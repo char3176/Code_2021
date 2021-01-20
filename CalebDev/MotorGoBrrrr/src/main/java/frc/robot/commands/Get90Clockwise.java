@@ -9,7 +9,8 @@ import frc.robot.subsystems.Motor;
 
 public class Get90Clockwise extends CommandBase {
   /** Creates a new Get90Clockwise. */
-  private Motor m_Motor;
+  private Motor m_Motor = Motor.getInstance();
+  
   public Get90Clockwise() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Motor);
@@ -22,7 +23,10 @@ public class Get90Clockwise extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println("command executed");
+    
     m_Motor.youSpinMotorRightRound();
+    
   }
 
   // Called once the command ends or is interrupted.
@@ -32,6 +36,6 @@ public class Get90Clockwise extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

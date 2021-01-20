@@ -24,9 +24,10 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
+    m_Controller = Controller.getInstance();
     m_Motor = Motor.getInstance();
 
-    m_Motor.setDefaultCommand(new Get90Clockwise());
+    //m_Motor.setDefaultCommand(new Get90Clockwise());
     configureButtonBindings();
   }
 
@@ -39,6 +40,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
      m_Controller.getAButton().whenPressed(new Get90Clockwise());
+     
   }
 
   /**
