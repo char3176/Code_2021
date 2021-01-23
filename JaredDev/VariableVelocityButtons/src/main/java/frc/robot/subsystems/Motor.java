@@ -29,14 +29,22 @@ public class Motor extends SubsystemBase {
 
     }
     
-    public void youSpinMotorRightRound() {
-        double motorPosition = spinEncoder.getPosition();
-        System.out.println(motorPosition);
-        
-        // CANSparkMax runs on 4096 ticks, NOT 2048 per revolution
-        // But this code below runs on revolutions
-        spinPIDControl.setReference(motorPosition + .25, ControlType.kPosition);
-        System.out.println("method run");
+    public void highSpin() {
+        spinPIDControl.setReference(1.0, ControlType.kVelocity);
+        System.out.println(spinEncoder.getVelocity());
+        System.out.println("High run");
+    }
+
+    public void lowSpin() {
+        spinPIDControl.setReference(0.5, ControlType.kVelocity);
+        System.out.println(spinEncoder.getVelocity());
+        System.out.println("Low run");
+    }
+
+    public void stopSpin() {
+        spinPIDControl.setReference(0.0, ControlType.kVelocity);
+        System.out.println(spinEncoder.getVelocity());
+        System.out.println("Stop run");
     }
 
     public static Motor getInstance() {
