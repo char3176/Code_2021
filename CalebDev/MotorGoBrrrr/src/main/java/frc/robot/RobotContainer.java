@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.Get90Clockwise;
-import frc.robot.subsystems.Motor;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -19,13 +18,11 @@ import frc.robot.subsystems.Motor;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
     private Controller m_Controller;
-    private Motor m_Motor;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     m_Controller = Controller.getInstance();
-    m_Motor = Motor.getInstance();
 
     //m_Motor.setDefaultCommand(new Get90Clockwise());
     configureButtonBindings();
