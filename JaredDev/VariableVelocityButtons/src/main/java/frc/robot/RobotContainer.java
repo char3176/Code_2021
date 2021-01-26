@@ -8,6 +8,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.ChangeVelocity;
+import frc.robot.commands.HighVelocity;
+import frc.robot.commands.LowVelocity;
+import frc.robot.commands.StopVelocity;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -36,9 +39,13 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    m_Controller.getXButton().whenPressed(new ChangeVelocity(() -> 3));
-    m_Controller.getAButton().whenPressed(new ChangeVelocity(() -> 1));
-    m_Controller.getBButton().whenPressed(new ChangeVelocity(() -> 2));
+    // m_Controller.getXButton().whenPressed(new ChangeVelocity(() -> 3));
+    // m_Controller.getAButton().whenPressed(new ChangeVelocity(() -> 1));
+    // m_Controller.getBButton().whenPressed(new ChangeVelocity(() -> 2));
+
+    m_Controller.getXButton().whenPressed(new HighVelocity());
+    m_Controller.getAButton().whenPressed(new LowVelocity());
+    m_Controller.getBButton().whenPressed(new StopVelocity());
      
   }
 
