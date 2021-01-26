@@ -14,17 +14,17 @@ package frc.robot;
  */
 public final class Constants {
 
-    public static final double kP = 6e-5; // Default 6e-5
-    public static final double kI = 0; // Default 0
-    public static final double kD = 0; // Default 0
-    public static final double kF = 0.000015; // Default 0.000015
+    public static final double kP = 4e-3; // Default 6e-5
+    public static final double kI = 0.2; // Default 0
+    public static final double kD = 1.5; // Default 0
+    public static final double kF = 0.0015; // Default 0.000015
     public static final int kIzone = 0; // Default 0
-    public static final double kMaxOutput = 1.0; // Default 1.0
-    public static final double kMinOutput = -1.0; // Default -1.0
-    public static final int kMaxRPM = 5700; // Default 5700
+    public static final double kMaxOutput = 0.25; // Default 1.0
+    public static final double kMinOutput = -0.25; // Default -1.0
+    // public static final int kMaxRPM = 5700; // Default 5700
     
-    public static final int kTimeoutMs = 30; // Default 30 (I think)
-    public static final int kPIDLoopIdx = 0; // Default 0
+    // public static final int kTimeoutMs = 30; // Default 30 (I think)
+    // public static final int kPIDLoopIdx = 0; // Default 0
 
     public static final int SparkMaxCAN = 6;
 

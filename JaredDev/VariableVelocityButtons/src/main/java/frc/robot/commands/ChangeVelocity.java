@@ -4,18 +4,22 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Motor;
 
 public class ChangeVelocity extends CommandBase {
   /** Creates a new Get90Clockwise. */
   private Motor m_Motor = Motor.getInstance();
-  int button;
+  DoubleSupplier button;
   
-  public ChangeVelocity(int b) {
+  public ChangeVelocity(DoubleSupplier b) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Motor);
-    this.button = b;
+    this.button = () -> b.getAsDouble();
+    System.out.println("this.button: " + this.button.getAsDouble());
+    System.out.println("param b: " + b.getAsDouble());
   }
 
   // Called when the command is initially scheduled.
@@ -26,9 +30,9 @@ public class ChangeVelocity extends CommandBase {
   @Override
   public void execute() {
     System.out.println("Command start");
-    if (button == 1) {
+    if (button.getAsDouble() == 1.0) {
       m_Motor.lowSpin();
-    } else if (button == 3) {
+    } else if (button.getAsDouble() == 3.0) {
       m_Motor.highSpin();
     } else { // Only other case is B, to stop
       m_Motor.stopSpin();
@@ -38,8 +42,12 @@ public class ChangeVelocity extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
 
+    // m_Motor.stopSpin();
+
+  }
+    
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {

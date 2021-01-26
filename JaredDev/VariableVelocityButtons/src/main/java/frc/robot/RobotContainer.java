@@ -36,9 +36,9 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    m_Controller.getXButton().whenPressed(new ChangeVelocity(3));
-    m_Controller.getAButton().whenPressed(new ChangeVelocity(1));
-    m_Controller.getBButton().whenPressed(new ChangeVelocity(2));
+    m_Controller.getXButton().whenPressed(new ChangeVelocity(() -> 3));
+    m_Controller.getAButton().whenPressed(new ChangeVelocity(() -> 1));
+    m_Controller.getBButton().whenPressed(new ChangeVelocity(() -> 2));
      
   }
 

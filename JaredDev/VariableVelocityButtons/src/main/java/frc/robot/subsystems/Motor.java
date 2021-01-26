@@ -27,22 +27,27 @@ public class Motor extends SubsystemBase {
         spinPIDControl.setFF(Constants.kF);
         spinPIDControl.setOutputRange(Constants.kMinOutput, Constants.kMaxOutput);
 
+        spinPIDControl.setReference(0.0, ControlType.kVelocity, 0);
+
     }
     
     public void highSpin() {
-        spinPIDControl.setReference(1.0, ControlType.kVelocity);
+        spinPIDControl.setReference(5700, ControlType.kVelocity, 1);
+        // spinPIDControl.setReference(1.0, ControlType.kVelocity);
         System.out.println(spinEncoder.getVelocity());
         System.out.println("High run");
     }
 
     public void lowSpin() {
-        spinPIDControl.setReference(0.5, ControlType.kVelocity);
+        spinPIDControl.setReference(2350, ControlType.kVelocity, 2);
+        // spinPIDControl.setReference(0.5, ControlType.kVelocity);
         System.out.println(spinEncoder.getVelocity());
         System.out.println("Low run");
     }
 
     public void stopSpin() {
-        spinPIDControl.setReference(0.0, ControlType.kVelocity);
+        spinPIDControl.setReference(0, ControlType.kVelocity, 3);
+        // spinPIDControl.setReference(0.0, ControlType.kVelocity);
         System.out.println(spinEncoder.getVelocity());
         System.out.println("Stop run");
     }
