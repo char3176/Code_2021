@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Motor;
 import frc.robot.commands.ChangeVelocity;
 import frc.robot.commands.HighVelocity;
 import frc.robot.commands.LowVelocity;
@@ -21,11 +22,15 @@ import frc.robot.commands.StopVelocity;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
     private Controller m_Controller;
+    private Motor m_Motor;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     m_Controller = Controller.getInstance();
+    m_Motor = Motor.getInstance();
+
+    m_Motor.setDefaultCommand(new StopVelocity());
 
     //m_Motor.setDefaultCommand(new Get90Clockwise());
     configureButtonBindings();
