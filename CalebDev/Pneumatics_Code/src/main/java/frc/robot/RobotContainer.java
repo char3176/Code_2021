@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExtendPiston;
@@ -21,12 +22,14 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private Lifter m_Lifter = new Lifter();
   private Controller m_Controller = new Controller();
+  private Compressor m_compressor;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
-    m_Lifter.enabled = true;
     configureButtonBindings();
+    m_compressor = new Compressor();
+    m_compressor.start();
   }
 
   /**
