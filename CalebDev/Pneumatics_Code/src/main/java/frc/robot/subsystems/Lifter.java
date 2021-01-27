@@ -14,19 +14,11 @@ public class Lifter extends SubsystemBase {
     //public final double kI = 0;
     //public final double kD = 0;
 
-	static DoubleSolenoid piston = new DoubleSolenoid(0, 4, 3);
-    static Compressor compressor = new Compressor(0);
+    DoubleSolenoid piston = new DoubleSolenoid(4, 3);
     //PIDController turnController = new PIDController(kP, kI, kD);
     private static Lifter instance = new Lifter();
 
-    public boolean enabled = compressor.enabled();
-
-    public static void readPeriodicInputs() {
-        compressor.setClosedLoopControl(true);
-
-    }
-
-    public static void writePeriodicInputs() {
+    public void writePeriodicInputs() {
         piston.set(Value.kOff);
     }
     
