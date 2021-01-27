@@ -1,7 +1,10 @@
 package frc.robot.subsystems;
+
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.controller.PIDController;
 
 
@@ -11,12 +14,10 @@ public class Lifter extends SubsystemBase {
     //public final double kI = 0;
     //public final double kD = 0;
 
-	static Solenoid piston = new Solenoid(0);
+	static DoubleSolenoid piston = new DoubleSolenoid(0, 4, 3);
     static Compressor compressor = new Compressor(0);
     //PIDController turnController = new PIDController(kP, kI, kD);
     private static Lifter instance = new Lifter();
-
-    private static boolean lift = false;
 
     public boolean enabled = compressor.enabled();
 
@@ -26,17 +27,15 @@ public class Lifter extends SubsystemBase {
     }
 
     public static void writePeriodicInputs() {
-        piston.set(lift);
+        piston.set(Value.kOff);
     }
     
     public void pistonExtend() {
-        lift = true;
-        piston.set(lift);
+        piston.set(Value.kForward);
     }
 
     public void pistonRetract() {
-        lift = false;
-        piston.set(lift);
+        piston.set(Value.kReverse);
     }
 
     public static Lifter getInstance() {
