@@ -14,7 +14,7 @@ public class Lifter extends SubsystemBase {
     //public final double kI = 0;
     //public final double kD = 0;
 
-    DoubleSolenoid piston = new DoubleSolenoid(4, 3);
+    private final DoubleSolenoid piston = new DoubleSolenoid(1, 4, 3);
     //PIDController turnController = new PIDController(kP, kI, kD);
     private static Lifter instance = new Lifter();
 
