@@ -30,7 +30,7 @@ public class RobotContainer {
     m_Controller = Controller.getInstance();
     m_Motor = Motor.getInstance();
 
-    m_Motor.setDefaultCommand(new StopVelocity());
+    // m_Motor.setDefaultCommand(new StopVelocity());
 
     //m_Motor.setDefaultCommand(new Get90Clockwise());
     configureButtonBindings();
@@ -47,6 +47,8 @@ public class RobotContainer {
     // m_Controller.getXButton().whenPressed(new ChangeVelocity(() -> 3));
     // m_Controller.getAButton().whenPressed(new ChangeVelocity(() -> 1));
     // m_Controller.getBButton().whenPressed(new ChangeVelocity(() -> 2));
+
+    m_Motor.boardDisplay();
 
     m_Controller.getXButton().whenPressed(new HighVelocity());
     m_Controller.getAButton().whenPressed(new LowVelocity());
