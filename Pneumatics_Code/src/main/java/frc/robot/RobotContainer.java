@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private Lifter m_Lifter = new Lifter();
+  public Lifter m_Lifter = null;
   private Controller m_Controller = new Controller();
   private Compressor m_compressor;
 
@@ -28,8 +28,9 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    m_compressor = new Compressor();
-    m_compressor.start();
+    //m_compressor = new Compressor();
+    //m_compressor.start();
+    m_Lifter = new Lifter();
   }
 
   /**
