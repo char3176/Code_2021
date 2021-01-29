@@ -20,17 +20,18 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  public Lifter m_Lifter = null;
-  private Controller m_Controller = new Controller();
+  public Lifter m_Lifter;
+  private Controller m_Controller;
   private Compressor m_compressor;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    m_compressor = new Compressor();
+    m_compressor.start();
+    m_Lifter = Lifter.getInstance();
+    m_Controller = Controller.getInstance();
     // Configure the button bindings
     configureButtonBindings();
-    //m_compressor = new Compressor();
-    //m_compressor.start();
-    m_Lifter = new Lifter();
   }
 
   /**
