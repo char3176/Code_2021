@@ -12,31 +12,31 @@ public class ExtendPiston extends CommandBase {
   
   public ExtendPiston() {
     //addRequirements(m_Lifter);
-    System.out.println("Extend Piston Created");
+    // System.out.println("Extend Piston Created");
   }
 
   @Override
   public void initialize() {
     //m_Lifter.pistonExtend();
-    System.out.println("Extend Piston Init");
+    // System.out.println("Extend Piston Init");
     addRequirements(m_Lifter); 
   }
 
   @Override
   public void execute() {
     m_Lifter.pistonExtend();
-    System.out.println("Extend Piston Execute");
+    // System.out.println("Extend Piston Execute");
   }
 
   @Override
   public void end(boolean interrupted) {
-    System.out.println("Extend Piston End");
+    // System.out.println("Extend Piston End");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    System.out.println("Extend Piston isFinished");
+    // System.out.println("Extend Piston isFinished");
     return false;
   }
 }

@@ -6,7 +6,8 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class Lifter extends SubsystemBase {
     private static Lifter instance = new Lifter();
-    private DoubleSolenoid piston = new DoubleSolenoid(5, 2);
+    private DoubleSolenoid piston = new DoubleSolenoid(2, 5); //Worked Backwards with 5, 2
+                                                            // but should be 2, 5 if not working change back
 
     public Lifter() {
         piston.set(DoubleSolenoid.Value.kOff);
@@ -17,14 +18,14 @@ public class Lifter extends SubsystemBase {
     }
     
     public void pistonExtend() {
-        System.out.println("Extend: " + piston.get());
+        // System.out.println("Extend: " + piston.get());
         piston.set(Value.kForward);
-        System.out.println("Piston Extend Method Did Something");
+        // System.out.println("Piston Extend Method Did Something");
     }
 
     public void pistonRetract() {
-        System.out.println("Retract: " + piston.get());
+        // System.out.println("Retract: " + piston.get());
         piston.set(Value.kReverse);
-        System.out.println("Piston Retract Method Did Something");
+        // System.out.println("Piston Retract Method Did Something");
     }    
 }
