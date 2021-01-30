@@ -14,12 +14,14 @@ public class ExtendPistonInstant extends InstantCommand {
   private Lifter m_Lifter = Lifter.getInstance();
   public ExtendPistonInstant() {
     addRequirements(m_Lifter);
+    System.out.println("Extend Piston Instant Created");
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_Lifter.pistonExtend();
+    System.out.println("Extend Piston Instant Init");
   }
 }
 

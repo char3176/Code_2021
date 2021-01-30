@@ -14,12 +14,14 @@ public class RetractPiston extends InstantCommand {
   private Lifter m_Lifter = Lifter.getInstance();
   public RetractPiston() {
     addRequirements(m_Lifter);
+    System.out.println("Retract Piston Created");
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_Lifter.pistonRetract();
+    System.out.println("Retract Piston Init");
   }
 }
 
