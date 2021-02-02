@@ -4,11 +4,14 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkMax;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Motor;
 import frc.robot.commands.ChangeVelocity;
+import frc.robot.commands.EMstopVelocity;
 import frc.robot.commands.HighVelocity;
 import frc.robot.commands.LowVelocity;
 import frc.robot.commands.StopVelocity;
@@ -48,11 +51,11 @@ public class RobotContainer {
     // m_Controller.getAButton().whenPressed(new ChangeVelocity(() -> 1));
     // m_Controller.getBButton().whenPressed(new ChangeVelocity(() -> 2));
 
-    m_Motor.boardDisplay();
-
+    m_Motor.setDefaultCommand(new StopVelocity());
     m_Controller.getXButton().whenPressed(new HighVelocity());
     m_Controller.getAButton().whenPressed(new LowVelocity());
     m_Controller.getBButton().whenPressed(new StopVelocity());
+    m_Controller.getRBumper().whenPressed(new EMstopVelocity());
      
   }
 

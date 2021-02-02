@@ -7,12 +7,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Motor;
 
-public class StopVelocity extends CommandBase {
-  /** Creates a new StopVelocity. */
+public class EMstopVelocity extends CommandBase {
+  /** Creates a new EMstopVelocity. */
 
-  private Motor m_Motor = Motor.getInstance();
+  Motor m_Motor = Motor.getInstance();
 
-  public StopVelocity() {
+  public EMstopVelocity() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Motor);
   }
@@ -25,7 +25,7 @@ public class StopVelocity extends CommandBase {
   @Override
   public void execute() {
 
-    m_Motor.stopSpin();
+    m_Motor.emergencyStop();
 
   }
 
