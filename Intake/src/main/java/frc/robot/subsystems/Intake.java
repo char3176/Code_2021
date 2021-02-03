@@ -4,16 +4,43 @@
 
 package frc.robot.subsystems;
 
+import javax.swing.text.Position;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
+  private static Intake instance = new Intake();
+  private DoubleSolenoid leftPiston = new DoubleSolenoid(5, 2);
+  private DoubleSolenoid rightPiston = new DoubleSolenoid(5, 2);
+  private WPI_TalonSRX motor = new WPI_TalonSRX(0);
 
-  public Intake() {}
+  public Intake() {
+    leftPiston.set(DoubleSolenoid.Value.kOff);
+    rightPiston.set(DoubleSolenoid.Value.kOff);
+  }
 
-  public static Lifter getInstance() {
+  public static Intake getInstance() {
+    return instance;
+  }
 
+  public void setPercentControl(double percent) {
+    motor.set(ControlMode.PercentOutput, percent);
+  }
+
+  public void Extend() {
+    leftPiston.set(Value.kForward);
+    rightPiston.set(Value.kForward);
+  }
+
+  public void Retract() {
+    leftPiston.set(Value.kReverse);
+    rightPiston.set(Value.kReverse);
   }
 }
