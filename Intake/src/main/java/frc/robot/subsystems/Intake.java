@@ -17,9 +17,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   private static Intake instance = new Intake();
-  private DoubleSolenoid leftPiston = new DoubleSolenoid(5, 2);
-  private DoubleSolenoid rightPiston = new DoubleSolenoid(5, 2);
-  private WPI_TalonSRX motor = new WPI_TalonSRX(0);
+  private DoubleSolenoid leftPiston = new DoubleSolenoid(2, 5);
+  private DoubleSolenoid rightPiston = new DoubleSolenoid(3, 4);
+  private WPI_TalonSRX motor = new WPI_TalonSRX(33);
 
   public Intake() {
     leftPiston.set(DoubleSolenoid.Value.kOff);

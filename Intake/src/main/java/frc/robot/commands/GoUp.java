@@ -5,7 +5,6 @@
 package frc.robot.commands;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 
 public class GoUp extends CommandBase {
   private final Intake m_Intake = Intake.getInstance();

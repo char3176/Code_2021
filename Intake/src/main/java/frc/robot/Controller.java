@@ -11,8 +11,11 @@ public class Controller {
 
     private final JoystickButton extendDong = new JoystickButton(duke, Button.kA.value);
     private final JoystickButton retractDong = new JoystickButton(duke, Button.kB.value);
-    private final JoystickButton roll = new JoystickButton(duke, Button.kX.value);
-    private final JoystickButton rollExtendDong = new JoystickButton(duke, Button.kY.value);
+    private final JoystickButton rollExtendDong = new JoystickButton(duke, Button.kX.value);
+    private final JoystickButton roll = new JoystickButton(duke, Button.kBumperLeft.value);
+    private final JoystickButton rollcancel = new JoystickButton(duke, Button.kBumperRight.value);
+
+    public boolean isCancel = false;
 
     public static Controller getInstance() {
         return instance;
@@ -27,10 +30,14 @@ public class Controller {
     }
 
     public JoystickButton getXButton() {
+        return rollExtendDong;
+    }
+
+    public JoystickButton getLeftBumper() {
         return roll;
     }
 
-    public JoystickButton getYButton() {
-        return rollExtendDong;
+    public JoystickButton getRightBumper() {
+        return rollcancel;
     }
 }
