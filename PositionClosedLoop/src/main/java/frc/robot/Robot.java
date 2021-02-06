@@ -180,7 +180,7 @@ public class Robot extends TimedRobot {
 
 		/* If Talon is in position closed-loop, print some more info */
 		if (_talon.getControlMode() == ControlMode.Position) {
-			/* ppend more signals to print when in speed mode. */
+			 //ppend more signals to print when in speed mode. 
 			_sb.append("\terr:");
 			_sb.append(_talon.getClosedLoopError(0));
 			_sb.append("u");	// Native Units

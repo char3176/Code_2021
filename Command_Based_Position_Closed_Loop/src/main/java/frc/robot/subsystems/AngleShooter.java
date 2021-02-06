@@ -4,11 +4,52 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import edu.wpi.first.wpilibj.Joystick;
 
-public class AngledShooter extends SubsystemBase {
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.*;
+
+public class AngleShooter extends SubsystemBase {
+  private static AngleShooter instance = new AngleShooter();
+  public TalonSRX _talon = new WPI_TalonSRX(33);
+  
+/** Used to create string thoughout loop */
+  StringBuilder _sb = new StringBuilder();
+  int _loops = 0;
+  double targetPositionRotations;
+  
+
+
+  /** Track button state for single press event */
+  boolean _lastButton1 = false;
+
   /** Creates a new AngledShooter. */
-  public AngledShooter() {}
+  public AngleShooter() {
+    _talon.configNominalOutputForward(0, Constants.kTimeoutMs);
+    _talon.configNominalOutputReverse(0, Constants.kTimeoutMs);
+		_talon.configPeakOutputForward(1, Constants.kTimeoutMs);
+		_talon.configPeakOutputReverse(-1, Constants.kTimeoutMs);
+    _talon.configAllowableClosedloopError(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+    _talon.config_kF(Constants.kPIDLoopIdx, Constants.kGains.kF, Constants.kTimeoutMs);
+		_talon.config_kP(Constants.kPIDLoopIdx, Constants.kGains.kP, Constants.kTimeoutMs);
+		_talon.config_kI(Constants.kPIDLoopIdx, Constants.kGains.kI, Constants.kTimeoutMs);
+		_talon.config_kD(Constants.kPIDLoopIdx, Constants.kGains.kD, Constants.kTimeoutMs);
+    int absolutePosition = _talon.getSensorCollection().getPulseWidthPosition();
+    absolutePosition &= 0xFFF;
+		if (Constants.kSensorPhase) { absolutePosition *= -1; }
+    if (Constants.kMotorInvert) { absolutePosition *= -1; }
+    _talon.setSelectedSensorPosition(absolutePosition, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+
+
+
+
+
+
+  }
 
   @Override
   public void periodic() {

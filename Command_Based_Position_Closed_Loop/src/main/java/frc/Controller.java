@@ -4,25 +4,32 @@
 
 package frc;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
+import frc.robot.commands.PositionClosedLoop;
 
 public class Controller {
-    private static Controller instance = new Controller();
-    Joystick _joy = new Joystick(0);
-    double leftYstick = _joy.getY();
-    boolean button1 = _joy.getRawButton(1);	// X-Button
-	boolean button2 = _joy.getRawButton(2);	// A-Button
+    public static Controller instance = new Controller();
+    public static Controller getInstance() {
+        return instance;
+    }
+    public Joystick _joy = new Joystick(0);
+   public  double leftYstick = _joy.getY();
+    public boolean button1 = _joy.getRawButton(1);	
+   public boolean _lastButton1 = false;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
+    
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
