@@ -12,7 +12,7 @@ import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Drum extends SubsystemBase {
-  CANSparkMax drumSpark = new CANSparkMax(0, MotorType.kBrushless);
+  CANSparkMax drumSpark = new CANSparkMax(6, MotorType.kBrushless);
   public static Drum instance = new Drum();
 
   /** Creates a new ExampleSubsystem. */
