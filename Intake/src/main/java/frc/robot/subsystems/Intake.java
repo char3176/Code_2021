@@ -13,13 +13,14 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   private static Intake instance = new Intake();
   private DoubleSolenoid leftPiston = new DoubleSolenoid(2, 5);
   private DoubleSolenoid rightPiston = new DoubleSolenoid(3, 4);
-  private WPI_TalonSRX motor = new WPI_TalonSRX(33);
+  private WPI_TalonSRX motor = new WPI_TalonSRX(Constants.MOTOR_CAN_ID);
 
   public Intake() {
     leftPiston.set(DoubleSolenoid.Value.kOff);
