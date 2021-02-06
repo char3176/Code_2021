@@ -5,7 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.Joystick;
+import com.revrobotics.CANSparkMax;
 
 public class Drum extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
