@@ -7,11 +7,16 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class AngledShooter extends SubsystemBase {
+  private static AngledShooter instance = new AngledShooter();
   /** Creates a new AngledShooter. */
   public AngledShooter() {}
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public static AngledShooter getInstance() {
+    return instance;
   }
 }
