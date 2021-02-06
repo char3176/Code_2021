@@ -6,7 +6,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.DrumOff;
+import frc.robot.commands.DrumSlow;
+import frc.robot.commands.DrumFast;
 import frc.robot.subsystems.Drum;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -18,13 +20,15 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drum m_Drum = new Drum();
-
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_Drum);
+  public Drum m_Drum;
+  private final Controller m_Controller;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
+    m_Drum = Drum.getInstance();
+    m_Controller = Controller.getInstance();
+
     configureButtonBindings();
   }
 
@@ -34,7 +38,11 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    m_Controller.getOffButton().whenPressed(new DrumOff());
+    m_Controller.getSlowButton().whenPressed(new DrumSlow());
+    m_Controller.getFastButton().whenPressed(new DrumFast());
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -43,6 +51,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return null;
   }
 }
