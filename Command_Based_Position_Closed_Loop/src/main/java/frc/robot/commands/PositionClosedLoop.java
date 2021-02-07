@@ -7,15 +7,15 @@ package frc.robot.commands;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.Controller;
-import frc.robot.subsystems.AngleShooter;
+import frc.robot.Controller;
+import frc.robot.subsystems.AngledShooter;
 
 public class PositionClosedLoop extends CommandBase {
   /** Creates a new PositionClosedLoop. */
   public PositionClosedLoop() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
-  private AngleShooter m_AngleShooter = new AngleShooter();
+  private AngledShooter m_AngleShooter = new AngledShooter();
   private Controller m_Controller = Controller.getInstance();
   // Called when the command is initially scheduled.
   @Override
@@ -29,7 +29,7 @@ public class PositionClosedLoop extends CommandBase {
     double targetPositionRotations = m_AngleShooter._talon.getSelectedSensorPosition(0) +.25*4096;/*leftYstick * 10.0 * 4096;*/
 			
       m_AngleShooter._talon.set(ControlMode.Position, targetPositionRotations);
-      m_Controller._lastButton1 = m_Controller.button1;
+      m_Controller._lastButton1 = m_Controller.button1;    // TODO: No need to do this here (I think?).  Unsure of _lastButton1 & button1 purpose.  Need to know to clear up.  But regularly best if these calls are in Controller and RobotContainer, just in general. (char)
   isFinished();
   }
 

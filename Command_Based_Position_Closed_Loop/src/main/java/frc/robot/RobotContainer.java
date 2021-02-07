@@ -11,14 +11,10 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
-<<<<<<< HEAD
-import frc.robot.subsystems.AngledShooter;
-=======
 import frc.robot.commands.PositionClosedLoop;
 import frc.robot.subsystems.AngleShooter;
->>>>>>> a4097457293ea36c461ae696803a13388502255e
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.Controller;
+import frc.robot.Controller;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -30,11 +26,16 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+
+/* ****************************************************************
+EXAMPLE OF CODE CONFLICT CREATED DURING ATTEMPTED MERGE.  SAVE TO SHOW KYLE AND SEE WHICH TO KEEP
 <<<<<<< HEAD
   private final AngledShooter m_AngledShooter = AngledShooter.getInstance();
 =======
   private final AngleShooter m_angleShooter = new AngleShooter();
 >>>>>>> a4097457293ea36c461ae696803a13388502255e
+********************************************************************
+*/
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final PositionClosedLoop m_PositonClosedLoop = new PositionClosedLoop();
@@ -45,15 +46,15 @@ private final Controller m_Controller = Controller.getInstance();
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    m_angleShooter._talon.configFactoryDefault();
+    m_angledShooter._talon.configFactoryDefault();
 		
 		/* Config the sensor used for Primary PID and sensor direction */
-        m_angleShooter._talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 
+        m_angledShooter._talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 
                                             Constants.kPIDLoopIdx,
 				                                    Constants.kTimeoutMs);
 
 		/* Ensure sensor is positive when output is positive */
-		m_angleShooter._talon.setSensorPhase(Constants.kSensorPhase);
+		m_angledShooter._talon.setSensorPhase(Constants.kSensorPhase);
     
   }
 
