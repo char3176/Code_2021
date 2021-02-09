@@ -18,16 +18,23 @@ public final class Constants {
 
     public static final int drumMotorCANID = 6;
 
-    // Drum PIDF constants
+    /* // Drum PIDF constants for SparkMAX BIG Neo (number?)
     public static final double drumKP = 0.000121;
     public static final double drumKI = 0.0000024;
     public static final double drumKD = 0.00272;
     public static final double drumKF = 0.000169;
     public static final double drumKIZone = 48;
+    public static final double drumKRampRate = 4500;    */
 
-    // Output limits, ramp rate used with SlewRateLimiter
+    // Drum PIDF Constants for SparkMAX Neo 550 - NEEDS TUNING!
+    public static final double drumKP = 0.000121;
+    public static final double drumKI = 0.0000024;
+    public static final double drumKD = 0.00272;
+    public static final double drumKF = 0.000169;
+    public static final double drumKIZone = 48;
+    public static final double drumKRampRate = 4500;    
+
     public static final double drumKMaxOutput = 1.0;
     public static final double drumKMinOutput = -1.0;
-    public static final double drumKRampRate = 4500;
 
 }

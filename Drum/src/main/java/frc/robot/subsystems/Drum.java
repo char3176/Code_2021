@@ -45,23 +45,28 @@ public class Drum extends SubsystemBase {
   }
 
   public void highSpin() {
-    drumPIDController.setReference(rateLimiter.calculate(4500), ControlType.kVelocity);
+    drumPIDController.setReference(rateLimiter.calculate(2000), ControlType.kVelocity);
+    System.out.println(drumEncoder.getVelocity());
   }
 
   public void mediumSpin() {
-    drumPIDController.setReference(rateLimiter.calculate(3000), ControlType.kVelocity);
+    drumPIDController.setReference(rateLimiter.calculate(1000), ControlType.kVelocity);
+    System.out.println(drumEncoder.getVelocity());
   }
 
   public void lowSpin() {
-    drumPIDController.setReference(rateLimiter.calculate(1500), ControlType.kVelocity);
+    drumPIDController.setReference(rateLimiter.calculate(500), ControlType.kVelocity);
+    System.out.println(drumEncoder.getVelocity());
   }
 
   public void easeStop() {
     drumPIDController.setReference(rateLimiter.calculate(0), ControlType.kVelocity);
+    System.out.println(drumEncoder.getVelocity());
   }
 
   public void instantStop() {
-    drumPIDController.setReference(0, ControlType.kVelocity);
+    drumPIDController.setReference(0, ControlType.kVoltage);
+    System.out.println(drumEncoder.getVelocity());
   }
 
 
