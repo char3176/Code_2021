@@ -17,19 +17,19 @@ public class PositionClosedLoop extends CommandBase {
   }
   private AngledShooter m_AngleShooter = new AngledShooter();
   private Controller m_Controller = Controller.getInstance();
+
+  double targetPositonRotations;
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+     targetPositonRotations = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double targetPositionRotations = m_AngleShooter._talon.getSelectedSensorPosition(0) +.25*4096;/*leftYstick * 10.0 * 4096;*/
-			
-      m_AngleShooter._talon.set(ControlMode.Position, targetPositionRotations);
-      m_Controller._lastButton1 = m_Controller.button1;    // TODO: No need to do this here (I think?).  Unsure of _lastButton1 & button1 purpose.  Need to know to clear up.  But regularly best if these calls are in Controller and RobotContainer, just in general. (char)
+     targetPositonRotations = m_Controller.moveAngleShooter() * 341.333;
+      m_AngleShooter._talon.set(ControlMode.Position, targetPositonRotations);
   isFinished();
   }
 

@@ -7,12 +7,11 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.PositionClosedLoop;
-import frc.robot.subsystems.AngleShooter;
+import frc.robot.subsystems.AngledShooter;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.Controller;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -27,15 +26,11 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-/* ****************************************************************
-EXAMPLE OF CODE CONFLICT CREATED DURING ATTEMPTED MERGE.  SAVE TO SHOW KYLE AND SEE WHICH TO KEEP
-<<<<<<< HEAD
+//****************************************************************
+//EXAMPLE OF CODE CONFLICT CREATED DURING ATTEMPTED MERGE.  SAVE TO SHOW KYLE AND SEE WHICH TO KEEP
   private final AngledShooter m_AngledShooter = AngledShooter.getInstance();
-=======
-  private final AngleShooter m_angleShooter = new AngleShooter();
->>>>>>> a4097457293ea36c461ae696803a13388502255e
-********************************************************************
-*/
+//********************************************************************
+
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final PositionClosedLoop m_PositonClosedLoop = new PositionClosedLoop();
@@ -46,15 +41,15 @@ private final Controller m_Controller = Controller.getInstance();
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    m_angledShooter._talon.configFactoryDefault();
+    m_AngledShooter._talon.configFactoryDefault();
 		
 		/* Config the sensor used for Primary PID and sensor direction */
-        m_angledShooter._talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 
+        m_AngledShooter._talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 
                                             Constants.kPIDLoopIdx,
 				                                    Constants.kTimeoutMs);
 
 		/* Ensure sensor is positive when output is positive */
-		m_angledShooter._talon.setSensorPhase(Constants.kSensorPhase);
+		m_AngledShooter._talon.setSensorPhase(Constants.kSensorPhase);
     
   }
 
@@ -65,7 +60,7 @@ private final Controller m_Controller = Controller.getInstance();
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    if ((!m_Controller._lastButton1) && m_Controller.button1) {
+    if (m_Controller.moveAngleShooter()>0) {
 			
 		m_PositonClosedLoop.schedule();
 			

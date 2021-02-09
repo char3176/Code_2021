@@ -3,19 +3,23 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class Controller {
     private static Controller instance = new Controller();
-    Joystick _joy = new Joystick(0);
-
-    private JoystickButton b1 = new JoystickButton(_joy, 1);
-    private JoystickButton b2 = new JoystickButton(_joy, 2);
-
+    //Joystick _joy = new Joystick(0);
+    private final XboxController operator = new XboxController(0);
     public static Controller getInstance() {
         return instance;
     }
+   /* private JoystickButton b1 = new JoystickButton(_joy, 1);
+    private JoystickButton b2 = new JoystickButton(_joy, 2);
+
+    
 
     public JoystickButton getButtonOne() {
         return b1;
@@ -24,8 +28,10 @@ public class Controller {
     public JoystickButton getButtonTwo() {
         return b2;
     }
+*/
+   
 
-    public double getYAxis() {
-        return _joy.getY();
+    public double moveAngleShooter(){
+        return operator.getY(Hand.kRight);
     }
 }

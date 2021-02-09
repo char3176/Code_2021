@@ -13,8 +13,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.*;
 
-public class AngleShooter extends SubsystemBase {
-  private static AngleShooter instance = new AngleShooter();
+public class AngledShooter extends SubsystemBase {
+  private static AngledShooter Shooter = new AngledShooter();
   public TalonSRX _talon = new WPI_TalonSRX(33);
   
 /** Used to create string thoughout loop */
@@ -29,7 +29,7 @@ public class AngleShooter extends SubsystemBase {
 
   private static AngledShooter instance = new AngledShooter();
   /** Creates a new AngledShooter. */
-  public AngleShooter() {
+  public AngledShooter() {
     _talon.configNominalOutputForward(0, Constants.kTimeoutMs);
     _talon.configNominalOutputReverse(0, Constants.kTimeoutMs);
 		_talon.configPeakOutputForward(1, Constants.kTimeoutMs);
