@@ -33,7 +33,7 @@ public class RobotContainer {
 
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private final PositionClosedLoop m_PositonClosedLoop = new PositionClosedLoop();
+ 
 
 private final Controller m_Controller = Controller.getInstance();
 

@@ -14,18 +14,16 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.*;
 
 public class AngledShooter extends SubsystemBase {
-  private static AngledShooter Shooter = new AngledShooter();
+  
   public TalonSRX _talon = new WPI_TalonSRX(33);
   
 /** Used to create string thoughout loop */
-  StringBuilder _sb = new StringBuilder();
-  int _loops = 0;
+
   double targetPositionRotations;
   
 
 
-  /** Track button state for single press event */
-  boolean _lastButton1 = false;
+  
 
   private static AngledShooter instance = new AngledShooter();
   /** Creates a new AngledShooter. */

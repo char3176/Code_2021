@@ -11,10 +11,10 @@ import frc.robot.Controller;
 import frc.robot.subsystems.AngledShooter;
 
 public class PositionClosedLoop extends CommandBase {
-  /** Creates a new PositionClosedLoop. */
+
   private AngledShooter m_AngleShooter = AngledShooter.getInstance();
+
   public PositionClosedLoop() {
-    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_AngleShooter);
   }
  
@@ -32,8 +32,8 @@ public class PositionClosedLoop extends CommandBase {
   @Override
   public void execute() {
     
-      m_AngleShooter._talon.set(ControlMode.Position, targetPositonRotations);
-  System.out.print(targetPositonRotations);
+    //  m_AngleShooter._talon.set(ControlMode.Position, targetPositonRotations);
+    m_AngleShooter._talon.set(ControlMode.Position, 1000);
   }
 
   // Called once the command ends or is interrupted.
