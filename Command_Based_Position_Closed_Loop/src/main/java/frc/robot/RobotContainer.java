@@ -26,10 +26,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-//****************************************************************
-//EXAMPLE OF CODE CONFLICT CREATED DURING ATTEMPTED MERGE.  SAVE TO SHOW KYLE AND SEE WHICH TO KEEP
+
   private final AngledShooter m_AngledShooter = AngledShooter.getInstance();
-//********************************************************************
 
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
@@ -44,9 +42,7 @@ private final Controller m_Controller = Controller.getInstance();
     m_AngledShooter._talon.configFactoryDefault();
 		
 		/* Config the sensor used for Primary PID and sensor direction */
-        m_AngledShooter._talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 
-                                            Constants.kPIDLoopIdx,
-				                                    Constants.kTimeoutMs);
+       
 
 		/* Ensure sensor is positive when output is positive */
 		m_AngledShooter._talon.setSensorPhase(Constants.kSensorPhase);

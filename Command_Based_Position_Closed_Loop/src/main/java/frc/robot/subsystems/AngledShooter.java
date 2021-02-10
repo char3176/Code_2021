@@ -42,6 +42,9 @@ public class AngledShooter extends SubsystemBase {
 		if (Constants.kSensorPhase) { absolutePosition *= -1; }
     if (Constants.kMotorInvert) { absolutePosition *= -1; }
     _talon.setSelectedSensorPosition(absolutePosition, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+    _talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 
+                                            Constants.kPIDLoopIdx,
+				                                    Constants.kTimeoutMs);
 
 
 

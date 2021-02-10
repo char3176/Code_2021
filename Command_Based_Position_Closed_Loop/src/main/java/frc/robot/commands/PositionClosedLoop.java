@@ -33,7 +33,8 @@ public class PositionClosedLoop extends CommandBase {
   public void execute() {
     
     //  m_AngleShooter._talon.set(ControlMode.Position, targetPositonRotations);
-    m_AngleShooter._talon.set(ControlMode.Position, 1000);
+    m_AngleShooter._talon.set(ControlMode.Position, (m_AngleShooter._talon.getSelectedSensorPosition() * 10 * 4096));
+  System.out.println(m_AngleShooter._talon.getSelectedSensorPosition());
   }
 
   // Called once the command ends or is interrupted.
