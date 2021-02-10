@@ -60,11 +60,9 @@ private final Controller m_Controller = Controller.getInstance();
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    if (m_Controller.moveAngleShooter()>0) {
-			
-		m_PositonClosedLoop.schedule();
-			
-		}
+
+    m_Controller.getAButton().whenPressed(new PositionClosedLoop());
+  
     
   }
 

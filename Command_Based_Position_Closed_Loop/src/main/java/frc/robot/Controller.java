@@ -6,15 +6,21 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class Controller {
     private static Controller instance = new Controller();
-    //Joystick _joy = new Joystick(0);
-    private final XboxController operator = new XboxController(0);
+  
+    private XboxController operator = new XboxController(0);
+    private final JoystickButton aButton = new JoystickButton(operator,Button.kA.value);
     public static Controller getInstance() {
         return instance;
+    }
+    
+    public JoystickButton getAButton(){
+        return aButton;
     }
    /* private JoystickButton b1 = new JoystickButton(_joy, 1);
     private JoystickButton b2 = new JoystickButton(_joy, 2);

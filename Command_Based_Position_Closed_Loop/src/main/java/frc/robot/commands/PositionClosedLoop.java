@@ -12,25 +12,28 @@ import frc.robot.subsystems.AngledShooter;
 
 public class PositionClosedLoop extends CommandBase {
   /** Creates a new PositionClosedLoop. */
+  private AngledShooter m_AngleShooter = AngledShooter.getInstance();
   public PositionClosedLoop() {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_AngleShooter);
   }
-  private AngledShooter m_AngleShooter = new AngledShooter();
+ 
   private Controller m_Controller = Controller.getInstance();
 
   double targetPositonRotations;
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-     targetPositonRotations = 0;
+     targetPositonRotations = m_Controller.moveAngleShooter()*341.333;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-     targetPositonRotations = m_Controller.moveAngleShooter() * 341.333;
+    
       m_AngleShooter._talon.set(ControlMode.Position, targetPositonRotations);
-  isFinished();
+  System.out.print(targetPositonRotations);
   }
 
   // Called once the command ends or is interrupted.
