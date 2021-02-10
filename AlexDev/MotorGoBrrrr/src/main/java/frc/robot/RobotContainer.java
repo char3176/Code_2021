@@ -7,7 +7,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.Get90Clockwise;
+import frc.robot.commands.FlywheelStop;
+import frc.robot.commands.FlywheelMinSpeed;
+import frc.robot.commands.FlywheelMedSpeed;
+import frc.robot.commands.FlywheelMaxSpeed;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -36,7 +39,10 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-     m_Controller.getAButton().whenPressed(new Get90Clockwise());
+     m_Controller.getAButton().whenPressed(new FlywheelStop());
+     m_Controller.getBButton().whenPressed(new FlywheelMinSpeed());
+     m_Controller.getYButton().whenPressed(new FlywheelMedSpeed());
+     m_Controller.getXButton().whenPressed(new FlywheelMaxSpeed());
      
   }
 

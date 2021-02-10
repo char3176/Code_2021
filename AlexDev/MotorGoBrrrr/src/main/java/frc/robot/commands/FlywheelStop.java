@@ -7,11 +7,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Motor;
 
-public class Get90Clockwise extends CommandBase {
+public class FlywheelStop extends CommandBase {
   /** Creates a new Get90Clockwise. */
   private Motor m_Motor = Motor.getInstance();
   
-  public Get90Clockwise() {
+  public FlywheelStop() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Motor);
   }
@@ -25,7 +25,7 @@ public class Get90Clockwise extends CommandBase {
   public void execute() {
     System.out.println("command executed");
     
-    m_Motor.youSpinMotorRightRound();
+    m_Motor.youSpinMotorRightRound(0);
     
   }
 

@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-import javax.swing.text.Position;
+//import javax.swing.text.Position;
 
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
@@ -27,11 +27,12 @@ public class Motor extends SubsystemBase {
         spinMotor.setSensorPhase(true);
     }
     
-    public void youSpinMotorRightRound() {
-        double motorPosition = spinMotor.getSelectedSensorPosition(0);
-        System.out.println(motorPosition);
-        spinMotor.set(TalonFXControlMode.Position, motorPosition + 512);
-        //spinMotor.set(TalonFXControlMode.PercentOutput, .1);
+    public void youSpinMotorRightRound(double uhh) {
+        //double motorVelocity = uhh;
+        double motorOutputPercent = uhh;
+        System.out.println(motorOutputPercent);
+        //spinMotor.set(TalonFXControlMode.Velocity, motorVelocity);
+        spinMotor.set(TalonFXControlMode.PercentOutput, motorOutputPercent);
         System.out.println("motor method run");
     }
 
