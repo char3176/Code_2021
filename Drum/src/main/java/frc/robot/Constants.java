@@ -26,13 +26,13 @@ public final class Constants {
     public static final double drumKIZone = 48;
     public static final double drumKRampRate = 4500;    */
 
-    // Drum PIDF Constants for SparkMAX Neo 550 - NEEDS TUNING!
-    public static final double drumKP = 0.000121;
-    public static final double drumKI = 0.0000024;
-    public static final double drumKD = 0.00272;
-    public static final double drumKF = 0.000169;
-    public static final double drumKIZone = 48;
-    public static final double drumKRampRate = 4500;    
+    // Drum PIDF Constants for SparkMAX Neo 550 - NEEDS A LITTLE TUNING/CHECKING
+    public static final double drumKP = 0.00015;
+    public static final double drumKI = 0.0000004;
+    public static final double drumKD = 0.0025;
+    public static final double drumKF = 0.000097;
+    public static final double drumKIZone = 0; // SET THIS TO SOMETHING
+    public static final double drumKRampRate = 500;    
 
     public static final double drumKMaxOutput = 1.0;
     public static final double drumKMinOutput = -1.0;

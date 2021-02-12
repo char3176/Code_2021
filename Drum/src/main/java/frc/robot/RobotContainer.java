@@ -11,6 +11,7 @@ import frc.robot.subsystems.Drum;
 import frc.robot.commands.HighDrumVelocity;
 import frc.robot.commands.MediumDrumVelocity;
 import frc.robot.commands.LowDrumVelocity;
+import frc.robot.commands.DrumVelocity;
 import frc.robot.commands.EaseStopDrumVelocity;
 import frc.robot.commands.InstantStopDrumVelocity;
 
@@ -44,13 +45,19 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    m_Drum.setDefaultCommand(new InstantStopDrumVelocity());
-    m_Controller.getAButton().whenPressed(new EaseStopDrumVelocity());
-    m_Controller.getBButton().whenPressed(new LowDrumVelocity());
-    m_Controller.getYButton().whenPressed(new MediumDrumVelocity());
-    m_Controller.getXButton().whenPressed(new HighDrumVelocity());
-    m_Controller.getRBumper().whenPressed(new InstantStopDrumVelocity());
-
+    // m_Drum.setDefaultCommand(new InstantStopDrumVelocity());
+    // m_Controller.getAButton().whenPressed(new EaseStopDrumVelocity());
+    // m_Controller.getBButton().whenPressed(new LowDrumVelocity());
+    // m_Controller.getYButton().whenPressed(new MediumDrumVelocity());
+    // m_Controller.getXButton().whenPressed(new HighDrumVelocity());
+    // m_Controller.getRBumper().whenPressed(new InstantStopDrumVelocity());
+    
+    m_Drum.setDefaultCommand(new DrumVelocity(10));
+    m_Controller.getAButton().whenPressed(new DrumVelocity(0));
+    m_Controller.getBButton().whenPressed(new DrumVelocity(1));
+    m_Controller.getYButton().whenPressed(new DrumVelocity(2));
+    m_Controller.getXButton().whenPressed(new DrumVelocity(3));
+    m_Controller.getRBumper().whenPressed(new DrumVelocity(10));
   }
 
   /**
