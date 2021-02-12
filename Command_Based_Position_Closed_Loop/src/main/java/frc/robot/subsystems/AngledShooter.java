@@ -29,7 +29,7 @@ public class AngledShooter extends SubsystemBase {
   /** Creates a new AngledShooter. */
   public AngledShooter() {
     _talon.configFactoryDefault();
-    _talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 
+    _talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 
                                             Constants.kPIDLoopIdx,
                                             Constants.kTimeoutMs);
     _talon.setSensorPhase(Constants.kSensorPhase);
