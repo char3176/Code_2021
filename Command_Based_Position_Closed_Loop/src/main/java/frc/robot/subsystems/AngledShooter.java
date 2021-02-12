@@ -28,23 +28,28 @@ public class AngledShooter extends SubsystemBase {
   private static AngledShooter instance = new AngledShooter();
   /** Creates a new AngledShooter. */
   public AngledShooter() {
+    _talon.configFactoryDefault();
+    _talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 
+                                            Constants.kPIDLoopIdx,
+                                            Constants.kTimeoutMs);
+    _talon.setSensorPhase(Constants.kSensorPhase);
     _talon.configNominalOutputForward(0, Constants.kTimeoutMs);
     _talon.configNominalOutputReverse(0, Constants.kTimeoutMs);
-		_talon.configPeakOutputForward(1, Constants.kTimeoutMs);
+		_talon.configPeakOutputForward(-1, Constants.kTimeoutMs);
 		_talon.configPeakOutputReverse(-1, Constants.kTimeoutMs);
     _talon.configAllowableClosedloopError(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
     _talon.config_kF(Constants.kPIDLoopIdx, Constants.kGains.kF, Constants.kTimeoutMs);
 		_talon.config_kP(Constants.kPIDLoopIdx, Constants.kGains.kP, Constants.kTimeoutMs);
 		_talon.config_kI(Constants.kPIDLoopIdx, Constants.kGains.kI, Constants.kTimeoutMs);
-		_talon.config_kD(Constants.kPIDLoopIdx, Constants.kGains.kD, Constants.kTimeoutMs);
+    _talon.config_kD(Constants.kPIDLoopIdx, Constants.kGains.kD, Constants.kTimeoutMs);
+    
+    
     int absolutePosition = _talon.getSensorCollection().getPulseWidthPosition();
     absolutePosition &= 0xFFF;
 		if (Constants.kSensorPhase) { absolutePosition *= -1; }
     if (Constants.kMotorInvert) { absolutePosition *= -1; }
     _talon.setSelectedSensorPosition(absolutePosition, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-    _talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 
-                                            Constants.kPIDLoopIdx,
-				                                    Constants.kTimeoutMs);
+    
 
 
 
