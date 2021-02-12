@@ -33,6 +33,7 @@ public class AngledShooter extends SubsystemBase {
                                             Constants.kPIDLoopIdx,
                                             Constants.kTimeoutMs);
     _talon.setSensorPhase(Constants.kSensorPhase);
+    _talon.setInverted(Constants.kMotorInvert);
     _talon.configNominalOutputForward(0, Constants.kTimeoutMs);
     _talon.configNominalOutputReverse(0, Constants.kTimeoutMs);
 		_talon.configPeakOutputForward(1, Constants.kTimeoutMs);
