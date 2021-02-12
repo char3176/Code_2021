@@ -68,6 +68,7 @@ public class AngledShooter extends SubsystemBase {
   }
   public void setRotation(double targetRotation){
 _talon.set(ControlMode.Position, targetRotation);
+System.out.println(":)");
   }
   public void setRotation2(double targetRotation){
     _talon.set(ControlMode.PercentOutput, targetRotation);
