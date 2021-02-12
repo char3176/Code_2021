@@ -4,16 +4,14 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+// import com.ctre.phoenix.motorcontrol.ControlMode;
+// import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.PositionClosedLoop;
 import frc.robot.subsystems.AngledShooter;
-import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.Controller;
+// import frc.robot.Controller;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -24,29 +22,19 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-
   private final AngledShooter m_AngledShooter = AngledShooter.getInstance();
 
-
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
- 
-
-private final Controller m_Controller = Controller.getInstance();
+  private final Controller m_Controller = Controller.getInstance();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Configure the button bindings
-    configureButtonBindings();
     m_AngledShooter._talon.configFactoryDefault();
-		
 		/* Config the sensor used for Primary PID and sensor direction */
-       
-
 		/* Ensure sensor is positive when output is positive */
 		m_AngledShooter._talon.setSensorPhase(Constants.kSensorPhase);
-    
+
+    // Configure the button bindings
+    configureButtonBindings();
   }
 
   /**
@@ -56,10 +44,7 @@ private final Controller m_Controller = Controller.getInstance();
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
     m_Controller.getAButton().whenPressed(new PositionClosedLoop());
-  
-    
   }
 
   /**
@@ -69,6 +54,6 @@ private final Controller m_Controller = Controller.getInstance();
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return null;
   }
 }
