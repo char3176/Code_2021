@@ -35,7 +35,7 @@ public class AngledShooter extends SubsystemBase {
     _talon.setSensorPhase(Constants.kSensorPhase);
     _talon.configNominalOutputForward(0, Constants.kTimeoutMs);
     _talon.configNominalOutputReverse(0, Constants.kTimeoutMs);
-		_talon.configPeakOutputForward(-1, Constants.kTimeoutMs);
+		_talon.configPeakOutputForward(1, Constants.kTimeoutMs);
 		_talon.configPeakOutputReverse(-1, Constants.kTimeoutMs);
     _talon.configAllowableClosedloopError(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
     _talon.config_kF(Constants.kPIDLoopIdx, Constants.kGains.kF, Constants.kTimeoutMs);
