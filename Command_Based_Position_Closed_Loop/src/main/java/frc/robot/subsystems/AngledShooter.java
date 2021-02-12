@@ -66,4 +66,7 @@ public class AngledShooter extends SubsystemBase {
   public static AngledShooter getInstance() {
     return instance;
   }
+  public void setRotation(double targetRotation){
+_talon.set(ControlMode.Position, targetRotation);
+  }
 }
