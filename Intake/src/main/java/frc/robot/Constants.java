@@ -13,6 +13,6 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final double INTAKE_PERCENT = 0.3;
-    public static final int MOTOR_CAN_ID = 33;
+    public static final double INTAKE_PERCENT = 1.0;
+    public static final int MOTOR_CAN_ID = 22;
 }

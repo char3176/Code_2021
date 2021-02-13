@@ -1,0 +1,9 @@
+[
+  {
+    "artifact": "frcJava (in project Command_Based_Position_Closed_Loop)",
+    "target": "roborio",
+    "debugfile": "frcJava_roborio.debugconfig",
+    "project": "Command_Based_Position_Closed_Loop",
+    "language": "java"
+  }
+]
