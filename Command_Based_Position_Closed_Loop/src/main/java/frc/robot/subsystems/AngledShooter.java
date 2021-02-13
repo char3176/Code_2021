@@ -9,11 +9,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import frc.robot.Constants;
 
 
 public class AngledShooter extends SubsystemBase {
   
-  public TalonSRX _talon = new WPI_TalonSRX(44);
+  public TalonSRX _talon = new WPI_TalonSRX(Constants.angledShooterCANID);
   private static AngledShooter instance = new AngledShooter();
 
   public double shooterAngle = 0;

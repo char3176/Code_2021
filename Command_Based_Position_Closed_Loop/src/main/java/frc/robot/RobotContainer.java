@@ -24,15 +24,7 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
- 
-
-//****************************************************************
-//EXAMPLE OF CODE CONFLICT CREATED DURING ATTEMPTED MERGE.  SAVE TO SHOW KYLE AND SEE WHICH TO KEEP
   private final AngledShooter m_AngledShooter = AngledShooter.getInstance();
-//********************************************************************
-
-
-
   private final Controller m_Controller = Controller.getInstance();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
