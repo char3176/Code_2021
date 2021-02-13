@@ -65,11 +65,15 @@ public class Drum extends SubsystemBase {
   }
 
   public void instantStop() {
-    drumPIDController.setReference(0, ControlType.kVoltage);
-    System.out.println(drumEncoder.getVelocity());
+    // drumPIDController.setReference(0, ControlType.kVoltage);
+    // System.out.println(drumEncoder.getVelocity());
 
     // attempt to make the motor slowly accelerate when started up after using the instant stop button
-    drumPIDController.setReference(rateLimiter.calculate(0), ControlType.kVelocity);
+    if (Math.abs(drumEncoder.getVelocity()) <= 10) {
+      drumPIDController.setReference(rateLimiter.calculate(0), ControlType.kVelocity);
+    } else {
+      drumPIDController.setReference(0, ControlType.kVelocity);
+    }
   }
 
 
