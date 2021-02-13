@@ -22,8 +22,8 @@ public class MoveShooterDown extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-     if(m_AngleShooter.shooterAngle <= 0){
-       cancel();
+     if(m_AngleShooter.shooterAngle == 0.0){
+       isFinished();
      }
   }
 
@@ -31,14 +31,20 @@ public class MoveShooterDown extends CommandBase {
   @Override
   public void execute() {
     
+
+    
     if(m_AngleShooter.shooterAngle>=57){
     m_AngleShooter.setRotation(m_AngleShooter._talon.getSelectedSensorPosition() - 57);
+    m_AngleShooter.shooterAngle = m_AngleShooter.shooterAngle -57;
     }
 
     else{
-      m_AngleShooter.setRotation(0);
+      m_AngleShooter.setRotation((m_AngleShooter._talon.getSelectedSensorPosition() - (57-m_AngleShooter.shooterAngle)));
+      System.out.println(m_AngleShooter.shooterAngle);
+      m_AngleShooter.shooterAngle = 0.0;
     }
   }
+  
 
   // Called once the command ends or is interrupted.
   @Override
@@ -50,5 +56,8 @@ public class MoveShooterDown extends CommandBase {
   @Override
   public boolean isFinished() {
     return true;
+  }
+  protected void interrupted(){
+
   }
 }

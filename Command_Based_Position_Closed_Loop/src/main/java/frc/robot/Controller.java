@@ -16,6 +16,7 @@ public class Controller {
     private XboxController operator = new XboxController(0);
     private final JoystickButton aButton = new JoystickButton(operator,Button.kA.value);
     private final JoystickButton bButton = new JoystickButton(operator,Button.kB.value);
+    private final JoystickButton xButton = new JoystickButton(operator,Button.kX.value);
 
     public static Controller getInstance() {
         return instance;
@@ -27,6 +28,9 @@ public class Controller {
 
     public JoystickButton getBButton(){
         return bButton;
+    }
+    public JoystickButton getXButton(){
+        return xButton;
     }
    /* private JoystickButton b1 = new JoystickButton(_joy, 1);
     private JoystickButton b2 = new JoystickButton(_joy, 2);

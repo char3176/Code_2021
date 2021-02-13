@@ -13,7 +13,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 public class AngledShooter extends SubsystemBase {
   
-  public TalonSRX _talon = new WPI_TalonSRX(33);
+  public TalonSRX _talon = new WPI_TalonSRX(44);
   private static AngledShooter instance = new AngledShooter();
 
   public double shooterAngle = 0;
@@ -53,7 +53,6 @@ public class AngledShooter extends SubsystemBase {
 
   public void setRotation(double targetRotation){
     _talon.set(ControlMode.Position, targetRotation);
-    System.out.println(":)");
   }
 
   public void setRotation2(double targetRotation){
