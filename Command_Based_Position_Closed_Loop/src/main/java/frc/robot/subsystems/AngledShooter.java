@@ -7,22 +7,17 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-// import edu.wpi.first.wpilibj.Joystick;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-// import com.ctre.phoenix.motorcontrol.can.*;
+
 
 public class AngledShooter extends SubsystemBase {
   
   public TalonSRX _talon = new WPI_TalonSRX(33);
-  
-/** Used to create string thoughout loop */
-
-  double targetPositionRotations;
-  
   private static AngledShooter instance = new AngledShooter();
-  /** Creates a new AngledShooter. */
+
+  public double shooterAngle = 0;
+
   public AngledShooter() {
     _talon.configFactoryDefault();
     _talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 
