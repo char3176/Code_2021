@@ -10,29 +10,36 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Controller;
 import frc.robot.subsystems.AngledShooter;
 
-public class PositionClosedLoop extends CommandBase {
+public class MoveShooterUp extends CommandBase {
   private AngledShooter m_AngleShooter = AngledShooter.getInstance();
   private Controller m_Controller = Controller.getInstance();
   double targetPositonRotations;
 
-  public PositionClosedLoop() {
+  public MoveShooterUp() {
     addRequirements(m_AngleShooter);
   }
   
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-     targetPositonRotations = m_Controller.moveAngleShooter()*341.333;
+     if(m_AngleShooter.shooterAngle >= 341){
+       cancel();
+     }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     
-    //  m_AngleShooter._talon.set(ControlMode.Position, targetPositonRotations);
-    m_AngleShooter.setRotation(10000000);
-  //System.out.println(m_AngleShooter._talon.getControlMode());
-  //System.out.println(targetPositonRotations);
+    if(m_AngleShooter.shooterAngle<=284){
+    m_AngleShooter.setRotation(m_AngleShooter._talon.getSelectedSensorPosition() + 57);
+    m_AngleShooter.shooterAngle = m_AngleShooter.shooterAngle +57;
+    }
+
+    else{
+      m_AngleShooter.setRotation(341);
+      m_AngleShooter.shooterAngle = 341;
+    }
   }
 
   // Called once the command ends or is interrupted.
