@@ -33,10 +33,12 @@ public class MoveShooterUp extends CommandBase {
     
     if(m_AngleShooter.shooterAngle<=284){
     m_AngleShooter.setRotation(m_AngleShooter._talon.getSelectedSensorPosition() + 57);
+    m_AngleShooter.shooterAngle = m_AngleShooter.shooterAngle +57;
     }
 
     else{
       m_AngleShooter.setRotation(341);
+      m_AngleShooter.shooterAngle = 341;
     }
   }
 
