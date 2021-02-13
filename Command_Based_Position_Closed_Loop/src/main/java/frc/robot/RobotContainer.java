@@ -60,9 +60,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     m_Controller.getAButton().whenPressed(new MoveShooterUp());
-   if(m_AngledShooter.shooterAngle>0){
+  //  if(m_AngledShooter.shooterAngle>0){
     m_Controller.getBButton().whenPressed(new MoveShooterDown());
-   }
+  //  }
     m_Controller.getXButton().whenPressed(new ResetShooter());
   
     

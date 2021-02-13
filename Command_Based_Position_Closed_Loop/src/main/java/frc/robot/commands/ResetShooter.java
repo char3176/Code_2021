@@ -5,13 +5,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Controller;
 import frc.robot.subsystems.AngledShooter;
 
 public class ResetShooter extends CommandBase {
   /** Creates a new ResetShooter. */
   private AngledShooter m_AngleShooter = AngledShooter.getInstance();
-  private Controller m_Controller = Controller.getInstance();
   
   public ResetShooter() {
     addRequirements(m_AngleShooter);
