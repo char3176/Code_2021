@@ -4,17 +4,12 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.MoveShooterDown;
 import frc.robot.commands.MoveShooterUp;
 import frc.robot.commands.ResetShooter;
 import frc.robot.subsystems.AngledShooter;
-import frc.robot.Controller;
-import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -31,16 +26,6 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    
-		
-		/* Config the sensor used for Primary PID? and sensor direction */
-        m_AngledShooter._talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 
-                                            Constants.kPIDLoopIdx,
-				                                    Constants.kTimeoutMs);
-
-		/* Ensure sensor is positive when output is positive */
-		
-    
   }
 
   /**

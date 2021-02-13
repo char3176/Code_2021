@@ -10,17 +10,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.AngledShooter;
 
 public class MoveShooterDown extends CommandBase {
-  private AngledShooter m_AngleShooter = AngledShooter.getInstance();
+  private AngledShooter m_AngledShooter = AngledShooter.getInstance();
   double targetPositonRotations;
 
   public MoveShooterDown() {
-    addRequirements(m_AngleShooter);
+    addRequirements(m_AngledShooter);
   }
   
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-     if(m_AngleShooter.shooterAngle == 0.0){
+     if(m_AngledShooter.getShooterAngle() == 0.0){
        isFinished();
      }
   }
@@ -31,31 +31,23 @@ public class MoveShooterDown extends CommandBase {
     
 
     
-    if(m_AngleShooter.shooterAngle>=57){
-    m_AngleShooter.setRotation(m_AngleShooter._talon.getSelectedSensorPosition() - 57);
-    m_AngleShooter.shooterAngle = m_AngleShooter.shooterAngle -57;
-    }
-
-    else{
-      m_AngleShooter.setRotation((m_AngleShooter._talon.getSelectedSensorPosition() - (57-m_AngleShooter.shooterAngle)));
-      System.out.println(m_AngleShooter.shooterAngle);
-      m_AngleShooter.shooterAngle = 0.0;
+    if(m_AngledShooter.getShooterAngle() >=57){
+    m_AngledShooter.setPosition(m_AngledShooter.getEncoderPosition() - 57);
+    m_AngledShooter.setShooterAngle(m_AngledShooter.getShooterAngle() - 57);
+    } else {
+      m_AngledShooter.setPosition((m_AngledShooter.getEncoderPosition() - (57 - m_AngledShooter.getShooterAngle())));
+      System.out.println(m_AngledShooter.getShooterAngle());
+      m_AngledShooter.setShooterAngle(0.0);
     }
   }
   
-
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return true;
-  }
-  protected void interrupted(){
-
   }
 }
