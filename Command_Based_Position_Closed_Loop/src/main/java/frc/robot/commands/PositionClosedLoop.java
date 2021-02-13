@@ -4,24 +4,21 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
+// import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Controller;
 import frc.robot.subsystems.AngledShooter;
 
 public class PositionClosedLoop extends CommandBase {
-
   private AngledShooter m_AngleShooter = AngledShooter.getInstance();
+  private Controller m_Controller = Controller.getInstance();
+  double targetPositonRotations;
 
   public PositionClosedLoop() {
     addRequirements(m_AngleShooter);
   }
- 
-  private Controller m_Controller = Controller.getInstance();
-
-  double targetPositonRotations;
-
+  
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {

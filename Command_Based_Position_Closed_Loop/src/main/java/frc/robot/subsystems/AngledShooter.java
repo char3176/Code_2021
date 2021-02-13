@@ -7,11 +7,11 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import edu.wpi.first.wpilibj.Joystick;
+// import edu.wpi.first.wpilibj.Joystick;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.*;
+// import com.ctre.phoenix.motorcontrol.can.*;
 
 public class AngledShooter extends SubsystemBase {
   
@@ -21,10 +21,6 @@ public class AngledShooter extends SubsystemBase {
 
   double targetPositionRotations;
   
-
-
-  
-
   private static AngledShooter instance = new AngledShooter();
   /** Creates a new AngledShooter. */
   public AngledShooter() {
@@ -44,19 +40,11 @@ public class AngledShooter extends SubsystemBase {
 		_talon.config_kI(Constants.kPIDLoopIdx, Constants.kGains.kI, Constants.kTimeoutMs);
     _talon.config_kD(Constants.kPIDLoopIdx, Constants.kGains.kD, Constants.kTimeoutMs);
     
-    
     int absolutePosition = _talon.getSensorCollection().getPulseWidthPosition();
     absolutePosition &= 0xFFF;
-		if (Constants.kSensorPhase) { absolutePosition *= -1; }
-    if (Constants.kMotorInvert) { absolutePosition *= -1; }
+		if (Constants.kSensorPhase) { absolutePosition *= -1;}
+    if (Constants.kMotorInvert) { absolutePosition *= -1;}
     _talon.setSelectedSensorPosition(absolutePosition, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-    
-
-
-
-
-
-
   }
 
   @Override
@@ -67,11 +55,13 @@ public class AngledShooter extends SubsystemBase {
   public static AngledShooter getInstance() {
     return instance;
   }
+
   public void setRotation(double targetRotation){
-_talon.set(ControlMode.Position, targetRotation);
-System.out.println(":)");
+    _talon.set(ControlMode.Position, targetRotation);
+    System.out.println(":)");
   }
+
   public void setRotation2(double targetRotation){
     _talon.set(ControlMode.PercentOutput, targetRotation);
-      }
+  }
 }
