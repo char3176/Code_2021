@@ -22,7 +22,7 @@ public class MoveShooterDown extends CommandBase {
   public void initialize() {
      if(m_AngledShooter.getShooterAngle() == 0.0){
        isFinished();
-     }
+     }//
   }
 
   // Called every time the scheduler runs while the command is scheduled.

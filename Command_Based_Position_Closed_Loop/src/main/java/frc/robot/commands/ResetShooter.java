@@ -16,7 +16,7 @@ public class ResetShooter extends CommandBase {
   }
 
   // Called when the command is initially scheduled.
-  @Override
+  @Override//
   public void initialize() {
     m_AngledShooter.setPosition(0);
   }

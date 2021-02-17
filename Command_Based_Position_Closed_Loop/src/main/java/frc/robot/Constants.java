@@ -38,7 +38,7 @@ public class Constants {
 	/**
 	 * Gains used in Positon Closed Loop, to be adjusted accordingly
      * Gains(kp, ki, kd, kf, izone, peak output);
-     */
+     *///
 
 	public static final double angledShooter_kP = 0.31; //1 As a test if needed
 	public static final double angledShooter_kI = 0.00075;
