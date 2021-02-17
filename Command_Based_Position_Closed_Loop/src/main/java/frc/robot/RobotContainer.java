@@ -4,12 +4,17 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.MoveShooterDown;
 import frc.robot.commands.MoveShooterUp;
 import frc.robot.commands.ResetShooter;
 import frc.robot.subsystems.AngledShooter;
+import frc.robot.Controller;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -19,13 +24,31 @@ import frc.robot.subsystems.AngledShooter;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+ 
+
+//****************************************************************
+//EXAMPLE OF CODE CONFLICT CREATED DURING ATTEMPTED MERGE.  SAVE TO SHOW KYLE AND SEE WHICH TO KEEP
   private final AngledShooter m_AngledShooter = AngledShooter.getInstance();
+//********************************************************************
+
+
+
   private final Controller m_Controller = Controller.getInstance();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    
+		
+		/* Config the sensor used for Primary PID? and sensor direction */
+        m_AngledShooter._talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 
+                                            Constants.kPIDLoopIdx,
+				                                    Constants.kTimeoutMs);
+
+		/* Ensure sensor is positive when output is positive */
+		
+    
   }
 
   /**
@@ -37,9 +60,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     m_Controller.getAButton().whenPressed(new MoveShooterUp());
-  //  if(m_AngledShooter.shooterAngle>0){
+   
     m_Controller.getBButton().whenPressed(new MoveShooterDown());
-  //  }
+   
     m_Controller.getXButton().whenPressed(new ResetShooter());
   
     
