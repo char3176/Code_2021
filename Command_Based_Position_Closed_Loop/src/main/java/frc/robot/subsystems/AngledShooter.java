@@ -10,36 +10,33 @@ import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
-
 public class AngledShooter extends SubsystemBase {
   
-  public TalonSRX _talon = new WPI_TalonSRX(44);
+  private TalonSRX angledShooterTalon = new WPI_TalonSRX(Constants.angledShooterCANID);
   private static AngledShooter instance = new AngledShooter();
-
-  public double shooterAngle = 0;
+  private double shooterAngle = 0;
+  private int absolutePosition = 0;
 
   public AngledShooter() {
-    _talon.configFactoryDefault();
-    _talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 
-                                            Constants.kPIDLoopIdx,
-                                            Constants.kTimeoutMs);
-    _talon.setSensorPhase(Constants.kSensorPhase);
-    _talon.setInverted(Constants.kMotorInvert);
-    _talon.configNominalOutputForward(0, Constants.kTimeoutMs);
-    _talon.configNominalOutputReverse(0, Constants.kTimeoutMs);
-		_talon.configPeakOutputForward(1, Constants.kTimeoutMs);
-		_talon.configPeakOutputReverse(-1, Constants.kTimeoutMs);
-    _talon.configAllowableClosedloopError(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-    _talon.config_kF(Constants.kPIDLoopIdx, Constants.kGains.kF, Constants.kTimeoutMs);
-		_talon.config_kP(Constants.kPIDLoopIdx, Constants.kGains.kP, Constants.kTimeoutMs);
-		_talon.config_kI(Constants.kPIDLoopIdx, Constants.kGains.kI, Constants.kTimeoutMs);
-    _talon.config_kD(Constants.kPIDLoopIdx, Constants.kGains.kD, Constants.kTimeoutMs);
+    angledShooterTalon.configFactoryDefault();
+    angledShooterTalon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder/*CTRE_MagEncoder_Absolute*/, Constants.angledShooterPIDLoopIdx, Constants.angledShooterTimeoutMs);
+    angledShooterTalon.setSensorPhase(Constants.angledShooterSensorPhase);
+    angledShooterTalon.setInverted(Constants.angledShooterMotorInvert);
+    angledShooterTalon.configNominalOutputForward(0, Constants.angledShooterTimeoutMs);
+    angledShooterTalon.configNominalOutputReverse(0, Constants.angledShooterTimeoutMs);
+		angledShooterTalon.configPeakOutputForward(1, Constants.angledShooterTimeoutMs);
+		angledShooterTalon.configPeakOutputReverse(-1, Constants.angledShooterTimeoutMs);
+    angledShooterTalon.configAllowableClosedloopError(0, Constants.angledShooterPIDLoopIdx, Constants.angledShooterTimeoutMs);
+    angledShooterTalon.config_kF(Constants.angledShooterPIDLoopIdx, Constants.angledShooter_kF, Constants.angledShooterTimeoutMs);
+		angledShooterTalon.config_kP(Constants.angledShooterPIDLoopIdx, Constants.angledShooter_kP, Constants.angledShooterTimeoutMs);
+		angledShooterTalon.config_kI(Constants.angledShooterPIDLoopIdx, Constants.angledShooter_kI, Constants.angledShooterTimeoutMs);
+    angledShooterTalon.config_kD(Constants.angledShooterPIDLoopIdx, Constants.angledShooter_kD, Constants.angledShooterTimeoutMs);
     
-    int absolutePosition = _talon.getSensorCollection().getPulseWidthPosition();
+    absolutePosition = angledShooterTalon.getSensorCollection().getPulseWidthPosition();
     absolutePosition &= 0xFFF;
-		if (Constants.kSensorPhase) { absolutePosition *= -1;}
-    if (Constants.kMotorInvert) { absolutePosition *= -1;}
-    _talon.setSelectedSensorPosition(absolutePosition, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+		if(Constants.angledShooterSensorPhase) {absolutePosition *= -1;}
+    if(Constants.angledShooterMotorInvert) {absolutePosition *= -1;}
+    angledShooterTalon.setSelectedSensorPosition(absolutePosition, Constants.angledShooterPIDLoopIdx, Constants.angledShooterTimeoutMs);
   }
 
   @Override
@@ -51,11 +48,23 @@ public class AngledShooter extends SubsystemBase {
     return instance;
   }
 
-  public void setRotation(double targetRotation){
-    _talon.set(ControlMode.Position, targetRotation);
+  public void setPosition(double targetPosition){
+    angledShooterTalon.set(ControlMode.Position, targetPosition);
   }
 
-  public void setRotation2(double targetRotation){
-    _talon.set(ControlMode.PercentOutput, targetRotation);
+  public void setPercent(double targetPercent){
+    angledShooterTalon.set(ControlMode.PercentOutput, targetPercent);
+  }
+
+  public double getShooterAngle() {
+    return shooterAngle;
+  }
+
+  public void setShooterAngle(double newAngle) {
+    shooterAngle = newAngle;
+  }
+
+  public int getEncoderPosition() {
+    return angledShooterTalon.getSelectedSensorPosition();
   }
 }

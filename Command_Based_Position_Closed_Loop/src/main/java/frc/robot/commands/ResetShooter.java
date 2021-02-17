@@ -5,22 +5,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Controller;
 import frc.robot.subsystems.AngledShooter;
 
 public class ResetShooter extends CommandBase {
   /** Creates a new ResetShooter. */
-  private AngledShooter m_AngleShooter = AngledShooter.getInstance();
-  private Controller m_Controller = Controller.getInstance();
+  private AngledShooter m_AngledShooter = AngledShooter.getInstance();
   
   public ResetShooter() {
-    addRequirements(m_AngleShooter);
+    addRequirements(m_AngledShooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_AngleShooter.setRotation(0);
+    m_AngledShooter.setPosition(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
