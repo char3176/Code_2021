@@ -42,9 +42,7 @@ public class RobotContainer {
     
 		
 		/* Config the sensor used for Primary PID? and sensor direction */
-        m_AngledShooter._talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 
-                                            Constants.kPIDLoopIdx,
-				                                    Constants.kTimeoutMs);
+        
 
 		/* Ensure sensor is positive when output is positive */
 		
