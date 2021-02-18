@@ -71,10 +71,10 @@ public class Robot extends TimedRobot {
     initMotorController(deviceID, m_invert_motor, m_follow_deviceID, m_follow_motor_inverted);
 
     // initial RPM st by controller, can be changed on SmartDashboard
-    aButtonSpeed = 500;
-    bButtonSpeed = 1000;
-    yButtonSpeed = 1500;
-    xButtonSpeed = 2000;
+    aButtonSpeed = 100;
+    bButtonSpeed = 200;
+    yButtonSpeed = 300;
+    xButtonSpeed = 400;
 
     // display PID coefficients on SmartDashboard
     SmartDashboard.putNumber("P Gain", kP);
