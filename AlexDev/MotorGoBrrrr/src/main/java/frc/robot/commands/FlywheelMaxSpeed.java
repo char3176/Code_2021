@@ -25,7 +25,7 @@ public class FlywheelMaxSpeed extends CommandBase {
   public void execute() {
     System.out.println("command executed");
     
-    m_Motor.youSpinMotorRightRound(1);
+    m_Motor.youSpinMotorRightRound(6380);
     
   }
 

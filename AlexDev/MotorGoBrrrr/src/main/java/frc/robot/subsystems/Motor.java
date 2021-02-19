@@ -9,7 +9,7 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Motor extends SubsystemBase {
-    WPI_TalonFX spinMotor = new WPI_TalonFX(1);
+    WPI_TalonFX spinMotor = new WPI_TalonFX(0);
 
     private static Motor instance = new Motor();
     
@@ -29,10 +29,11 @@ public class Motor extends SubsystemBase {
     
     public void youSpinMotorRightRound(double uhh) {
         //double motorVelocity = uhh;
-        double motorOutputPercent = uhh;
-        System.out.println(motorOutputPercent);
-        //spinMotor.set(TalonFXControlMode.Velocity, motorVelocity);
-        spinMotor.set(TalonFXControlMode.PercentOutput, motorOutputPercent);
+        double motorVelocity = uhh;
+        System.out.println(motorVelocity);
+        double ticsPer100ms = (uhh * 2048.0) / 600.0;
+        spinMotor.set(TalonFXControlMode.Velocity, ticsPer100ms);
+        //spinMotor.set(TalonFXControlMode.PercentOutput, motorOutputPercent);
         System.out.println("motor method run");
     }
 

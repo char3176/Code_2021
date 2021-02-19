@@ -25,7 +25,7 @@ public class FlywheelMedSpeed extends CommandBase {
   public void execute() {
     System.out.println("command executed");
     
-    m_Motor.youSpinMotorRightRound(.66);
+    m_Motor.youSpinMotorRightRound(4042);
     
   }
 
