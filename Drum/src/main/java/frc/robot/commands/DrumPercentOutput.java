@@ -7,17 +7,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drum;
 
-public class DrumVelocity extends CommandBase {
-  /** Creates a new DrumVelocity. */
+public class DrumPercentOutput extends CommandBase {
+  /** Creates a new DrumPercentOutput. */                               // NOT FINISHED YET!
 
   Drum m_Drum = Drum.getInstance();
-  int button;
+  private int buttonNumber;
 
-  public DrumVelocity(int buttonNumber) {
+  public DrumPercentOutput(int buttonNumber) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Drum);
-    button = buttonNumber;
-
+    this.buttonNumber = buttonNumber;
   }
 
   // Called when the command is initially scheduled.
@@ -28,22 +27,15 @@ public class DrumVelocity extends CommandBase {
   @Override
   public void execute() {
 
-    // A = 0, B = 1, Y = 2, X = 3, RBumper = 10. (The final else is for button = 11, for the default Drum Power Off metod)
-
-    if (button == 0) {
-      m_Drum.easeStop();
-    } else if (button == 1) {
-      m_Drum.lowSpin();
-    } else if (button == 2) {
-      m_Drum.mediumSpin();
-    } else if (button == 3) {
-      m_Drum.highSpin();
-    } else if (button == 10) {
-      m_Drum.instantStop();
+    // increases the percent for one button, decreases by 0.05 for another
+    // runs normal function (doesn't change percent) when no button is pushed
+    if (buttonNumber == 1) {
+      m_Drum.changePercentSet(true);
+    } else if (buttonNumber == 2) {
+      m_Drum.changePercentSet(false);
     } else {
-      m_Drum.drumPowerOff();
+      m_Drum.percentOutputIncrement();
     }
-
   }
 
   // Called once the command ends or is interrupted.

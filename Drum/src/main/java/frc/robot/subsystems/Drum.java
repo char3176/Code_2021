@@ -21,6 +21,8 @@ public class Drum extends SubsystemBase {
   private CANEncoder drumEncoder;
   private SlewRateLimiter rateLimiter;
   private static Drum instance = new Drum();
+  private double percentOutputSet = 0.0;
+  public boolean drumPctOutputMode = false;
 
   public Drum() {
 
@@ -81,6 +83,33 @@ public class Drum extends SubsystemBase {
     System.out.println("Instant stop run");
   }
 
+  // used with the default command to cut power to the drum upon being enabled
+  public void drumPowerOff() {
+    drumMotor.set(0.0);
+    drumEncoder.getVelocity();
+    System.out.println("Power off run");
+  }
+
+
+  // Percent Output control, runs every loop to print the stuff
+  public void percentOutputIncrement() {
+    drumMotor.set(percentOutputSet);
+    drumEncoder.getVelocity();
+    System.out.println("Percent output run at " + percentOutputSet);
+  }
+
+  // called once when the percent is triggered to be increased or decreased
+  public void changePercentSet(boolean upDown) {
+    if ((upDown == true) && (percentOutputSet < 1.0)) {
+      percentOutputSet += 0.05;
+    } else if ((upDown == false) && (percentOutputSet > -1.0)) {
+      percentOutputSet -= 0.05;
+    }
+  }
+
+  public void resetPercentSet() {
+    percentOutputSet = 0.0;
+  }
 
   public static Drum getInstance() {
     return instance;

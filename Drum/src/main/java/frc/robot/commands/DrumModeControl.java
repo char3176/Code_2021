@@ -7,17 +7,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drum;
 
-public class DrumVelocity extends CommandBase {
-  /** Creates a new DrumVelocity. */
+public class DrumModeControl extends CommandBase {
+  /** Creates a new DrumModeControl. */
 
   Drum m_Drum = Drum.getInstance();
-  int button;
 
-  public DrumVelocity(int buttonNumber) {
+  public DrumModeControl() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Drum);
-    button = buttonNumber;
-
   }
 
   // Called when the command is initially scheduled.
@@ -28,20 +25,16 @@ public class DrumVelocity extends CommandBase {
   @Override
   public void execute() {
 
-    // A = 0, B = 1, Y = 2, X = 3, RBumper = 10. (The final else is for button = 11, for the default Drum Power Off metod)
-
-    if (button == 0) {
-      m_Drum.easeStop();
-    } else if (button == 1) {
-      m_Drum.lowSpin();
-    } else if (button == 2) {
-      m_Drum.mediumSpin();
-    } else if (button == 3) {
-      m_Drum.highSpin();
-    } else if (button == 10) {
-      m_Drum.instantStop();
-    } else {
+    // switches the public Drum mode variable between percent output and velocity with PID
+    if (m_Drum.drumPctOutputMode == true) {
+      m_Drum.drumPctOutputMode = false;
       m_Drum.drumPowerOff();
+      m_Drum.resetPercentSet(); // resets percent to zero upon selecting this mode for safety
+      m_Drum.setDefaultCommand(new DrumPercentOutput(0));
+    } else {
+      m_Drum.drumPctOutputMode = true;
+      m_Drum.drumPowerOff();
+      m_Drum.setDefaultCommand(new DrumVelocity(11));
     }
 
   }
@@ -53,6 +46,6 @@ public class DrumVelocity extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

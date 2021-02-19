@@ -49,6 +49,7 @@ public class Robot extends TimedRobot {
   private int bButtonSpeed;
   private int xButtonSpeed;
   private int yButtonSpeed;
+  private boolean instantStop;
 
   @Override
   public void robotInit() {
@@ -56,15 +57,15 @@ public class Robot extends TimedRobot {
     // PID coefficients (starting point)
     // Small initial kFF and kP values, probably just big enough to do *something* 
     // and *probably* too small to overdrive an untuned system.
-    kFF = 0.000015;  
-    kP = 0.00003;
-    kI = 0;
-    kD = 0;
+    kFF = 0.000097;  
+    kP = 0.00015;
+    kI = 0.0000004;
+    kD = 0.0025;
     kIz = 0;
     kMaxOutput = 1.0;
     kMinOutput = -1.0;
     maxRPM = 5700;
-    m_rate_RPMpersecond = 1e10;    // 10 million effectively disables rate limiting
+    m_rate_RPMpersecond = 500;    // 10 million effectively disables rate limiting
 
     m_rateLimiter = new SlewRateLimiter(m_rate_RPMpersecond, m_setPoint);
 
@@ -98,6 +99,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("Invert Lead Motor", m_invert_motor);
     mode_chooser.addOption("Fixed RPM (A, B, Y, X buttons)", "fixed");
     mode_chooser.addOption("Variable RPM (left stick)", "variable");
+    mode_chooser.addOption("Fixed Percent Output (buttons)", "fixedPercent");
     SmartDashboard.putData("Mode", mode_chooser);
     SmartDashboard.putNumber("Applied Output", 0.0);
     SmartDashboard.putNumber("Ramp Rate (RPM/s)", m_rate_RPMpersecond);
@@ -252,6 +254,10 @@ public class Robot extends TimedRobot {
       }
       else if (m_xboxController.getBumperPressed(Hand.kRight)) {
         setPoint = 0;
+        instantStop = true;
+      }
+      else if (m_xboxController.getBumperPressed(Hand.kLeft)) {
+        setPoint = 0;
       } 
     }
 
@@ -287,10 +293,11 @@ public class Robot extends TimedRobot {
 
     // Calculate and set new reference RPM
     double reference_setpoint = m_rateLimiter.calculate(setPoint);
-    if (setPoint == 0) {
-       // when we hit  stop, stop immediately. (safety!)
+    if (instantStop) {
+       // when we hit the instant stop button, stop immediately. (safety!)
       reference_setpoint = 0;
       m_rateLimiter.reset(0);
+      instantStop = false;
     }
     m_pidController.setReference(reference_setpoint, ControlType.kVelocity);
 

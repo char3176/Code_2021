@@ -15,6 +15,7 @@ public class Controller {
     private final JoystickButton yButton = new JoystickButton(m_Controller, Button.kY.value);
     private final JoystickButton xButton = new JoystickButton(m_Controller, Button.kX.value);
     private final JoystickButton rBumper = new JoystickButton(m_Controller, Button.kBumperRight.value);
+    private final JoystickButton lBumper = new JoystickButton(m_Controller, Button.kBumperLeft.value);
 
     public JoystickButton getAButton() {
         return aButton;
@@ -34,6 +35,10 @@ public class Controller {
 
     public JoystickButton getRBumper() {
         return rBumper;
+    }
+
+    public JoystickButton getLBumper() {
+        return lBumper;
     }
 
     public static Controller getInstance() {
