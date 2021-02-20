@@ -15,6 +15,7 @@ public class AngledShooter extends SubsystemBase {
   private TalonSRX angledShooterTalon = new WPI_TalonSRX(Constants.angledShooterCANID);
   private static AngledShooter instance = new AngledShooter();
   private double shooterAngle = 0;
+  public double initialShooterAngle = angledShooterTalon.getSelectedSensorPosition();
   private int absolutePosition = 0;
 
   public AngledShooter() {

@@ -7,6 +7,7 @@ package frc.robot.commands;
 // import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.AngledShooter;
 
 public class MoveShooterUp extends CommandBase {
@@ -20,7 +21,7 @@ public class MoveShooterUp extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-     if(m_AngledShooter.getShooterAngle() >= 341){
+     if(m_AngledShooter.getShooterAngle() >= Constants.kMaxDegrees){
        isFinished();
      }
   }
@@ -29,14 +30,14 @@ public class MoveShooterUp extends CommandBase {
   @Override
   public void execute() {
     
-    if(m_AngledShooter.getShooterAngle() <= 284){
-    m_AngledShooter.setPosition(m_AngledShooter.getEncoderPosition() + 57);
-    m_AngledShooter.setShooterAngle(m_AngledShooter.getShooterAngle() + 57);
+    if(m_AngledShooter.getShooterAngle() <= Constants.kSecondMax){
+    m_AngledShooter.setPosition(m_AngledShooter.getEncoderPosition() + Constants.k5Degrees);
+    m_AngledShooter.setShooterAngle(m_AngledShooter.getShooterAngle() + Constants.k5Degrees);
     }
 
     else{
-      m_AngledShooter.setPosition(m_AngledShooter.getEncoderPosition() + (341 - m_AngledShooter.getShooterAngle()));
-      m_AngledShooter.setShooterAngle(341);
+      m_AngledShooter.setPosition(m_AngledShooter.getEncoderPosition() + (Constants.kMaxDegrees - m_AngledShooter.getShooterAngle()));
+      m_AngledShooter.setShooterAngle(Constants.kMaxDegrees);
     }
   }
 
