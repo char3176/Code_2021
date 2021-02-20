@@ -17,6 +17,7 @@ public class Controller {
     private final JoystickButton aButton = new JoystickButton(operator,Button.kA.value);
     private final JoystickButton bButton = new JoystickButton(operator,Button.kB.value);
     private final JoystickButton xButton = new JoystickButton(operator,Button.kX.value);
+    private final JoystickButton yButton = new JoystickButton(operator,Button.kY.value);
 
     public static Controller getInstance() {
         return instance;
@@ -31,6 +32,9 @@ public class Controller {
     }
     public JoystickButton getXButton(){
         return xButton;
+    }
+    public JoystickButton getYButton(){
+        return yButton;
     }
    /* private JoystickButton b1 = new JoystickButton(_joy, 1);
     private JoystickButton b2 = new JoystickButton(_joy, 2);

@@ -21,7 +21,7 @@ public class MoveShooterDown extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-     if(m_AngledShooter.getShooterAngle() == 0.0){
+     if(m_AngledShooter.getEncoderPosition() == 0.0){
        isFinished();
      }//
   }
@@ -32,20 +32,18 @@ public class MoveShooterDown extends CommandBase {
     
 
     
-    if(m_AngledShooter.getShooterAngle() >=Constants.k5Degrees){
+    if(m_AngledShooter.getEncoderPosition() >=Constants.k5Degrees+m_AngledShooter.initialShooterAngle){
     m_AngledShooter.setPosition(m_AngledShooter.getEncoderPosition() - Constants.k5Degrees);
-    m_AngledShooter.setShooterAngle(m_AngledShooter.getShooterAngle() - Constants.k5Degrees);
-    } else {
-      m_AngledShooter.setPosition((m_AngledShooter.getEncoderPosition() - (Constants.k5Degrees - m_AngledShooter.getShooterAngle())));
-      m_AngledShooter.setShooterAngle(0.0);
+   
+} else {
+      m_AngledShooter.setPosition((m_AngledShooter.initialShooterAngle));
     }
   }
   
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if(m_AngledShooter.getShooterAngle() == 0.0){
-      m_AngledShooter.setShooterAngle(0.0);
+    if(m_AngledShooter.getEncoderPosition() == m_AngledShooter.initialShooterAngle){
       m_AngledShooter.setPosition(m_AngledShooter.initialShooterAngle);
     }
   }

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.MoveShooterDown;
 import frc.robot.commands.MoveShooterUp;
 import frc.robot.commands.ResetShooter;
+import frc.robot.commands.StopMotor;
 import frc.robot.subsystems.AngledShooter;
 import frc.robot.Controller;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -62,6 +63,8 @@ public class RobotContainer {
     m_Controller.getBButton().whenPressed(new MoveShooterDown());
    
     m_Controller.getXButton().whenPressed(new ResetShooter());
+    
+    m_Controller.getYButton().whenPressed(new StopMotor());
   
     
   }

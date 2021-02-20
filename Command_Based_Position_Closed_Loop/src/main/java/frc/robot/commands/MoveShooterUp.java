@@ -16,12 +16,12 @@ public class MoveShooterUp extends CommandBase {
 
   public MoveShooterUp() {
     addRequirements(m_AngledShooter);
-  } 
+  }  
   
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-     if(m_AngledShooter.getShooterAngle() >= Constants.kMaxDegrees){
+     if(m_AngledShooter.getEncoderPosition() >= Constants.kMaxDegrees + m_AngledShooter.initialShooterAngle){
        isFinished();
      }
   }
@@ -30,14 +30,13 @@ public class MoveShooterUp extends CommandBase {
   @Override
   public void execute() {
     
-    if(m_AngledShooter.getShooterAngle() <= Constants.kSecondMax){
+    if(m_AngledShooter.getEncoderPosition() <= Constants.kSecondMax){
     m_AngledShooter.setPosition(m_AngledShooter.getEncoderPosition() + Constants.k5Degrees);
-    m_AngledShooter.setShooterAngle(m_AngledShooter.getShooterAngle() + Constants.k5Degrees);
+    System.out.println(m_AngledShooter.getEncoderPosition());
     }
-
+ 
     else{
-      m_AngledShooter.setPosition(m_AngledShooter.getEncoderPosition() + (Constants.kMaxDegrees - m_AngledShooter.getShooterAngle()));
-      m_AngledShooter.setShooterAngle(Constants.kMaxDegrees);
+      m_AngledShooter.setPosition(m_AngledShooter.initialShooterAngle+Constants.kMaxDegrees);
     }
   }
 
