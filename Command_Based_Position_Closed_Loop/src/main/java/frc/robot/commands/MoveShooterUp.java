@@ -16,7 +16,7 @@ public class MoveShooterUp extends CommandBase {
 
   public MoveShooterUp() {
     addRequirements(m_AngledShooter);
-  }
+  } 
   
   // Called when the command is initially scheduled.
   @Override

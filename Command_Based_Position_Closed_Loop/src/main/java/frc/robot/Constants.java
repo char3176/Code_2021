@@ -49,7 +49,7 @@ public class Constants {
 
  	// public static final Gains kGains = new Gains(0.31, 0.00075, 1.12, 0.0, 0, 1.0);
 	//public static final Gains kGains = new Gains(1, 0.00075, 1.12, 0.0, 0, 1.0);
-	public static final double k5Degrees = 57;
-	public static final double kMaxDegrees = 341;
-	public static final double kSecondMax = 284;
+	public static final double k5Degrees = 570;
+	public static final double kMaxDegrees = 3410;
+	public static final double kSecondMax = 2840;
 }
