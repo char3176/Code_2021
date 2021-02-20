@@ -30,7 +30,7 @@ public class MoveShooterUp extends CommandBase {
   @Override
   public void execute() {
     
-    if(m_AngledShooter.getEncoderPosition() <= Constants.kSecondMax){
+    if(m_AngledShooter.getEncoderPosition() <= Constants.kSecondMax + m_AngledShooter.initialShooterAngle){
     m_AngledShooter.setPosition(m_AngledShooter.getEncoderPosition() + Constants.k5Degrees);
     System.out.println(m_AngledShooter.getEncoderPosition());
     }
@@ -42,7 +42,11 @@ public class MoveShooterUp extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    if(m_AngledShooter.getEncoderPosition() == m_AngledShooter.initialShooterAngle + Constants.kMaxDegrees){
+      m_AngledShooter.setPosition(m_AngledShooter.initialShooterAngle+Constants.kMaxDegrees);
+    }
+  }
 
   // Returns true when the command should end.
   @Override
