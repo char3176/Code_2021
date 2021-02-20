@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Motor;
 
@@ -23,9 +24,12 @@ public class FlywheelMinSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("command executed");
     
-    m_Motor.youSpinMotorRightRound(1024);
+    for(int i = 0; i <= 1024; i += 102.4){
+      m_Motor.youSpinMotorRightRound(i);
+      Timer.delay(.1);
+    }
+    //m_Motor.youSpinMotorRightRound(1024);
     
   }
 

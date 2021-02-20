@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Motor;
 
@@ -25,8 +26,12 @@ public class FlywheelStop extends CommandBase {
   public void execute() {
     System.out.println("command executed");
     
-    m_Motor.youSpinMotorRightRound(0);
     
+    for(int i = 1024; i >= 0; i -= 102.4){
+      m_Motor.youSpinMotorRightRound(i);
+      Timer.delay(.1);
+    }
+    m_Motor.youSpinMotorRightRound(0);
   }
 
   // Called once the command ends or is interrupted.
