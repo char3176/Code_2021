@@ -25,7 +25,7 @@ public class FlywheelMinSpeed extends CommandBase {
   public void execute() {
     System.out.println("command executed");
     
-    m_Motor.youSpinMotorRightRound(2404);
+    m_Motor.youSpinMotorRightRound(1024);
     
   }
 

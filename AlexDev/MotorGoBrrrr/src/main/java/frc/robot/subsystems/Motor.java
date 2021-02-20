@@ -9,7 +9,7 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Motor extends SubsystemBase {
-    WPI_TalonFX spinMotor = new WPI_TalonFX(0);
+    WPI_TalonFX spinMotor = new WPI_TalonFX(5);
 
     private static Motor instance = new Motor();
     
