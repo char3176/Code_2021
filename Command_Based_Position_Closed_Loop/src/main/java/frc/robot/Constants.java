@@ -51,7 +51,7 @@ public class Constants {
 	//public static final Gains kGains = new Gains(1, 0.00075, 1.12, 0.0, 0, 1.0);
 
 	public static final double kGearRatio = 4/1;
-	public static final double k5Degrees = 57*kGearRatio;
-	public static final double kMaxDegrees = 340*kGearRatio;
-	public static final double kSecondMax = 280*kGearRatio  ;
+	public static final double k5Degrees = 570*kGearRatio;
+	public static final double kMaxDegrees = 3413*kGearRatio;
+	public static final double kSecondMax = 2830*kGearRatio  ;
 }

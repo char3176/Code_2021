@@ -12,7 +12,6 @@ import frc.robot.subsystems.AngledShooter;
 
 public class MoveShooterUp extends CommandBase {
   private AngledShooter m_AngledShooter = AngledShooter.getInstance();
-  double targetPositonRotations;
 
   public MoveShooterUp() {
     addRequirements(m_AngledShooter);
@@ -22,7 +21,8 @@ public class MoveShooterUp extends CommandBase {
   @Override
   public void initialize() {
      if(m_AngledShooter.getEncoderPosition() >= Constants.kMaxDegrees + m_AngledShooter.initialShooterAngle){
-       isFinished();
+      m_AngledShooter.setPosition(m_AngledShooter.initialShooterAngle+Constants.kMaxDegrees); 
+      isFinished();
      }
   }
 
@@ -43,9 +43,7 @@ public class MoveShooterUp extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if(m_AngledShooter.getEncoderPosition() == m_AngledShooter.initialShooterAngle + Constants.kMaxDegrees){
-      m_AngledShooter.setPosition(m_AngledShooter.initialShooterAngle+Constants.kMaxDegrees);
-    }
+    
   }
 
   // Returns true when the command should end.
