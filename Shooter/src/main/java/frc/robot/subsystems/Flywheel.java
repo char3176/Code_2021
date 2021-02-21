@@ -8,7 +8,7 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Flywheel extends SubsystemBase {
-    WPI_TalonFX spinMotor = new WPI_TalonFX(0);
+    WPI_TalonFX spinMotor = new WPI_TalonFX(Constants.FlywheelCANID);
 
     private static Flywheel instance = new Flywheel();
     

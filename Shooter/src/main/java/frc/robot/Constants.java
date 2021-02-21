@@ -8,6 +8,7 @@ public final class Constants {
 
     /* Flywheel */
 
+	public static final int FlywheelCANID = 0;
     public static final double Flywheel_kP = 0.14;
     public static final double Flywheel_kI = 0.0;
     public static final double Flywheel_kD = 1.5;

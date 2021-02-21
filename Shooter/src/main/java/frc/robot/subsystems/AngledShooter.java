@@ -16,7 +16,7 @@ public class AngledShooter extends SubsystemBase {
 
   public AngledShooter() {
     angledShooterTalon.configFactoryDefault();
-    angledShooterTalon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder/*CTRE_MagEncoder_Absolute*/, Constants.angledShooterPIDLoopIdx, Constants.angledShooterTimeoutMs);
+    angledShooterTalon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.angledShooterPIDLoopIdx, Constants.angledShooterTimeoutMs);
     angledShooterTalon.setSensorPhase(Constants.angledShooterSensorPhase);
     angledShooterTalon.setInverted(Constants.angledShooterMotorInvert);
     angledShooterTalon.configNominalOutputForward(0, Constants.angledShooterTimeoutMs);
@@ -63,4 +63,3 @@ public class AngledShooter extends SubsystemBase {
     return angledShooterTalon.getSelectedSensorPosition();
   }
 }
-//
