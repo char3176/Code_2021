@@ -32,7 +32,7 @@ public final class Constants {
     public static final double drumKD = 0.0025;
     public static final double drumKF = 0.000097;
     public static final double drumKIZone = 0; // SET THIS TO SOMETHING
-    public static final double drumKRampRate = 500;    
+    public static final double drumKRampRate = 2000;    
 
     public static final double drumKMaxOutput = 1.0;
     public static final double drumKMinOutput = -1.0;

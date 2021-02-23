@@ -16,6 +16,7 @@ import frc.robot.commands.DrumPercentOutput;
 import frc.robot.commands.DrumVelocity;
 import frc.robot.commands.EaseStopDrumVelocity;
 import frc.robot.commands.InstantStopDrumVelocity;
+import frc.robot.commands.AgitateDrum;
 import frc.robot.commands.DrumFunnel;
 
 /**
@@ -55,6 +56,9 @@ public class RobotContainer {
     m_Controller.getYButton().whenPressed(new DrumVelocity(2));
     m_Controller.getXButton().whenPressed(new DrumVelocity(3));
     m_Controller.getRBumper().whenPressed(new DrumVelocity(10));
+
+    m_Controller.getLBumper().whenPressed(new AgitateDrum());
+
   }
 
   /**

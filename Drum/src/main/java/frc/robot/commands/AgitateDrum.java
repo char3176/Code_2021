@@ -6,12 +6,12 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drum;
-//import java.lang.Object.wait;
+import java.util.Timer;
 
 public class AgitateDrum extends CommandBase {
   /** Creates a new AgitateDrum. */
 
-  Object obj = new Object();
+  // Timer timer = new Timer();
   Drum m_Drum = Drum.getInstance();
 
   public AgitateDrum() {
@@ -21,15 +21,33 @@ public class AgitateDrum extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    for (int e = 1; e <= 10; e++) {
+    // BUG ALERT: The motor shakes correctly, but the loop doesn't stop and can't be interrupted very easily by another command.
+
+    for (int e = 1; e <= 5; e++) {
       m_Drum.shakeDrum(true);
-      Thread.sleep(500, 0);
+
+      try {
+        Thread.sleep(500);
+      } catch (InterruptedException e1) {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
+
+      m_Drum.shakeDrum(false);
+
+      try {
+        Thread.sleep(500);
+      } catch (InterruptedException e1) {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
     }
 
   }
