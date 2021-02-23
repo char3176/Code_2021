@@ -26,7 +26,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
  * it contains the code necessary to operate a robot with tank drive.
  */
 public class Robot extends TimedRobot {
-  private XboxController m_xboxController = new XboxController(0);
+  private XboxController m_xboxController = new XboxController(2);
   private PowerDistributionPanel m_pdp = new PowerDistributionPanel();
   private int deviceID = 6;
   private int m_follow_deviceID = 0;    // CAN Id zero disables follow motor mode
@@ -72,10 +72,10 @@ public class Robot extends TimedRobot {
     initMotorController(deviceID, m_invert_motor, m_follow_deviceID, m_follow_motor_inverted);
 
     // initial RPM st by controller, can be changed on SmartDashboard
-    aButtonSpeed = 100;
-    bButtonSpeed = 200;
-    yButtonSpeed = 300;
-    xButtonSpeed = 400;
+    aButtonSpeed = 1500;
+    bButtonSpeed = 3000;
+    yButtonSpeed = 5000;
+    xButtonSpeed = 7500;
 
     // display PID coefficients on SmartDashboard
     SmartDashboard.putNumber("P Gain", kP);
@@ -99,7 +99,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("Invert Lead Motor", m_invert_motor);
     mode_chooser.addOption("Fixed RPM (A, B, Y, X buttons)", "fixed");
     mode_chooser.addOption("Variable RPM (left stick)", "variable");
-    mode_chooser.addOption("Fixed Percent Output (buttons)", "fixedPercent");
+    // mode_chooser.addOption("Fixed Percent Output (buttons)", "fixedPercent");
     SmartDashboard.putData("Mode", mode_chooser);
     SmartDashboard.putNumber("Applied Output", 0.0);
     SmartDashboard.putNumber("Ramp Rate (RPM/s)", m_rate_RPMpersecond);
@@ -163,6 +163,14 @@ public class Robot extends TimedRobot {
     m_pidController.setFF(kFF);
     m_pidController.setOutputRange(kMinOutput, kMaxOutput);
   }
+
+
+  @Override
+  public void teleopInit() {
+    m_rateLimiter.reset(0);
+    m_pidController.setReference(m_rateLimiter.calculate(0), ControlType.kVelocity);
+  }
+
 
   @Override
   public void teleopPeriodic() {
@@ -254,7 +262,7 @@ public class Robot extends TimedRobot {
       }
       else if (m_xboxController.getBumperPressed(Hand.kRight)) {
         setPoint = 0;
-        instantStop = true;
+        // instantStop = true;
       }
       else if (m_xboxController.getBumperPressed(Hand.kLeft)) {
         setPoint = 0;
@@ -292,13 +300,8 @@ public class Robot extends TimedRobot {
     }
 
     // Calculate and set new reference RPM
-    double reference_setpoint = m_rateLimiter.calculate(setPoint);
-    if (instantStop) {
-       // when we hit the instant stop button, stop immediately. (safety!)
-      reference_setpoint = 0;
-      m_rateLimiter.reset(0);
-      instantStop = false;
-    }
+    double reference_setpoint;
+    reference_setpoint = m_rateLimiter.calculate(setPoint);
     m_pidController.setReference(reference_setpoint, ControlType.kVelocity);
 
     SmartDashboard.putNumber("SetPoint (RPM)", reference_setpoint);  // was m_setpoint

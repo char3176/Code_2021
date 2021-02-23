@@ -13,14 +13,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drum;
 
-public class DrumModeControl extends CommandBase {
-  /** Creates a new DrumModeControl. */
+public class DrumFunnel extends CommandBase {
+  /** Creates a new DrumFunnel. */
 
   Drum m_Drum = Drum.getInstance();
+  private int buttonNumber;
 
-  public DrumModeControl() {
+  public DrumFunnel(int buttonNumber) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Drum);
+    this.buttonNumber = buttonNumber;
   }
 
   // Called when the command is initially scheduled.
@@ -31,22 +33,21 @@ public class DrumModeControl extends CommandBase {
   @Override
   public void execute() {
 
-    // switches the public Drum mode variable between percent output and velocity with PID
     if (m_Drum.drumPctOutputMode == true) {
-      m_Drum.drumPctOutputMode = false;
-      m_Drum.drumPowerOff();
-      m_Drum.setDefaultCommand(new DrumVelocity(11));
+      new DrumPercentOutput(buttonNumber);
     } else {
-      m_Drum.drumPctOutputMode = true;
-      m_Drum.drumPowerOff();
-      m_Drum.resetPercentSet(); // resets percent to zero upon selecting this mode for safety
-      m_Drum.setDefaultCommand(new DrumPercentOutput(11));
-    }
+      new DrumVelocity(buttonNumber);
+    }    
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+
+
+
+  }
 
   // Returns true when the command should end.
   @Override

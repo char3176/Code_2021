@@ -90,10 +90,18 @@ public class Drum extends SubsystemBase {
     System.out.println("Power off run");
   }
 
+  public void shakeDrum(boolean direction) {
+    if (direction) {
+      drumPIDController.setReference(500, ControlType.kVelocity);
+    } else {
+      drumPIDController.setReference(-500, ControlType.kVelocity);
+    }
+  }
+
 
   // Percent Output control, runs every loop to print the stuff
   public void percentOutputIncrement() {
-    drumMotor.set(percentOutputSet);
+    //drumMotor.set(percentOutputSet);
     drumEncoder.getVelocity();
     System.out.println("Percent output run at " + percentOutputSet);
   }

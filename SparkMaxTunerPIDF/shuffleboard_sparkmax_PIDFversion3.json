@@ -5,10 +5,10 @@
       "autoPopulate": true,
       "autoPopulatePrefix": "SmartDashboard/",
       "widgetPane": {
-        "gridSize": 44.0,
+        "gridSize": 50.0,
         "showGrid": true,
         "hgap": 7.0,
-        "vgap": 20.0,
+        "vgap": 37.0,
         "tiles": {
           "0,0": {
             "size": [
@@ -54,7 +54,7 @@
               "_title": "P Gain"
             }
           },
-          "5,6": {
+          "6,4": {
             "size": [
               3,
               1
@@ -76,7 +76,7 @@
               "_title": "I Gain"
             }
           },
-          "5,7": {
+          "3,4": {
             "size": [
               3,
               1
@@ -98,7 +98,7 @@
               "_title": "Feed Forward"
             }
           },
-          "0,3": {
+          "0,6": {
             "size": [
               2,
               1
@@ -120,24 +120,25 @@
               "_title": "SetPoint (RPM)"
             }
           },
-          "19,6": {
+          "18,4": {
             "size": [
-              7,
-              6
+              8,
+              4
             ],
             "content": {
               "_type": "Graph",
               "_source0": "network_table:///SmartDashboard/Total Current (Amp)",
               "_title": "Total Current (Amp)",
-              "Graph/Visible time": 30.0,
+              "Graph/Visible time": 20.0,
               "Graph/X-axis auto scrolling": true,
               "Y-axis/Automatic bounds": true,
               "Y-axis/Upper bound": 1.0,
               "Y-axis/Lower bound": -1.0,
-              "Y-axis/Unit": "ul"
+              "Y-axis/Unit": "ul",
+              "Visible data/SmartDashboard/Total Current (Amp)": true
             }
           },
-          "2,7": {
+          "0,4": {
             "size": [
               3,
               1
@@ -151,23 +152,24 @@
           "8,0": {
             "size": [
               9,
-              6
+              4
             ],
             "content": {
               "_type": "Graph",
               "_source0": "network_table:///SmartDashboard/Velocity (RPM)",
               "_title": "Velocity (RPM)",
-              "Graph/Visible time": 30.0,
+              "Graph/Visible time": 20.0,
               "Graph/X-axis auto scrolling": true,
               "Y-axis/Automatic bounds": true,
               "Y-axis/Upper bound": 1010.0,
               "Y-axis/Lower bound": 990.0,
-              "Y-axis/Unit": "ul"
+              "Y-axis/Unit": "ul",
+              "Visible data/SmartDashboard/Velocity (RPM)": true
             }
           },
-          "0,5": {
+          "4,3": {
             "size": [
-              1,
+              4,
               1
             ],
             "content": {
@@ -176,7 +178,7 @@
               "_title": "Invert Follow Motor"
             }
           },
-          "5,8": {
+          "5,6": {
             "size": [
               2,
               1
@@ -187,7 +189,7 @@
               "_title": "Undershot"
             }
           },
-          "0,7": {
+          "2,6": {
             "size": [
               2,
               1
@@ -200,24 +202,25 @@
           },
           "17,0": {
             "size": [
-              10,
-              7
+              9,
+              4
             ],
             "content": {
               "_type": "Graph",
               "_source0": "network_table:///SmartDashboard/Error (RPM)",
               "_title": "Error (RPM)",
-              "Graph/Visible time": 30.0,
+              "Graph/Visible time": 20.0,
               "Graph/X-axis auto scrolling": true,
               "Y-axis/Automatic bounds": false,
-              "Y-axis/Upper bound": 25.0,
-              "Y-axis/Lower bound": -25.0,
-              "Y-axis/Unit": "ul"
+              "Y-axis/Upper bound": 100.0,
+              "Y-axis/Lower bound": -100.0,
+              "Y-axis/Unit": "ul",
+              "Visible data/SmartDashboard/Error (RPM)": true
             }
           },
-          "0,6": {
+          "0,3": {
             "size": [
-              1,
+              4,
               1
             ],
             "content": {
@@ -226,7 +229,7 @@
               "_title": "Invert Lead Motor"
             }
           },
-          "7,8": {
+          "7,6": {
             "size": [
               2,
               1
@@ -237,21 +240,22 @@
               "_title": "Overshot"
             }
           },
-          "10,6": {
+          "9,4": {
             "size": [
               9,
-              6
+              4
             ],
             "content": {
               "_type": "Graph",
               "_source0": "network_table:///SmartDashboard/Applied Output",
               "_title": "Applied Output",
-              "Graph/Visible time": 30.0,
+              "Graph/Visible time": 20.0,
               "Graph/X-axis auto scrolling": true,
               "Y-axis/Automatic bounds": true,
               "Y-axis/Upper bound": 1.0,
               "Y-axis/Lower bound": -1.0,
-              "Y-axis/Unit": "ul"
+              "Y-axis/Unit": "ul",
+              "Visible data/SmartDashboard/Applied Output": true
             }
           },
           "0,2": {
@@ -265,10 +269,10 @@
               "_title": "Ramp Rate (RPM/s)"
             }
           },
-          "8,9": {
+          "0,7": {
             "size": [
-              2,
-              2
+              4,
+              1
             ],
             "content": {
               "_type": "Text View",
@@ -276,21 +280,10 @@
               "_title": "Total Power (W)"
             }
           },
-          "0,11": {
+          "6,5": {
             "size": [
               2,
               1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/limelight_Interface",
-              "_title": "limelight_Interface"
-            }
-          },
-          "5,10": {
-            "size": [
-              3,
-              2
             ],
             "content": {
               "_type": "Text View",
@@ -298,10 +291,10 @@
               "_title": "X Button RPM"
             }
           },
-          "2,9": {
+          "2,5": {
             "size": [
-              3,
-              2
+              2,
+              1
             ],
             "content": {
               "_type": "Text View",
@@ -309,7 +302,7 @@
               "_title": "B Button RPM"
             }
           },
-          "0,9": {
+          "0,5": {
             "size": [
               2,
               1
@@ -320,9 +313,9 @@
               "_title": "A Button RPM"
             }
           },
-          "2,11": {
+          "4,5": {
             "size": [
-              3,
+              2,
               1
             ],
             "content": {
@@ -606,6 +599,12 @@
                   "_type": "Text View",
                   "_source0": "network_table:///LiveWindow/Ungrouped/DoubleSolenoid[0,3]/Value",
                   "_title": "DoubleSolenoid[0,3]/Value"
+                },
+                {
+                  "_type": "Speed Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Talon SRX [44]",
+                  "_title": "Talon SRX [44]",
+                  "Visuals/Orientation": "HORIZONTAL"
                 }
               ]
             }
