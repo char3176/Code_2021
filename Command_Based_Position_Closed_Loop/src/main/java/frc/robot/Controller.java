@@ -31,10 +31,10 @@ public class Controller {
         return bButton;
     }
     public JoystickButton getXButton(){
-        return xButton;
+       // return xButton;
     }
     public JoystickButton getYButton(){
-        return yButton;
+        //return yButton;
     }
    /* private JoystickButton b1 = new JoystickButton(_joy, 1);
     private JoystickButton b2 = new JoystickButton(_joy, 2);

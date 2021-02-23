@@ -20,27 +20,24 @@ public class MoveShooterDown extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-     if(m_AngledShooter.currentShooterAngleTics <= m_AngledShooter.initialShooterAngle){
-      
-      m_AngledShooter.setPosition(m_AngledShooter.initialShooterAngle); 
-       isFinished();
-     }
+     
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-
-    
-    if(m_AngledShooter.currentShooterAngleTics >=Constants.TICS_EQUAL_TO_5DEGREES+m_AngledShooter.initialShooterAngle){
-   
+    if(m_AngledShooter.currentShooterAngleTics < m_AngledShooter.initialShooterAngle){
+      m_AngledShooter.currentShooterAngleTics = m_AngledShooter.initialShooterAngle;
+      m_AngledShooter.setPosition(m_AngledShooter.currentShooterAngleTics); 
+     }
+     
+    else if(m_AngledShooter.currentShooterAngleTics >=Constants.TICS_EQUAL_TO_5DEGREES+m_AngledShooter.initialShooterAngle){
     m_AngledShooter.updateCurrentShooterAngleTics(-Constants.TICS_EQUAL_TO_5DEGREES);
     m_AngledShooter.setPosition(m_AngledShooter.currentShooterAngleTics);
    } 
+
    else {
-      
-      m_AngledShooter.updateCurrentShooterAngleTics(-(m_AngledShooter.currentShooterAngleTics-m_AngledShooter.initialShooterAngle));
+      m_AngledShooter.currentShooterAngleTics = m_AngledShooter.initialShooterAngle;
       m_AngledShooter.setPosition((m_AngledShooter.currentShooterAngleTics));
     }
   }
