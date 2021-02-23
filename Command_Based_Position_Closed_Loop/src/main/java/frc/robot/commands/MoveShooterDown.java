@@ -12,7 +12,6 @@ import frc.robot.subsystems.AngledShooter;
 
 public class MoveShooterDown extends CommandBase {
   private AngledShooter m_AngledShooter = AngledShooter.getInstance();
-  double targetPositonRotations;
 
   public MoveShooterDown() {
     addRequirements(m_AngledShooter);
@@ -21,9 +20,11 @@ public class MoveShooterDown extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-     if(m_AngledShooter.getEncoderPosition() == 0.0){
+     if(m_AngledShooter.currentShooterAngleTics <= m_AngledShooter.initialShooterAngle){
+      
+      m_AngledShooter.setPosition(m_AngledShooter.initialShooterAngle); 
        isFinished();
-     }//
+     }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -32,20 +33,22 @@ public class MoveShooterDown extends CommandBase {
     
 
     
-    if(m_AngledShooter.getEncoderPosition() >=Constants.k5Degrees+m_AngledShooter.initialShooterAngle){
-    m_AngledShooter.setPosition(m_AngledShooter.getEncoderPosition() - Constants.k5Degrees);
+    if(m_AngledShooter.currentShooterAngleTics >=Constants.TICS_EQUAL_TO_5DEGREES+m_AngledShooter.initialShooterAngle){
    
-} else {
-      m_AngledShooter.setPosition((m_AngledShooter.initialShooterAngle));
+    m_AngledShooter.updateCurrentShooterAngleTics(-Constants.TICS_EQUAL_TO_5DEGREES);
+    m_AngledShooter.setPosition(m_AngledShooter.currentShooterAngleTics);
+   } 
+   else {
+      
+      m_AngledShooter.updateCurrentShooterAngleTics(-(m_AngledShooter.currentShooterAngleTics-m_AngledShooter.initialShooterAngle));
+      m_AngledShooter.setPosition((m_AngledShooter.currentShooterAngleTics));
     }
   }
   
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if(m_AngledShooter.getEncoderPosition() == m_AngledShooter.initialShooterAngle){
-      m_AngledShooter.setPosition(m_AngledShooter.initialShooterAngle);
-    }
+    
   }
 
   // Returns true when the command should end.

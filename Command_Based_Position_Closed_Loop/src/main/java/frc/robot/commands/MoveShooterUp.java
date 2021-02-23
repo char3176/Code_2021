@@ -20,8 +20,8 @@ public class MoveShooterUp extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-     if(m_AngledShooter.getEncoderPosition() >= Constants.kMaxDegrees + m_AngledShooter.initialShooterAngle){
-      m_AngledShooter.setPosition(m_AngledShooter.initialShooterAngle+Constants.kMaxDegrees); 
+     if(m_AngledShooter.currentShooterAngleTics >= Constants.MAX_DEGREES_IN_TIC_UNITS + m_AngledShooter.initialShooterAngle){
+      m_AngledShooter.setPosition(m_AngledShooter.initialShooterAngle+Constants.MAX_DEGREES_IN_TIC_UNITS); 
       isFinished();
      }
   }
@@ -30,13 +30,15 @@ public class MoveShooterUp extends CommandBase {
   @Override
   public void execute() {
     
-    if(m_AngledShooter.getEncoderPosition() <= Constants.kSecondMax + m_AngledShooter.initialShooterAngle){
-    m_AngledShooter.setPosition(m_AngledShooter.getEncoderPosition() + Constants.k5Degrees);
-    System.out.println(m_AngledShooter.getEncoderPosition());
+    if(m_AngledShooter.currentShooterAngleTics <= Constants.MAX_DEGREES_IN_TIC_UNITS - Constants.TICS_EQUAL_TO_5DEGREES+ m_AngledShooter.initialShooterAngle){
+    m_AngledShooter.updateCurrentShooterAngleTics(Constants.TICS_EQUAL_TO_5DEGREES);
+      m_AngledShooter.setPosition(m_AngledShooter.currentShooterAngleTics);
     }
  
     else{
-      m_AngledShooter.setPosition(m_AngledShooter.initialShooterAngle+Constants.kMaxDegrees);
+      
+      m_AngledShooter.updateCurrentShooterAngleTics(Constants.MAX_DEGREES_IN_TIC_UNITS-m_AngledShooter.initialShooterAngle);
+      m_AngledShooter.setPosition(m_AngledShooter.currentShooterAngleTics);
     }
   }
 

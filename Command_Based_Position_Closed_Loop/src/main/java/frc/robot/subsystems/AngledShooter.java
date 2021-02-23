@@ -17,6 +17,7 @@ public class AngledShooter extends SubsystemBase {
   private double shooterAngle = 0;
   public double initialShooterAngle = angledShooterTalon.getSelectedSensorPosition();
   private int absolutePosition = 0;
+  public double currentShooterAngleTics; 
 
   public AngledShooter() {
     angledShooterTalon.configFactoryDefault();
@@ -38,6 +39,7 @@ public class AngledShooter extends SubsystemBase {
 		if(Constants.angledShooterSensorPhase) {absolutePosition *= -1;}
     if(Constants.angledShooterMotorInvert) {absolutePosition *= -1;}
     angledShooterTalon.setSelectedSensorPosition(absolutePosition, Constants.angledShooterPIDLoopIdx, Constants.angledShooterTimeoutMs);
+    currentShooterAngleTics = angledShooterTalon.getSelectedSensorPosition();
   }
 
   @Override
@@ -51,8 +53,16 @@ public class AngledShooter extends SubsystemBase {
   }
 
   public void setPosition(double targetPosition){
-    angledShooterTalon.set(ControlMode.Position, targetPosition);
+    
+      angledShooterTalon.set(ControlMode.Position, targetPosition);
+    
+    
+    
   }
+
+  public void updateCurrentShooterAngleTics(double targetPosition){
+    currentShooterAngleTics += targetPosition;
+  }  
 
   public void setPercent(double targetPercent){
     angledShooterTalon.set(ControlMode.PercentOutput, targetPercent);

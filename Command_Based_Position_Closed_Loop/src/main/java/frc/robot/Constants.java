@@ -50,8 +50,8 @@ public class Constants {
  	// public static final Gains kGains = new Gains(0.31, 0.00075, 1.12, 0.0, 0, 1.0);
 	//public static final Gains kGains = new Gains(1, 0.00075, 1.12, 0.0, 0, 1.0);
 
-	public static final double kGearRatio = 4/1;
-	public static final double k5Degrees = 570*kGearRatio;
-	public static final double kMaxDegrees = 3413*kGearRatio;
-	public static final double kSecondMax = 2830*kGearRatio  ;
+	public static final double GEAR_RATIO = 4/1;
+	
+	public static final double MAX_DEGREES_IN_TIC_UNITS = 341.3*GEAR_RATIO;
+	public static final double TICS_EQUAL_TO_5DEGREES = (MAX_DEGREES_IN_TIC_UNITS / 6 );
 }
