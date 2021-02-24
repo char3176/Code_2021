@@ -5,6 +5,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.*;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -14,13 +16,13 @@ public class AngledShooter extends SubsystemBase {
   
   private TalonSRX angledShooterTalon = new WPI_TalonSRX(Constants.angledShooterCANID);
   private static AngledShooter instance = new AngledShooter();
-  public double initialShooterAngle = angledShooterTalon.getSelectedSensorPosition();
+  public double initialShooterAngle;
   private int absolutePosition = 0;
   public double currentShooterAngleTics; 
 
   public AngledShooter() {
     angledShooterTalon.configFactoryDefault();
-    angledShooterTalon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder/*CTRE_MagEncoder_Absolute*/, Constants.angledShooterPIDLoopIdx, Constants.angledShooterTimeoutMs);
+    angledShooterTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.angledShooterPIDLoopIdx, Constants.angledShooterTimeoutMs);
     angledShooterTalon.setSensorPhase(Constants.angledShooterSensorPhase);
     angledShooterTalon.setInverted(Constants.angledShooterMotorInvert);
     angledShooterTalon.configNominalOutputForward(0, Constants.angledShooterTimeoutMs);
@@ -38,7 +40,10 @@ public class AngledShooter extends SubsystemBase {
 		if(Constants.angledShooterSensorPhase) {absolutePosition *= -1;}
     if(Constants.angledShooterMotorInvert) {absolutePosition *= -1;}
     angledShooterTalon.setSelectedSensorPosition(absolutePosition, Constants.angledShooterPIDLoopIdx, Constants.angledShooterTimeoutMs);
-    currentShooterAngleTics = angledShooterTalon.getSelectedSensorPosition();
+    currentShooterAngleTics = getEncoderPosition();
+    SmartDashboard.putNumber("InitialShooterAngleTics", currentShooterAngleTics);
+    SmartDashboard.putNumber("InitialEncoderPositon", getEncoderPosition());
+    initialShooterAngle = angledShooterTalon.getSelectedSensorPosition();
   }
 
   @Override
@@ -56,7 +61,10 @@ public class AngledShooter extends SubsystemBase {
 
   public void updateCurrentShooterAngleTics(double targetPosition){
     currentShooterAngleTics += targetPosition;
+    SmartDashboard.putNumber("CurrentShooterAngleTics", currentShooterAngleTics);
+    SmartDashboard.putNumber("CurrentEncoderPositon", getEncoderPosition());
   }  
+
 
   public int getEncoderPosition() {
     return angledShooterTalon.getSelectedSensorPosition();

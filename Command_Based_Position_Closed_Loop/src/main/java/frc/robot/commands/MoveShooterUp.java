@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 // import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -33,7 +35,7 @@ public class MoveShooterUp extends CommandBase {
      }
 
     else if(m_AngledShooter.currentShooterAngleTics <= Constants.MAX_DEGREES_IN_TIC_UNITS - Constants.TICS_EQUAL_TO_5DEGREES+ m_AngledShooter.initialShooterAngle){
-    m_AngledShooter.updateCurrentShooterAngleTics(Constants.TICS_EQUAL_TO_5DEGREES);
+      m_AngledShooter.updateCurrentShooterAngleTics(Constants.TICS_EQUAL_TO_5DEGREES);
       m_AngledShooter.setPosition(m_AngledShooter.currentShooterAngleTics);
     }
  

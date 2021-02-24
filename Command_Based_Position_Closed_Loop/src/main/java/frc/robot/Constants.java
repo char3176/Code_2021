@@ -40,10 +40,10 @@ public class Constants {
      * Gains(kp, ki, kd, kf, izone, peak output);
      *///
 
-	public static final double angledShooter_kP = 0.31; //1 As a test if needed
-	public static final double angledShooter_kI = 0.00075;
-	public static final double angledShooter_kD = 1.12;
-	public static final double angledShooter_kF = 0.0;
+	public static final double angledShooter_kP = 1; //1 As a test if needed
+	public static final double angledShooter_kI = 0;
+	public static final double angledShooter_kD = 0;
+	public static final double angledShooter_kF = 0;
 	public static final int angledShooter_iZone = 0;
 	public static final double angledShooter_PeakOutput = 1.0;
 
