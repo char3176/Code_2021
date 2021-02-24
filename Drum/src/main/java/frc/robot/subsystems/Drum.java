@@ -33,6 +33,8 @@ public class Drum extends SubsystemBase {
     drumPIDController = drumMotor.getPIDController();
     drumEncoder = drumMotor.getEncoder();
 
+    drumPIDController.setReference(0.0, ControlType.kVelocity);
+
     rateLimiter = new SlewRateLimiter(Constants.drumKRampRate, 0);
 
     drumPIDController.setP(Constants.drumKP);
@@ -41,19 +43,17 @@ public class Drum extends SubsystemBase {
     drumPIDController.setFF(Constants.drumKF);
     drumPIDController.setIZone(Constants.drumKIZone);
     drumPIDController.setOutputRange(Constants.drumKMinOutput, Constants.drumKMaxOutput);
-  
-    drumPIDController.setReference(0.0, ControlType.kVelocity);
 
   }
 
   public void highSpin() {
-    drumPIDController.setReference(rateLimiter.calculate(2000), ControlType.kVelocity);
+    drumPIDController.setReference(rateLimiter.calculate(4000), ControlType.kVelocity);
     System.out.println(drumEncoder.getVelocity());
     System.out.println("High run");
   }
 
   public void mediumSpin() {
-    drumPIDController.setReference(rateLimiter.calculate(1000), ControlType.kVelocity);
+    drumPIDController.setReference(rateLimiter.calculate(2000), ControlType.kVelocity);
     System.out.println(drumEncoder.getVelocity());
     System.out.println("Medium run");
   }
@@ -74,7 +74,8 @@ public class Drum extends SubsystemBase {
     // drumPIDController.setReference(0, ControlType.kVoltage);
     // System.out.println(drumEncoder.getVelocity());
 
-    // attempt to make the motor slowly accelerate when started up after using the instant stop button
+    // attempt to make the motor slowly accelerate when started up after using the
+    // instant stop button
     if (Math.abs(drumEncoder.getVelocity()) <= 10) {
       drumPIDController.setReference(rateLimiter.calculate(0), ControlType.kVelocity);
     } else {
@@ -90,11 +91,20 @@ public class Drum extends SubsystemBase {
     System.out.println("Power off run");
   }
 
-  public void shakeDrum(boolean direction) {
+  public void shakeDrumOld(boolean direction) {
     if (direction) {
       drumPIDController.setReference(500, ControlType.kVelocity);
     } else {
       drumPIDController.setReference(-500, ControlType.kVelocity);
+    }
+  }
+
+  public void shakeDrum() throws InterruptedException {
+    for (int e = 1; e <= 5; e++) {
+      drumMotor.set(0.05);
+      Thread.sleep(500);
+      drumMotor.set(-0.05);
+      Thread.sleep(500);
     }
   }
 

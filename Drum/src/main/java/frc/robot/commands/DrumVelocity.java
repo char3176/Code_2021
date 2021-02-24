@@ -39,7 +39,7 @@ public class DrumVelocity extends CommandBase {
     } else if (button == 3) {
       m_Drum.highSpin();
     } else if (button == 10) {
-      m_Drum.instantStop();
+      m_Drum.drumPowerOff();
     } else {
       m_Drum.drumPowerOff();
     }
