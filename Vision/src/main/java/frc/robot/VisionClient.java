@@ -91,10 +91,10 @@ public class VisionClient{
         if(finalTheta >= (11 * Math.PI)/12 && finalTheta <= (13 * Math.PI)/12){
             double[] arrayToSend = {initialVelocity[speedIdx], initialTheta};
             return arrayToSend;
-        } else {
-            try{
+        } else{
+            if(speedIdx + 1 < initialVelocity.length){
                 return findInitialValues(speedIdx + 1);
-            } catch(Exception e){
+            } else{
                 return null;
             }
         }
