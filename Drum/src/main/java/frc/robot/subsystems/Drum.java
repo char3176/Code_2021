@@ -99,12 +99,20 @@ public class Drum extends SubsystemBase {
     }
   }
 
-  public void shakeDrum() throws InterruptedException {
-    for (int e = 1; e <= 5; e++) {
-      drumMotor.set(0.05);
-      Thread.sleep(500);
-      drumMotor.set(-0.05);
-      Thread.sleep(500);
+  public void shakeDrum() {
+    double mStartTime;
+    int direction = -1;
+    drumMotor.set(0.25); // initial set to avoid delay at start
+    for (int e = 1; e <= 10; e++) {
+      // direction is 1 or -1 to switch rotation direction
+      mStartTime = System.nanoTime() / 1000000; // multiply by 1 million to get to milliseconds
+      while (true) {
+        if ((System.nanoTime() / 1000000 - mStartTime) >= 150) {
+          drumMotor.set(0.25 * direction);
+          direction *= -1;
+          break;
+        }
+      }
     }
   }
 

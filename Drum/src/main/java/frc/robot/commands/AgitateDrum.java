@@ -31,9 +31,7 @@ public class AgitateDrum extends CommandBase {
     // BUG ALERT: The motor shakes correctly, but the loop doesn't stop and can't be
     // interrupted very easily by another command.
 
-    for (int e = 1; e <= 3; e++) {
-      
-    }
+      m_Drum.shakeDrum();
 
   }
 
@@ -44,6 +42,6 @@ public class AgitateDrum extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

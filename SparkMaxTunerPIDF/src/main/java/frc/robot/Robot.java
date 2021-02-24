@@ -58,13 +58,13 @@ public class Robot extends TimedRobot {
     // Small initial kFF and kP values, probably just big enough to do *something* 
     // and *probably* too small to overdrive an untuned system.
     kFF = 0.000097;  
-    kP = 0.00015;
-    kI = 0.0000004;
-    kD = 0.0025;
+    kP = 0.00013;
+    kI = 0.0000008;
+    kD = 0.004;
     kIz = 0;
     kMaxOutput = 1.0;
     kMinOutput = -1.0;
-    maxRPM = 5700;
+    // maxRPM = 5700;
     m_rate_RPMpersecond = 500;    // 10 million effectively disables rate limiting
 
     m_rateLimiter = new SlewRateLimiter(m_rate_RPMpersecond, m_setPoint);
@@ -73,9 +73,9 @@ public class Robot extends TimedRobot {
 
     // initial RPM st by controller, can be changed on SmartDashboard
     aButtonSpeed = 1500;
-    bButtonSpeed = 3000;
-    yButtonSpeed = 5000;
-    xButtonSpeed = 7500;
+    bButtonSpeed = 8000;
+    yButtonSpeed = 9500;
+    xButtonSpeed = 10000;
 
     // display PID coefficients on SmartDashboard
     SmartDashboard.putNumber("P Gain", kP);
