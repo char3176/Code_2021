@@ -24,14 +24,13 @@ public class Drum extends SubsystemBase {
   private CANEncoder drumEncoder;
   private SlewRateLimiter rateLimiter;
   private static Drum instance = new Drum();
+  private double percentOutputSet = 0.0;
   public boolean drumPctOutputMode = false;
   private boolean isRateLimitOff = false;
   private int lastSetting;
   private int direction = 1;
   private double shakeStartTime = -1;
   private double shakeIterations = 0;
-
-  private double percentOutputSet = 0.0;     // for unused percent output control
 
   public Drum() {
 
@@ -62,19 +61,10 @@ public class Drum extends SubsystemBase {
     }
   }
 
-  // hit the hyperdrive!
-  public void extremeSpin() {
-    reengageRampLimit();
-    lastSetting = 4;
-    drumPIDController.setReference(rateLimiter.calculate(Constants.drumExtreme), ControlType.kVelocity);
-    System.out.println(drumEncoder.getVelocity());
-    System.out.println("Extreme run");
-  }
-
   public void highSpin() {
     reengageRampLimit();
     lastSetting = 3;
-    drumPIDController.setReference(rateLimiter.calculate(Constants.drumHigh), ControlType.kVelocity);
+    drumPIDController.setReference(rateLimiter.calculate(6000), ControlType.kVelocity);
     System.out.println(drumEncoder.getVelocity());
     System.out.println("High run");
   }
@@ -82,7 +72,7 @@ public class Drum extends SubsystemBase {
   public void mediumSpin() {
     reengageRampLimit();
     lastSetting = 2;
-    drumPIDController.setReference(rateLimiter.calculate(Constants.drumMedium), ControlType.kVelocity);
+    drumPIDController.setReference(rateLimiter.calculate(3000), ControlType.kVelocity);
     System.out.println(drumEncoder.getVelocity());
     System.out.println("Medium run");
   }
@@ -90,18 +80,68 @@ public class Drum extends SubsystemBase {
   public void lowSpin() {
     reengageRampLimit();
     lastSetting = 1;
-    drumPIDController.setReference(rateLimiter.calculate(Constants.drumLow), ControlType.kVelocity);
+    drumPIDController.setReference(rateLimiter.calculate(1500), ControlType.kVelocity);
     System.out.println(drumEncoder.getVelocity());
     System.out.println("Low run");
   }
 
+  public void easeStop() {
+    reengageRampLimit();
+    lastSetting = 10;
+    drumPIDController.setReference(rateLimiter.calculate(0), ControlType.kVelocity);
+    System.out.println(drumEncoder.getVelocity());
+    System.out.println("Ease stop run");
+  }
+
+  /*
+  public void instantStop() {
+    // drumPIDController.setReference(0, ControlType.kVoltage);
+    // System.out.println(drumEncoder.getVelocity());
+
+    // attempt to make the motor slowly accelerate when started up after using the
+    // instant stop button
+    if (Math.abs(drumEncoder.getVelocity()) <= 10) {
+      drumPIDController.setReference(rateLimiter.calculate(0), ControlType.kVelocity);
+    } else {
+      drumPIDController.setReference(0, ControlType.kVelocity);
+    }
+    System.out.println("Instant stop run");
+  }
+  */
+
   // used with the default command to cut power to the drum upon being enabled
   public void drumPowerOff() {
     isRateLimitOff = true;
-    lastSetting = 0;
+    lastSetting = 11;
     drumMotor.set(0.0);
     drumEncoder.getVelocity();
     System.out.println("Power off run");
+  }
+
+  public void shakeDrumOld(boolean direction) {
+    if (direction) {
+      drumPIDController.setReference(500, ControlType.kVelocity);
+    } else {
+      drumPIDController.setReference(-500, ControlType.kVelocity);
+    }
+  }
+
+  public void shakeDrumStuck() {
+    isRateLimitOff = true;
+    double mStartTime;
+    int direction = -1;
+    drumMotor.set(0.3); // initial set to avoid delay at start
+    for (int e = 1; e <= 10; e++) {
+      // direction is 1 or -1 to switch rotation direction
+      mStartTime = System.nanoTime() / 1000000; // multiply by 1 million to get to milliseconds
+      while (true) {
+        if ((System.nanoTime() / 1000000 - mStartTime) >= 150) {
+          drumMotor.set(0.3 * direction);
+          direction *= -1;
+          break;
+        }
+      }
+    }
   }
 
   public boolean shakeDrum() {
@@ -127,22 +167,6 @@ public class Drum extends SubsystemBase {
     return false;
   }
 
-  public int getLastSetting() {
-    return lastSetting;
-  }
-
-  public static Drum getInstance() {
-    return instance;
-  }
-
-  // Periodic NOT USED for now
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
-
-
-  //***** EXPERIMENTAL PERCENT OUTPUT - NOT USED YET *****
 
   // Percent Output control, runs every loop to print the stuff
   public void percentOutputIncrement() {
@@ -164,4 +188,18 @@ public class Drum extends SubsystemBase {
     percentOutputSet = 0.0;
   }
 
+
+  public int getLastSetting() {
+    return lastSetting;
+  }
+
+  public static Drum getInstance() {
+    return instance;
+  }
+
+  // Periodic NOT USED for now
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
 }

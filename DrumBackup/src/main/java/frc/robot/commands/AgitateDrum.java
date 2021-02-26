@@ -40,7 +40,7 @@ public class AgitateDrum extends CommandBase {
   @Override
   public void end(boolean interrupted) {
 
-    System.out.println(m_Drum.getLastSetting());  // Getting last state doesn't work yet
+    System.out.println(m_Drum.getLastSetting());
     new DrumVelocity(m_Drum.getLastSetting());
 
   }

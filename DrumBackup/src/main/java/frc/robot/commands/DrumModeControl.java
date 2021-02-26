@@ -2,17 +2,23 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+
+/************
+ * This is an EXPIRIMENTAL command for percent output control. It is NOTU USED right now because it doesn't work.
+************/
+
+
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drum;
 
-public class InstantStopDrumVelocity extends CommandBase {
-  /** Creates a new InstantStopDrumVelocity. */
+public class DrumModeControl extends CommandBase {
+  /** Creates a new DrumModeControl. */
 
-  private Drum m_Drum = Drum.getInstance();
+  Drum m_Drum = Drum.getInstance();
 
-  public InstantStopDrumVelocity() {
+  public DrumModeControl() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Drum);
   }
@@ -25,8 +31,17 @@ public class InstantStopDrumVelocity extends CommandBase {
   @Override
   public void execute() {
 
-    m_Drum.instantStop();
-
+    // switches the public Drum mode variable between percent output and velocity with PID
+    if (m_Drum.drumPctOutputMode == true) {
+      m_Drum.drumPctOutputMode = false;
+      m_Drum.drumPowerOff();
+      m_Drum.setDefaultCommand(new DrumVelocity(11));
+    } else {
+      m_Drum.drumPctOutputMode = true;
+      m_Drum.drumPowerOff();
+      m_Drum.resetPercentSet(); // resets percent to zero upon selecting this mode for safety
+      m_Drum.setDefaultCommand(new DrumPercentOutput(11));
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -36,6 +51,6 @@ public class InstantStopDrumVelocity extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

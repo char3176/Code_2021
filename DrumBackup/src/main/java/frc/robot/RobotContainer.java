@@ -8,10 +8,15 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drum;
-import frc.robot.commands.DrumVelocity;
-import frc.robot.commands.AgitateDrum;
+import frc.robot.commands.HighDrumVelocity;
+import frc.robot.commands.MediumDrumVelocity;
+import frc.robot.commands.LowDrumVelocity;
 import frc.robot.commands.DrumModeControl;
 import frc.robot.commands.DrumPercentOutput;
+import frc.robot.commands.DrumVelocity;
+import frc.robot.commands.EaseStopDrumVelocity;
+import frc.robot.commands.InstantStopDrumVelocity;
+import frc.robot.commands.AgitateDrum;
 import frc.robot.commands.DrumFunnel;
 
 /**
@@ -44,13 +49,13 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     
-    m_Drum.setDefaultCommand(new DrumVelocity(0));
+    m_Drum.setDefaultCommand(new DrumVelocity(11));
 
-    m_Controller.getAButton().whenPressed(new DrumVelocity(1));
-    m_Controller.getBButton().whenPressed(new DrumVelocity(2));
-    m_Controller.getYButton().whenPressed(new DrumVelocity(3));
-    m_Controller.getXButton().whenPressed(new DrumVelocity(4));
-    m_Controller.getRBumper().whenPressed(new DrumVelocity(0));
+    m_Controller.getAButton().whenPressed(new DrumVelocity(0));
+    m_Controller.getBButton().whenPressed(new DrumVelocity(1));
+    m_Controller.getYButton().whenPressed(new DrumVelocity(2));
+    m_Controller.getXButton().whenPressed(new DrumVelocity(3));
+    m_Controller.getRBumper().whenPressed(new DrumVelocity(10));
 
     m_Controller.getLBumper().whenPressed(new AgitateDrum());
 
