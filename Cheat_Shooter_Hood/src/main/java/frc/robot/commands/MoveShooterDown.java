@@ -29,17 +29,17 @@ public class MoveShooterDown extends CommandBase {
   @Override
   public void execute() {
     int temp = m_AngledShooter.getEncoderPosition();
-    if(temp <= Constants.P1+100 ){
-     m_AngledShooter.setPosition(Constants.MIN_TICS);
+    if(temp <= Constants.P1/*Constants.pos[1]*/+100 ){
+     m_AngledShooter.setPosition(Constants.MIN_TICS/*Constants.pos[0]*/);
     }
-    else if(temp <= Constants.P2+100 && temp>=Constants.MIN_TICS-100){
-       m_AngledShooter.setPosition(Constants.P1);
+    else if(temp <= Constants.P2/*Constants.pos[2]*/+100 && temp>=Constants.MIN_TICS/*Constants.pos[0]*/-100){
+       m_AngledShooter.setPosition(Constants.P1/*Constants.pos[1]*/);
     }
-    else if(temp <= Constants.P3+100 && temp>=Constants.P1-100){
-     m_AngledShooter.setPosition(Constants.P2);
+    else if(temp <= Constants.P3/*Constants.pos[3]*/+100 && temp>=Constants.P1/*Constants.pos[1]*/-100){
+     m_AngledShooter.setPosition(Constants.P2/*Constants.pos[2]*/);
    }
-   else if(temp <= Constants.MAX_TICS+100 && temp>=Constants.P2-100){
-     m_AngledShooter.setPosition(Constants.P3);
+   else if(temp <= Constants.MAX_TICS/*Constants.pos[4]*/+100 && temp>=Constants.P2/*Constants.pos[2]*/-100){
+     m_AngledShooter.setPosition(Constants.P3/*Constants.pos[3]*/);
    }
    System.out.println("DOWN");
   }

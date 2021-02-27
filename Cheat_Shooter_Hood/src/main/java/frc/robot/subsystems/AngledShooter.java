@@ -30,10 +30,10 @@ public class AngledShooter extends SubsystemBase {
 		angledShooterTalon.configPeakOutputForward(1, Constants.angledShooterTimeoutMs);
 		angledShooterTalon.configPeakOutputReverse(-1, Constants.angledShooterTimeoutMs);
     angledShooterTalon.configAllowableClosedloopError(0, Constants.angledShooterPIDLoopIdx, Constants.angledShooterTimeoutMs);
-    angledShooterTalon.config_kF(Constants.angledShooterPIDLoopIdx, Constants.angledShooter_kF, Constants.angledShooterTimeoutMs);
-		angledShooterTalon.config_kP(Constants.angledShooterPIDLoopIdx, Constants.angledShooter_kP, Constants.angledShooterTimeoutMs);
-		angledShooterTalon.config_kI(Constants.angledShooterPIDLoopIdx, Constants.angledShooter_kI, Constants.angledShooterTimeoutMs);
-    angledShooterTalon.config_kD(Constants.angledShooterPIDLoopIdx, Constants.angledShooter_kD, Constants.angledShooterTimeoutMs);
+    angledShooterTalon.config_kF(Constants.angledShooterPIDLoopIdx, Constants.angledShooter_kF/*Constants.pArray[3]*/, Constants.angledShooterTimeoutMs);
+		angledShooterTalon.config_kP(Constants.angledShooterPIDLoopIdx, Constants.angledShooter_kP/*Constants.pArray[0]*/, Constants.angledShooterTimeoutMs);
+		angledShooterTalon.config_kI(Constants.angledShooterPIDLoopIdx, Constants.angledShooter_kI/*Constants.pArray[1]*/, Constants.angledShooterTimeoutMs);
+    angledShooterTalon.config_kD(Constants.angledShooterPIDLoopIdx, Constants.angledShooter_kD/*Constants.pArray[2]*/, Constants.angledShooterTimeoutMs);
     
     absolutePosition = angledShooterTalon.getSensorCollection().getPulseWidthPosition();
     absolutePosition &= 0xFFF;
