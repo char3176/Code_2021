@@ -17,8 +17,7 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 
@@ -48,30 +47,19 @@ public class RobotContainer {
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    var autoVoltageConstraint =
+  public void getAutonomousCommand() {
+    /*var autoVoltageConstraint =
     new DifferentialDriveVoltageConstraint(
         new SimpleMotorFeedforward(Constants.ksVolts,
                                    Constants.kvVoltSecondsPerMeter,
                                    Constants.kaVoltSecondsSquaredPerMeter),
         Constants.kDriveKinematics,
-        10);
+        10);*/
 
-        
-        String trajectoryJSON = "paths/YourPath.wpilib.json";
-        Trajectory trajectory = new Trajectory();
-        try {
-          Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-          trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-        } catch (IOException ex) {
-          DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
-        }
+       
 
-
-RamseteCommand ramseteCommand = new RamseteCommand(
+/*RamseteCommand ramseteCommand = new RamseteCommand(
     exampleTrajectory,
     m_robotDrive::getPose,
     new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta),
@@ -85,12 +73,12 @@ RamseteCommand ramseteCommand = new RamseteCommand(
     // RamseteCommand passes volts to the callback
     m_robotDrive::tankDriveVolts,
     m_robotDrive
-);
+);*/
 
 // Reset odometry to the starting pose of the trajectory.
-m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
+//m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
 
 // Run path following command, then stop at the end.
-return ramseteCommand.andThen(() -> m_robotDrive.tankDriveVolts(0, 0));
+//return ramseteCommand.andThen(() -> m_robotDrive.tankDriveVolts(0, 0));
   }
 }
