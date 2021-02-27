@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
-
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 /**
@@ -43,14 +43,102 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    String trajectoryJSON = "paths/Complicated.wpilib.json";
-    Trajectory trajectory = new Trajectory();
+    
+    double startTime = Timer.getFPGATimestamp();
+
+    String barrelRacingJSON = "paths/output/BarrelRacing.wpilib.json";
+    Trajectory barrelRacingTrajectory = new Trajectory();
     try {
-      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+      Path barrelRacingPath = Filesystem.getDeployDirectory().toPath().resolve(barrelRacingJSON);
+      barrelRacingTrajectory = TrajectoryUtil.fromPathweaverJson(barrelRacingPath);
     } catch (IOException ex) {
-      DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
+      DriverStation.reportError("Unable to open trajectory: " + barrelRacingJSON, ex.getStackTrace());
     }
+    double duration = barrelRacingTrajectory.getTotalTimeSeconds();
+    System.out.println(duration);
+
+    double totalTime = Timer.getFPGATimestamp() - startTime;
+    System.out.println(totalTime);
+    startTime = Timer.getFPGATimestamp();
+
+    String bouncePathJSON = "paths/output/BouncePath.wpilib.json";
+    Trajectory bouncePathTrajectory = new Trajectory();
+    try {
+      Path bouncePath = Filesystem.getDeployDirectory().toPath().resolve(bouncePathJSON);
+      bouncePathTrajectory = TrajectoryUtil.fromPathweaverJson(bouncePath);
+    } catch (IOException ex) {
+      DriverStation.reportError("Unable to open trajectory: " + bouncePathJSON, ex.getStackTrace());
+    }
+
+    totalTime = Timer.getFPGATimestamp() - startTime;
+    System.out.println(totalTime);
+    startTime = Timer.getFPGATimestamp();
+
+    String galacticSearchARedJSON = "paths/output/GalacticSearchARed.wpilib.json";
+    Trajectory galacticSearchARedTrajectory = new Trajectory();
+    try {
+      Path galacticSearchARedPath = Filesystem.getDeployDirectory().toPath().resolve(galacticSearchARedJSON);
+      galacticSearchARedTrajectory = TrajectoryUtil.fromPathweaverJson(galacticSearchARedPath);
+    } catch (IOException ex) {
+      DriverStation.reportError("Unable to open trajectory: " + galacticSearchARedJSON, ex.getStackTrace());
+    }
+
+    totalTime = Timer.getFPGATimestamp() - startTime;
+    System.out.println(totalTime);
+    startTime = Timer.getFPGATimestamp();
+
+    String galacticSearchBRedJSON = "paths/output/GalacticSearchBRed.wpilib.json";
+    Trajectory galacticSearchBRedTrajectory = new Trajectory();
+    try {
+      Path galacticSearchBRedPath = Filesystem.getDeployDirectory().toPath().resolve(galacticSearchBRedJSON);
+      galacticSearchBRedTrajectory = TrajectoryUtil.fromPathweaverJson(galacticSearchBRedPath);
+    } catch (IOException ex) {
+      DriverStation.reportError("Unable to open trajectory: " + galacticSearchBRedJSON, ex.getStackTrace());
+    }
+
+    totalTime = Timer.getFPGATimestamp() - startTime;
+    System.out.println(totalTime);
+    startTime = Timer.getFPGATimestamp();
+
+    String galacticSearchABlueJSON = "paths/output/GalacticSearchABlue.wpilib.json";
+    Trajectory galacticSearchABlueTrajectory = new Trajectory();
+    try {
+      Path galacticSearchABluePath = Filesystem.getDeployDirectory().toPath().resolve(galacticSearchABlueJSON);
+      galacticSearchABlueTrajectory = TrajectoryUtil.fromPathweaverJson(galacticSearchABluePath);
+    } catch (IOException ex) {
+      DriverStation.reportError("Unable to open trajectory: " + galacticSearchABlueJSON, ex.getStackTrace());
+    }
+
+    totalTime = Timer.getFPGATimestamp() - startTime;
+    System.out.println(totalTime);
+    startTime = Timer.getFPGATimestamp();
+
+    String galacticSearchBBlueJSON = "paths/output/GalacticSearchBBlue.wpilib.json";
+    Trajectory galacticSearchBBlueTrajectory = new Trajectory();
+    try {
+      Path galacticSearchBBluePath = Filesystem.getDeployDirectory().toPath().resolve(galacticSearchBBlueJSON);
+      galacticSearchBBlueTrajectory = TrajectoryUtil.fromPathweaverJson(galacticSearchBBluePath);
+    } catch (IOException ex) {
+      DriverStation.reportError("Unable to open trajectory: " + galacticSearchBBlueJSON, ex.getStackTrace());
+    }
+
+    totalTime = Timer.getFPGATimestamp() - startTime;
+    System.out.println(totalTime);
+    startTime = Timer.getFPGATimestamp();
+
+    String slalomJSON = "paths/output/Slalom.wpilib.json";
+    Trajectory slalomTrajectory = new Trajectory();
+    try {
+      Path slalomPath = Filesystem.getDeployDirectory().toPath().resolve(slalomJSON);
+      slalomTrajectory = TrajectoryUtil.fromPathweaverJson(slalomPath);
+    } catch (IOException ex) {
+      DriverStation.reportError("Unable to open trajectory: " + slalomJSON, ex.getStackTrace());
+    }
+
+    totalTime = Timer.getFPGATimestamp() - startTime;
+    System.out.println(totalTime);
+    startTime = Timer.getFPGATimestamp();
+
     m_robotContainer = new RobotContainer();
   }
 
