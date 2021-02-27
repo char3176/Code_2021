@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    String trajectoryJSON = "paths/Help.wpilib.json";
+    String trajectoryJSON = "paths/Complicated.wpilib.json";
     Trajectory trajectory = new Trajectory();
     try {
       Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
