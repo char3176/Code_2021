@@ -10,9 +10,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drum;
 import frc.robot.commands.DrumVelocity;
 import frc.robot.commands.AgitateDrum;
-import frc.robot.commands.DrumModeControl;
-import frc.robot.commands.DrumPercentOutput;
-import frc.robot.commands.DrumFunnel;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -46,13 +43,13 @@ public class RobotContainer {
     
     m_Drum.setDefaultCommand(new DrumVelocity(0));
 
-    m_Controller.getAButton().whenPressed(new DrumVelocity(1));
-    m_Controller.getBButton().whenPressed(new DrumVelocity(2));
-    m_Controller.getYButton().whenPressed(new DrumVelocity(3));
-    m_Controller.getXButton().whenPressed(new DrumVelocity(4));
-    m_Controller.getRBumper().whenPressed(new DrumVelocity(0));
+    m_Controller.getLowSpeedButton().whenPressed(new DrumVelocity(1));
+    m_Controller.getMediumSpeedButton().whenPressed(new DrumVelocity(2));
+    m_Controller.getHighSpeedButton().whenPressed(new DrumVelocity(3));
+    m_Controller.getExtremeSpeedButton().whenPressed(new DrumVelocity(4));
+    m_Controller.getOffButton().whenPressed(new DrumVelocity(0));
 
-    m_Controller.getLBumper().whenPressed(new AgitateDrum());
+    m_Controller.getAgitateButton().whenPressed(new AgitateDrum());
 
   }
 

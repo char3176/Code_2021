@@ -4,7 +4,6 @@ import javax.swing.JFileChooser;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-// import frc.robot.Constants;
 
 public class Controller {
     
@@ -16,31 +15,77 @@ public class Controller {
     private final JoystickButton xButton = new JoystickButton(m_Controller, Button.kX.value);
     private final JoystickButton rBumper = new JoystickButton(m_Controller, Button.kBumperRight.value);
     private final JoystickButton lBumper = new JoystickButton(m_Controller, Button.kBumperLeft.value);
-
-    public JoystickButton getAButton() {
+    
+    /**
+     * <b> Low Speed Button </b>
+     * <p>
+     * returns LowSpeedButton to be used for RobotContainer.
+     * @return aButton
+     * @author Jared Brown, Caleb Walters, Amelia Bingamin
+     */
+    public JoystickButton getLowSpeedButton() {
         return aButton;
     }
 
-    public JoystickButton getBButton() {
+    /**
+     * <b> Medium Speed Button </b>
+     * <p>
+     * returns MediumSpeedButton to be used for RobotContainer.
+     * @return bButton
+     * @author Jared Brown, Caleb Walters, Amelia Bingamin
+     */
+    public JoystickButton getMediumSpeedButton() {
         return bButton;
     }
 
-    public JoystickButton getYButton() {
+    /**
+     * <b> High Speed Button </b>
+     * <p>
+     * returns HighSpeedButton to be used for RobotContainer.
+     * @return yButton
+     * @author Jared Brown, Caleb Walters, Amelia Bingamin
+     */
+    public JoystickButton getHighSpeedButton() {
         return yButton;
     }
 
-    public JoystickButton getXButton() {
+    /**
+     * <b> Extreme Speed Button </b>
+     * <p>
+     * returns ExtremeSpeedButton to be used for RobotContainer.
+     * @return xButton
+     * @author Jared Brown, Caleb Walters, Amelia Bingamin
+     */
+    public JoystickButton getExtremeSpeedButton() {
         return xButton;
     }
 
-    public JoystickButton getRBumper() {
+    /**
+     * <b> Off Button </b>
+     * <p>
+     * returns OffButton to be used for RobotContainer.
+     * @return rBumper
+     * @author Jared Brown, Caleb Walters, Amelia Bingamin
+     */
+    public JoystickButton getOffButton() {
         return rBumper;
     }
 
-    public JoystickButton getLBumper() {
+    /**
+     * <b> Agitate Button </b>
+     * <p>
+     * returns AgitateButton to be used for RobotContainer.
+     * @return lBumper
+     * @author Jared Brown, Caleb Walters, Amelia Bingamin
+     */
+    public JoystickButton getAgitateButton() {
         return lBumper;
     }
 
+    /**
+     * Returns a universal instance of the Controller.
+     * @return Controller -- to be used anywhere the Controller is needed
+     */
     public static Controller getInstance() {
         return instance;
     }

@@ -7,12 +7,26 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drum;
 
+/**
+ * <b> Drum Velocity Class </b>
+ * <p>
+ * Commands Drum to spin at a certain velocity, such as low speed, medium speed,
+ * high speed, and extreme speed. A rateLimiter is used to slowly spin and despin the motor.
+ * @author Jared Brown, Caleb Walters, Amelia Bingamin
+ */
 public class DrumVelocity extends CommandBase {
   /** Creates a new DrumVelocity. */
 
   Drum m_Drum = Drum.getInstance();
   int button;
-
+  
+  /**
+   * <b> Drum Velocity Method </b>
+   * <p>
+   * Adds the Drum methods and adds a new button called button Number.
+   * @param buttonNumber
+   * @author Jared Brown, Caleb Walters, Amelia Bingamin
+   */
   public DrumVelocity(int buttonNumber) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Drum);
@@ -28,7 +42,7 @@ public class DrumVelocity extends CommandBase {
   @Override
   public void execute() {
 
-    // A = 0, B = 1, Y = 2, X = 3, RBumper = 10. (The final else is for button = 11, for the default Drum Power Off metod)
+    // A = 1, B = 2, Y = 3, X = 4, RBumper = 0 (the final else case).
 
     if (button == 1) {
       m_Drum.lowSpin();

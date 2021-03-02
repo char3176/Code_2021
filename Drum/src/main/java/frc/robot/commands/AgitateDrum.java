@@ -8,6 +8,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drum;
 import java.util.Timer;
 
+/**
+ * <b> Agitate Drum Class </b>
+ * <p>
+ * Shakes the drum back and forth to fix any misplacement of power cells.
+ * Loops 10 times.
+ * @author Jared Brown, Caleb Walters, Amelia Bingamin
+ */
 public class AgitateDrum extends CommandBase {
   /** Creates a new AgitateDrum. */
 
@@ -15,6 +22,12 @@ public class AgitateDrum extends CommandBase {
   Drum m_Drum = Drum.getInstance();
   private boolean ranThroughSequence;
 
+  /**
+   * <b> Agitate Drum Method </b>
+   * <p>
+   * Adds the Drum subsystem.
+   * @author Jared Brown, Caleb Walters, Amelia Bingamin
+   */
   public AgitateDrum() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Drum);
