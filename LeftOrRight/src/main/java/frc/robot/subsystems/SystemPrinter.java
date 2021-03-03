@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SystemPrinter extends SubsystemBase {
@@ -16,19 +17,19 @@ public class SystemPrinter extends SubsystemBase {
   }
 
   public void printPositivetv() {
-    System.out.println("I see something.");
+    SmartDashboard.putBoolean("Has Target", true);
   }
   public void printNegativetv() {
-    System.out.println("I see nothing.");
+    SmartDashboard.putBoolean("Has Target", false);
   }
   public void printtoleft(double absOffset) {
-    System.out.println("It's " + absOffset + " degrees to my left.");
+    SmartDashboard.putNumber("Degrees", absOffset * -1);
   }
   public void printtright(double absOffset) {
-    System.out.println("It's " + absOffset + " degrees to my right.");
+    SmartDashboard.putNumber("Degrees", absOffset);
   }
   public void printinfront() {
-    System.out.println("It's directly ahead of me.");
+    SmartDashboard.putNumber("Degrees", 0);
   }
   @Override
   public void periodic() {

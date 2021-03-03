@@ -33,7 +33,7 @@ public class LeftOrRight extends CommandBase {
       if (targetX <= 1 && targetX >= -1){
         msysprint.printinfront();
       }
-      else if(targetX >=1){
+      else if(targetX >= 1){
         msysprint.printtright(absOffset);
       }
       else if(targetX <= -1){
