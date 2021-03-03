@@ -1,10 +1,18 @@
 package frc.robot.commands;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
+/**
+ * <b> Cancel Roll Class </b>
+ * <p>
+ * Creates the class that stops the wheels spinning via the motor.
+ * @author Caleb Walters
+ */
 public class CancelRoll extends CommandBase {
     private final Intake m_Intake = Intake.getInstance();
-    
+    /**
+   * Add commands from Intake subsystem.
+   * @author Caleb Walters
+   */
     public CancelRoll() {
       // Use addRequirements() here to declare subsystem dependencies.
       addRequirements(m_Intake);

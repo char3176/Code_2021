@@ -2,10 +2,19 @@ package frc.robot.commands;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-
+/**
+ * <b> Down And Roll Class </b>
+ * <p>
+ * Creates the command that both pushes the intake down via extending 
+ * the pistons and spins the wheels via the motor.
+ * @author Caleb Walters
+ */
 public class DownAndRoll extends CommandBase {
   private final Intake m_Intake = Intake.getInstance();
-  
+  /**
+   * Add commands from Intake subsystem.
+   * @author Caleb Walters
+   */
   public DownAndRoll() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Intake);
