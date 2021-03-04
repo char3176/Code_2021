@@ -1,11 +1,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.teleop.CancelIntakeRoll;
-import frc.robot.commands.teleop.DeployIntake;
+import frc.robot.commands.teleop.IntakeCancelRoll;
+import frc.robot.commands.teleop.IntakeDeploy;
 import frc.robot.commands.teleop.IntakeDeployAndRoll;
 import frc.robot.commands.teleop.IntakeRoll;
-import frc.robot.commands.teleop.RetractIntake;
+import frc.robot.commands.teleop.IntakeRetract;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -14,7 +14,7 @@ import frc.robot.commands.teleop.AngledShooterUp;
 import frc.robot.subsystems.AngledShooter;
 import frc.robot.subsystems.Drum;
 import frc.robot.commands.teleop.DrumVelocity;
-import frc.robot.commands.teleop.AgitateDrum;
+import frc.robot.commands.teleop.DrumAgitate;
 import frc.robot.commands.teleop.FlywheelStop;
 import frc.robot.commands.teleop.FlywheelMin;
 import frc.robot.commands.teleop.FlywheelMed;
@@ -71,11 +71,11 @@ public class RobotContainer {
     m_Controller.getReZeroGyroButton().whenHeld(new SwerveReZeroGyro());
     m_Controller.getSlalomButton().whenPressed(new Slalom());
 
-    m_Controller.getExtendButton().whenPressed(new DeployIntake());
-    m_Controller.getRetractButton().whenPressed(new RetractIntake());
-    m_Controller.getRollAndExtendButton().whenPressed(new IntakeDeployAndRoll());
-    m_Controller.getRollButton().whenPressed(new IntakeRoll());
-    m_Controller.getStopButton().whenPressed(new CancelIntakeRoll());
+    m_Controller.getIntakeExtendButton().whenPressed(new IntakeDeploy());
+    m_Controller.getIntakeRetractButton().whenPressed(new IntakeRetract());
+    m_Controller.getIntakeRollAndExtendButton().whenPressed(new IntakeDeployAndRoll());
+    m_Controller.getIntakeRollButton().whenPressed(new IntakeRoll());
+    m_Controller.getIntakeStopButton().whenPressed(new IntakeCancelRoll());
 
     m_Controller.getUpDPAD().whenPressed(new AngledShooterUp());
     m_Controller.getDownDPAD().whenPressed(new AngledShooterDown());
@@ -88,7 +88,7 @@ public class RobotContainer {
     // m_Controller.getXButton3().whenPressed(new DrumVelocity(4));
     // m_Controller.getRBumper3().whenPressed(new DrumVelocity(0));
 
-    m_Controller.getAgitateButton().whenPressed(new AgitateDrum());
+    m_Controller.getDrumAgitateButton().whenPressed(new DrumAgitate());
 
     // m_Controller.getAButton4().whenPressed(new FlywheelStop()); 
     // m_Controller.getBButton4().whenPressed(new FlywheelMin());

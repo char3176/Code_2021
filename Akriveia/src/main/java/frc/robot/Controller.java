@@ -32,11 +32,11 @@ public class Controller {
     
     /* Intake */
 
-    private final JoystickButton extendButton = new JoystickButton(rotStick, 11);
-    private final JoystickButton retractButton = new JoystickButton(rotStick, 12);
-    private final JoystickButton rollExtendButton = new JoystickButton(rotStick, 13);
-    private final JoystickButton rollButton = new JoystickButton(rotStick, 14);
-    private final JoystickButton iStopButton = new JoystickButton(rotStick, 15);
+    private final JoystickButton intakeExtendButton = new JoystickButton(rotStick, 11);
+    private final JoystickButton intakeRetractButton = new JoystickButton(rotStick, 12);
+    private final JoystickButton intakeRollExtendButton = new JoystickButton(rotStick, 13);
+    private final JoystickButton intakeRollButton = new JoystickButton(rotStick, 14);
+    private final JoystickButton intakeStopButton = new JoystickButton(rotStick, 15);
 
     /* Angled Shooter */
 
@@ -45,7 +45,7 @@ public class Controller {
 
     /* Drum */
 
-    private final JoystickButton agitateDrumButton = new JoystickButton(op, Button.kStart.value);
+    private final JoystickButton drumAgitateButton = new JoystickButton(op, Button.kStart.value);
     private final JoystickButton drumDownButton = new JoystickButton(op, Button.kBumperLeft.value);
     private final JoystickButton drumUpButton = new JoystickButton(op, Button.kBumperRight.value);
 
@@ -93,11 +93,11 @@ public class Controller {
 
     /* Intake Buttons */
 
-    public JoystickButton getExtendButton() {return extendButton;}
-    public JoystickButton getRetractButton() {return retractButton;}
-    public JoystickButton getRollAndExtendButton() {return rollExtendButton;}
-    public JoystickButton getRollButton() {return rollButton;}
-    public JoystickButton getStopButton() {return iStopButton;}
+    public JoystickButton getIntakeExtendButton() {return intakeExtendButton;}
+    public JoystickButton getIntakeRetractButton() {return intakeRetractButton;}
+    public JoystickButton getIntakeRollAndExtendButton() {return intakeRollExtendButton;}
+    public JoystickButton getIntakeRollButton() {return intakeRollButton;}
+    public JoystickButton getIntakeStopButton() {return intakeStopButton;}
 
     /* Angled Shooter*/
 
@@ -116,7 +116,7 @@ public class Controller {
 
     /* Drum */
 
-    public JoystickButton getAgitateButton() {return agitateDrumButton;}
+    public JoystickButton getDrumAgitateButton() {return drumAgitateButton;}
     public JoystickButton getDrumUpButton() {return drumUpButton;}
     public JoystickButton getDrumDownButton() {return drumDownButton;}
 
