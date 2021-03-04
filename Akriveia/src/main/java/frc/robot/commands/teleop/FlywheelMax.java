@@ -12,6 +12,6 @@ public class FlywheelMax extends InstantCommand {
 
   @Override
   public void initialize() {
-    m_Flywheel.spin(6380);
+    m_Flywheel.spinVelocityPIDF(6380);
   }
 }

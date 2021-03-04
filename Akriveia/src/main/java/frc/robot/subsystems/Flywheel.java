@@ -7,28 +7,33 @@ import frc.robot.constants.FlywheelConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Flywheel extends SubsystemBase {
-    WPI_TalonFX fly = new WPI_TalonFX(5);
+    WPI_TalonFX flywheelController = new WPI_TalonFX(5);
 
     private static Flywheel instance = new Flywheel();
     
     public Flywheel() {
-        fly.configFactoryDefault();
+        flywheelController.configFactoryDefault();
 
-        fly.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, FlywheelConstants.kPIDLoopIdx, FlywheelConstants.kTimeoutMs);
-        fly.configAllowableClosedloopError(0, FlywheelConstants.kPIDLoopIdx, FlywheelConstants.kTimeoutMs);
+        flywheelController.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, FlywheelConstants.kPIDLoopIdx, FlywheelConstants.kTimeoutMs);
+        flywheelController.configAllowableClosedloopError(0, FlywheelConstants.kPIDLoopIdx, FlywheelConstants.kTimeoutMs);
 
-        fly.config_kF(FlywheelConstants.kPIDLoopIdx, FlywheelConstants.kF, FlywheelConstants.kTimeoutMs);
-        fly.config_kP(FlywheelConstants.kPIDLoopIdx, FlywheelConstants.kP, FlywheelConstants.kTimeoutMs);
-        fly.config_kI(FlywheelConstants.kPIDLoopIdx, FlywheelConstants.kI, FlywheelConstants.kTimeoutMs);
-        fly.config_kD(FlywheelConstants.kPIDLoopIdx, FlywheelConstants.kD, FlywheelConstants.kTimeoutMs);
+        flywheelController.config_kF(FlywheelConstants.kPIDLoopIdx, FlywheelConstants.kF, FlywheelConstants.kTimeoutMs);
+        flywheelController.config_kP(FlywheelConstants.kPIDLoopIdx, FlywheelConstants.kP, FlywheelConstants.kTimeoutMs);
+        flywheelController.config_kI(FlywheelConstants.kPIDLoopIdx, FlywheelConstants.kI, FlywheelConstants.kTimeoutMs);
+        flywheelController.config_kD(FlywheelConstants.kPIDLoopIdx, FlywheelConstants.kD, FlywheelConstants.kTimeoutMs);
 
-        fly.setSensorPhase(true);
+        flywheelController.setSensorPhase(true);
     }
     
-    public void spin(double u) {
+    public void spinVelocityPIDF(double u) {
         double ticsPer100ms = (u * 2048.0) / 600.0;
-        fly.set(TalonFXControlMode.Velocity, ticsPer100ms);
+        flywheelController.set(TalonFXControlMode.Velocity, ticsPer100ms);
     }
+
+    public void spinVelocityOutputPercent(double u) {
+        flywheelController.set(TalonFXControlMode.PercentOutput, u);
+    }
+
 
     public static Flywheel getInstance() {
         return instance;

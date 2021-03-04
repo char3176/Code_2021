@@ -12,6 +12,6 @@ public class FlywheelStop extends InstantCommand {
 
   @Override
   public void initialize() {
-    m_Flywheel.spin(0);
+    m_Flywheel.spinVelocityPIDF(0);
   }
 }
