@@ -15,6 +15,9 @@ public class AngledShooter extends SubsystemBase {
   private int absolutePosition = 0;  
 
   public AngledShooter() {
+	  
+	/* Setting up the Motor */
+	  
     angledShooterTalon.configFactoryDefault();
     angledShooterTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.angledShooterTimeoutMs);
     angledShooterTalon.setSensorPhase(AngledShooterConstants.angledShooterSensorPhase);
@@ -28,7 +31,6 @@ public class AngledShooter extends SubsystemBase {
 		angledShooterTalon.config_kP(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pArray[0], AngledShooterConstants.angledShooterTimeoutMs);
 		angledShooterTalon.config_kI(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pArray[1], AngledShooterConstants.angledShooterTimeoutMs);
     angledShooterTalon.config_kD(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pArray[2], AngledShooterConstants.angledShooterTimeoutMs);
-    
     absolutePosition = angledShooterTalon.getSensorCollection().getPulseWidthPosition();
     absolutePosition &= 0xFFF;
 		if(AngledShooterConstants.angledShooterSensorPhase) {absolutePosition *= -1;}
@@ -41,18 +43,26 @@ public class AngledShooter extends SubsystemBase {
   @Override
   public void periodic() {}
 
+	/*
+	 * @return AngledShooter Instance
+	 */
   public static AngledShooter getInstance() {
     return instance;
   }
 
+	/*
+	 * @param targetPosition gets the target position that it should go if its inside of the MIN and MAX constants
+	 */
   public void setPosition(double targetPosition){
     if (targetPosition>=AngledShooterConstants.MIN_TICS && targetPosition<=AngledShooterConstants.MAX_TICS){
       angledShooterTalon.set(ControlMode.Position, targetPosition);
     }
-    else{System.out.println("NO");}
-    SmartDashboard.putNumber("targetPositon",targetPosition);
   }
 
+	/*
+	 * @return gets the encoder position by getting the Selected Sensor Position
+	 */
+	
   public double getEncoderPosition() {
     return angledShooterTalon.getSelectedSensorPosition();
   }
