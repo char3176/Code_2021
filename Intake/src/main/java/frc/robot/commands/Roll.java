@@ -7,9 +7,18 @@ import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 
+/**
+ * <b> Roll Class </b>
+ * <p>
+ * Starts the Roll command, which spins the wheels via the motor.
+ * @author Caleb Walters
+ */
 public class Roll extends CommandBase {
   private final Intake m_Intake = Intake.getInstance();
-  
+  /**
+   * Add commands from Intake subsystem.
+   * @author Caleb Walters
+   */
   public Roll() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Intake);

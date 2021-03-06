@@ -3,29 +3,22 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.BallTransfer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-/**
- * <b> Go Down Class </b>
- * <p>
- * Creates the command that pushes the intake down by extending the pistons.
- * @author Caleb Walters
- */
-public class GoDown extends CommandBase {
-  private final Intake m_Intake = Intake.getInstance();
-  /**
-   * Add commands from Intake subsystem.
-   * @author Caleb Walters
-   */
-  public GoDown() {
+
+public class Straight extends CommandBase {
+  private final BallTransfer m_BallTransfer = BallTransfer.getInstance();
+  
+  public Straight() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_Intake);
+    addRequirements(m_BallTransfer);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_Intake.Extend();
+    m_BallTransfer.Extend();
+    m_BallTransfer.setPercentControl(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

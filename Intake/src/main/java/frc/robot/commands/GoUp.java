@@ -5,10 +5,18 @@
 package frc.robot.commands;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
+/**
+ * <b> Go Up Class </b>
+ * <p>
+ * Creates command that pushes the intake up by retracting the pistons.
+ * @author Caleb Walters
+ */
 public class GoUp extends CommandBase {
   private final Intake m_Intake = Intake.getInstance();
-  
+  /**
+   * Add commands from Intake subsystem.
+   * @author Caleb Walters
+   */
   public GoUp() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Intake);
