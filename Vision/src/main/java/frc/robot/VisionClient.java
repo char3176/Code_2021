@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.util.Arrays;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -15,12 +17,15 @@ public class VisionClient{
     public NetworkTableEntry tlong;
     public NetworkTableEntry thor;
     public static NetworkTableEntry tvert;
-    public static NetworkTableEntry tcornx;
+    public static NetworkTableEntry tcornxy;
     private static NetworkTableEntry tl;
 
+    private double[] tcornx = new double[4];
+    private double[] tcorny = new double[4];
+
     private double deltaXCam;
-    private double tcornx0;
-    private double tcornx1;
+    //private double tcornx0;
+    //private double tcornx1;
     private double radius;
 
     private final double gravity = -9.81; // m/s^2
@@ -43,7 +48,7 @@ public class VisionClient{
         tlong = limelightTable.getEntry("tlong");
         thor = limelightTable.getEntry("thor");
         tvert = limelightTable.getEntry("tvert");
-        tcornx = limelightTable.getEntry("tcornxy");
+        tcornxy = limelightTable.getEntry("tcornxy");
         tl = limelightTable.getEntry("tl");
         
         limelightTable.getEntry("pipeline").setNumber(1);
@@ -83,42 +88,45 @@ public class VisionClient{
         SmartDashboard.putNumber("tshort", tshort.getDouble(0));
         SmartDashboard.putNumber("tvert", tvert.getDouble(0));
 
-        SmartDashboard.putNumber("Length", tcornx.getDoubleArray(new double[1]).length);
+        SmartDashboard.putNumber("Length", tcornxy.getDoubleArray(new double[1]).length);
 
-        try{
-            tcornx0 = tcornx.getDoubleArray(new double[1])[0];
-            tcornx1 = tcornx.getDoubleArray(new double[2])[1];
-        } catch(Exception e){
-            tcornx0 = 10;
-            tcornx1 = 20;
+        if(tcornxy.getDoubleArray(new double[1]).length != 8){
+            return;
         }
 
-        deltaXCam = tcornx1 - tcornx0;
+        int j = 0;
+        for(int i = 0; i < 8; i++){
+            if(i % 2 == 0){
+                tcornx[j] = tcornxy.getDoubleArray(new double[1])[i];
+            } else{
+                tcorny[j] = tcornxy.getDoubleArray(new double[1])[i];
+                j++;
+            }
+        }
+
+        deltaXCam = calculateDeltaX(tcornx);
 
         SmartDashboard.putNumber("DeltaXCam", deltaXCam);
 
-        radius = Constants.VISION_CONSTANT * (Constants.DELTA_X_REAL / deltaXCam);
+        //radius = Constants.VISION_CONSTANT * (deltaXCam / Constants.DELTA_X_REAL);
+        radius = Constants.VISION_CONSTANT / deltaXCam;
         deltaX = radius * Math.cos(ty.getDouble(0) * Constants.DEG2RAD);
         deltaY = radius * Math.sin(ty.getDouble(0) * Constants.DEG2RAD);
-        
-        double k = (Constants.DELTA_X_REAL * deltaX) / (deltaXCam * Math.cos(ty.getDouble(0) * Constants.DEG2RAD));
-
-        System.out.println(ty.getDouble(0));
-
-        double testRadius = k * (Constants.DELTA_X_REAL / deltaXCam);
 
         SmartDashboard.putNumber("Radius", radius);
         SmartDashboard.putNumber("deltaX", deltaX);
         SmartDashboard.putNumber("deltaY", deltaY);
 
-        SmartDashboard.putNumber("Test Radius", testRadius);
-
-        SmartDashboard.putNumber("k", k);
-
     
-        //double[] resultArray = findInitialValues(0);
+        
+        double[] resultArray = findInitialValues(0);
 
         SmartDashboard.putNumber("Latency (ms)", ((Timer.getFPGATimestamp() - startTime) * 1000) + tl.getDouble(0) + 11);
+    }
+
+    public double calculateDeltaX(double[] array){
+        Arrays.sort(array);
+        return array[array.length - 1] - array[0];
     }
 
     public double[] findInitialValues(int speedIdx){
