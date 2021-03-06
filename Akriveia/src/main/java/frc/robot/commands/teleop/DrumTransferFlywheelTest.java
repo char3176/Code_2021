@@ -5,8 +5,11 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Drum;
 import frc.robot.subsystems.BallTransfer;
 import frc.robot.subsystems.Flywheel;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class DrumTransferFlywheelTest extends InstantCommand {
+
+
+public class DrumTransferFlywheelTest extends CommandBase {
   Drum m_Drum = Drum.getInstance();
   BallTransfer m_BallTransfer = BallTransfer.getInstance();
   Flywheel m_Flywheel = Flywheel.getInstance();
@@ -51,8 +54,4 @@ public class DrumTransferFlywheelTest extends InstantCommand {
 
   }
 
-  @Override
-
-    }
-  }
 }

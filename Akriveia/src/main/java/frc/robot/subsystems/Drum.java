@@ -133,12 +133,6 @@ public class Drum extends SubsystemBase {
     this.percentOutputSet = percentOutputSet;
   }
 
-  // BEGIN: TEMP CODE FOR TESTING.  WILL REMOVE LATER. --char
-  public void setPercentOutputSetFromShuffleboard() {
-    double percentOutputSetSB = SmartDashboard.getNumber("DrumSetPercentOutput", 0);
-    this.drumMotor.set(percentOutputSetSB);
-  }
-  // END: TEMP CODE FOR TESTING.  WILL REMOVE LATER. --char
 
   @Override
   public void periodic() {}
