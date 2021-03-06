@@ -93,7 +93,7 @@ public class RobotContainer {
 
     m_Controller.getDrumAgitateButton().whenPressed(new DrumAgitate());
 
-    // m_Controller.getAButton4().whenPressed(new FlywheelStop()); 
+    // m_Controller.getAButton4().whenPressed(new FlywheelStop());
     // m_Controller.getBButton4().whenPressed(new FlywheelMin());
     // m_Controller.getYButton4().whenPressed(new FlywheelMed());
     // m_Controller.getXButton4().whenPressed(new FlywheelMax());
