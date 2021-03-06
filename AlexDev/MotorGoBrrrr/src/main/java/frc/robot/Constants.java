@@ -22,4 +22,5 @@ public final class Constants {
     public static final double kPeakOutput = 1.0; // Default 1.0
     public static final int kTimeoutMs = 30; // Default 30 (I think)
     public static final int kPIDLoopIdx = 0; // Default 0
+    public static final int[] FlywheelSpeeds = {0, 1024, 4042, 6380};
 }

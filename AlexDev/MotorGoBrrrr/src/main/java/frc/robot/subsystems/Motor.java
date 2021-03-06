@@ -27,14 +27,9 @@ public class Motor extends SubsystemBase {
         spinMotor.setSensorPhase(true);
     }
     
-    public void youSpinMotorRightRound(double uhh) {
-        //double motorVelocity = uhh;
-        double motorVelocity = uhh;
-        System.out.println(motorVelocity);
-        double ticsPer100ms = (uhh * 2048.0) / 600.0;
+    public void youSpinMotorRightRound(double level) {
+        double ticsPer100ms = (level * 2048.0) / 600.0;
         spinMotor.set(TalonFXControlMode.Velocity, ticsPer100ms);
-        //spinMotor.set(TalonFXControlMode.PercentOutput, motorOutputPercent);
-        System.out.println("motor method run");
     }
 
     public static Motor getInstance() {
