@@ -13,6 +13,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.SlewRateLimiter;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.constants.DrumConstants;
 
 public class Drum extends SubsystemBase {
@@ -25,7 +26,7 @@ public class Drum extends SubsystemBase {
   private static Drum instance = new Drum();
   public boolean drumPctOutputMode = false;
   private boolean isRateLimitOff = false;
-  private int lastSetting;
+  private int lastSetting; 
   private int direction = 1;
   private double shakeStartTime = -1;
   private double shakeIterations = 0;
@@ -127,6 +128,17 @@ public class Drum extends SubsystemBase {
   public static Drum getInstance() {
     return instance;
   }
+
+  public void setPercentOutputSet(double percentOutputSet) {
+    this.percentOutputSet = percentOutputSet;
+  }
+
+  // BEGIN: TEMP CODE FOR TESTING.  WILL REMOVE LATER. --char
+  public void setPercentOutputSetFromShuffleboard() {
+    double percentOutputSetSB = SmartDashboard.getNumber("DrumSetPercentOutput", 0);
+    this.drumMotor.set(percentOutputSetSB);
+  }
+  // END: TEMP CODE FOR TESTING.  WILL REMOVE LATER. --char
 
   @Override
   public void periodic() {}
