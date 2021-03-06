@@ -5,9 +5,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import javax.swing.text.Style;
-
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
@@ -39,7 +36,7 @@ public class Drum extends SubsystemBase {
   private double shakeStartTime = -1;
   private double shakeIterations = 0;
 
-  private double percentOutputSet = 0.0;     // for unused percent output control
+  // private double percentOutputSet = 0.0;     // for unused percent output control
 
   /**
    * Initializes the Drum subsystem once at code deploy. <b> Does not run at each enable! </b>
