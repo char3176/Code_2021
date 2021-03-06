@@ -9,77 +9,30 @@ public class Controller {
     
     private static Controller instance = new Controller();
     private XboxController m_Controller = new XboxController(2);
-    private final JoystickButton aButton = new JoystickButton(m_Controller, Button.kA.value);
-    private final JoystickButton bButton = new JoystickButton(m_Controller, Button.kB.value);
-    private final JoystickButton yButton = new JoystickButton(m_Controller, Button.kY.value);
-    private final JoystickButton xButton = new JoystickButton(m_Controller, Button.kX.value);
-    private final JoystickButton rBumper = new JoystickButton(m_Controller, Button.kBumperRight.value);
-    private final JoystickButton lBumper = new JoystickButton(m_Controller, Button.kBumperLeft.value);
+    private final JoystickButton intakePistonButton = new JoystickButton(m_Controller, Button.kA.value);
+    private final JoystickButton intakeMotorButton = new JoystickButton(m_Controller, Button.kB.value);
+    private final JoystickButton drumAgitateButton = new JoystickButton(m_Controller, Button.kX.value);
+    private final JoystickButton drumSpeedLButton = new JoystickButton(m_Controller, Button.kBumperLeft.value);
+    private final JoystickButton drumSpeedRButton = new JoystickButton(m_Controller, Button.kBumperRight.value);
     
-    /**
-     * <b> Low Speed Button </b>
-     * <p>
-     * returns LowSpeedButton to be used for RobotContainer.
-     * @return aButton
-     * @author Jared Brown, Caleb Walters, Amelia Bingamin
-     */
-    public JoystickButton getAButton() {
-        return aButton;
+    public JoystickButton getIntakePistonButton() {
+        return intakePistonButton;
     }
 
-    /**
-     * <b> Medium Speed Button </b>
-     * <p>
-     * returns MediumSpeedButton to be used for RobotContainer.
-     * @return bButton
-     * @author Jared Brown, Caleb Walters, Amelia Bingamin
-     */
-    public JoystickButton getBButton() {
-        return bButton;
+    public JoystickButton getIntakeMotorButton() {
+        return intakeMotorButton;
     }
 
-    /**
-     * <b> High Speed Button </b>
-     * <p>
-     * returns HighSpeedButton to be used for RobotContainer.
-     * @return yButton
-     * @author Jared Brown, Caleb Walters, Amelia Bingamin
-     */
-    public JoystickButton getYButton() {
-        return yButton;
+    public JoystickButton getDrumSpeedLButton() {
+        return drumSpeedLButton;
     }
 
-    /**
-     * <b> Extreme Speed Button </b>
-     * <p>
-     * returns ExtremeSpeedButton to be used for RobotContainer.
-     * @return xButton
-     * @author Jared Brown, Caleb Walters, Amelia Bingamin
-     */
-    public JoystickButton getXButton() {
-        return xButton;
+    public JoystickButton getDrumSpeedRButton() {
+        return drumSpeedRButton;
     }
 
-    /**
-     * <b> Off Button </b>
-     * <p>
-     * returns OffButton to be used for RobotContainer.
-     * @return rBumper
-     * @author Jared Brown, Caleb Walters, Amelia Bingamin
-     */
-    public JoystickButton getRBumper() {
-        return rBumper;
-    }
-
-    /**
-     * <b> Agitate Button </b>
-     * <p>
-     * returns AgitateButton to be used for RobotContainer.
-     * @return lBumper
-     * @author Jared Brown, Caleb Walters, Amelia Bingamin
-     */
-    public JoystickButton getLBumper() {
-        return lBumper;
+    public JoystickButton getDrumAgitateButton() {
+        return drumAgitateButton;
     }
 
     /**

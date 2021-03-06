@@ -10,11 +10,11 @@ import frc.robot.subsystems.Drum;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class DrumVelocity extends InstantCommand {
+public class DrumVelocitySlow extends InstantCommand {
 
   Drum m_Drum = Drum.getInstance();
 
-  public DrumVelocity() {
+  public DrumVelocitySlow() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Drum);
   }
@@ -23,8 +23,10 @@ public class DrumVelocity extends InstantCommand {
   @Override
   public void initialize() {
     // increment based on the lastSetting variable with 2 speeds and a stop
-
-
+    int tempSetting = m_Drum.getLastSetting();
+    if (tempSetting - 1 >= 0) {
+      m_Drum.setSpeed(tempSetting - 1);
+    }
 
   }
 }

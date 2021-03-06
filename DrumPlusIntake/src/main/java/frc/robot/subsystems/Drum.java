@@ -23,6 +23,7 @@ import frc.robot.constants.DrumConstants;
  * speeds to unload power cells, and can shake to dislodge power cells stuck on top of one another inside the Drum.
  * @author Jared Brown, Caleb Walters, Amelia Bingamin
  */
+
 public class Drum extends SubsystemBase {
   /** Creates a new Drum. */
 
@@ -73,7 +74,6 @@ public class Drum extends SubsystemBase {
    * velocity if it was turned off during the drumPowerOff and shakeDrum methods. It prevents sudden, violent jumps in speed.
    * @see Drum.drumPowerOff
    * @see Drum.shakeDrum
-   * @author Jared Brown
    */
   public void reengageRampLimit() {
     if (isRateLimitOff) {
@@ -82,83 +82,20 @@ public class Drum extends SubsystemBase {
     }
   }
 
-  // hit the hyperdrive!
   /**
-   * <b> Extreme speed spin: </b>
+   * <b> Spin (I Am Speed. K-CHOW!): </b>
    * <p>
-   * Sets the Drum motor to highest speed, set by Constants.drumExtreme, using the rateLimiter
-   * @see commands.DrumVelocity
-   * @author Jared Brown, Caleb Walters, Amelia Bingamin
+   * Sets the Drum motor to whatever the index level is in the drumSpeeds array.
+   * @see commands.teleop.DrumVelocitySlow
+   * @see commands.teleop.DrumVelocitySpeed
    */
-  public void extremeSpin() {
+  public void setSpeed(int level) {
     reengageRampLimit();
-    lastSetting = 4;
-    drumPIDController.setReference(rateLimiter.calculate(DrumConstants.drumExtreme), ControlType.kVelocity);
-    System.out.println(drumEncoder.getVelocity());
-    System.out.println("Extreme run");
+    lastSetting = level;
+    drumPIDController.setReference(rateLimiter.calculate(DrumConstants.drumSpeeds[level]), ControlType.kVelocity);
   }
 
-  /**
-   * <b> High speed spin: </b>
-   * <p>
-   * Sets the Drum motor to high speed, set by Constants.drumHigh, using the rateLimiter
-   * @see commands.DrumVelocity
-   * @author Jared Brown, Caleb Walters, Amelia Bingamin
-   */
-  public void highSpin() {
-    reengageRampLimit();
-    lastSetting = 3;
-    drumPIDController.setReference(rateLimiter.calculate(DrumConstants.drumHigh), ControlType.kVelocity);
-    System.out.println(drumEncoder.getVelocity());
-    System.out.println("High run");
-  }
-
-  /**
-   * <b> Medium speed spin: </b>
-   * <p>
-   * Sets the Drum motor to medium speed, set by Constants.drumMedium, using the rateLimiter
-   * @see commands.DrumVelocity
-   * @author Jared Brown, Caleb Walters, Amelia Bingamin
-   */
-  public void mediumSpin() {
-    reengageRampLimit();
-    lastSetting = 2;
-    drumPIDController.setReference(rateLimiter.calculate(DrumConstants.drumMedium), ControlType.kVelocity);
-    System.out.println(drumEncoder.getVelocity());
-    System.out.println("Medium run");
-  }
-
-  /**
-   * <b> Low speed spin: </b>
-   * <p>
-   * Sets the Drum motor to low speed, set by Constants.drumLow, using the rateLimiter
-   * @see commands.DrumVelocity
-   * @author Jared Brown, Caleb Walters, Amelia Bingamin
-   */
-  public void lowSpin() {
-    reengageRampLimit();
-    lastSetting = 1;
-    drumPIDController.setReference(rateLimiter.calculate(DrumConstants.drumLow), ControlType.kVelocity);
-    System.out.println(drumEncoder.getVelocity());
-    System.out.println("Low run");
-  }
-
-  // used with the default command to cut power to the drum upon being enabled
-  /**
-   * <b> Stopping the Drum: </b>
-   * <p>
-   * Sets the Drum to zero using percent output, stopping all force being applied to the motor. This slows down quickly but not
-   * violently, bypassing the PIDF and rateLimiter controls
-   * @see commands.DrumVelocity
-   * @author Jared Brown, Caleb Walters, Amelia Bingamin
-   */
-  public void drumPowerOff() {
-    isRateLimitOff = true;
-    lastSetting = 0;
-    drumMotor.set(0.0);
-    drumEncoder.getVelocity();
-    System.out.println("Power off run");
-  }
+  
 
   public void drumIncrement() {
 
@@ -174,7 +111,6 @@ public class Drum extends SubsystemBase {
    * confuse the CommandScheduler</b>.
    * @see commands.AgitateDrum
    * @return Boolean -- whether or not the Drum has changed direction the specified number of times
-   * @author Jared Brown, Caleb Walters, Amelia Bingamin
    */
   public boolean shakeDrum() {
     isRateLimitOff = true;
@@ -203,7 +139,7 @@ public class Drum extends SubsystemBase {
      * <p>
      * It'll never give up it's last state
      * @return lastSetting
-     * @author Rick Astley, Caleb Walters, Amelia Bingamin
+     * @author Rick Astley
      */
   public int getLastSetting() {
     return lastSetting;
@@ -214,7 +150,6 @@ public class Drum extends SubsystemBase {
    * <p>
    * Returns the instance created above for Drum.
    * @return instance
-   * @author Jared Brown, Caleb Walters, Amelia Bingamin
    */
   public static Drum getInstance() {
     return instance;

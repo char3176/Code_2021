@@ -9,13 +9,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.Compressor;
 import frc.robot.commands.AgitateDrum;
-import frc.robot.commands.CancelRoll;
-import frc.robot.commands.DownAndRoll;
-import frc.robot.commands.DrumVelocity;
-import frc.robot.commands.DrumVelocityOld;
-import frc.robot.commands.IntakeDown;
-import frc.robot.commands.IntakeUp;
-import frc.robot.commands.Roll;
+import frc.robot.commands.DrumVelocitySpeed;
+import frc.robot.commands.DrumVelocitySlow;
+import frc.robot.commands.IntakeRoll;
+import frc.robot.commands.IntakeSwitch;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -47,18 +44,11 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    m_Controller.getAButton().whenPressed(new DrumVelocityOld(1));
-    m_Controller.getBButton().whenPressed(new DrumVelocityOld(2));
-    m_Controller.getYButton().whenPressed(new DrumVelocityOld(3));
-    m_Controller.getXButton().whenPressed(new DrumVelocityOld(4));
-    m_Controller.getRBumper().whenPressed(new DrumVelocityOld(0));
-    m_Controller.getLBumper().whenPressed(new AgitateDrum());
-
-    m_Controller.getAButton().whenPressed(new IntakeDown());
-    m_Controller.getBButton().whenPressed(new IntakeUp());
-    m_Controller.getXButton().whenPressed(new DownAndRoll());
-    m_Controller.getLBumper().whenPressed(new Roll());
-    m_Controller.getRBumper().whenPressed(new CancelRoll());
+    m_Controller.getDrumSpeedLButton().whenPressed(new DrumVelocitySlow());
+    m_Controller.getDrumSpeedRButton().whenPressed(new DrumVelocitySpeed());
+    m_Controller.getDrumAgitateButton().whenPressed(new AgitateDrum());
+    m_Controller.getIntakePistonButton().whenPressed(new IntakeSwitch());
+    m_Controller.getIntakeMotorButton().whenPressed(new IntakeRoll());
 
   }
 
