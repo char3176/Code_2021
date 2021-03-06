@@ -11,10 +11,13 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.commands.teleop.AngledShooterDown;
 import frc.robot.commands.teleop.AngledShooterUp;
+import frc.robot.commands.teleop.BallTransferPivotAndRoll;
+import frc.robot.commands.teleop.BallTransferStraight;
 import frc.robot.subsystems.AngledShooter;
 import frc.robot.subsystems.Drum;
 import frc.robot.commands.teleop.DrumVelocity;
 import frc.robot.commands.teleop.DrumAgitate;
+import frc.robot.commands.teleop.DrumTransferFlywheelTest;
 import frc.robot.commands.teleop.FlywheelStop;
 import frc.robot.commands.teleop.FlywheelMin;
 import frc.robot.commands.teleop.FlywheelMed;
@@ -94,6 +97,11 @@ public class RobotContainer {
     // m_Controller.getBButton4().whenPressed(new FlywheelMin());
     // m_Controller.getYButton4().whenPressed(new FlywheelMed());
     // m_Controller.getXButton4().whenPressed(new FlywheelMax());
+
+    m_Controller.getTransferStraightButton().whenPressed(new BallTransferStraight());
+    m_Controller.getTransferPivotButton().whenPressed(new BallTransferPivotAndRoll());
+
+    m_Controller.getShootCMDButton().whenPressed(new DrumTransferFlywheelTest());
      
   }
 

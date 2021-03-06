@@ -50,10 +50,18 @@ public class Controller {
     private final JoystickButton drumUpButton = new JoystickButton(op, Button.kBumperRight.value);
 
     /* Flywheel */
-    
      
     private final JoystickButton flywheelRightButton = new JoystickButton(op, op.getPOV(90)); //Right on the D-Pad
     private final JoystickButton flywheelLeftButton = new JoystickButton(op, op.getPOV(270)); //Left on the D-Pad
+
+    /* Transfer */
+
+    private final JoystickButton transferStraightButton = new JoystickButton(op, Button.kA.value);
+    private final JoystickButton transferPivotButton = new JoystickButton(op, Button.kB.value);
+
+    /* Command Buttons */
+
+    private final JoystickButton shootCMD = new JoystickButton(op, Button.kX.value);
 
 
     /* Swerve Axis Data */
@@ -134,4 +142,13 @@ public class Controller {
 
     public JoystickButton getRightDPAD() {return flywheelRightButton;}
     public JoystickButton getLeftDPAD() {return flywheelLeftButton;}
+
+    /* Transfer */
+
+    public JoystickButton getTransferStraightButton() {return transferStraightButton;}
+    public JoystickButton getTransferPivotButton() {return transferPivotButton;}
+
+    /* Command Buttons */
+
+    public JoystickButton getShootCMDButton() {return shootCMD;}
 }

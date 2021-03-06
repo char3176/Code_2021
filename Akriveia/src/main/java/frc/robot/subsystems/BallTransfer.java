@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import javax.swing.text.Position;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.constants.BallTransferConstants;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -17,8 +18,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 public class BallTransfer extends SubsystemBase {
   /** Creates a new Intake. */
   private static BallTransfer instance = new BallTransfer();
-  private DoubleSolenoid transferPiston = new DoubleSolenoid(2, 5);
-  private WPI_TalonSRX transferMotor = new WPI_TalonSRX(33);
+  private DoubleSolenoid transferPiston = new DoubleSolenoid(1, 6);
+  private WPI_TalonSRX transferMotor = new WPI_TalonSRX(BallTransferConstants.MOTOR_CAN_ID);
 
   public BallTransfer() {
     transferPiston.set(DoubleSolenoid.Value.kOff);

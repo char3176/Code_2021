@@ -1,7 +1,6 @@
 package frc.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Drum;
 import frc.robot.subsystems.BallTransfer;
 import frc.robot.subsystems.Flywheel;
@@ -15,11 +14,10 @@ public class DrumTransferFlywheelTest extends CommandBase {
   Flywheel m_Flywheel = Flywheel.getInstance();
   int button;
   
-  public DrumTransferFlywheelTest(int buttonNumber) {
+  public DrumTransferFlywheelTest() {
     addRequirements(m_Drum);
     addRequirements(m_BallTransfer);
     addRequirements(m_Flywheel);
-    button = buttonNumber;
   }
 
   // Called when the command is initially scheduled.
