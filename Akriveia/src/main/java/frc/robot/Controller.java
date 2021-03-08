@@ -151,4 +151,55 @@ public class Controller {
     /* Command Buttons */
 
     public JoystickButton getShootCMDButton() {return shootCMD;}
+
+
+
+
+
+    /* ##############################################################
+     * BEGIN: EXAMPLE USAGE OF DoubleButton / LoneButton classes
+     * ############################################################## 
+     *
+     *  // This example uses 3 buttons:  blueButton, rightBumperButton, and leftBumperButton
+     *  // DoubleButton pairs together two "normal" buttons (ie blueButton & leftBummperButton in
+     *  // this example) into one "DoubleButton" object named myNewButton.
+     *  // However, the logic of DoubleButton.java could potentially foul-up independent 
+     *  // operation of blueButton as a sole button.   
+     *  // So we "re-create" (ie reassign) blueButton as a LoneButton object which checks that 
+     *  // none of the modifer buttons (ie rightBumperButton or leftBumperButton) are also 
+     *  // being presssed.  If that is true, then blueButton (or more specifically loneBlueButton) activate
+     *  // "MySecondCommand() when pressed (ie loneBlueButton.whenPressed() etc etc).
+     *  
+     * // include the DoubleButton class
+     *  import frc.robot.util.DoubleButton.java
+     * 
+     * // Create an object (named myjoystick) of Joystick class
+     *  private Joystick myjoystick = new Joystick(Joystick_ID_Number_from_Drivestation); 
+     *  
+     * // Create an object (named myNewButton in this example) using DoubleButton class.
+     * // Pass the "myjoystick" object, and the numbers of the first and second button on the joystick
+     * // to the DoubleButton(). 
+     *  private Button myNewButton = new DoubleButton(myjoystick, BLUE_BUTTON_ID, LEFT_BUMPER_ID);
+     *
+     * // MyCommand will now only "fire" when both button numbers 1 & 2 are pressed together
+     *   myNewButton.whenPressed(new MyCommand());
+     *
+     * 
+     * // NOW CREATE LONE BUTTONS for buttons blueButton, rightBumperButton, & leftBumperButton using the LoneButton class
+     *   JoystickButton blueButton = new JoystickButton(myjoystick, BLUE_BUTTON_ID);
+     *   JoystickButton rightBumperButton = new JoystickButton(myjoystick, RIGHT_BUMPER_ID);
+     *   JoystickButton leftBumperButton = new JoystickButton(myjoystick, LEFT_BUMPER_ID);
+
+     *   LoneButton loneBlueButton = new LoneButton(blueButton, leftBumperButton, rightBumperButton);
+     * 
+     *   loneBlueButton.whenPressed(new MySecondCommand());
+     *  
+     * 
+     * ##############################################################
+     * END: EXAMPLE USAGE OF DoubleButton / LoneButton classes
+     * ############################################################## */
+
 }
+
+
+
