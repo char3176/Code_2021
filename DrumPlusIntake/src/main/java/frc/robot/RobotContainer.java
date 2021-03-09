@@ -13,6 +13,8 @@ import frc.robot.commands.DrumVelocitySpeed;
 import frc.robot.commands.DrumVelocitySlow;
 import frc.robot.commands.IntakeRoll;
 import frc.robot.commands.IntakeSwitch;
+import frc.robot.commands.BallTransferPivotRoll;
+import frc.robot.commands.BallTransferShelf;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -49,6 +51,8 @@ public class RobotContainer {
     m_Controller.getDrumAgitateButton().whenPressed(new AgitateDrum());
     m_Controller.getIntakePistonButton().whenPressed(new IntakeSwitch());
     m_Controller.getIntakeMotorButton().whenPressed(new IntakeRoll());
+    m_Controller.getTransferStartButton().whenPressed(new BallTransferPivotRoll());
+    m_Controller.getTransferStopButton().whenPressed(new BallTransferShelf());
 
   }
 

@@ -138,7 +138,7 @@ public class Drum extends SubsystemBase {
   }
 
   /**
-   * <b> Retuens Drum Instance </b>
+   * <b> Returns Drum Instance </b>
    * <p>
    * Returns the instance created above for Drum.
    * @return instance
