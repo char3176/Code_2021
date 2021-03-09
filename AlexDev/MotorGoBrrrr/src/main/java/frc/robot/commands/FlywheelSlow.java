@@ -6,14 +6,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Flywheel;
-import frc.robot.Constants;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class FlywheelSpeed extends InstantCommand {
+public class FlywheelSlow extends InstantCommand {
   Flywheel m_Flywheel = Flywheel.getInstance();
-  public FlywheelSpeed() {
+  public FlywheelSlow() {
     addRequirements(m_Flywheel);
   }
 
@@ -21,8 +20,8 @@ public class FlywheelSpeed extends InstantCommand {
   @Override
   public void initialize() {
     double tempSetting = m_Flywheel.getLastSetting();
-    if (tempSetting + 1 < Constants.FlywheelSpeeds.length) {
-      m_Flywheel.youSpinMotorRightRound(tempSetting + 1);
+    if (tempSetting - 1 >= 0) {
+      m_Flywheel.youSpinMotorRightRound(tempSetting - 1);
     }
   }
 }

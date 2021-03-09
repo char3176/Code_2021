@@ -8,19 +8,14 @@ public class Controller {
     private static Controller instance = new Controller();
     XboxController duke = new XboxController(0);
     private final JoystickButton flywheelSpeedButton = new JoystickButton(duke, Button.kA.value);
-    private final JoystickButton minButton = new JoystickButton(duke, Button.kB.value);
+    private final JoystickButton flywheelSlowButton = new JoystickButton(duke, Button.kB.value);
 
-    public JoystickButton getAButton(){
-        return stopButton; 
+    public JoystickButton getFlywheelSpeedButton(){
+        return flywheelSpeedButton; 
     }
-    public JoystickButton getBButton(){
-        return minButton; 
-    }
-    public JoystickButton getYButton(){
-        return medButton; 
-    }
-    public JoystickButton getXButton(){
-        return maxButton; 
+    
+    public JoystickButton getFlywheelSlowButton(){
+        return flywheelSlowButton; 
     }
 
     public static Controller getInstance() {
