@@ -41,10 +41,7 @@ public class AgitateDrum extends CommandBase {
   @Override
   public void execute() {
 
-    // BUG ALERT: The motor shakes correctly, but the loop doesn't stop and can't be
-    // interrupted very easily by another command.
-
-      ranThroughSequence = m_Drum.shakeDrum();
+    ranThroughSequence = m_Drum.shakeDrum();
 
   }
 

@@ -92,11 +92,6 @@ public class Drum extends SubsystemBase {
     drumPIDController.setReference(rateLimiter.calculate(DrumConstants.drumSpeeds[level]), ControlType.kVelocity);
   }
 
-  
-
-  public void drumIncrement() {
-
-  }
 
   /**
    * <b> Shaking the Drum: </b>
@@ -113,12 +108,12 @@ public class Drum extends SubsystemBase {
     isRateLimitOff = true;
     if (shakeIterations < 10) {
       if (shakeStartTime == -1) {
-        drumMotor.set(0.3 * direction);
+        drumMotor.set(DrumConstants.drumShakePct * direction);
         shakeStartTime = System.nanoTime() / 1000000;
         direction *= -1;
       }
       if ((System.nanoTime() / 1000000) - shakeStartTime >= 150) {
-        drumMotor.set(0.3 * direction);
+        drumMotor.set(DrumConstants.drumShakePct * direction);
         direction *= -1;
         shakeIterations += 1;
         shakeStartTime = System.nanoTime() / 1000000;

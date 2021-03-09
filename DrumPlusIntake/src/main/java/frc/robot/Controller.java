@@ -11,8 +11,8 @@ public class Controller {
     private final JoystickButton intakePistonButton = new JoystickButton(m_Controller, Button.kA.value);
     private final JoystickButton intakeMotorButton = new JoystickButton(m_Controller, Button.kB.value);
     private final JoystickButton drumAgitateButton = new JoystickButton(m_Controller, Button.kX.value);
-    private final JoystickButton drumSpeedLButton = new JoystickButton(m_Controller, Button.kBumperLeft.value);
-    private final JoystickButton drumSpeedRButton = new JoystickButton(m_Controller, Button.kBumperRight.value);
+    private final JoystickButton drumSlowButton = new JoystickButton(m_Controller, Button.kBumperLeft.value);
+    private final JoystickButton drumSpeedButton = new JoystickButton(m_Controller, Button.kBumperRight.value);
     
     public JoystickButton getIntakePistonButton() {
         return intakePistonButton;
@@ -22,12 +22,12 @@ public class Controller {
         return intakeMotorButton;
     }
 
-    public JoystickButton getDrumSpeedLButton() {
-        return drumSpeedLButton;
+    public JoystickButton getDrumSlowButton() {
+        return drumSlowButton;
     }
 
-    public JoystickButton getDrumSpeedRButton() {
-        return drumSpeedRButton;
+    public JoystickButton getDrumSpeedButton() {
+        return drumSpeedButton;
     }
 
     public JoystickButton getDrumAgitateButton() {

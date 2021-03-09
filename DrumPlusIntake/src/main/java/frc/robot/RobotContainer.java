@@ -44,8 +44,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    m_Controller.getDrumSpeedLButton().whenPressed(new DrumVelocitySlow());
-    m_Controller.getDrumSpeedRButton().whenPressed(new DrumVelocitySpeed());
+    m_Controller.getDrumSlowButton().whenPressed(new DrumVelocitySlow());
+    m_Controller.getDrumSpeedButton().whenPressed(new DrumVelocitySpeed());
     m_Controller.getDrumAgitateButton().whenPressed(new AgitateDrum());
     m_Controller.getIntakePistonButton().whenPressed(new IntakeSwitch());
     m_Controller.getIntakeMotorButton().whenPressed(new IntakeRoll());
