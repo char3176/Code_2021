@@ -7,10 +7,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class Controller {
     private static Controller instance = new Controller();
     XboxController duke = new XboxController(0);
-    private final JoystickButton stopButton = new JoystickButton(duke, Button.kA.value);
+    private final JoystickButton flywheelSpeedButton = new JoystickButton(duke, Button.kA.value);
     private final JoystickButton minButton = new JoystickButton(duke, Button.kB.value);
-    private final JoystickButton medButton = new JoystickButton(duke, Button.kY.value);
-    private final JoystickButton maxButton = new JoystickButton(duke, Button.kX.value);
 
     public JoystickButton getAButton(){
         return stopButton; 

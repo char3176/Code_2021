@@ -19,6 +19,6 @@ public class FlywheelSpeed extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    if ()
   }
 }
