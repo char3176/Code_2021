@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SystemPrinter extends SubsystemBase {
   public static SystemPrinter Instance = new SystemPrinter();
-  /** Creates a new SystemPrinter. */
+  /** Creates a new SystemPrinter. This subsystem interacts with no physical hardware, just system outputs.*/
   public SystemPrinter() {}
 
   public static SystemPrinter getInstance(){

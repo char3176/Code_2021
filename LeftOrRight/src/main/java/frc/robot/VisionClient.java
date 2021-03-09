@@ -7,7 +7,9 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-/** Add your docs here. */
+/** Just creates and sets the networktable variables needed for the program to function.
+ * 
+ */
 public class VisionClient {
     public NetworkTableInstance tableInstance;
     public NetworkTable limelightTable;

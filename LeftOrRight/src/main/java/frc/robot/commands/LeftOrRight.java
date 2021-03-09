@@ -12,7 +12,7 @@ public class LeftOrRight extends CommandBase {
   SystemPrinter msysprint = SystemPrinter.getInstance();
   public double hastarget = VisionClient.tx.getDouble(0);
   public double targetX = VisionClient.tx.getDouble(0);
-  /** Creates a new LeftOrRight. */
+  /** Creates a new LeftOrRight. This command determines where the ball is relative to the camera crosshair. */
   public LeftOrRight() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(msysprint);
