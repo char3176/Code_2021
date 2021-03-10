@@ -14,5 +14,6 @@ package frc.robot.constants;
  */
 public final class BallTransferConstants {
     public static final double BALL_TRANSFER_PERCENT = 0.3;
-    public static final int MOTOR_CAN_ID = 33;
+    public static final int MOTOR_CAN_ID = 52;
+    public static final int PCM_CAN_ID = 10;
 }

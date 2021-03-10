@@ -1,7 +1,7 @@
 package frc.robot.constants;
 
 public class AngledShooterConstants {
-    public static final int angledShooterCANID = 44;
+    public static final int angledShooterCANID = 60;
 	public static final int angledShooterSlotIdx = 0;
     public static final int angledShooterPIDLoopIdx = 0;
     public static final int angledShooterTimeoutMs = 30;

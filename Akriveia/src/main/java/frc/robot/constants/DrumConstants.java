@@ -1,7 +1,7 @@
 package frc.robot.constants;
 
 public class DrumConstants {
-    public static final int drumMotorCANID = 6;
+    public static final int drumMotorCANID = 50;
 
     public static final double drumKP = 0.00013;
     public static final double drumKI = 0.0000008;

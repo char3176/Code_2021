@@ -7,7 +7,7 @@ import frc.robot.constants.FlywheelConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Flywheel extends SubsystemBase {
-    WPI_TalonFX flywheelController = new WPI_TalonFX(5);
+    WPI_TalonFX flywheelController = new WPI_TalonFX(FlywheelConstants.MOTOR_CAN_ID);
 
     private static Flywheel instance = new Flywheel();
     
@@ -31,6 +31,7 @@ public class Flywheel extends SubsystemBase {
     }
 
     public void spinVelocityOutputPercent(double u) {
+        System.out.println("Flywheel.java::spinVelocityOutputPercent" + u);
         flywheelController.set(TalonFXControlMode.PercentOutput, u);
     }
 

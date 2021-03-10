@@ -23,8 +23,12 @@ public class AngledShooter extends SubsystemBase {
     angledShooterTalon.setInverted(AngledShooterConstants.angledShooterMotorInvert);
     angledShooterTalon.configNominalOutputForward(0, AngledShooterConstants.angledShooterTimeoutMs);
     angledShooterTalon.configNominalOutputReverse(0, AngledShooterConstants.angledShooterTimeoutMs);
-		angledShooterTalon.configPeakOutputForward(1, AngledShooterConstants.angledShooterTimeoutMs);
-		angledShooterTalon.configPeakOutputReverse(-1, AngledShooterConstants.angledShooterTimeoutMs);
+    
+    //angledShooterTalon.configPeakOutputForward(1, AngledShooterConstants.angledShooterTimeoutMs);
+    angledShooterTalon.configPeakOutputForward(0.5, AngledShooterConstants.angledShooterTimeoutMs);
+    //angledShooterTalon.configPeakOutputReverse(-1, AngledShooterConstants.angledShooterTimeoutMs);
+    angledShooterTalon.configPeakOutputReverse(-0.5, AngledShooterConstants.angledShooterTimeoutMs);
+    
     angledShooterTalon.configAllowableClosedloopError(0, AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.angledShooterTimeoutMs);
     angledShooterTalon.config_kF(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pArray[3], AngledShooterConstants.angledShooterTimeoutMs);
 		angledShooterTalon.config_kP(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pArray[0], AngledShooterConstants.angledShooterTimeoutMs);
@@ -34,8 +38,8 @@ public class AngledShooter extends SubsystemBase {
     absolutePosition &= 0xFFF;
 		if(AngledShooterConstants.angledShooterSensorPhase) {absolutePosition *= -1;}
     if(AngledShooterConstants.angledShooterMotorInvert) {absolutePosition *= -1;}
-    angledShooterTalon.setSelectedSensorPosition(absolutePosition, AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.angledShooterTimeoutMs);
-    angledShooterTalon.set(ControlMode.Position, AngledShooterConstants.MIN_TICS);
+    //angledShooterTalon.setSelectedSensorPosition(absolutePosition, AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.angledShooterTimeoutMs);
+    //angledShooterTalon.set(ControlMode.Position, AngledShooterConstants.MIN_TICS);
   }
 
   @Override

@@ -40,8 +40,8 @@ public class Controller {
 
     /* Angled Shooter */
 
-    private final JoystickButton shooterUpButton = new JoystickButton(op, op.getPOV(180)); //Up on the D-Pad
-    private final JoystickButton shooterDownButton = new JoystickButton(op, op.getPOV(0)); //Down on the D-Pad
+    // private final JoystickButton shooterUpButton = new JoystickButton(op, op.getPOV(180)); //Up on the D-Pad
+    // private final JoystickButton shooterDownButton = new JoystickButton(op, op.getPOV(0)); //Down on the D-Pad
 
     /* Drum */
 
@@ -51,8 +51,8 @@ public class Controller {
 
     /* Flywheel */
      
-    private final JoystickButton flywheelRightButton = new JoystickButton(op, op.getPOV(90)); //Right on the D-Pad
-    private final JoystickButton flywheelLeftButton = new JoystickButton(op, op.getPOV(270)); //Left on the D-Pad
+    // private final JoystickButton flywheelRightButton = new JoystickButton(op, op.getPOV(90)); //Right on the D-Pad
+    // private final JoystickButton flywheelLeftButton = new JoystickButton(op, op.getPOV(270)); //Left on the D-Pad
 
     /* Transfer */
 
@@ -62,7 +62,10 @@ public class Controller {
     /* Command Buttons */
 
     private final JoystickButton shootCMD = new JoystickButton(op, Button.kX.value);
-
+    private final JoystickButton extend = new JoystickButton(op, Button.kBumperLeft.value);
+    private final JoystickButton retract = new JoystickButton(op, Button.kBumperRight.value);
+    public boolean getExtend() {return extend.get();}
+    public boolean getRetract() {return retract.get();}
 
     /* Swerve Axis Data */
 
@@ -109,18 +112,18 @@ public class Controller {
 
     /* Angled Shooter*/
 
-    public boolean getUpDPADB() {
-        if(op.getPOV() == 180) {return true;}
-        return false;
-    }
+    // public boolean getUpDPADB() {
+    //     if(op.getPOV() == 180) {return true;}
+    //     return false;
+    // }
 
-    public boolean getDownDPADB() {
-        if(op.getPOV() == 0) {return true;}
-        return false;
-    }
+    // public boolean getDownDPADB() {
+    //     if(op.getPOV() == 0) {return true;}
+    //     return false;
+    // }
 
-    public JoystickButton getUpDPAD() {return shooterUpButton;}
-    public JoystickButton getDownDPAD() {return shooterDownButton;}
+    // public JoystickButton getUpDPAD() {return shooterUpButton;}
+    // public JoystickButton getDownDPAD() {return shooterDownButton;}
 
     /* Drum */
 
@@ -130,18 +133,18 @@ public class Controller {
 
     /* Flywheel */
 
-    public boolean getRightDPADB() {
-        if(op.getPOV() == 90) {return true;}
-        return false;
-    }
+    // public boolean getRightDPADB() {
+    //     if(op.getPOV() == 90) {return true;}
+    //     return false;
+    // }
 
-    public boolean getLeftDPADB() {
-        if(op.getPOV() == 270) {return true;}
-        return false;
-    }
+    // public boolean getLeftDPADB() {
+    //     if(op.getPOV() == 270) {return true;}
+    //     return false;
+    // }
 
-    public JoystickButton getRightDPAD() {return flywheelRightButton;}
-    public JoystickButton getLeftDPAD() {return flywheelLeftButton;}
+    // public JoystickButton getRightDPAD() {return flywheelRightButton;}
+    // public JoystickButton getLeftDPAD() {return flywheelLeftButton;}
 
     /* Transfer */
 

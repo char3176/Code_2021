@@ -130,7 +130,9 @@ public class Drum extends SubsystemBase {
   }
 
   public void setPercentOutputSet(double percentOutputSet) {
+    System.out.println("Drum.java::setPercentOutputSet" + percentOutputSet);
     this.percentOutputSet = percentOutputSet;
+    drumMotor.set(percentOutputSet);
   }
 
 

@@ -1,6 +1,7 @@
 package frc.robot.constants;
 
 public class FlywheelConstants {
+    public static final int MOTOR_CAN_ID = 54;
     public static final double kP = 0.14; // Default .15
     public static final double kI = 0.0; // Default 0.0
     public static final double kD = 1.5; // Default 1.0

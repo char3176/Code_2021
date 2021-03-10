@@ -6,16 +6,19 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class BallTransfer extends SubsystemBase {
   /** Creates a new Transfer. This transfer goes from the Drum to the Shooter. This transfer has a piston to move it and also a Talon SRX to move the Power Cells */
   private static BallTransfer instance = new BallTransfer();
-  private DoubleSolenoid transferPiston = new DoubleSolenoid(1, 6);
-  private WPI_TalonSRX transferMotor = new WPI_TalonSRX(BallTransferConstants.MOTOR_CAN_ID);
+  // private DoubleSolenoid transferPiston = new DoubleSolenoid(3, 4); //Add to Constants
+  // private WPI_TalonSRX transferMotor = new WPI_TalonSRX(BallTransferConstants.MOTOR_CAN_ID);
+  private CANSparkMax motorS = new CANSparkMax(BallTransferConstants.MOTOR_CAN_ID, MotorType.kBrushless);
 
   public BallTransfer() {
     //Sets the piston to a nuetral state
-    transferPiston.set(Value.kOff);
+    // transferPiston.set(Value.kOff);
   }
 
   public static BallTransfer getInstance() {
@@ -27,7 +30,8 @@ public class BallTransfer extends SubsystemBase {
    */
 
   public void setPercentControl(double percent) {
-    transferMotor.set(ControlMode.PercentOutput, percent);
+    // transferMotor.set(ControlMode.PercentOutput, percent);
+    motorS.set(percent);
   }
 
   /**
@@ -35,7 +39,7 @@ public class BallTransfer extends SubsystemBase {
    */
 
   public void Extend() {
-    transferPiston.set(Value.kForward);
+    // transferPiston.set(Value.kForward);
   }
 
   /**
@@ -43,6 +47,6 @@ public class BallTransfer extends SubsystemBase {
    */
   
   public void Retract() {
-    transferPiston.set(Value.kReverse);
+    // transferPiston.set(Value.kReverse);
   }
 }

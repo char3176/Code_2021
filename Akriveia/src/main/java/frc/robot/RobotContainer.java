@@ -18,6 +18,9 @@ import frc.robot.subsystems.Drum;
 import frc.robot.commands.teleop.DrumVelocity;
 import frc.robot.commands.teleop.DrumAgitate;
 import frc.robot.commands.teleop.DrumTransferFlywheelTest;
+import frc.robot.subsystems.BallTransfer;
+import frc.robot.subsystems.Flywheel;
+import frc.robot.subsystems.AngledShooter;
 import frc.robot.commands.teleop.FlywheelStop;
 import frc.robot.commands.teleop.FlywheelMin;
 import frc.robot.commands.teleop.FlywheelMed;
@@ -29,6 +32,9 @@ import frc.robot.commands.teleop.SwerveVision;
 import frc.robot.commands.auton.Slalom;
 import frc.robot.subsystems.Drivetrain;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+
 public class RobotContainer {
   public Intake m_Intake;
   private Controller m_Controller;
@@ -36,6 +42,8 @@ public class RobotContainer {
   private AngledShooter m_AngledShooter;
   private Drum m_Drum;
   private Drivetrain m_Drivetrain;
+  private BallTransfer m_BallTransfer;
+  private Flywheel m_Flywheel;
 
   private SendableChooser<String> m_autonChooser;
   private static final String auto1 = "Galactic Search";
@@ -50,38 +58,49 @@ public class RobotContainer {
     m_Controller = Controller.getInstance();
 
     m_Intake = Intake.getInstance();
-    m_AngledShooter = AngledShooter.getInstance();
     m_Drum = Drum.getInstance();
+    m_BallTransfer = BallTransfer.getInstance();
+    m_Flywheel = Flywheel.getInstance();
+    m_AngledShooter = AngledShooter.getInstance();
+
     m_Drivetrain = Drivetrain.getInstance();
-    
-    m_Drivetrain.setDefaultCommand(new SwerveDrive(
-      () -> m_Controller.getForward(), 
-      () -> m_Controller.getStrafe(),
-      () -> m_Controller.getSpin(),
-      () -> m_Controller.isFieldCentricButtonPressed(),
-      () -> m_Controller.isRobotCentricButtonPressed(),
-      () -> m_Controller.isBackRobotCentricButtonPressed()));
+    // m_Drivetrain.setDefaultCommand(new SwerveDrive(
+    //   () -> m_Controller.getForward(), 
+    //   () -> m_Controller.getStrafe(),
+    //   () -> m_Controller.getSpin(),
+    //   () -> m_Controller.isFieldCentricButtonPressed(),
+    //   () -> m_Controller.isRobotCentricButtonPressed(),
+    //   () -> m_Controller.isBackRobotCentricButtonPressed()));
+
+    /* ##############################################################
+     * BEGIN:  Temp code for Integration test of Drum+BallTransfer+Flywheel+AngledShooter
+     * ############################################################# */
+    SmartDashboard.putNumber("DrumOutputPercent", 0);
+    SmartDashboard.putNumber("BallTransferOutputPercent", 0);
+    SmartDashboard.putNumber("FlywheelOutputPercent", 0);
+    SmartDashboard.putBoolean("StopTest06", false);
 
     configureButtonBindings();
   }
 
   private void configureButtonBindings() {
+
     // Drivetrain buttons
-    m_Controller.getDefenseButton().whenHeld(new SwerveDefense());
-    m_Controller.getVisionButton().whenHeld(new SwerveVision( 
-      () -> m_Controller.getForward(), 
-      () -> m_Controller.getStrafe()));
-    m_Controller.getReZeroGyroButton().whenHeld(new SwerveReZeroGyro());
-    m_Controller.getSlalomButton().whenPressed(new Slalom());
+    // m_Controller.getDefenseButton().whenHeld(new SwerveDefense());
+    // m_Controller.getVisionButton().whenHeld(new SwerveVision( 
+    //   () -> m_Controller.getForward(), 
+    //   () -> m_Controller.getStrafe()));
+    // m_Controller.getReZeroGyroButton().whenHeld(new SwerveReZeroGyro());
+    // m_Controller.getSlalomButton().whenPressed(new Slalom());
 
-    m_Controller.getIntakeExtendButton().whenPressed(new IntakeDeploy());
-    m_Controller.getIntakeRetractButton().whenPressed(new IntakeRetract());
-    m_Controller.getIntakeRollAndExtendButton().whenPressed(new IntakeDeployAndRoll());
-    m_Controller.getIntakeRollButton().whenPressed(new IntakeRoll());
-    m_Controller.getIntakeStopButton().whenPressed(new IntakeCancelRoll());
+    // m_Controller.getIntakeExtendButton().whenPressed(new IntakeDeploy());
+    // m_Controller.getIntakeRetractButton().whenPressed(new IntakeRetract());
+    // m_Controller.getIntakeRollAndExtendButton().whenPressed(new IntakeDeployAndRoll());
+    // m_Controller.getIntakeRollButton().whenPressed(new IntakeRoll());
+    // m_Controller.getIntakeStopButton().whenPressed(new IntakeCancelRoll());
 
-    m_Controller.getUpDPAD().whenPressed(new AngledShooterUp());
-    m_Controller.getDownDPAD().whenPressed(new AngledShooterDown());
+    // m_Controller.getUpDPAD().whenPressed(new AngledShooterUp());
+    // m_Controller.getDownDPAD().whenPressed(new AngledShooterDown());
 
     // m_Drum.setDefaultCommand(new DrumVelocity(0));
 
@@ -91,7 +110,7 @@ public class RobotContainer {
     // m_Controller.getXButton3().whenPressed(new DrumVelocity(4));
     // m_Controller.getRBumper3().whenPressed(new DrumVelocity(0));
 
-    m_Controller.getDrumAgitateButton().whenPressed(new DrumAgitate());
+    // m_Controller.getDrumAgitateButton().whenPressed(new DrumAgitate());
 
     // m_Controller.getAButton4().whenPressed(new FlywheelStop());
     // m_Controller.getBButton4().whenPressed(new FlywheelMin());
@@ -103,6 +122,8 @@ public class RobotContainer {
 
     m_Controller.getShootCMDButton().whenPressed(new DrumTransferFlywheelTest());
      
+    if(m_Controller.getRetract()) {m_BallTransfer.Retract();}
+    if(m_Controller.getExtend()) {m_BallTransfer.Extend();}
   }
 
   public Command getAutonomousCommand() {
