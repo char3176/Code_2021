@@ -5,29 +5,27 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.constants.DrumConstants;
-import frc.robot.subsystems.Drum;
+import frc.robot.subsystems.BallTransfer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class DrumVelocitySpeed extends InstantCommand {
+public class BallTransferPivot extends InstantCommand {
 
-  Drum m_Drum = Drum.getInstance();
+  BallTransfer m_BallTransfer = BallTransfer.getInstance();
 
-  public DrumVelocitySpeed() {
+  public BallTransferPivot() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_Drum);
+    addRequirements(m_BallTransfer);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // increment based on the lastSetting variable with 2 speeds and a stop
-    int tempSetting = m_Drum.getLastSetting();
-    if (tempSetting + 1 < DrumConstants.drumSpeeds.length) {
-      m_Drum.setSpeed(tempSetting + 1);
+    if (m_BallTransfer.getPistonSetting()) {
+      m_BallTransfer.Retract();
+    } else {
+      m_BallTransfer.Extend();
     }
-
   }
 }

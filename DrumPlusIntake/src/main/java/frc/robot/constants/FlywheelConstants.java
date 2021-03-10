@@ -12,7 +12,15 @@ package frc.robot.constants;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
-public final class IntakeConstants {
-    public static final double INTAKE_PERCENT = -0.4;
-    public static final int INTAKE_MOTOR_CAN_ID = 44;
+public final class FlywheelConstants {
+
+    public static final double kP = 0.14; // Default .15    // FIX THIS!!! (I think -- it just looks really queestionable)
+    public static final double kI = 0.0; // Default 0.0
+    public static final double kD = 1.5; // Default 1.0
+    public static final double kF = 0.0; // Default 0.0
+    public static final int kIzone = 0; // Default 0
+    public static final double kPeakOutput = 1.0; // Default 1.0
+    public static final int kTimeoutMs = 30; // Default 30
+    public static final int kPIDLoopIdx = 0; // Default 0
+    public static final int[] FlywheelSpeeds = {0, 1024, 4042, 6380};
 }

@@ -5,25 +5,24 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.subsystems.BallTransfer;
-import frc.robot.constants.BallTransferConstants;
+import frc.robot.subsystems.Flywheel;
+import frc.robot.constants.FlywheelConstants;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class BallTransferPivotRoll extends InstantCommand {
-
-  private final BallTransfer m_BallTransfer = BallTransfer.getInstance();
-
-  public BallTransferPivotRoll() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_BallTransfer);
+public class FlywheelSpeed extends InstantCommand {
+  Flywheel m_Flywheel = Flywheel.getInstance();
+  public FlywheelSpeed() {
+    addRequirements(m_Flywheel);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_BallTransfer.Retract();
-    m_BallTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT);
+    double tempSetting = m_Flywheel.getLastSetting();
+    if (tempSetting + 1 < FlywheelConstants.FlywheelSpeeds.length) {
+      m_Flywheel.youSpinMotorRightRound(tempSetting + 1);
+    }
   }
 }

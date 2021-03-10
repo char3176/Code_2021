@@ -5,16 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.constants.BallTransferConstants;
 import frc.robot.subsystems.BallTransfer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class BallTransferShelf extends InstantCommand {
+public class BallTransferRoll extends InstantCommand {
 
-  private final BallTransfer m_BallTransfer = BallTransfer.getInstance();
+  BallTransfer m_BallTransfer = BallTransfer.getInstance();
 
-  public BallTransferShelf() {
+  public BallTransferRoll() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_BallTransfer);
   }
@@ -22,7 +23,10 @@ public class BallTransferShelf extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_BallTransfer.Extend();
-    m_BallTransfer.setPercentControl(0);
+    if (m_BallTransfer.getLevelSetting() == 0) {
+      m_BallTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT);
+    } else {
+      m_BallTransfer.setPercentControl(0);
+    }
   }
 }
