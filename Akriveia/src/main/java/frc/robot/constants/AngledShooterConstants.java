@@ -8,11 +8,11 @@ public class AngledShooterConstants {
     public static boolean angledShooterSensorPhase = true;
     public static boolean angledShooterMotorInvert = false;
     
-    public static final double[] pArray = {/*P*/.31,/*I*/0.002,/*D*/1.12,/*F*/0};
+    public static final double[] pid = {/*P*/.31,/*I*/0.002,/*D*/1.12,/*F*/0};
 
     public static final double GEAR_RATIO = 4/1;
 	
-	public static final double MAX_DEGREES_IN_TIC_UNITS = 341.3*GEAR_RATIO;
+	public static final double MAX_DEGREES_IN_TIC_UNITS = 341.3 * GEAR_RATIO;
 	public static final double TICS_EQUAL_TO_5DEGREES = (MAX_DEGREES_IN_TIC_UNITS / 6 );
 
     public static final double MIN_TICS = -3822;
@@ -20,5 +20,4 @@ public class AngledShooterConstants {
     public static final double RANGE = (MAX_TICS-MIN_TICS);
 
     public static final double[] pos = {MIN_TICS, MIN_TICS + (RANGE*.25), MIN_TICS+ (RANGE*.5), MIN_TICS + (RANGE*.75), MAX_TICS};
-
 }

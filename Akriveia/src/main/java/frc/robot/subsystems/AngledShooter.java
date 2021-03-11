@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.AngledShooterConstants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -30,10 +29,10 @@ public class AngledShooter extends SubsystemBase {
     angledShooterTalon.configPeakOutputReverse(-0.5, AngledShooterConstants.angledShooterTimeoutMs);
     
     angledShooterTalon.configAllowableClosedloopError(0, AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.angledShooterTimeoutMs);
-    angledShooterTalon.config_kF(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pArray[3], AngledShooterConstants.angledShooterTimeoutMs);
-		angledShooterTalon.config_kP(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pArray[0], AngledShooterConstants.angledShooterTimeoutMs);
-		angledShooterTalon.config_kI(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pArray[1], AngledShooterConstants.angledShooterTimeoutMs);
-    angledShooterTalon.config_kD(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pArray[2], AngledShooterConstants.angledShooterTimeoutMs);
+    angledShooterTalon.config_kF(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pid[3], AngledShooterConstants.angledShooterTimeoutMs);
+		angledShooterTalon.config_kP(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pid[0], AngledShooterConstants.angledShooterTimeoutMs);
+		angledShooterTalon.config_kI(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pid[1], AngledShooterConstants.angledShooterTimeoutMs);
+    angledShooterTalon.config_kD(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pid[2], AngledShooterConstants.angledShooterTimeoutMs);
     absolutePosition = angledShooterTalon.getSensorCollection().getPulseWidthPosition();
     absolutePosition &= 0xFFF;
 		if(AngledShooterConstants.angledShooterSensorPhase) {absolutePosition *= -1;}
