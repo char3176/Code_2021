@@ -10,7 +10,7 @@ import frc.robot.constants.IntakeConstants;
 public class Intake extends SubsystemBase {
   private static Intake instance = new Intake();
   private DoubleSolenoid leftPiston = new DoubleSolenoid(2, 5);
-  private DoubleSolenoid rightPiston = new DoubleSolenoid(3, 4);
+  private DoubleSolenoid rightPiston = new DoubleSolenoid(1, 7);
   private WPI_TalonSRX motor = new WPI_TalonSRX(IntakeConstants.MOTOR_CAN_ID);
 
   public Intake() {
