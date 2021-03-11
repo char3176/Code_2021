@@ -12,7 +12,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class BallTransfer extends SubsystemBase {
   /** Creates a new Transfer. This transfer goes from the Drum to the Shooter. This transfer has a piston to move it and also a Talon SRX to move the Power Cells */
   private static BallTransfer instance = new BallTransfer();
-  // private DoubleSolenoid transferPiston = new DoubleSolenoid(10, 3, 4); //Add to Constants and I added 10 because that is the PCM ID
+  private DoubleSolenoid transferPiston = new DoubleSolenoid(3, 4); //Add to Constants
   private CANSparkMax transferMotor = new CANSparkMax(BallTransferConstants.MOTOR_CAN_ID, MotorType.kBrushless);
 
   public BallTransfer() {
@@ -37,7 +37,7 @@ public class BallTransfer extends SubsystemBase {
    */
 
   public void Extend() {
-    // transferPiston.set(Value.kForward);
+    transferPiston.set(Value.kForward);
   }
 
   /**
@@ -45,6 +45,6 @@ public class BallTransfer extends SubsystemBase {
    */
   
   public void Retract() {
-    // transferPiston.set(Value.kReverse);
+    transferPiston.set(Value.kReverse);
   }
 }
