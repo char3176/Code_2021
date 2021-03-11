@@ -13,8 +13,7 @@ public class BallTransfer extends SubsystemBase {
   /** Creates a new Transfer. This transfer goes from the Drum to the Shooter. This transfer has a piston to move it and also a Talon SRX to move the Power Cells */
   private static BallTransfer instance = new BallTransfer();
   // private DoubleSolenoid transferPiston = new DoubleSolenoid(3, 4); //Add to Constants
-  // private WPI_TalonSRX transferMotor = new WPI_TalonSRX(BallTransferConstants.MOTOR_CAN_ID);
-  private CANSparkMax motorS = new CANSparkMax(BallTransferConstants.MOTOR_CAN_ID, MotorType.kBrushless);
+  private CANSparkMax transferMotor = new CANSparkMax(BallTransferConstants.MOTOR_CAN_ID, MotorType.kBrushless);
 
   public BallTransfer() {
     //Sets the piston to a nuetral state
@@ -30,8 +29,7 @@ public class BallTransfer extends SubsystemBase {
    */
 
   public void setPercentControl(double percent) {
-    // transferMotor.set(ControlMode.PercentOutput, percent);
-    motorS.set(percent);
+    transferMotor.set(percent);
   }
 
   /**
