@@ -55,7 +55,7 @@ public class RobotContainer {
     m_Controller.getDrumAgitateButton().whenPressed(new AgitateDrum());
     m_Controller.getDrumSpinReverseButton().whenPressed(new DrumSpinReverse());
     m_Controller.getDrumPreShootAgitateButton().whenPressed(new DrumAgitatePreShoot());
-    m_Controller.getIntakePistonButton().whenPressed(new IntakeSwitch());
+    // m_Controller.getIntakePistonButton().whenPressed(new IntakeSwitch());
     m_Controller.getIntakeMotorButton().whenPressed(new IntakeRoll());
     m_Controller.getTransferPivotButton().whenPressed(new BallTransferPivot());
     m_Controller.getTransferRollButton().whenPressed(new BallTransferRoll());

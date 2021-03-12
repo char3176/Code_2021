@@ -9,7 +9,7 @@ public class Controller {
     
     private static Controller instance = new Controller();
     private XboxController m_Controller = new XboxController(2);
-    private final JoystickButton intakePistonButton = new JoystickButton(m_Controller, Button.kA.value);
+    // private final JoystickButton intakePistonButton = new JoystickButton(m_Controller, Button.kA.value);
     private final JoystickButton intakeMotorButton = new JoystickButton(m_Controller, Button.kB.value);
     private final JoystickButton drumAgitateButton = new JoystickButton(m_Controller, Button.kY.value);
     private final JoystickButton drumSlowButton = new JoystickButton(m_Controller, Button.kBumperLeft.value);
@@ -21,9 +21,9 @@ public class Controller {
     private final JoystickButton transferPivotButton = new JoystickButton(m_Controller, Button.kX.value);
     private final JoystickButton transferRollButton = new JoystickButton(m_Controller, Button.kStart.value);
     
-    public JoystickButton getIntakePistonButton() {
-        return intakePistonButton;
-    }
+    // public JoystickButton getIntakePistonButton() {
+    //     return intakePistonButton;
+    // }
 
     public JoystickButton getIntakeMotorButton() {
         return intakeMotorButton;
