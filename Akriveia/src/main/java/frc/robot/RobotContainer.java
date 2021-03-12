@@ -2,10 +2,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.teleop.IntakeCancelRoll;
-import frc.robot.commands.teleop.IntakeDeploy;
-import frc.robot.commands.teleop.IntakeDeployAndRoll;
 import frc.robot.commands.teleop.IntakeRoll;
-import frc.robot.commands.teleop.IntakeRetract;
+import frc.robot.commands.teleop.IntakeZero;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;

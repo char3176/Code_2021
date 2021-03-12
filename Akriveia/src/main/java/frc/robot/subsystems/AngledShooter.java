@@ -10,7 +10,6 @@ public class AngledShooter extends SubsystemBase {
   
   private TalonSRX angledShooterTalon = new WPI_TalonSRX(AngledShooterConstants.angledShooterCANID);
   private static AngledShooter instance = new AngledShooter();
-  private int absolutePosition = 0;  
 
   public AngledShooter() {
 	  
@@ -33,10 +32,6 @@ public class AngledShooter extends SubsystemBase {
 		angledShooterTalon.config_kP(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pid[0], AngledShooterConstants.angledShooterTimeoutMs);
 		angledShooterTalon.config_kI(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pid[1], AngledShooterConstants.angledShooterTimeoutMs);
     angledShooterTalon.config_kD(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pid[2], AngledShooterConstants.angledShooterTimeoutMs);
-    absolutePosition = angledShooterTalon.getSensorCollection().getPulseWidthPosition();
-    absolutePosition &= 0xFFF;
-		if(AngledShooterConstants.angledShooterSensorPhase) {absolutePosition *= -1;}
-    if(AngledShooterConstants.angledShooterMotorInvert) {absolutePosition *= -1;}
     //angledShooterTalon.setSelectedSensorPosition(absolutePosition, AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.angledShooterTimeoutMs);
     //angledShooterTalon.set(ControlMode.Position, AngledShooterConstants.MIN_TICS);
   }
