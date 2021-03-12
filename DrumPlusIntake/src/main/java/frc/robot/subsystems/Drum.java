@@ -12,6 +12,7 @@ import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.SlewRateLimiter;
 import frc.robot.constants.DrumConstants;
+import frc.robot.PowerManagement;
 
 /**
  * <b> The Drum subsystem </b>
@@ -109,14 +110,14 @@ public class Drum extends SubsystemBase {
     if (shakeIterations < 10) {
       if (shakeStartTime == -1) {
         drumMotor.set(DrumConstants.drumShakePct * direction);
-        shakeStartTime = System.nanoTime() / 1000000;
+        shakeStartTime = DrumConstants.drumMilli;
         direction *= -1;
       }
-      if ((System.nanoTime() / 1000000) - shakeStartTime >= 150) {
+      if ((System.nanoTime() / DrumConstants.drumMilli) - shakeStartTime >= 150) {
         drumMotor.set(DrumConstants.drumShakePct * direction);
         direction *= -1;
         shakeIterations += 1;
-        shakeStartTime = System.nanoTime() / 1000000;
+        shakeStartTime = System.nanoTime() / DrumConstants.drumMilli;
       }
     } else {
       shakeIterations = 0;
@@ -126,6 +127,44 @@ public class Drum extends SubsystemBase {
     }
     return false;
   }
+
+  public void ShortSpinInReverse() {
+    if (System.nanoTime() / DrumConstants.drumSec >= 2) {
+      drumPIDController.setReference(rateLimiter.calculate(DrumConstants.drumSpeeds[1] * -1), ControlType.kVelocity);
+    }
+    setSpeed(lastSetting);
+  }
+
+  public boolean PreShootSpinAgitate() {
+    isRateLimitOff = true;
+    if (shakeIterations < 5) {
+      if (shakeStartTime == -1) {
+        drumMotor.set(DrumConstants.drumShakePct * direction);
+        shakeStartTime = DrumConstants.drumMilli;
+        direction *= -1;
+      }
+      if ((System.nanoTime() / DrumConstants.drumMilli) - shakeStartTime >= 150) {
+        drumMotor.set(DrumConstants.drumShakePct * direction);
+        direction *= -1;
+        shakeIterations += 1;
+        shakeStartTime = System.nanoTime() / DrumConstants.drumMilli;
+      }
+    } else {
+      shakeIterations = 0;
+      shakeStartTime = -1;
+      direction = 1;
+      return true;
+    }
+    return false;
+  }
+
+  public void CheckForVoltageDrop() {
+    double volt = PowerManagement.getDrumCurrent();
+    if (volt >= 0) {
+      drumMotor.set(0);
+    }
+  }
+
     /**
      * <b> Never giving it up! </b>
      * <p>

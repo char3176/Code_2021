@@ -14,6 +14,8 @@ public class Controller {
     private final JoystickButton drumAgitateButton = new JoystickButton(m_Controller, Button.kY.value);
     private final JoystickButton drumSlowButton = new JoystickButton(m_Controller, Button.kBumperLeft.value);
     private final JoystickButton drumSpeedButton = new JoystickButton(m_Controller, Button.kBumperRight.value);
+    private final JoystickButton drumSpinReverseButton = new JoystickButton(m_Controller, Button.kStickRight.value);
+    private final JoystickButton drumPreShootAgitateButton = new JoystickButton(m_Controller, m_Controller.getPOV(0));
     private final JoystickButton flywheelSpeedButton = new JoystickButton(m_Controller, Button.kBack.value);
     private final JoystickButton flywheelSlowButton = new JoystickButton(m_Controller, Button.kStickLeft.value);
     private final JoystickButton transferPivotButton = new JoystickButton(m_Controller, Button.kX.value);
@@ -37,6 +39,14 @@ public class Controller {
 
     public JoystickButton getDrumAgitateButton() {
         return drumAgitateButton;
+    }
+
+    public JoystickButton getDrumSpinReverseButton() {
+        return drumSpinReverseButton;
+    }
+
+    public JoystickButton getDrumPreShootAgitateButton() {
+        return drumPreShootAgitateButton;
     }
 
     public JoystickButton getFlywheelSpeedButton() {

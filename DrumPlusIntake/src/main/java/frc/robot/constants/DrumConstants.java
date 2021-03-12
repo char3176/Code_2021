@@ -34,4 +34,7 @@ public final class DrumConstants {
     // public static final int drumExtreme = 8500;
     public static final int[] drumSpeeds = {0, 2500, 4500, 7000, 8500};
     public static final double drumShakePct = 0.35;
+
+    public static final double drumMilli = 1000000;
+    public static final double drumSec = 1000000000;
 }

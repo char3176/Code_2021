@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.Compressor;
 import frc.robot.commands.AgitateDrum;
 import frc.robot.commands.DrumVelocitySpeed;
 import frc.robot.commands.DrumVelocitySlow;
+import frc.robot.commands.DrumSpinReverse;
+import frc.robot.commands.DrumAgitatePreShoot;
 import frc.robot.commands.IntakeRoll;
 import frc.robot.commands.IntakeSwitch;
 import frc.robot.commands.BallTransferPivot;
@@ -51,6 +53,8 @@ public class RobotContainer {
     m_Controller.getDrumSlowButton().whenPressed(new DrumVelocitySlow());
     m_Controller.getDrumSpeedButton().whenPressed(new DrumVelocitySpeed());
     m_Controller.getDrumAgitateButton().whenPressed(new AgitateDrum());
+    m_Controller.getDrumSpinReverseButton().whenPressed(new DrumSpinReverse());
+    m_Controller.getDrumPreShootAgitateButton().whenPressed(new DrumAgitatePreShoot());
     m_Controller.getIntakePistonButton().whenPressed(new IntakeSwitch());
     m_Controller.getIntakeMotorButton().whenPressed(new IntakeRoll());
     m_Controller.getTransferPivotButton().whenPressed(new BallTransferPivot());
