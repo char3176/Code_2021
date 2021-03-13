@@ -165,6 +165,14 @@ public class Drum extends SubsystemBase {
     }
   }
 
+  public void CounterClockwise() {
+    drumMotor.set(-0.3);
+  }
+
+  public void CounterClockwise(double PCT) {
+    drumMotor.set(-PCT);
+  }
+
     /**
      * <b> Never giving it up! </b>
      * <p>

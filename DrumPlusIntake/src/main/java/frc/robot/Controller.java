@@ -20,6 +20,8 @@ public class Controller {
     private final JoystickButton flywheelSlowButton = new JoystickButton(m_Controller, Button.kStickLeft.value);
     private final JoystickButton transferPivotButton = new JoystickButton(m_Controller, Button.kX.value);
     private final JoystickButton transferRollButton = new JoystickButton(m_Controller, Button.kStart.value);
+    private final JoystickButton drumCCWButton = new JoystickButton(m_Controller, Button.kA.value);
+    private final JoystickButton drumCCWSetButton = new JoystickButton(m_Controller, Button.kA.value); 
     
     // public JoystickButton getIntakePistonButton() {
     //     return intakePistonButton;
@@ -47,6 +49,14 @@ public class Controller {
 
     public JoystickButton getDrumPreShootAgitateButton() {
         return drumPreShootAgitateButton;
+    }
+
+    public JoystickButton getDrumCCWButton() {
+        return drumCCWButton;
+    }
+
+    public JoystickButton getDrumCCWSetButton() {
+        return drumCCWSetButton;
     }
 
     public JoystickButton getFlywheelSpeedButton() {
