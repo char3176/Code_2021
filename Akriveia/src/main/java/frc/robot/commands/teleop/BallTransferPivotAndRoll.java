@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.constants.BallTransferConstants;
 
 public class BallTransferPivotAndRoll extends InstantCommand {
+  
   private BallTransfer m_BallTransfer = BallTransfer.getInstance();
   
   public BallTransferPivotAndRoll() {
@@ -13,7 +14,7 @@ public class BallTransferPivotAndRoll extends InstantCommand {
 
   @Override
   public void initialize() {
-    // m_BallTransfer.Retract();
+    m_BallTransfer.Retract();
     m_BallTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT);
   }
 }

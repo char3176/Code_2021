@@ -21,24 +21,22 @@ public class AngledShooter extends SubsystemBase {
     angledShooterTalon.setInverted(AngledShooterConstants.angledShooterMotorInvert);
     angledShooterTalon.configNominalOutputForward(0, AngledShooterConstants.angledShooterTimeoutMs);
     angledShooterTalon.configNominalOutputReverse(0, AngledShooterConstants.angledShooterTimeoutMs);
-    
-    //angledShooterTalon.configPeakOutputForward(1, AngledShooterConstants.angledShooterTimeoutMs);
-    angledShooterTalon.configPeakOutputForward(0.5, AngledShooterConstants.angledShooterTimeoutMs);
-    //angledShooterTalon.configPeakOutputReverse(-1, AngledShooterConstants.angledShooterTimeoutMs);
-    angledShooterTalon.configPeakOutputReverse(-0.5, AngledShooterConstants.angledShooterTimeoutMs);
-    
+    angledShooterTalon.configPeakOutputForward(/*1*/0.5, AngledShooterConstants.angledShooterTimeoutMs);
+    angledShooterTalon.configPeakOutputReverse(/*-1*/-0.5, AngledShooterConstants.angledShooterTimeoutMs);
     angledShooterTalon.configAllowableClosedloopError(0, AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.angledShooterTimeoutMs);
     angledShooterTalon.config_kF(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pid[3], AngledShooterConstants.angledShooterTimeoutMs);
 		angledShooterTalon.config_kP(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pid[0], AngledShooterConstants.angledShooterTimeoutMs);
 		angledShooterTalon.config_kI(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pid[1], AngledShooterConstants.angledShooterTimeoutMs);
     angledShooterTalon.config_kD(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pid[2], AngledShooterConstants.angledShooterTimeoutMs);
-    //angledShooterTalon.setSelectedSensorPosition(absolutePosition, AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.angledShooterTimeoutMs);
-    //angledShooterTalon.set(ControlMode.Position, AngledShooterConstants.MIN_TICS);
   }
 
   @Override
   public void periodic() {}
 
+  /**
+   * @return A single, universal Intake instance to be used anywhere else in the code
+   */
+  
   public static AngledShooter getInstance() {return instance;}
 
   /**

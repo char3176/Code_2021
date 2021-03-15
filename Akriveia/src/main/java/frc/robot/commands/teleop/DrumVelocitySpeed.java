@@ -14,7 +14,9 @@ public class DrumVelocitySpeed extends InstantCommand {
 
   @Override
   public void initialize() {
-    // increment based on the lastSetting variable with 2 speeds and a stop
+
+    /* increment based on the lastSetting variable with 2 speeds and a stop */
+    
     int tempSetting = m_Drum.getLastSetting();
     if (tempSetting + 1 < DrumConstants.drumSpeeds.length) {
       m_Drum.setSpeed(tempSetting + 1);

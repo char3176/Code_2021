@@ -6,13 +6,10 @@ import frc.robot.subsystems.BallTransfer;
 import frc.robot.subsystems.Flywheel;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-
-
 public class DrumTransferFlywheelTest extends CommandBase {
   Drum m_Drum = Drum.getInstance();
   BallTransfer m_BallTransfer = BallTransfer.getInstance();
   Flywheel m_Flywheel = Flywheel.getInstance();
-  int button;
   
   public DrumTransferFlywheelTest() {
     addRequirements(m_Drum);
@@ -20,14 +17,13 @@ public class DrumTransferFlywheelTest extends CommandBase {
     addRequirements(m_Flywheel);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     System.out.println("DrumTransferFlywheelTest.java initialize");
     double drumOutputPercent = SmartDashboard.getNumber("DrumOutputPercent", 0);
     double transferOutputPercent = SmartDashboard.getNumber("BallTransferOutputPercent", 0);
     double flywheelOutputPercent = SmartDashboard.getNumber("FlywheelOutputPercent", 0);
-    m_Drum.setPercentOutputSet(drumOutputPercent);
+    m_Drum.simpleSet(drumOutputPercent);
     m_BallTransfer.setPercentControl(transferOutputPercent);
     m_Flywheel.spinVelocityOutputPercent(flywheelOutputPercent);
   }
@@ -37,7 +33,7 @@ public class DrumTransferFlywheelTest extends CommandBase {
     double drumOutputPercent = SmartDashboard.getNumber("DrumOutputPercent", 0);
     double transferOutputPercent = SmartDashboard.getNumber("BallTransferOutputPercent", 0);
     double flywheelOutputPercent = SmartDashboard.getNumber("FlywheelOutputPercent", 0);
-    m_Drum.setPercentOutputSet(drumOutputPercent);
+    m_Drum.simpleSet(drumOutputPercent);
     m_BallTransfer.setPercentControl(transferOutputPercent);
     m_Flywheel.spinVelocityOutputPercent(flywheelOutputPercent);
   }
@@ -53,7 +49,7 @@ public class DrumTransferFlywheelTest extends CommandBase {
 
   @Override
   public void end(boolean interrupted) { 
-    m_Drum.setPercentOutputSet(0.0);
+    m_Drum.simpleSet(0.0);
     m_BallTransfer.setPercentControl(0.0);
     m_Flywheel.spinVelocityOutputPercent(0.0);
 

@@ -1,9 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.teleop.IntakeCancelRoll;
 import frc.robot.commands.teleop.IntakeRoll;
-import frc.robot.commands.teleop.IntakeZero;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -13,23 +11,15 @@ import frc.robot.commands.teleop.BallTransferPivotAndRoll;
 import frc.robot.commands.teleop.BallTransferStraight;
 import frc.robot.subsystems.AngledShooter;
 import frc.robot.subsystems.Drum;
-import frc.robot.commands.teleop.DrumVelocity;
-import frc.robot.commands.teleop.DrumAgitate;
 import frc.robot.commands.teleop.DrumTransferFlywheelTest;
 import frc.robot.subsystems.BallTransfer;
 import frc.robot.subsystems.Flywheel;
-import frc.robot.subsystems.AngledShooter;
-import frc.robot.commands.teleop.FlywheelStop;
-import frc.robot.commands.teleop.FlywheelMin;
-import frc.robot.commands.teleop.FlywheelMed;
-import frc.robot.commands.teleop.FlywheelMax;
 import frc.robot.commands.teleop.SwerveDefense;
 import frc.robot.commands.teleop.SwerveDrive;
 import frc.robot.commands.teleop.SwerveReZeroGyro;
 import frc.robot.commands.teleop.SwerveVision;
 import frc.robot.commands.auton.Slalom;
 import frc.robot.subsystems.Drivetrain;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
