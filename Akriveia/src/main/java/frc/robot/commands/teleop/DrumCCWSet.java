@@ -12,7 +12,7 @@ public class DrumCCWSet extends CommandBase {
 
   @Override
   public void initialize() {
-    SmartDashboard.putNumber("CCWPCT", 0);
+    SmartDashboard.putNumber("CCWPCT", 0); 
     m_Drum.CounterClockwise(0);
   }
 
@@ -26,5 +26,11 @@ public class DrumCCWSet extends CommandBase {
   public void end(boolean interrupted) {}
 
   @Override
-  public boolean isFinished() {return false;}
+  public boolean isFinished() {
+    if (SmartDashboard.getNumber("CCWPCT", 0) == -999) {  //TODO: check/test to make sure this conditional evaluation with SmartDashboard getNumber will work properly
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
