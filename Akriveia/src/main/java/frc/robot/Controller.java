@@ -1,95 +1,11 @@
 package frc.robot;
 
-/*
-
-package frc.robot;
-
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
-public class Controller {
-    
-    private static Controller instance = new Controller();
-    private XboxController m_Controller = new XboxController(2);
-    // private final JoystickButton intakePistonButton = new JoystickButton(m_Controller, Button.kA.value);
-    private final JoystickButton intakeMotorButton = new JoystickButton(m_Controller, Button.kB.value);
-    private final JoystickButton drumAgitateButton = new JoystickButton(m_Controller, Button.kY.value);
-    private final JoystickButton drumSlowButton = new JoystickButton(m_Controller, Button.kBumperLeft.value);
-    private final JoystickButton drumSpeedButton = new JoystickButton(m_Controller, Button.kBumperRight.value);
-    private final JoystickButton drumSpinReverseButton = new JoystickButton(m_Controller, Button.kStickRight.value);
-    private final JoystickButton drumPreShootAgitateButton = new JoystickButton(m_Controller, m_Controller.getPOV(0));
-    private final JoystickButton flywheelSpeedButton = new JoystickButton(m_Controller, Button.kBack.value);
-    private final JoystickButton flywheelSlowButton = new JoystickButton(m_Controller, Button.kStickLeft.value);
-    private final JoystickButton transferPivotButton = new JoystickButton(m_Controller, Button.kX.value);
-    private final JoystickButton transferRollButton = new JoystickButton(m_Controller, Button.kStart.value);
-    private final JoystickButton drumCCWButton = new JoystickButton(m_Controller, Button.kA.value);
-    private final JoystickButton drumCCWSetButton = new JoystickButton(m_Controller, Button.kA.value); 
-    
-    // public JoystickButton getIntakePistonButton() {
-    //     return intakePistonButton;
-    // }
-
-    public JoystickButton getIntakeMotorButton() {
-        return intakeMotorButton;
-    }
-
-    public JoystickButton getDrumSlowButton() {
-        return drumSlowButton;
-    }
-
-    public JoystickButton getDrumSpeedButton() {
-        return drumSpeedButton;
-    }
-
-    public JoystickButton getDrumAgitateButton() {
-        return drumAgitateButton;
-    }
-
-    public JoystickButton getDrumSpinReverseButton() {
-        return drumSpinReverseButton;
-    }
-
-    public JoystickButton getDrumPreShootAgitateButton() {
-        return drumPreShootAgitateButton;
-    }
-
-    public JoystickButton getDrumCCWButton() {
-        return drumCCWButton;
-    }
-
-    public JoystickButton getDrumCCWSetButton() {
-        return drumCCWSetButton;
-    }
-
-    public JoystickButton getFlywheelSpeedButton() {
-        return flywheelSpeedButton;
-    }
-
-    public JoystickButton getFlywheelSlowButton() {
-        return flywheelSlowButton;
-    }
-
-    public JoystickButton getTransferPivotButton() {
-        return transferPivotButton;
-    }
-    public JoystickButton getTransferRollButton() {
-        return transferRollButton;
-    }
-    public static Controller getInstance() {
-        return instance;
-    }
-
-}
-
- */
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj.buttons.POVButton;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
+// import edu.wpi.first.wpilibj.buttons.POVButton;
+// import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.constants.ControllerConstants;
 
 public class Controller {
@@ -106,37 +22,40 @@ public class Controller {
 
     private final JoystickButton orbitButton = new JoystickButton(rotStick, 2);
     private final JoystickButton dosadoButton = new JoystickButton(rotStick, 3);
-    private final JoystickButton visionButton = new JoystickButton(transStick, 3); // or op Y //Should be part of the xbox controller later
+    private final JoystickButton visionButton = new JoystickButton(op, Button.kY.value);
     private final JoystickButton defenseButton = new JoystickButton(transStick, 2);
     private final JoystickButton fieldCentricButton = new JoystickButton(transStick, 4);
     private final JoystickButton robotCentricButton = new JoystickButton(transStick, 5);
     private final JoystickButton backRobotCentricButton = new JoystickButton(transStick, 6);
     private final JoystickButton reZeroGyroButton = new JoystickButton(rotStick, 4);
-    private final JoystickButton slalomButton = new JoystickButton(transStick, 7);
+    // private final JoystickButton slalomButton = new JoystickButton(transStick, 7);
     
     /* Intake */
 
-    private final JoystickButton intakeExtendButton = new JoystickButton(rotStick, 11);
-    private final JoystickButton intakeRetractButton = new JoystickButton(rotStick, 12);
-    private final JoystickButton intakeRollExtendButton = new JoystickButton(rotStick, 13);
-    private final JoystickButton intakeRollButton = new JoystickButton(rotStick, 14);
-    private final JoystickButton intakeStopButton = new JoystickButton(rotStick, 15);
+    private final JoystickButton intakeSwitchButton = new JoystickButton(op, Button.kB.value);
+    private final JoystickButton intakeSpinButton = new JoystickButton(op, Button.kA.value);
 
     /* Angled Shooter */
 
-    // private final JoystickButton shooterUpButton = new JoystickButton(op, op.getPOV(180)); //Up on the D-Pad
-    // private final JoystickButton shooterDownButton = new JoystickButton(op, op.getPOV(0)); //Down on the D-Pad
+    private final JoystickButton shooterUpButton = new JoystickButton(op, op.getPOV(180)); //Up on the D-Pad
+    private final JoystickButton shooterDownButton = new JoystickButton(op, op.getPOV(0)); //Down on the D-Pad
 
     /* Drum */
 
     private final JoystickButton drumAgitateButton = new JoystickButton(op, Button.kStart.value);
     private final JoystickButton drumDownButton = new JoystickButton(op, Button.kBumperLeft.value);
     private final JoystickButton drumUpButton = new JoystickButton(op, Button.kBumperRight.value);
+    //3 MORE BUTTONS
+    
+    private final JoystickButton drumSpinReverseButton = new JoystickButton(op, Button.kA.value); //Layer 2
+    private final JoystickButton drumPreShootAgitateButton = new JoystickButton(op, Button.kStart.value); //Layer 2
+    private final JoystickButton drumCCWButton = new JoystickButton(op, Button.kBack.value);
+    private final JoystickButton drumCCWSetButton = new JoystickButton(op, Button.kBack.value); //Layer 2 
 
     /* Flywheel */
      
-    // private final JoystickButton flywheelRightButton = new JoystickButton(op, op.getPOV(90)); //Right on the D-Pad
-    // private final JoystickButton flywheelLeftButton = new JoystickButton(op, op.getPOV(270)); //Left on the D-Pad
+    private final JoystickButton flywheelRightButton = new JoystickButton(op, op.getPOV(90)); //Right on the D-Pad
+    private final JoystickButton flywheelLeftButton = new JoystickButton(op, op.getPOV(270)); //Left on the D-Pad
 
     /* Transfer */
 
@@ -146,6 +65,9 @@ public class Controller {
     /* Command Buttons */
 
     private final JoystickButton shootCMD = new JoystickButton(op, Button.kX.value);
+
+    /* TEMP */
+
     private final JoystickButton extend = new JoystickButton(op, Button.kBumperLeft.value);
     private final JoystickButton retract = new JoystickButton(op, Button.kBumperRight.value);
     public boolean getExtend() {return extend.get();}
@@ -181,18 +103,15 @@ public class Controller {
     public JoystickButton getVisionButton() {return visionButton;}
     public JoystickButton getDefenseButton() {return defenseButton;}
     public JoystickButton getReZeroGyroButton() {return reZeroGyroButton;}
-    public JoystickButton getSlalomButton() {return slalomButton;}
+    // public JoystickButton getSlalomButton() {return slalomButton;}
     public boolean isFieldCentricButtonPressed() {return fieldCentricButton.get();}
     public boolean isRobotCentricButtonPressed() {return robotCentricButton.get();}
     public boolean isBackRobotCentricButtonPressed() {return backRobotCentricButton.get();}
 
     /* Intake Buttons */
 
-    public JoystickButton getIntakeExtendButton() {return intakeExtendButton;}
-    public JoystickButton getIntakeRetractButton() {return intakeRetractButton;}
-    public JoystickButton getIntakeRollAndExtendButton() {return intakeRollExtendButton;}
-    public JoystickButton getIntakeRollButton() {return intakeRollButton;}
-    public JoystickButton getIntakeStopButton() {return intakeStopButton;}
+    public JoystickButton getIntakeSpinButton() {return intakeSpinButton;}
+    public JoystickButton getIntakeSwitchButton() {return intakeSwitchButton;}
 
     /* Angled Shooter*/
 
@@ -206,8 +125,8 @@ public class Controller {
     //     return false;
     // }
 
-    // public JoystickButton getUpDPAD() {return shooterUpButton;}
-    // public JoystickButton getDownDPAD() {return shooterDownButton;}
+    public JoystickButton getUpDPAD() {return shooterUpButton;}
+    public JoystickButton getDownDPAD() {return shooterDownButton;}
 
     /* Drum */
 
@@ -227,8 +146,8 @@ public class Controller {
     //     return false;
     // }
 
-    // public JoystickButton getRightDPAD() {return flywheelRightButton;}
-    // public JoystickButton getLeftDPAD() {return flywheelLeftButton;}
+    public JoystickButton getRightDPAD() {return flywheelRightButton;}
+    public JoystickButton getLeftDPAD() {return flywheelLeftButton;}
 
     /* Transfer */
 
