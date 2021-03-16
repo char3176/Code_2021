@@ -71,26 +71,33 @@ public class RobotContainer {
       () -> m_Controller.getStrafe()));
     m_Controller.getReZeroGyroButton().whenHeld(new SwerveReZeroGyro());
 
-    // m_Controller.getUpDPAD().whenPressed(new AngledShooterUp());
-    // m_Controller.getDownDPAD().whenPressed(new AngledShooterDown());
 
-    m_Controller.getDrumAgitateButton().whenPressed(new DrumAgitate());
-    m_Controller.getDrumCCWSetButton().whenPressed(new DrumCCWSet());
-    m_Controller.getDrumUpButton().whenPressed(new DrumVelocitySpeed());
-    m_Controller.getDrumDownButton().whenPressed(new DrumVelocitySlow());
+    if(!m_Controller.getShift()) { //REGULAR
+      if(m_Controller.getPOVLocation() == 0) {new AngledShooterUp();}
+      else if(m_Controller.getPOVLocation() == 180) {new AngledShooterDown();}
+      // m_Controller.getUpDPAD().whenPressed(new AngledShooterUp());
+      // m_Controller.getDownDPAD().whenPressed(new AngledShooterDown());
 
-    m_Controller.getIntakeSpinButton().whenPressed(new IntakeRoll());
-    // m_Controller.getIntakeSwitchButton().whenPressed(new IntakeSwitch());
-    if(m_Controller.getLeftDPAD()) {new FlywheelSlow();}
-    // m_Controller.getLeftDPAD().whenPressed(new FlywheelSlow());
-    if(m_Controller.getRightDPAD()) {new FlywheelSpeed();}
-    // m_Controller.getRightDPAD().whenPressed(new FlywheelSpeed());
+      m_Controller.getDrumAgitateButton().whenPressed(new DrumAgitate());
+      m_Controller.getDrumCCWSetButton().whenPressed(new DrumCCWSet());
+      m_Controller.getDrumUpButton().whenPressed(new DrumVelocitySpeed());
+      m_Controller.getDrumDownButton().whenPressed(new DrumVelocitySlow());
 
-    m_Controller.getTransferStraightButton().whenPressed(new BallTransferStraight());
-    m_Controller.getTransferPivotButton().whenPressed(new BallTransferPivotAndRoll());
+      m_Controller.getIntakeSpinButton().whenPressed(new IntakeRoll());
+      // m_Controller.getIntakeSwitchButton().whenPressed(new IntakeSwitch());
 
-    m_Controller.getShootCMDButton().whenPressed(new DrumTransferFlywheelTest());
-    
+      if(m_Controller.getPOVLocation() == 90) {new FlywheelSpeed();}
+      else if(m_Controller.getPOVLocation() == 270) {new FlywheelSlow();}
+      // m_Controller.getLeftDPAD().whenPressed(new FlywheelSlow());
+      // m_Controller.getRightDPAD().whenPressed(new FlywheelSpeed());
+
+      m_Controller.getTransferStraightButton().whenPressed(new BallTransferStraight());
+      m_Controller.getTransferPivotButton().whenPressed(new BallTransferPivotAndRoll());
+
+      m_Controller.getShootCMDButton().whenPressed(new DrumTransferFlywheelTest());
+    } else { //SHIFTED
+
+    }
   }
 
   public Command getAutonomousCommand() {

@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
 // import edu.wpi.first.wpilibj.buttons.POVButton;
 // import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -65,6 +66,7 @@ public class Controller {
     /* Command Buttons */
 
     private final JoystickButton shootCMD = new JoystickButton(op, Button.kX.value);
+    // private final JoystickButton shift = new JoystickButton(op, Trig);
 
     /* TEMP */
 
@@ -159,7 +161,16 @@ public class Controller {
 
     public JoystickButton getShootCMDButton() {return shootCMD;}
 
+    /* Button Get Methods */
 
+    public int getPOVLocation() {return op.getPOV();}
+    /**
+     * @return If the Left Trigger is pressed for half and then shifts the controls
+     */
+    public boolean getShift() {
+        if(op.getTriggerAxis(Hand.kLeft) >= 0.5) {return true;}
+        return false;
+    }
 
 
 

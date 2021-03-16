@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Flywheel extends SubsystemBase {
     WPI_TalonFX flywheelController = new WPI_TalonFX(FlywheelConstants.MOTOR_CAN_ID);
     private static Flywheel instance = new Flywheel();
-    private static double lastSetting = 0;
+    private static int lastSetting = 0;
     
     public Flywheel() {
         flywheelController.configFactoryDefault();
@@ -28,9 +28,9 @@ public class Flywheel extends SubsystemBase {
      * @param level of speed to multipy by 2048 and then divide by 600 and set it to that velocity
      */
 
-    public void spinVelocityPIDF(double level) {
+    public void spinVelocityPIDF(int level) {
         lastSetting = level;
-        double ticsPer100ms = (FlywheelConstants.FlywheelSpeeds[(int) level] * 2048.0) / 600.0;
+        double ticsPer100ms = (FlywheelConstants.FlywheelSpeeds[level] * 2048.0) / 600.0;
         flywheelController.set(TalonFXControlMode.Velocity, ticsPer100ms);
     }
 
@@ -46,7 +46,7 @@ public class Flywheel extends SubsystemBase {
      * @return the last speed setting of the Flywheel
      */
 
-    public double getLastSetting() {
+    public int getLastSetting() {
         return lastSetting;
     }
 

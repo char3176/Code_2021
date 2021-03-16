@@ -16,7 +16,7 @@ public class FlywheelSlow extends InstantCommand {
 
     /* Finds whatever setting the intake pistons are and does the opposite. */
 
-    double tempSetting = m_Flywheel.getLastSetting();
+    int tempSetting = m_Flywheel.getLastSetting();
     if (tempSetting - 1 >= 0) {
       m_Flywheel.spinVelocityPIDF(tempSetting - 1);
     }
