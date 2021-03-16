@@ -30,6 +30,8 @@ public class VisionClient{
     public static NetworkTableEntry tcornxy;
     private static NetworkTableEntry tl;
     private static NetworkTableEntry pipeline;
+    private static NetworkTableEntry camMode;
+    private static NetworkTableEntry ledMode;
     
     private double activePipeline = 1;
 
@@ -38,8 +40,6 @@ public class VisionClient{
     private double[] tcorny = new double[4];
 
     private double deltaXCam;
-    //private double tcornx0;
-    //private double tcornx1;
     private double radius;
 
     // initializing variables for kinematic calculations
@@ -60,7 +60,7 @@ public class VisionClient{
     /**
      * Creates the default references for VisionClient, specifically for Limelight values
      */
-    public VisionClient() {
+    public VisionClient(){
         tableInstance = NetworkTableInstance.getDefault();
         limelightTable = tableInstance.getTable("limelight");
         updateVisionData();
@@ -71,7 +71,7 @@ public class VisionClient{
     /**
      * Can be called to force update of VisionClient data structure
      */
-    public void updateVisionData() {
+    public void updateVisionData(){
         tv = limelightTable.getEntry("tv");
         tx = limelightTable.getEntry("tx");
         ty = limelightTable.getEntry("ty");
@@ -82,6 +82,8 @@ public class VisionClient{
         tcornxy = limelightTable.getEntry("tcornxy");
         tl = limelightTable.getEntry("tl");
         pipeline = limelightTable.getEntry("pipeline");
+        camMode = limelightTable.getEntry("camMode");
+        ledMode = limelightTable.getEntry("ledMode");
         activePipeline = pipeline.getDouble(0);
     }
     
@@ -95,13 +97,13 @@ public class VisionClient{
      * -initial angle of ball to make it into target
      * -initial velocity of ball to make it into target
      */
-    public void targetRecogControlLoop() {
+    public void targetRecogControlLoop(){
         // used to calculate latency
         double startTime = Timer.getFPGATimestamp();
 
         publishPrelimTargetRecogData();
 
-        if (tcornxy.getDoubleArray(new double[1]).length != 8) {
+        if(tcornxy.getDoubleArray(new double[1]).length != 8){
             return;
         }
 
@@ -121,7 +123,7 @@ public class VisionClient{
     /**
      * Publishes "Has Targets", tshort, tvert, and tcornxy (under "Length" keyname value) to SmartDashboard
      */
-    public void publishPrelimTargetRecogData() {
+    public void publishPrelimTargetRecogData(){
         SmartDashboard.putBoolean("Has Targets", (tv.getDouble(2) == 1) ? true : false);
         SmartDashboard.putNumber("tshort", tshort.getDouble(0));
         SmartDashboard.putNumber("tvert", tvert.getDouble(0));
@@ -130,13 +132,13 @@ public class VisionClient{
     /** 
      * Deconvolutes tcornxy array into tcornx[] and tcorny[] arrays of double datatype.
      */
-    public void separateTcornxyArrayInto2() {
+    public void separateTcornxyArrayInto2(){
         // separate the larger tcornxy arrays into the easier to understand x and y arrays
         int j = 0;
-        for (int i = 0; i < 8; i++) {
-            if (i % 2 == 0) {
+        for(int i = 0; i < 8; i++){
+            if(i % 2 == 0){
                 tcornx[j] = tcornxy.getDoubleArray(new double[1])[i];
-            } else {
+            } else{
                 tcorny[j] = tcornxy.getDoubleArray(new double[1])[i];
                 j++;
             }
@@ -146,7 +148,7 @@ public class VisionClient{
     /**
      * Calculates distances (deltaX and deltaY) to target from Target Recog Data
      */ 
-    public void calcTargetRecogDistances() {
+    public void calcTargetRecogDistances(){
         
         // calculate the distance between the furthest two points as the camera sees it
         deltaXCam = calculateDeltaX(tcornx);
@@ -162,7 +164,7 @@ public class VisionClient{
     /**
      * Publishes Target Recog Data to SmartDashboard.  Variables published are: radius, deltaX, deltaY.
      */
-    public void publishTargetRecogDistances() {
+    public void publishTargetRecogDistances(){
         SmartDashboard.putNumber("Radius", radius);
         SmartDashboard.putNumber("deltaX", deltaX);
         SmartDashboard.putNumber("deltaY", deltaY);
@@ -174,7 +176,7 @@ public class VisionClient{
      * @param array array to find the range of
      * @return double that represents the range of the array
      */
-    public double calculateDeltaX(double[] array) {
+    public double calculateDeltaX(double[] array){
         Arrays.sort(array);
         return array[array.length - 1] - array[0];
     }
@@ -184,20 +186,32 @@ public class VisionClient{
      * Calculates the initial angle and velocity of the ball using kinematic equations
      * 
      * @param speedIdx The index in the possible speed array (above) for the method to start at. It is reccommended to default to 0.
-     * @return A double array where the first value is the velocity, and the second value is the angle (in degrees).
+     * @return A double array where the first value is the velocity, and the second value is the angle.
      */
-    public double[] findInitialAngleAndVelocity(int speedIdx) {
-        findInitialAngle(speedIdx);
+    public double[] findInitialAngleAndVelocity(int speedIdx){
+        if(speedIdx >= initialVelocity.length){
+            speedIdx = 0;
+        }
+
+        findInitialAngle(initialVelocity[speedIdx]);
         publishPrelimTargetRecogData();
 
-        findInitialVelocity(speedIdx);
+        if(!(initialTheta >= 0 && initialTheta <= (29.2 * Constants.DEG2RAD))){
+            if(speedIdx < initialVelocity.length - 1){
+                return findInitialAngleAndVelocity(speedIdx + 1);
+            } else{
+                return null;
+            }
+        }
+
+        solveOtherVariablesFromAngle();
 
         // figures out if the solution is valid by checking if it would actually go into the target
-        if (finalTheta >= (11 * Math.PI)/12 && finalTheta <= (13 * Math.PI)/12) {
-            double[] arrayToSend = {initialVelocity[speedIdx], initialTheta / Constants.DEG2RAD};
+        if(finalTheta >= (11 * Math.PI)/12 && finalTheta <= (13 * Math.PI)/12){
+            double[] arrayToSend = {initialVelocity[speedIdx], initialTheta};
             return arrayToSend;
-        } else {
-            if (speedIdx + 1 < initialVelocity.length) {
+        } else{
+            if(speedIdx < initialVelocity.length - 1){
                 return findInitialAngleAndVelocity(speedIdx + 1);
             } else {
                 return null;
@@ -211,26 +225,24 @@ public class VisionClient{
      * 
      * @param speedIdx The index in the possible speed array (above) for the method to start at. It is reccommended to default to 0.
      */
-    public void findInitialAngle(int speedIdx) {
+    public void findInitialAngle(double speed){
         // this single line that calculates the initial angle
-        initialTheta = Math.atan((-deltaX + Math.sqrt(Math.pow(deltaX, 2) - 4 * ((gravity * deltaX) / (2 * Math.pow(initialVelocity[speedIdx], 2))) * (((gravity * deltaX) / (2 * Math.pow(initialVelocity[speedIdx], 2))) - deltaY))) / ((gravity * deltaX) / Math.pow(initialVelocity[speedIdx], 2)));
+        initialTheta = Math.atan((-deltaX + Math.sqrt(Math.pow(deltaX, 2) - 4 * ((gravity * deltaX) / (2 * Math.pow(speed, 2))) * (((gravity * deltaX) / (2 * Math.pow(speed, 2))) - deltaY))) / ((gravity * deltaX) / Math.pow(speed, 2)));
     }
 
 
     /** 
      * Publishes initialAngle to SmartDashboard under key value "initialTheta".
      */
-    public void publishInitialTheta() {
+    public void publishInitialTheta(){
         SmartDashboard.putNumber("initialTheta", initialTheta);
     }
 
 
     /**
-     * Calculates the initial velocity of the ball using kinematic equations
-     * 
-     * @param speedIdx The index in the possible speed array (above) for the method to start at. It is reccommended to default to 0.
+     * Calculates the other variables needed to verify the solution
      */
-    public void findInitialVelocity(int speedIdx) {
+    public void solveOtherVariablesFromAngle(){
         // this section calculates the angle that the ball would approach the target to see if it would actually go in
         xVelocity = Math.cos(initialTheta);
         initialYVelocity = Math.sin(initialTheta);
@@ -249,43 +261,38 @@ public class VisionClient{
      * Positive degrees = Ball to Left of crosshairs.
      * Zero degrees = Ball straight ahead forward.
      */
-    public void controlLoopBallRecog() {
+    public void controlLoopBallRecog(){
         tv = limelightTable.getEntry("tv");
         tx = limelightTable.getEntry("tx");
         limelightTable.getEntry("pipeline").setNumber(0);
         
-        double hastarget = tv.getDouble(0);
+        double hasTarget = tv.getDouble(0);
         double targetX = tx.getDouble(0);
         double absOffset = Math.abs(targetX);
-        if (hastarget == 1){
+        if(hasTarget == 1){
           SmartDashboard.putBoolean("Ball Recognized", true);
-          if (targetX <= 1 && targetX >= -1){
+          if(targetX <= 1 && targetX >= -1){
             ballLocation = 1;
             ballDegrees = 0;
             SmartDashboard.putNumber("Degrees", 0);
-          }
-          else if(targetX >= 1){
+          } else if(targetX >= 1){
             ballLocation = 2;
             ballDegrees = absOffset * -1;
               //Ball on the Right side of Limelight crosshairs by absOffset Degrees.
             SmartDashboard.putNumber("Ball Degrees", absOffset * -1);
-          }
-          else if(targetX <= -1){
+          } else if(targetX <= -1){
             ballLocation = 0;
             ballDegrees = absOffset;
               // Ball on the Left side of Limelight crosshairs by absOffset Degrees.
             SmartDashboard.putNumber("Ball Degrees", absOffset);
-          }
-          else{
+          } else{
             ballDegrees = -999;
             System.out.println("Ball Recog FAILED:  see VisionClient.controlLoopBallRecog.");
           }
-        }
-        else if (hastarget == 0){
+        } else if (hasTarget == 0){
             ballLocation = -999;
             SmartDashboard.putBoolean("Ball Recognized", false);
-        }
-        else{
+        } else{
           System.out.println("Ball Recog FAILED:  see VisionClient.controlLoopBallRecog.");
         }
     }
@@ -295,24 +302,24 @@ public class VisionClient{
     /**
      * Turns on Limelight's LEDs.  Duh.
      */
-    public void turnLEDson() {
-        limelightTable.getEntry("ledMode").setNumber(3);
+    public void turnLEDsOn(){
+        ledMode.setNumber(3);
     }
 
 
     /**
      * Blinks Limelight's LEDs.  Double duh.
      */
-    public void blinkLEDs() {
-        limelightTable.getEntry("ledMode").setNumber(2);
+    public void blinkLEDs(){
+        ledMode.setNumber(2);
     }
 
 
     /**
      * Seriously, man? Method's name says it all. It turns off Limelight's LEDs
      */
-    public void turnLEDsoff() {
-        limelightTable.getEntry("ledMode").setNumber(1);
+    public void turnLEDsOff(){
+        ledMode.setNumber(1);
     }
 
 
@@ -320,12 +327,11 @@ public class VisionClient{
      * Sets camera's mode
      * @param mode determines which mode the method is set to, 0 is vision processing, 1 is Driver Cam, and anything else will print an error message.
      */
-    public void setCameraMode(boolean mode) {
-        if (mode) {
-            limelightTable.getEntry("camMode").setNumber(0);
-        }
-        else {
-            limelightTable.getEntry("camMode").setNumber(1);
+    public void setCameraMode(boolean mode){
+        if(mode){
+            camMode.setNumber(0);
+        } else{
+            camMode.setNumber(1);
         }
     } 
 
@@ -333,8 +339,7 @@ public class VisionClient{
    /**
    * Gets which pipeline the processor will use. Returns double value indicating number of currently active pipeline. 
    */
-    public Double getActivePipeline() {
-        pipeline = limelightTable.getEntry("pipeline");
+    public Double getActivePipeline(){
         activePipeline = pipeline.getDouble(0);
         return activePipeline;
     }
@@ -344,18 +349,18 @@ public class VisionClient{
    * Sets which pipeline the processor will use.
    * @param desiredPipelineNum sets the pipeline that will be used. Acceptable values are 0 and 1 at present.
    */
-    public void setActivePipeline(double desiredPipelineNum) {
-        if (desiredPipelineNum == 0 || desiredPipelineNum == 1) {
+    public void setActivePipeline(double desiredPipelineNum){
+        if(desiredPipelineNum == 0 || desiredPipelineNum == 1){
             activePipeline = desiredPipelineNum;
-            limelightTable.getEntry("pipeline").setNumber(activePipeline);
+            pipeline.setNumber(activePipeline);
         } 
     }
 
-    public double getBallLocation() {
+    public double getBallLocation(){
         return ballLocation;
     }
 
-    public double getBallDegrees() {
+    public double getBallDegrees(){
         return ballDegrees;
     }
 }
