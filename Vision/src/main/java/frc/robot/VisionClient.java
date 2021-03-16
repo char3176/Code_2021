@@ -28,6 +28,9 @@ public class VisionClient{
     public static NetworkTableEntry tvert;
     public static NetworkTableEntry tcornxy;
     private static NetworkTableEntry tl;
+    private static NetworkTableEntry pipeline;
+    
+    private double activePipeline = 1;
 
     // separation of tcornxy into two different arrays
     private double[] tcornx = new double[4];
@@ -65,9 +68,27 @@ public class VisionClient{
         tcornxy = limelightTable.getEntry("tcornxy");
         tl = limelightTable.getEntry("tl");
         
-        limelightTable.getEntry("pipeline").setNumber(1);
+        limelightTable.getEntry("pipeline").setNumber(activePipeline);
     }
 
+    /**
+     * Can be called to force update of VisionClient data structure
+     */
+    public void updateVisionData() {
+        tableInstance = NetworkTableInstance.getDefault();
+        limelightTable = tableInstance.getTable("limelight");
+        tv = limelightTable.getEntry("tv");
+        ty = limelightTable.getEntry("ty");
+        tshort = limelightTable.getEntry("tshort");
+        tlong = limelightTable.getEntry("tlong");
+        thor = limelightTable.getEntry("thor");
+        tvert = limelightTable.getEntry("tvert");
+        tcornxy = limelightTable.getEntry("tcornxy");
+        tl = limelightTable.getEntry("tl");
+        pipeline = limelightTable.getEntry("pipeline");
+        activePipeline = pipeline.getDouble(0);
+    }
+    
     /**
      * All calculations for everything are done in this method.
      * It is essentially the main method in this class.
@@ -141,7 +162,7 @@ public class VisionClient{
      * @return A double array where the first value is the velocity, and the second value is the angle (in degrees).
      */
     public double[] findInitialValues(int speedIdx){
-        // ths single line that calculates the initial angle
+        // this single line that calculates the initial angle
         initialTheta = Math.atan((-deltaX + Math.sqrt(Math.pow(deltaX, 2) - 4 * ((gravity * deltaX) / (2 * Math.pow(initialVelocity[speedIdx], 2))) * (((gravity * deltaX) / (2 * Math.pow(initialVelocity[speedIdx], 2))) - deltaY))) / ((gravity * deltaX) / Math.pow(initialVelocity[speedIdx], 2)));
 
         SmartDashboard.putNumber("initialTheta", initialTheta);
@@ -167,5 +188,56 @@ public class VisionClient{
                 return null;
             }
         }
+    }
+
+    public void setupBallRecog(){
+        tableInstance = NetworkTableInstance.getDefault();
+        limelightTable = tableInstance.getTable("limelight");
+        tv = limelightTable.getEntry("tv");
+        tx = limelightTable.getEntry("tx");
+        limelightTable.getEntry("pipeline").setNumber(0);
+    }
+    public void turnLEDson(){
+        limelightTable.getEntry("ledMode").setNumber(3);
+    }
+    public void blinkLEDs(){
+        limelightTable.getEntry("ledMode").setNumber(2);
+    }
+    public void turnLEDsoff(){
+        limelightTable.getEntry("ledMode").setNumber(1);
+    }
+    /**
+     * Sets camera's mode
+     * @param mode determines which mode the method is set to, 0 is vision processing, 1 is Driver Cam, and anything else will print an error message.
+     */
+    public void setCameraMode(boolean mode){
+        if(mode){
+            limelightTable.getEntry("camMode").setNumber(0);
+        }
+        else{
+            limelightTable.getEntry("camMode").setNumber(1);
+        }
+    } 
+
+
+
+
+
+
+    public Double getActivePipeline() {
+        pipeline = limelightTable.getEntry("pipeline");
+        activePipeline = pipeline.getDouble(0);
+        return activePipeline;
+    }
+
+   /**
+   * Sets which pipeline the processor will use.
+   * @param pipe sets the pipeline that will be used.
+   */
+    public void setActivePipeline(double desiredPipelineNum) {
+        if (desiredPipelineNum == 0 || desirePipelineNum == 1) {
+            activePipeline = desiredPipelineNum;
+            limelightTable.getEntry("pipeline").setNumber(activePipeline);
+        } 
     }
 }
