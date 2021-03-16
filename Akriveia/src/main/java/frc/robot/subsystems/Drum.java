@@ -28,7 +28,7 @@ public class Drum extends SubsystemBase {
   private static Drum instance = new Drum();
   public boolean drumPctOutputMode = false;
   private boolean isRateLimitOff = false;
-  private int lastSetting;
+  private int lastSetting = 0;
   private int direction = 1;
   private double shakeStartTime = -1;
   private double shakeIterations = 0;

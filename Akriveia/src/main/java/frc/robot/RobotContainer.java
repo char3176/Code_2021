@@ -43,13 +43,13 @@ public class RobotContainer {
     m_AngledShooter = AngledShooter.getInstance();
 
     m_Drivetrain = Drivetrain.getInstance();
-    // m_Drivetrain.setDefaultCommand(new SwerveDrive(
-    //   () -> m_Controller.getForward(), 
-    //   () -> m_Controller.getStrafe(),
-    //   () -> m_Controller.getSpin(),
-    //   () -> m_Controller.isFieldCentricButtonPressed(),
-    //   () -> m_Controller.isRobotCentricButtonPressed(),
-    //   () -> m_Controller.isBackRobotCentricButtonPressed()));
+    m_Drivetrain.setDefaultCommand(new SwerveDrive(
+      () -> m_Controller.getForward(), 
+      () -> m_Controller.getStrafe(),
+      () -> m_Controller.getSpin(),
+      () -> m_Controller.isFieldCentricButtonPressed(),
+      () -> m_Controller.isRobotCentricButtonPressed(),
+      () -> m_Controller.isBackRobotCentricButtonPressed()));
 
     /* ##############################################################
      * BEGIN:  Temp code for Integration test of Drum+BallTransfer+Flywheel+AngledShooter
