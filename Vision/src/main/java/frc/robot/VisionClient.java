@@ -21,6 +21,7 @@ public class VisionClient{
     public NetworkTableInstance tableInstance;
     public NetworkTable limelightTable;
     public static NetworkTableEntry tv;
+    public static NetworkTableEntry tx;
     public static NetworkTableEntry ty;
     public static NetworkTableEntry tshort;
     public NetworkTableEntry tlong;
@@ -60,6 +61,7 @@ public class VisionClient{
         tableInstance = NetworkTableInstance.getDefault();
         limelightTable = tableInstance.getTable("limelight");
         tv = limelightTable.getEntry("tv");
+        tx = limelightTable.getEntry("tx");
         ty = limelightTable.getEntry("ty");
         tshort = limelightTable.getEntry("tshort");
         tlong = limelightTable.getEntry("tlong");
@@ -78,6 +80,7 @@ public class VisionClient{
         tableInstance = NetworkTableInstance.getDefault();
         limelightTable = tableInstance.getTable("limelight");
         tv = limelightTable.getEntry("tv");
+        tx = limelightTable.getEntry("tx");
         ty = limelightTable.getEntry("ty");
         tshort = limelightTable.getEntry("tshort");
         tlong = limelightTable.getEntry("tlong");
@@ -109,16 +112,16 @@ public class VisionClient{
 
         SmartDashboard.putNumber("Length", tcornxy.getDoubleArray(new double[1]).length);
 
-        if(tcornxy.getDoubleArray(new double[1]).length != 8){
+        if (tcornxy.getDoubleArray(new double[1]).length != 8) {
             return;
         }
 
         // separate the larger tcornxy arrays into the easier to understand x and y arrays
         int j = 0;
-        for(int i = 0; i < 8; i++){
-            if(i % 2 == 0){
+        for (int i = 0; i < 8; i++) {
+            if (i % 2 == 0) {
                 tcornx[j] = tcornxy.getDoubleArray(new double[1])[i];
-            } else{
+            } else {
                 tcorny[j] = tcornxy.getDoubleArray(new double[1])[i];
                 j++;
             }
@@ -150,7 +153,7 @@ public class VisionClient{
      * @param array array to find the range of
      * @return double that represents the range of the array
      */
-    public double calculateDeltaX(double[] array){
+    public double calculateDeltaX(double[] array) {
         Arrays.sort(array);
         return array[array.length - 1] - array[0];
     }
@@ -161,7 +164,7 @@ public class VisionClient{
      * @param speedIdx The index in the possible speed array (above) for the method to start at. It is reccommended to default to 0.
      * @return A double array where the first value is the velocity, and the second value is the angle (in degrees).
      */
-    public double[] findInitialValues(int speedIdx){
+    public double[] findInitialValues(int speedIdx) {
         // this single line that calculates the initial angle
         initialTheta = Math.atan((-deltaX + Math.sqrt(Math.pow(deltaX, 2) - 4 * ((gravity * deltaX) / (2 * Math.pow(initialVelocity[speedIdx], 2))) * (((gravity * deltaX) / (2 * Math.pow(initialVelocity[speedIdx], 2))) - deltaY))) / ((gravity * deltaX) / Math.pow(initialVelocity[speedIdx], 2)));
 
@@ -178,64 +181,72 @@ public class VisionClient{
         finalTheta = Math.atan(finalYVelocity / xVelocity) + Math.PI;
 
         // figures out if the solution is valid by checking if it would actually go into the target
-        if(finalTheta >= (11 * Math.PI)/12 && finalTheta <= (13 * Math.PI)/12){
+        if (finalTheta >= (11 * Math.PI)/12 && finalTheta <= (13 * Math.PI)/12) {
             double[] arrayToSend = {initialVelocity[speedIdx], initialTheta / Constants.DEG2RAD};
             return arrayToSend;
-        } else{
-            if(speedIdx + 1 < initialVelocity.length){
+        } else {
+            if (speedIdx + 1 < initialVelocity.length) {
                 return findInitialValues(speedIdx + 1);
-            } else{
+            } else {
                 return null;
             }
         }
     }
 
-    public void setupBallRecog(){
+    public void setupBallRecog() {
         tableInstance = NetworkTableInstance.getDefault();
         limelightTable = tableInstance.getTable("limelight");
         tv = limelightTable.getEntry("tv");
         tx = limelightTable.getEntry("tx");
         limelightTable.getEntry("pipeline").setNumber(0);
     }
-    public void turnLEDson(){
+
+
+    public void turnLEDson() {
         limelightTable.getEntry("ledMode").setNumber(3);
     }
-    public void blinkLEDs(){
+
+
+    public void blinkLEDs() {
         limelightTable.getEntry("ledMode").setNumber(2);
     }
-    public void turnLEDsoff(){
+
+
+    public void turnLEDsoff() {
         limelightTable.getEntry("ledMode").setNumber(1);
     }
+
+
     /**
      * Sets camera's mode
      * @param mode determines which mode the method is set to, 0 is vision processing, 1 is Driver Cam, and anything else will print an error message.
      */
-    public void setCameraMode(boolean mode){
-        if(mode){
+    public void setCameraMode(boolean mode) {
+        if (mode) {
             limelightTable.getEntry("camMode").setNumber(0);
         }
-        else{
+        else {
             limelightTable.getEntry("camMode").setNumber(1);
         }
     } 
 
 
-
-
-
-
+   /**
+   * Gets which pipeline the processor will use. Returns double value indicating number of currently active pipeline. 
+   */
     public Double getActivePipeline() {
         pipeline = limelightTable.getEntry("pipeline");
         activePipeline = pipeline.getDouble(0);
         return activePipeline;
     }
 
+
    /**
    * Sets which pipeline the processor will use.
-   * @param pipe sets the pipeline that will be used.
+   * @param desiredPipelineNum sets the pipeline that will be used. Acceptable values are 0 and 1 at present.
    */
     public void setActivePipeline(double desiredPipelineNum) {
-        if (desiredPipelineNum == 0 || desirePipelineNum == 1) {
+        if (desiredPipelineNum == 0 || desiredPipelineNum == 1) {
             activePipeline = desiredPipelineNum;
             limelightTable.getEntry("pipeline").setNumber(activePipeline);
         } 
