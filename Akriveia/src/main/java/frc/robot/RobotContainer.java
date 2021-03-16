@@ -1,26 +1,17 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.teleop.IntakeRoll;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import frc.robot.commands.teleop.AngledShooterDown;
-import frc.robot.commands.teleop.AngledShooterUp;
-import frc.robot.commands.teleop.BallTransferPivotAndRoll;
-import frc.robot.commands.teleop.BallTransferStraight;
 import frc.robot.subsystems.AngledShooter;
 import frc.robot.subsystems.Drum;
-import frc.robot.commands.teleop.DrumTransferFlywheelTest;
 import frc.robot.subsystems.BallTransfer;
 import frc.robot.subsystems.Flywheel;
-import frc.robot.commands.teleop.SwerveDefense;
-import frc.robot.commands.teleop.SwerveDrive;
-import frc.robot.commands.teleop.SwerveReZeroGyro;
-import frc.robot.commands.teleop.SwerveVision;
 import frc.robot.commands.auton.Slalom;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.teleop.*;
 
 
 public class RobotContainer {
@@ -74,44 +65,32 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // Drivetrain buttons
-    // m_Controller.getDefenseButton().whenHeld(new SwerveDefense());
-    // m_Controller.getVisionButton().whenHeld(new SwerveVision( 
-    //   () -> m_Controller.getForward(), 
-    //   () -> m_Controller.getStrafe()));
-    // m_Controller.getReZeroGyroButton().whenHeld(new SwerveReZeroGyro());
-    // m_Controller.getSlalomButton().whenPressed(new Slalom());
-
-    // m_Controller.getIntakeExtendButton().whenPressed(new IntakeDeploy());
-    // m_Controller.getIntakeRetractButton().whenPressed(new IntakeRetract());
-    // m_Controller.getIntakeRollAndExtendButton().whenPressed(new IntakeDeployAndRoll());
-    // m_Controller.getIntakeRollButton().whenPressed(new IntakeRoll());
-    // m_Controller.getIntakeStopButton().whenPressed(new IntakeCancelRoll());
+    m_Controller.getDefenseButton().whenHeld(new SwerveDefense());
+    m_Controller.getVisionButton().whenHeld(new SwerveVision( 
+      () -> m_Controller.getForward(), 
+      () -> m_Controller.getStrafe()));
+    m_Controller.getReZeroGyroButton().whenHeld(new SwerveReZeroGyro());
 
     // m_Controller.getUpDPAD().whenPressed(new AngledShooterUp());
     // m_Controller.getDownDPAD().whenPressed(new AngledShooterDown());
 
-    // m_Drum.setDefaultCommand(new DrumVelocity(0));
+    m_Controller.getDrumAgitateButton().whenPressed(new DrumAgitate());
+    m_Controller.getDrumCCWSetButton().whenPressed(new DrumCCWSet());
+    m_Controller.getDrumUpButton().whenPressed(new DrumVelocitySpeed());
+    m_Controller.getDrumDownButton().whenPressed(new DrumVelocitySlow());
 
-    // m_Controller.getAButton3().whenPressed(new DrumVelocity(1));
-    // m_Controller.getBButton3().whenPressed(new DrumVelocity(2));
-    // m_Controller.getYButton3().whenPressed(new DrumVelocity(3));
-    // m_Controller.getXButton3().whenPressed(new DrumVelocity(4));
-    // m_Controller.getRBumper3().whenPressed(new DrumVelocity(0));
-
-    // m_Controller.getDrumAgitateButton().whenPressed(new DrumAgitate());
-
-    // m_Controller.getAButton4().whenPressed(new FlywheelStop());
-    // m_Controller.getBButton4().whenPressed(new FlywheelMin());
-    // m_Controller.getYButton4().whenPressed(new FlywheelMed());
-    // m_Controller.getXButton4().whenPressed(new FlywheelMax());
+    m_Controller.getIntakeSpinButton().whenPressed(new IntakeRoll());
+    // m_Controller.getIntakeSwitchButton().whenPressed(new IntakeSwitch());
+    if(m_Controller.getLeftDPAD()) {new FlywheelSlow();}
+    // m_Controller.getLeftDPAD().whenPressed(new FlywheelSlow());
+    if(m_Controller.getRightDPAD()) {new FlywheelSpeed();}
+    // m_Controller.getRightDPAD().whenPressed(new FlywheelSpeed());
 
     m_Controller.getTransferStraightButton().whenPressed(new BallTransferStraight());
     m_Controller.getTransferPivotButton().whenPressed(new BallTransferPivotAndRoll());
 
     m_Controller.getShootCMDButton().whenPressed(new DrumTransferFlywheelTest());
-     
-    if(m_Controller.getRetract()) {m_BallTransfer.Retract();}
-    if(m_Controller.getExtend()) {m_BallTransfer.Extend();}
+    
   }
 
   public Command getAutonomousCommand() {

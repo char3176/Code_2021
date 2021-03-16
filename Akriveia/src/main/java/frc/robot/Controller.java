@@ -37,8 +37,8 @@ public class Controller {
 
     /* Angled Shooter */
 
-    private final JoystickButton shooterUpButton = new JoystickButton(op, op.getPOV(180)); //Up on the D-Pad
-    private final JoystickButton shooterDownButton = new JoystickButton(op, op.getPOV(0)); //Down on the D-Pad
+    // private final JoystickButton shooterUpButton = new JoystickButton(op, op.getPOV(180)); //Up on the D-Pad
+    // private final JoystickButton shooterDownButton = new JoystickButton(op, op.getPOV(0)); //Down on the D-Pad
 
     /* Drum */
 
@@ -49,13 +49,13 @@ public class Controller {
     
     private final JoystickButton drumSpinReverseButton = new JoystickButton(op, Button.kA.value); //Layer 2
     private final JoystickButton drumPreShootAgitateButton = new JoystickButton(op, Button.kStart.value); //Layer 2
-    private final JoystickButton drumCCWButton = new JoystickButton(op, Button.kBack.value);
-    private final JoystickButton drumCCWSetButton = new JoystickButton(op, Button.kBack.value); //Layer 2 
+    private final JoystickButton drumCCWButton = new JoystickButton(op, Button.kBack.value); //Layer 1 but not usable
+    private final JoystickButton drumCCWSetButton = new JoystickButton(op, Button.kBack.value); //Layer 2 but usable
 
     /* Flywheel */
      
-    private final JoystickButton flywheelRightButton = new JoystickButton(op, op.getPOV(90)); //Right on the D-Pad
-    private final JoystickButton flywheelLeftButton = new JoystickButton(op, op.getPOV(270)); //Left on the D-Pad
+    // private final JoystickButton flywheelRightButton = new JoystickButton(op, op.getPOV(90)); //Right on the D-Pad
+    // private final JoystickButton flywheelLeftButton = new JoystickButton(op, op.getPOV(270)); //Left on the D-Pad
 
     /* Transfer */
 
@@ -125,29 +125,30 @@ public class Controller {
     //     return false;
     // }
 
-    public JoystickButton getUpDPAD() {return shooterUpButton;}
-    public JoystickButton getDownDPAD() {return shooterDownButton;}
+    // public JoystickButton getUpDPAD() {return shooterUpButton;}
+    // public JoystickButton getDownDPAD() {return shooterDownButton;}
 
     /* Drum */
 
     public JoystickButton getDrumAgitateButton() {return drumAgitateButton;}
     public JoystickButton getDrumUpButton() {return drumUpButton;}
     public JoystickButton getDrumDownButton() {return drumDownButton;}
+    public JoystickButton getDrumCCWSetButton() {return drumCCWSetButton;}
 
     /* Flywheel */
 
-    // public boolean getRightDPADB() {
-    //     if(op.getPOV() == 90) {return true;}
-    //     return false;
-    // }
+    public boolean getRightDPAD() {
+        if(op.getPOV() == 90) {return true;}
+        return false;
+    }
 
-    // public boolean getLeftDPADB() {
-    //     if(op.getPOV() == 270) {return true;}
-    //     return false;
-    // }
+    public boolean getLeftDPAD() {
+        if(op.getPOV() == 270) {return true;}
+        return false;
+    }
 
-    public JoystickButton getRightDPAD() {return flywheelRightButton;}
-    public JoystickButton getLeftDPAD() {return flywheelLeftButton;}
+    // public JoystickButton getRightDPAD() {return flywheelRightButton;}
+    // public JoystickButton getLeftDPAD() {return flywheelLeftButton;}
 
     /* Transfer */
 

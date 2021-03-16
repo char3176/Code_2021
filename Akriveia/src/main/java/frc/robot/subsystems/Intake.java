@@ -20,8 +20,8 @@ public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
 
   private static Intake instance = new Intake();
-  private DoubleSolenoid leftPiston = new DoubleSolenoid(2, 5);
-  private DoubleSolenoid rightPiston = new DoubleSolenoid(1, 7);
+  // private DoubleSolenoid leftPiston = new DoubleSolenoid(2, 5);
+  // private DoubleSolenoid rightPiston = new DoubleSolenoid(1, 7);
   private WPI_TalonSRX motor = new WPI_TalonSRX(IntakeConstants.MOTOR_CAN_ID);
   private boolean pistonCurrentSetting = false;
   private double intakeMotorSpeed = 0;
@@ -54,23 +54,23 @@ public class Intake extends SubsystemBase {
    * Extends left and right DoubleSolenoids to lower the Intake to the ground
    */
 
-  public void Extend() {
-    pistonCurrentSetting = true;
-    leftPiston.set(Value.kForward);
-    rightPiston.set(Value.kForward);
-  }
+  // public void Extend() {
+  //   pistonCurrentSetting = true;
+  //   leftPiston.set(Value.kForward);
+  //   rightPiston.set(Value.kForward);
+  // }
 
   /**
    * Retracts left and right DoubleSolenoids to bring Intake off the ground and back inside the bot.
    * It also sets the motor to 0 because the intake shouldn't run while retracted.
    */
 
-  public void Retract() {
-    pistonCurrentSetting = false;
-    leftPiston.set(Value.kReverse);
-    rightPiston.set(Value.kReverse);
-    setPercentControl(0.0);
-  }
+  // public void Retract() {
+  //   pistonCurrentSetting = false;
+  //   leftPiston.set(Value.kReverse);
+  //   rightPiston.set(Value.kReverse);
+  //   setPercentControl(0.0);
+  // }
 
   /**
    * @return the current Piston Setting (either Extended or Retracted) as a boolean
