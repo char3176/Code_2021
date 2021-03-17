@@ -6,6 +6,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.constants.VisionConstants;
 
 /**
  * The VisionClient class is used as a proxy between direct Limelight values and the rest of the Java code.
@@ -154,9 +155,9 @@ public class VisionClient{
         SmartDashboard.putNumber("DeltaXCam", deltaXCam);
 
         // calculate the various kinds of distances from the camera
-        radius = Constants.VISION_CONSTANT / deltaXCam;
-        deltaX = radius * Math.cos(ty.getDouble(0) * Constants.DEG2RAD);
-        deltaY = radius * Math.sin(ty.getDouble(0) * Constants.DEG2RAD);
+        radius = VisionConstants.VISION_CONSTANT / deltaXCam;
+        deltaX = radius * Math.cos(ty.getDouble(0) * VisionConstants.DEG2RAD);
+        deltaY = radius * Math.sin(ty.getDouble(0) * VisionConstants.DEG2RAD);
     }
 
     /**
@@ -194,7 +195,7 @@ public class VisionClient{
 
         // figures out if the solution is valid by checking if it would actually go into the target
         if (finalTheta >= (11 * Math.PI)/12 && finalTheta <= (13 * Math.PI)/12) {
-            double[] arrayToSend = {initialVelocity[speedIdx], initialTheta / Constants.DEG2RAD};
+            double[] arrayToSend = {initialVelocity[speedIdx], initialTheta / VisionConstants.DEG2RAD};
             return arrayToSend;
         } else {
             if (speedIdx + 1 < initialVelocity.length) {

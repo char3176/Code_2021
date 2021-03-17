@@ -78,7 +78,7 @@ public class RobotContainer {
       // m_Controller.getUpDPAD().whenPressed(new AngledShooterUp());
       // m_Controller.getDownDPAD().whenPressed(new AngledShooterDown());
 
-      m_Controller.getDrumAgitateButton().whenPressed(new DrumAgitate());
+      // m_Controller.getDrumAgitateButton().whenPressed(new DrumAgitate());
       m_Controller.getDrumCCWSetButton().whenPressed(new DrumCCWSet());
       m_Controller.getDrumUpButton().whenPressed(new DrumVelocitySpeed());
       m_Controller.getDrumDownButton().whenPressed(new DrumVelocitySlow());
@@ -95,6 +95,9 @@ public class RobotContainer {
       m_Controller.getTransferPivotButton().whenPressed(new BallTransferPivotAndRoll());
 
       m_Controller.getShootCMDButton().whenPressed(new DrumTransferFlywheelTest());
+
+      m_Controller.getFlywheelLeft().whenPressed(new FlywheelSlow());
+      m_Controller.getFlywheelRight().whenPressed(new FlywheelSpeed());
     } else { //SHIFTED
 
     }

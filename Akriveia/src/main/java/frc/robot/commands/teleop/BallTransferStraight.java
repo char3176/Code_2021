@@ -1,5 +1,6 @@
 package frc.robot.commands.teleop;
 
+import frc.robot.constants.BallTransferConstants;
 import frc.robot.subsystems.BallTransfer;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
@@ -14,6 +15,6 @@ public class BallTransferStraight extends InstantCommand {
   @Override
   public void initialize() {
     m_BallTransfer.Extend();
-    m_BallTransfer.setPercentControl(0);
+    m_BallTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT);
   }
 }

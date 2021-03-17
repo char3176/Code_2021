@@ -15,6 +15,6 @@ public class BallTransferPivotAndRoll extends InstantCommand {
   @Override
   public void initialize() {
     m_BallTransfer.Retract();
-    m_BallTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT);
+    m_BallTransfer.setPercentControl(0);
   }
 }

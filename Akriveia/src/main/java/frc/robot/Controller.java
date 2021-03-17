@@ -43,20 +43,20 @@ public class Controller {
 
     /* Drum */
 
-    private final JoystickButton drumAgitateButton = new JoystickButton(op, Button.kStart.value);
+    // private final JoystickButton drumAgitateButton = new JoystickButton(op, Button.kStart.value);
     private final JoystickButton drumDownButton = new JoystickButton(op, Button.kBumperLeft.value);
     private final JoystickButton drumUpButton = new JoystickButton(op, Button.kBumperRight.value);
     //3 MORE BUTTONS
     
     private final JoystickButton drumSpinReverseButton = new JoystickButton(op, Button.kA.value); //Layer 2
-    private final JoystickButton drumPreShootAgitateButton = new JoystickButton(op, Button.kStart.value); //Layer 2
+    // private final JoystickButton drumPreShootAgitateButton = new JoystickButton(op, Button.kStart.value); //Layer 2
     private final JoystickButton drumCCWButton = new JoystickButton(op, Button.kBack.value); //Layer 1 but not usable
     private final JoystickButton drumCCWSetButton = new JoystickButton(op, Button.kBack.value); //Layer 2 but usable
 
     /* Flywheel */
      
-    // private final JoystickButton flywheelRightButton = new JoystickButton(op, op.getPOV(90)); //Right on the D-Pad
-    // private final JoystickButton flywheelLeftButton = new JoystickButton(op, op.getPOV(270)); //Left on the D-Pad
+    private final JoystickButton flywheelRightButton = new JoystickButton(op, Button.kY.value); //Right on the D-Pad
+    private final JoystickButton flywheelLeftButton = new JoystickButton(op, Button.kX.value); //Left on the D-Pad
 
     /* Transfer */
 
@@ -65,7 +65,7 @@ public class Controller {
 
     /* Command Buttons */
 
-    private final JoystickButton shootCMD = new JoystickButton(op, Button.kX.value);
+    private final JoystickButton shootCMD = new JoystickButton(op, Button.kStart.value);
     // private final JoystickButton shift = new JoystickButton(op, Trig);
 
     /* TEMP */
@@ -132,21 +132,19 @@ public class Controller {
 
     /* Drum */
 
-    public JoystickButton getDrumAgitateButton() {return drumAgitateButton;}
+    // public JoystickButton getDrumAgitateButton() {return drumAgitateButton;}
     public JoystickButton getDrumUpButton() {return drumUpButton;}
     public JoystickButton getDrumDownButton() {return drumDownButton;}
     public JoystickButton getDrumCCWSetButton() {return drumCCWSetButton;}
 
     /* Flywheel */
 
-    public boolean getRightDPAD() {
-        if(op.getPOV() == 90) {return true;}
-        return false;
+    public JoystickButton getFlywheelLeft() {
+        return flywheelLeftButton;
     }
 
-    public boolean getLeftDPAD() {
-        if(op.getPOV() == 270) {return true;}
-        return false;
+    public JoystickButton getFlywheelRight() {
+        return flywheelRightButton;
     }
 
     // public JoystickButton getRightDPAD() {return flywheelRightButton;}
