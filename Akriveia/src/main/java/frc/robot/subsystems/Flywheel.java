@@ -30,7 +30,7 @@ public class Flywheel extends SubsystemBase {
 
     public void spinVelocityPIDF(int level) {
         lastSetting = level;
-        double ticsPer100ms = (FlywheelConstants.FlywheelSpeeds[level] * 2048.0) / 600.0;
+        double ticsPer100ms = (FlywheelConstants.FlywheelSpeeds[level] * 2048.0) / 600.0;   // Constants? Think it's gear ratio & ticks/rev
         flywheelController.set(TalonFXControlMode.Velocity, ticsPer100ms);
     }
 

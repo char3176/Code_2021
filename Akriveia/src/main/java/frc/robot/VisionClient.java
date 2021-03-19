@@ -101,14 +101,14 @@ public class VisionClient{
      * -initial velocity of ball to make it into target
      * @return if the method has found a valid solution
      */
-    public boolean targetRecogControlLoop(){
+    public double[] targetRecogControlLoop(){
         // used to calculate latency
         double startTime = Timer.getFPGATimestamp();
 
         publishPrelimTargetRecogData();
 
         if(tcornxy.getDoubleArray(new double[1]).length != 8){
-            return false;
+            return null;
         }
 
         separateTcornxyArrayInto2();
@@ -119,9 +119,10 @@ public class VisionClient{
 
         // get the initial velocity and angle of ball
         double[] resultArray = findInitialAngleAndVelocity(0);
+        if (resultArray == null) return null;
 
         SmartDashboard.putNumber("Latency (ms)", ((Timer.getFPGATimestamp() - startTime) * 1000) + tl.getDouble(0) + 11);
-        return true;
+        return resultArray;
     }
 
 
