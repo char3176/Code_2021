@@ -82,6 +82,7 @@ public class Drum extends SubsystemBase {
 
   public void setSpeed(int level) {
     reengageRampLimit();
+    if(level == 0) {isRateLimitOff = true;}
     lastSetting = level;
     drumPIDController.setReference(rateLimiter.calculate(DrumConstants.drumSpeeds[level]), ControlType.kVelocity);
   }

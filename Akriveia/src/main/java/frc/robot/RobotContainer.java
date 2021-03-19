@@ -72,7 +72,7 @@ public class RobotContainer {
     m_Controller.getReZeroGyroButton().whenHeld(new SwerveReZeroGyro());
 
 
-    if(!m_Controller.getShift()) { //REGULAR
+    while(!m_Controller.getShift()) { //REGULAR
       if(m_Controller.getPOVLocation() == 0) {new AngledShooterUp();}
       else if(m_Controller.getPOVLocation() == 180) {new AngledShooterDown();}
       // m_Controller.getUpDPAD().whenPressed(new AngledShooterUp());
@@ -96,10 +96,8 @@ public class RobotContainer {
 
       m_Controller.getShootCMDButton().whenPressed(new DrumTransferFlywheelTest());
 
-      m_Controller.getFlywheelLeft().whenPressed(new FlywheelSlow());
+      // m_Controller.getFlywheelLeft().whenPressed(new FlywheelSlow());
       m_Controller.getFlywheelRight().whenPressed(new FlywheelSpeed());
-    } else { //SHIFTED
-
     }
   }
 

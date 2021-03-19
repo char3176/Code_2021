@@ -5,8 +5,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
-// import edu.wpi.first.wpilibj.buttons.POVButton;
-// import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.constants.ControllerConstants;
 
 public class Controller {
@@ -33,7 +31,6 @@ public class Controller {
     
     /* Intake */
 
-    private final JoystickButton intakeSwitchButton = new JoystickButton(op, Button.kB.value);
     private final JoystickButton intakeSpinButton = new JoystickButton(op, Button.kA.value);
 
     /* Angled Shooter */
@@ -48,7 +45,7 @@ public class Controller {
     private final JoystickButton drumUpButton = new JoystickButton(op, Button.kBumperRight.value);
     //3 MORE BUTTONS
     
-    private final JoystickButton drumSpinReverseButton = new JoystickButton(op, Button.kA.value); //Layer 2
+    // private final JoystickButton drumSpinReverseButton = new JoystickButton(op, Button.kA.value); //Layer 2
     // private final JoystickButton drumPreShootAgitateButton = new JoystickButton(op, Button.kStart.value); //Layer 2
     private final JoystickButton drumCCWButton = new JoystickButton(op, Button.kBack.value); //Layer 1 but not usable
     private final JoystickButton drumCCWSetButton = new JoystickButton(op, Button.kBack.value); //Layer 2 but usable
@@ -56,7 +53,7 @@ public class Controller {
     /* Flywheel */
      
     private final JoystickButton flywheelRightButton = new JoystickButton(op, Button.kY.value); //Right on the D-Pad
-    private final JoystickButton flywheelLeftButton = new JoystickButton(op, Button.kX.value); //Left on the D-Pad
+    // private final JoystickButton flywheelLeftButton = new JoystickButton(op, Button.kX.value); //Left on the D-Pad
 
     /* Transfer */
 
@@ -113,7 +110,6 @@ public class Controller {
     /* Intake Buttons */
 
     public JoystickButton getIntakeSpinButton() {return intakeSpinButton;}
-    public JoystickButton getIntakeSwitchButton() {return intakeSwitchButton;}
 
     /* Angled Shooter*/
 
@@ -139,9 +135,9 @@ public class Controller {
 
     /* Flywheel */
 
-    public JoystickButton getFlywheelLeft() {
-        return flywheelLeftButton;
-    }
+    // public JoystickButton getFlywheelLeft() {
+    //     return flywheelLeftButton;
+    // }
 
     public JoystickButton getFlywheelRight() {
         return flywheelRightButton;
