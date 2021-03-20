@@ -26,7 +26,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
  * it contains the code necessary to operate a robot with tank drive.
  */
 public class Robot extends TimedRobot {
-  private XboxController m_xboxController = new XboxController(2);
+  private XboxController m_xboxController = new XboxController(0);
   private PowerDistributionPanel m_pdp = new PowerDistributionPanel();
   private int deviceID = 6;
   private int m_follow_deviceID = 0;    // CAN Id zero disables follow motor mode
@@ -182,7 +182,7 @@ public class Robot extends TimedRobot {
     double ff = SmartDashboard.getNumber("Feed Forward", 0);
     double max = SmartDashboard.getNumber("Max Output", 0);
     double min = SmartDashboard.getNumber("Min Output", 0);
-    int canId = (int) SmartDashboard.getNumber("CAN Id", 0);
+    int canId = (int) SmartDashboard.getNumber("CAN Id", 0);  // 50 for Drum
     boolean invert_motor = SmartDashboard.getBoolean("Invert Lead Motor", m_invert_motor);
     int follow_canId = (int) SmartDashboard.getNumber("Follow CAN Id", 0);
     boolean follow_inverted = (boolean) SmartDashboard.getBoolean("Invert Follow Motor", true);

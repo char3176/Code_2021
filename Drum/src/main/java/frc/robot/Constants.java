@@ -16,7 +16,7 @@ public final class Constants {
 
     public static final int XBoxControllerPort = 2;
 
-    public static final int drumMotorCANID = 6;
+    public static final int drumMotorCANID = 50;
 
     // Drum PIDF Constants for SparkMAX Neo 550
     public static final double drumKP = 0.00013;
