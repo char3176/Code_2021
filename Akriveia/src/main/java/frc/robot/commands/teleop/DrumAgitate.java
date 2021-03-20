@@ -17,8 +17,11 @@ public class DrumAgitate extends InstantCommand {
   }
 
   /*
+  From Jared:
     This probably has to be a normal (not instant) command because of how the method in the subsystem works for interruptability.
-                                                                                                                - Jared
+    When I made it, the call to shakeDrum saved the returned boolean to a variable. Then, isFinished returned that variable, which the
+    method in Drum makes true if the shake cycle is done, and false otherwise. This helps the commandScheduler not get stuck because of
+    loops, and also allows the shaking to be interrupted before the cycle is complete.
   */
 
 }
