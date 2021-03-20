@@ -54,7 +54,8 @@ public class SwervePod {
     public SwervePod(int id, TalonFX driveController, TalonSRX spinController) {
         this.id = id;
 
-        this.kEncoderOffset = SwervePodConstants.SPIN_OFFSET[this.id];
+        // this.kEncoderOffset = SwervePodConstants.SPIN_OFFSET[this.id];
+        this.kEncoderOffset = 0;
         ///System.out.println("P"+(this.id+1)+" kEncoderOffset: "+this.kEncoderOffset);
 
         kSpinEncoderUnitsPerRevolution = SwervePodConstants.SPIN_ENCODER_UNITS_PER_REVOLUTION;
@@ -95,11 +96,11 @@ public class SwervePod {
         this.driveController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
         this.spinController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);   //TODO: investigate QuadEncoder vs CTRE_MagEncoder_Absolute.  Are the two equivalent?  Why QuadEncoder instead of CTRE_MagEncoder_Absolute
 
-        if (this.id < 3) {
+        if (this.id < 2) {
             this.spinController.setSensorPhase(SwervePodConstants.kSensorPhase);
             this.spinController.setInverted(SwervePodConstants.kMotorInverted);
         }
-        if (this.id == 3) {
+        if (this.id == 3 || this.id == 2) {
             this.spinController.setSensorPhase(true);
             this.spinController.setInverted(true);
         }
