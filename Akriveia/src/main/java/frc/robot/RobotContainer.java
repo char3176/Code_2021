@@ -8,6 +8,7 @@ import frc.robot.subsystems.AngledShooter;
 import frc.robot.subsystems.Drum;
 import frc.robot.subsystems.BallTransfer;
 import frc.robot.subsystems.Flywheel;
+import frc.robot.commands.teleop.DrumInputReset;
 import frc.robot.commands.auton.Slalom;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -72,7 +73,7 @@ public class RobotContainer {
     m_Controller.getReZeroGyroButton().whenHeld(new SwerveReZeroGyro());
 
 
-    while(!m_Controller.getShift()) { //REGULAR
+    if(!m_Controller.getShift()) { //REGULAR
       if(m_Controller.getPOVLocation() == 0) {new AngledShooterUp();}
       else if(m_Controller.getPOVLocation() == 180) {new AngledShooterDown();}
       // m_Controller.getUpDPAD().whenPressed(new AngledShooterUp());
@@ -80,8 +81,10 @@ public class RobotContainer {
 
       // m_Controller.getDrumAgitateButton().whenPressed(new DrumAgitate());
       m_Controller.getDrumCCWSetButton().whenPressed(new DrumCCWSet());
-      m_Controller.getDrumUpButton().whenPressed(new DrumVelocitySpeed());
-      m_Controller.getDrumDownButton().whenPressed(new DrumVelocitySlow());
+      m_Controller.getDrumUpButton().whenPressed(new DrumInputReset());
+      m_Controller.getDrumDownButton().whenPressed(new DrumInputReset());
+      m_Controller.getDrumUpButton().whenPressed(new DrumVelocitySpeed2());
+      m_Controller.getDrumDownButton().whenPressed(new DrumVelocitySlow2());
 
       m_Controller.getIntakeSpinButton().whenPressed(new IntakeRoll());
       // m_Controller.getIntakeSwitchButton().whenPressed(new IntakeSwitch());

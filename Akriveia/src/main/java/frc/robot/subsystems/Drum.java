@@ -27,7 +27,7 @@ public class Drum extends SubsystemBase {
   private SlewRateLimiter rateLimiter;
   private static Drum instance = new Drum();
   public boolean drumPctOutputMode = false;
-  private boolean isRateLimitOff = false;
+  private boolean isRateLimitOff = true;
   private int lastSetting = 0;
   private int direction = 1;
   private double shakeStartTime = -1;
@@ -82,7 +82,7 @@ public class Drum extends SubsystemBase {
 
   public void setSpeed(int level) {
     reengageRampLimit();
-    if(level == 0) {isRateLimitOff = true;}
+    // if(level == 0) {isRateLimitOff = true;}
     lastSetting = level;
     drumPIDController.setReference(rateLimiter.calculate(DrumConstants.drumSpeeds[level]), ControlType.kVelocity);
   }
