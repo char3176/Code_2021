@@ -15,4 +15,10 @@ public class DrumAgitate extends InstantCommand {
   public void initialize() {
     m_Drum.shakeDrum();
   }
+
+  /*
+    This probably has to be a normal (not instant) command because of how the method in the subsystem works for interruptability.
+                                                                                                                - Jared
+  */
+
 }
