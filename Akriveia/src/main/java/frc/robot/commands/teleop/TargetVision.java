@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.VisionClient;
 import frc.robot.subsystems.AngledShooter;
 import frc.robot.constants.AngledShooterConstants;
+import frc.robot.constants.VisionConstants;
 import frc.robot.subsystems.Flywheel;
 
 public class TargetVision extends CommandBase {
@@ -42,11 +43,14 @@ public class TargetVision extends CommandBase {
     if (resultArray != null) {
       wantedAngleTicks = resultArray[1] * (180 / Math.PI) * (AngledShooterConstants.TICS_EQUAL_TO_5DEGREES / 5);
 
-      // might be checked in vision already, this is for safety until we're sure of that
+      // whether it is in the range of the hood might be checked in vision already, this is for safety until we're sure of that
       m_AngledShooter.setPosition(wantedAngleTicks);
 
-      wantedVelocityTicks = resultArray[0]; // in m/s, need to get to ticks/100 ms (rpm to ticks/100 ms conversion in Flywheel subsystem)
-      // what's the equation that compares linear and angular velocity?
+      // m/s to rad/s (using alpha = r * omega) to rev/s to deg/s to tics/s to tics/100 ms
+      wantedVelocityTicks = resultArray[0] / VisionConstants.FLYWHEEL_RADIUS / (2 * Math.PI) * 360 * 
+                              (AngledShooterConstants.TICS_EQUAL_TO_5DEGREES / 5) * 0.1;
+
+      m_Flywheel.spinVelocityPIDF(wantedVelocityTicks);
     }
 
   }
