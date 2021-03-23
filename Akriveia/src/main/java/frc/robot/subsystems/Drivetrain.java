@@ -26,6 +26,15 @@ import frc.robot.Controller;
 // import frc.robot.VisionClient;
 
 import java.util.ArrayList;
+
+
+/* ##################################################################################
+ *  BEGIN: Temporary Code for PIDController of rotation to stop drift in AutonCrude
+ * ################################################################################## */
+    import frc.robot.util.PIDLoop;
+/* ##################################################################################
+ *  END: Temporary Code for PIDController of rotation to stop drift in AutonCrude
+ * ################################################################################## */
 public class Drivetrain extends SubsystemBase {
   private static Drivetrain instance = new Drivetrain();
   private Controller controller = Controller.getInstance();
@@ -37,6 +46,7 @@ public class Drivetrain extends SubsystemBase {
   private ArrayList<SwervePod> pods;
 
   private coordType currentCoordType;
+  private coordType lastCoordType;
   private driveMode currentDriveMode;
 
   private boolean autonVision;
@@ -74,12 +84,23 @@ public class Drivetrain extends SubsystemBase {
   private double forwardCommand;
   private double strafeCommand;
   private double spinCommand;
- 
-  public enum driveMode {
+
+  /* ##################################################################################
+   *  BEGIN: Temporary Code for PIDController of rotation to stop drift in AutonCrude
+   * ################################################################################## */
+    private int arraytrack;
+    double[] AngleHist = {0.0, 0.0, 0.0, 0.0, 0.0};
+    double autonCrudeGyroAngleAvg;
+  /* ##################################################################################
+   *  END: Temporary Code for PIDController of rotation to stop drift in AutonCrude
+   * ################################################################################## */
+
+   public enum driveMode {
     DEFENSE,
     DRIVE,
     TURBO,
-    VISION
+    VISION,
+    ORBIT
   }
 
   public enum coordType {
@@ -124,7 +145,7 @@ public class Drivetrain extends SubsystemBase {
     // Instantiating the gyro
     gyro = new AHRS(SPI.Port.kMXP);
     gyro.reset();
-    // gyroUpdateOffset();
+    gyroUpdateOffset();
     updateAngle();
     // SmartDashboard.putNumber("currentAngle", this.currentAngle);
 
@@ -133,6 +154,15 @@ public class Drivetrain extends SubsystemBase {
     // SmartDashboard.putNumber("spinCommand", 0);
 
     isVisionDriving = false;
+
+  /* ##################################################################################
+   *  BEGIN: Temporary Code for PIDController of rotation to stop drift in AutonCrude
+   * ################################################################################## */
+    arraytrack = 0;
+    autonCrudeGyroAngleAvg = 0;
+  /* ##################################################################################
+   *  END: Temporary Code for PIDController of rotation to stop drift in AutonCrude
+   * ################################################################################## */
 
     // TODO: We initialize to face forward but how do we make this into a command?
     // Maybe we say drive with the below parameters, but where?
@@ -187,7 +217,6 @@ public class Drivetrain extends SubsystemBase {
     // board.putNumber("Drive updated currentAngle Degrees", (this.currentAngle * 180/Math.PI));
     // SmartDashboard.putString("Drive currentCoordType", currentCoordType.toString());
 
-
     if(currentDriveMode != driveMode.TURBO) {
       this.forwardCommand *= DrivetrainConstants.NON_TURBO_PERCENT_OUT_CAP;
       this.strafeCommand *= DrivetrainConstants.NON_TURBO_PERCENT_OUT_CAP;
@@ -213,8 +242,10 @@ public class Drivetrain extends SubsystemBase {
     // SmartDashboard.putNumber("this.strafeComDriveTrain.drive", this.strafeCommand);
     // SmartDashboard.putNumber("this.spinComDriveTrain.drive", this.spinCommand);
     calculateNSetPodPositions(this.forwardCommand, this.strafeCommand, this.spinCommand);  
-
-    SmartDashboard.putNumber("angle", this.currentAngle * (180 / Math.PI));
+    
+    SmartDashboard.putBoolean("isOrbiting", currentDriveMode == driveMode.ORBIT);
+    SmartDashboard.putBoolean("isRobotCentric", currentCoordType == coordType.ROBOT_CENTRIC);
+    SmartDashboard.putBoolean("isFieldCentric", currentCoordType == coordType.FIELD_CENTRIC);
   }
 
   /**
@@ -240,10 +271,10 @@ public class Drivetrain extends SubsystemBase {
       //          +Y :=  axis of chassis forward movement
       //          +X :=  axis of chassis strafe to starboard/right
       // ###########################################################
-      double a = strafeCommand - spinCommand * length/2; 
-      double b = strafeCommand + spinCommand * length/2;
-      double c = forwardCommand - spinCommand * width/2;  
-      double d = forwardCommand + spinCommand * width/2;
+      double a = strafeCommand - spinCommand * getRadius("A");
+      double b = strafeCommand + spinCommand * getRadius("B");;
+      double c = forwardCommand - spinCommand * getRadius("C");  
+      double d = forwardCommand + spinCommand * getRadius("D");
       
       // Calculate speed (podDrive[idx]) and angle (podSpin[idx]) of each pod
       podDrive[0] = Math.sqrt(Math.pow(b, 2) + Math.pow(c, 2));
@@ -273,11 +304,13 @@ public class Drivetrain extends SubsystemBase {
       double b = this.forwardCommand + this.spinCommand * width/2;
       double c = this.strafeCommand - this.spinCommand * length/2;
       double d = this.strafeCommand + this.spinCommand * length/2;
+
       // Calculate speed and angle of each pod
       // TODO: Verify order of atan2 parameters. atan2(y,x) is formal java def, 
       //        but past implementations and ether use atan2(x,y).
       podDrive[0] = Math.sqrt(Math.pow(b,2) + Math.pow(d,2));
       podSpin[0] = Math.atan2(d, b);
+
       podDrive[1] = Math.sqrt(Math.pow(b,2) + Math.pow(c,2));
       podSpin[1] = Math.atan2(c, b);
       
@@ -312,6 +345,8 @@ public class Drivetrain extends SubsystemBase {
         for(int idx = 0; idx < (pods.size()); idx++) {
         pods.get(idx).set(podDrive[idx], podSpin[idx]);   //TODO: try doing pods.size() - 1 in for conditional, then outside for loop
                                                           //  do a hardcode set of pods.get(3).set(0.1, 0.0);
+        SmartDashboard.putNumber("pod" + idx + " drive", podDrive[idx]);    
+        SmartDashboard.putNumber("pod" + idx + " spin", podSpin[idx]);
         }
         //pods.get(3).set(0.1,1.57);
         
@@ -323,15 +358,14 @@ public class Drivetrain extends SubsystemBase {
     //  pods.get(2).set(smallNum, 3.0 * Math.PI / 4.0);
     //  pods.get(3).set(smallNum, -3.0 * Math.PI / 4.0);
 
-    SmartDashboard.putBoolean("isFieldCentric", isFieldCentric());
+    SmartDashboard.putBoolean("orbiting", isOrbiting());
     }
   }
 
   private void updateAngle() {
     // -pi to pi; 0 = straight
-    this.currentAngle = ((((gyro.getAngle() - this.gyroOffset) * Math.PI/180.0)) % (2*Math.PI));
+    this.currentAngle = (((((gyro.getAngle()) - this.gyroOffset) * Math.PI/180.0)) % (2*Math.PI));
     // gyro.getAngle is returned in degrees.
-    // 
     // Then converted to radians via "* pi/180".
     // And finally, it's modulus against 2pi is taken and returned as currentAngle.
   }
@@ -343,13 +377,14 @@ public class Drivetrain extends SubsystemBase {
   private double getRadius(String component) {
     // Omitted if driveStatements where we pivoted around a pod
     // This'll be orbit and dosado in the future
-    if(false /* orbiting || dosadoing */) {
-      // Do special things to components based on radius and more
-    } else {
-      if(component.equals("A") || component.equals("B")) { return length / 2 ; }
-      else { return width / 2; }  //TODO: place to check for forward vs back pods working vs not working
-    }
-    return 0.0;
+    // if(currentDriveMode == driveMode.ORBIT) {
+      // if(component.equals("A") || component.equals("B")) { return length / 2.0; }
+      // else if(component.equals("C")) { return width; }
+      // else /* component D */ { return 2 * width; } // Puts radius to the right of bot at distance w
+    // } else {
+      if(component.equals("A") || component.equals("B")) { return length / 2.0 ; }
+      else { return width / 2.0; }  //TODO: place to check for forward vs back pods working vs not working
+    // }
   }
 
   public void setDriveMode(driveMode wantedDriveMode) {
@@ -360,13 +395,17 @@ public class Drivetrain extends SubsystemBase {
     currentCoordType = wantedType;
   }
 
-  public boolean isFieldCentric() {
-    if(currentCoordType == coordType.FIELD_CENTRIC) { return true; }
+  public boolean isOrbiting() {
+    if(currentDriveMode == driveMode.ORBIT) { return true; }
     return false;
   }
 
   public void resetGyro() {
     gyro.reset();
+  }
+
+  public coordType getCurrentCoordType() {
+    return currentCoordType;
   }
 
  
@@ -387,14 +426,46 @@ public class Drivetrain extends SubsystemBase {
   public void setPose(Pose2d setPose) {
     odometry.resetPosition(setPose, getAngle());
   }
+
   public Rotation2d getAngle() {
     return Rotation2d.fromDegrees(-gyro.getAngle());
   }
+
   public Pose2d getCurrentPose() {
     return odometry.getPoseMeters();
   }
+
   public DifferentialDriveKinematics getKinematics() {
     return kinematics;
   }
   */
+
+/* ##################################################################################
+ *  BEGIN: Temporary Code for PIDController of rotation to stop drift in AutonCrude
+ * ################################################################################## */
+  private void calcAutonCrudeGyroAngleAvg() {
+    this.AngleHist[this.arraytrack] = this.currentAngle;
+    autonCrudeGyroAngleAvg = ( this.AngleHist[0] + this.AngleHist[1] + this.AngleHist[2] + this.AngleHist[3] + this.AngleHist[4] ) / 5;
+  }
+
+  public double getAutonCrudeGyroAngleAvg() {
+    return this.autonCrudeGyroAngleAvg;
+  }
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+    
+    calcAutonCrudeGyroAngleAvg();
+    this.arraytrack++;
+    if (this.arraytrack > 3) {
+      this.arraytrack = 0;
+    } 
+/* ##################################################################################
+ *  END: Temporary Code for PIDController of rotation to stop drift in AutonCrude
+ * ################################################################################## */
+
+
+  }
+
 }

@@ -27,7 +27,7 @@ public class TargetVision extends CommandBase {
   @Override
   public void execute() {
 
-    boolean foundTarget = m_VisionClient.targetRecogControlLoop();
+    boolean foundTarget = m_VisionClient.targetRecogControlLoop() == null ? false : true;
 
   }
 

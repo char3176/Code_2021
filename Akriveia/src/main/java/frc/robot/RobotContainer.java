@@ -71,7 +71,11 @@ public class RobotContainer {
       () -> m_Controller.getForward(), 
       () -> m_Controller.getStrafe()));
     m_Controller.getReZeroGyroButton().whenHeld(new SwerveReZeroGyro());
-
+    m_Controller.getReZeroGyroButton().whenPressed(new SwerveReZeroGyro());
+    //m_Controller.getSlalomButton().whenPressed(new Slalom());
+    m_Controller.getOrbitButton().whenHeld(new SwerveOrbit(
+      () -> m_Controller.getForward(),
+      () -> m_Controller.getPOVTransStick()));
 
     if(!m_Controller.getShift()) { //REGULAR
       if(m_Controller.getPOVLocation() == 0) {new AngledShooterUp();}
