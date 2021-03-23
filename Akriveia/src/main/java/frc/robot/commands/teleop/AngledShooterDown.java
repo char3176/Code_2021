@@ -5,6 +5,7 @@ import frc.robot.constants.AngledShooterConstants;
 import frc.robot.subsystems.AngledShooter;
 
 public class AngledShooterDown extends InstantCommand {
+
   private AngledShooter m_AngledShooter = AngledShooter.getInstance();
 
   public AngledShooterDown() {
@@ -13,7 +14,9 @@ public class AngledShooterDown extends InstantCommand {
 
   @Override
   public void initialize() {
-    //Gets the current encoder position and see where it should go
+    
+    /* Gets the current encoder position and see where it should go */
+    
     double temp = m_AngledShooter.getEncoderPosition();
     if(temp <= AngledShooterConstants.pos[1] + 100) {
      m_AngledShooter.setPosition(AngledShooterConstants.pos[0]);

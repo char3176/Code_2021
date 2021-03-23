@@ -1,34 +1,27 @@
 package frc.robot.commands.teleop;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Drum;
 
-public class DrumAgitate extends CommandBase {
+public class DrumAgitate extends InstantCommand {
+
   Drum m_Drum = Drum.getInstance();
-  private boolean ranThroughSequence;
 
   public DrumAgitate() {
     addRequirements(m_Drum);
   }
 
   @Override
-  public void initialize() {}
-
-  @Override
-  public void execute() {
-    // BUG ALERT: The motor shakes correctly, but the loop doesn't stop and can't be
-    // interrupted very easily by another command.
-      ranThroughSequence = m_Drum.shakeDrum();
+  public void initialize() {
+    m_Drum.shakeDrum();
   }
 
-  @Override
-  public void end(boolean interrupted) {
-    System.out.println(m_Drum.getLastSetting());  // Getting last state doesn't work yet
-    new DrumVelocity(m_Drum.getLastSetting());
-  }
+  /*
+  From Jared:
+    This probably has to be a normal (not instant) command because of how the method in the subsystem works for interruptability.
+    When I made it, the call to shakeDrum saved the returned boolean to a variable. Then, isFinished returned that variable, which the
+    method in Drum makes true if the shake cycle is done, and false otherwise. This helps the commandScheduler not get stuck because of
+    loops, and also allows the shaking to be interrupted before the cycle is complete.
+  */
 
-  @Override
-  public boolean isFinished() {
-    return ranThroughSequence;
-  }
 }

@@ -3,6 +3,8 @@ package frc.robot.constants;
 public class DrumConstants {
     public static final int drumMotorCANID = 50;
 
+    /* Drum PIDF Constants for SparkMAX Neo 550 */
+
     public static final double drumKP = 0.00013;
     public static final double drumKI = 0.0000008;
     public static final double drumKD = 0.003;
@@ -13,12 +15,10 @@ public class DrumConstants {
     public static final double drumKMaxOutput = 1.0;
     public static final double drumKMinOutput = -1.0;
 
-    // RPM for Drum buttons
-    public static final int drumLow = 1500;
-    public static final int drumMedium = 3500;
-    public static final int drumHigh = 6000;
-    public static final int drumExtreme = 8500;   
+    /* RPM Array */
 
     public static final int[] drumSpeeds = {0, 2500, 4500, 7000, 8500};
     public static final double drumShakePct = 0.35;
+    public static final double drumMilli = 1000000;
+    public static final double drumSec = 1000000000;
 }

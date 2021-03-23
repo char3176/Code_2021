@@ -1,30 +1,11 @@
-
 package frc.robot.subsystems;
-
-import java.util.function.DoubleSupplier;
 
 //TODO: Recognize the red dependecys because seeing red is annoying
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.*; 
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
-
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.CANPIDController;
-import com.revrobotics.ControlType;
-
-import com.kauailabs.navx.frc.AHRS;
-
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.constants.SwervePodConstants;
@@ -38,7 +19,7 @@ public class SwervePod {
     private int kEncoderOffset; 
     private double kSpinEncoderUnitsPerRevolution;
     private double kDriveEncoderUnitsPerRevolution;
-    private int off = 0;
+    // private int off = 0;
 
     private double lastEncoderPos;
     private double radianError;
@@ -66,14 +47,15 @@ public class SwervePod {
     private double maxVelTicsPer100ms;
 
     private double PI = Math.PI;
-    private double maxFps = SwervePodConstants.DRIVE_SPEED_MAX_EMPIRICAL_FEET_PER_SECOND;
+    // private double maxFps = SwervePodConstants.DRIVE_SPEED_MAX_EMPIRICAL_FEET_PER_SECOND;
 
-    private int startTics;
+    // private int startTics;
 
     public SwervePod(int id, TalonFX driveController, TalonSRX spinController) {
         this.id = id;
 
-        this.kEncoderOffset = SwervePodConstants.SPIN_OFFSET[this.id];
+        // this.kEncoderOffset = SwervePodConstants.SPIN_OFFSET[this.id];
+        this.kEncoderOffset = 0;
         ///System.out.println("P"+(this.id+1)+" kEncoderOffset: "+this.kEncoderOffset);
 
         kSpinEncoderUnitsPerRevolution = SwervePodConstants.SPIN_ENCODER_UNITS_PER_REVOLUTION;
@@ -114,11 +96,11 @@ public class SwervePod {
         this.driveController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
         this.spinController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);   //TODO: investigate QuadEncoder vs CTRE_MagEncoder_Absolute.  Are the two equivalent?  Why QuadEncoder instead of CTRE_MagEncoder_Absolute
 
-        if (this.id < 3) {
+        if (this.id < 2) {
             this.spinController.setSensorPhase(SwervePodConstants.kSensorPhase);
             this.spinController.setInverted(SwervePodConstants.kMotorInverted);
         }
-        if (this.id == 3) {
+        if (this.id == 3 || this.id == 2) {
             this.spinController.setSensorPhase(true);
             this.spinController.setInverted(true);
         }
@@ -168,7 +150,7 @@ public class SwervePod {
         this.maxVelTicsPer100ms = 1 * 987.2503 * kDriveEncoderUnitsPerRevolution / 600.0;
         this.velTicsPer100ms = this.podDrive * 2000.0 * kDriveEncoderUnitsPerRevolution / 600.0;  //TODO: rework "podDrive * 2000.0"
         double encoderSetPos = calcSpinPos(this.podSpin);
-        double tics = rads2Tics(this.podSpin);
+        // double tics = rads2Tics(this.podSpin);
         // SmartDashboard.putNumber("P" + (id + 1) + " tics", tics);
         // SmartDashboard.putNumber("P" + (id + 1) + " absTics", spinController.getSelectedSensorPosition());
         //if (this.id == 3) {spinController.set(ControlMode.Position, 0.0); } else {   // TODO: Try this to force pod4 to jump lastEncoderPos

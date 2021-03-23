@@ -1,38 +1,54 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.robot.constants.IntakeConstants;
 
-public class Intake extends SubsystemBase {
-  private static Intake instance = new Intake();
-  private DoubleSolenoid leftPiston = new DoubleSolenoid(2, 5);
-  private DoubleSolenoid rightPiston = new DoubleSolenoid(1, 7);
-  private WPI_TalonSRX motor = new WPI_TalonSRX(IntakeConstants.MOTOR_CAN_ID);
+/**
+ * <b> The Intake subsystem </b>
+ * <p>
+ * The mechanism that pulls power cells from the ground and deposits them into the Drum.
+ * @see subsystems.Drum
+ */
 
-  public Intake() {
-    leftPiston.set(DoubleSolenoid.Value.kOff);
-    rightPiston.set(DoubleSolenoid.Value.kOff);
-  }
+public class Intake extends SubsystemBase {
+
+  /** Creates a new Intake. */
+
+  private static Intake instance = new Intake();
+  private WPI_TalonSRX motor = new WPI_TalonSRX(IntakeConstants.MOTOR_CAN_ID);
+  private double intakeMotorSpeed = 0;
+
+  /**
+   * Initializes the Intake once upon code deploy
+   */
+
+  public Intake() {}
+
+  /**
+   * @return A single, universal Intake instance to be used anywhere else in the code
+   */
 
   public static Intake getInstance() {
     return instance;
   }
 
+  /**
+   * Sets the speed of the intake wheels.
+   * @param percent between -1 and 1
+   */
+
   public void setPercentControl(double percent) {
     motor.set(ControlMode.PercentOutput, percent);
+    intakeMotorSpeed = percent;
   }
 
-  public void Extend() {
-    leftPiston.set(Value.kForward);
-    rightPiston.set(Value.kForward);
-  }
-
-  public void Retract() {
-    leftPiston.set(Value.kReverse);
-    rightPiston.set(Value.kReverse);
+  /**
+   * @return the intake's motor speed
+   */
+  
+  public double getIntakeMotorSpeed() {
+    return intakeMotorSpeed;
   }
 }

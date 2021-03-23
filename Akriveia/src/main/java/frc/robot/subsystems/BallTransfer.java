@@ -8,15 +8,17 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class BallTransfer extends SubsystemBase {
-  /** Creates a new Transfer. This transfer goes from the Drum to the Shooter. This transfer has a piston to move it and also a Spark Max to move the Power Cells */
+  
+  /** Creates a new Transfer. This transfer goes from the Drum to the Shooter. 
+   * This transfer has a piston to move it and also a Spark Max to move the Power Cells */
+  
   private static BallTransfer instance = new BallTransfer();
   private DoubleSolenoid transferPiston = new DoubleSolenoid(BallTransferConstants.DS_OPEN_ID, BallTransferConstants.DS_CLOSE_ID);
   private CANSparkMax transferMotor = new CANSparkMax(BallTransferConstants.MOTOR_CAN_ID, MotorType.kBrushless);
+  private boolean pistonSetting = false;
+  private double levelSetting = 0;
 
-  public BallTransfer() {
-    //Sets the piston to a nuetral state
-    // transferPiston.set(Value.kOff);
-  }
+  public BallTransfer() {}
 
   public static BallTransfer getInstance() {
     return instance;
@@ -27,6 +29,7 @@ public class BallTransfer extends SubsystemBase {
    */
 
   public void setPercentControl(double percent) {
+    levelSetting = percent;
     transferMotor.set(percent);
   }
 
@@ -35,6 +38,7 @@ public class BallTransfer extends SubsystemBase {
    */
 
   public void Extend() {
+    pistonSetting = true;
     transferPiston.set(Value.kForward);
   }
 
@@ -43,6 +47,23 @@ public class BallTransfer extends SubsystemBase {
    */
   
   public void Retract() {
+    pistonSetting = false;
     transferPiston.set(Value.kReverse);
+  }
+
+  /**
+   * @return Gets the piston setting incase its extended or retracted
+   */
+
+  public boolean getPistonSetting() {
+    return pistonSetting;
+  }
+
+  /**
+   * @return Gets the percentage of the motor from the last time it was set
+   */
+
+  public double getLevelSetting() {
+    return levelSetting;
   }
 }
