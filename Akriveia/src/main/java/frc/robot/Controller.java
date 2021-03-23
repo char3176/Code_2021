@@ -6,8 +6,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.constants.ControllerConstants;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 
 public class Controller {
     private static Controller instance = new Controller();
@@ -231,12 +229,13 @@ public class Controller {
     /**
      * @return If the Left Trigger is pressed for half and then shifts the controls
      */
-    public boolean getShift() {
-        if(op.getTriggerAxis(Hand.kLeft) >= 0.5) {return true;}
-        return false;
+    public double getShiftValue() {
+        return op.getTriggerAxis(Hand.kLeft);
     }
 
-
+    public double getRTriggerValue() {
+        return op.getTriggerAxis(Hand.kRight);
+    }
 
     /* ##############################################################
      * BEGIN: EXAMPLE USAGE OF DoubleButton / LoneButton classes

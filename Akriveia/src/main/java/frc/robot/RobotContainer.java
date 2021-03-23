@@ -8,7 +8,6 @@ import frc.robot.subsystems.AngledShooter;
 import frc.robot.subsystems.Drum;
 import frc.robot.subsystems.BallTransfer;
 import frc.robot.subsystems.Flywheel;
-import frc.robot.commands.teleop.DrumInputReset;
 import frc.robot.commands.auton.Slalom;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -53,7 +52,7 @@ public class RobotContainer {
       () -> m_Controller.isBackRobotCentricButtonPressed()));
 
     /* ##############################################################
-     * BEGIN:  Temp code for Integration test of Drum+BallTransfer+Flywheel+AngledShooter
+     * Temp code for Integration test of Drum+BallTransfer+Flywheel
      * ############################################################# */
     SmartDashboard.putNumber("DrumOutputPercent", 0);
     SmartDashboard.putNumber("BallTransferOutputPercent", 0);
@@ -77,7 +76,7 @@ public class RobotContainer {
       () -> m_Controller.getForward(),
       () -> m_Controller.getPOVTransStick()));
 
-    if(!m_Controller.getShift()) { //REGULAR
+    if(m_Controller.getShiftValue() < 0.5) { //REGULAR
       if(m_Controller.getPOVLocation() == 0) {new AngledShooterUp();}
       else if(m_Controller.getPOVLocation() == 180) {new AngledShooterDown();}
       // m_Controller.getUpDPAD().whenPressed(new AngledShooterUp());
@@ -105,6 +104,10 @@ public class RobotContainer {
 
       // m_Controller.getFlywheelLeft().whenPressed(new FlywheelSlow());
       m_Controller.getFlywheelRight().whenPressed(new FlywheelSpeed());
+
+      if(m_Controller.getRTriggerValue() > 0.5) {new Shoot();}
+    } else { //SHIFTED
+      if(m_Controller.getRTriggerValue() > 0.5) {new ShootReset();}
     }
   }
 
