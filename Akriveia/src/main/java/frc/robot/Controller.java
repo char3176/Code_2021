@@ -33,11 +33,6 @@ public class Controller {
 
     private final JoystickButton intakeSpinButton;
 
-    /* Angled Shooter */
-
-    // private final JoystickButton shooterUpButton; = new JoystickButton(op, op.getPOV(180)); //Up on the D-Pad
-    // private final JoystickButton shooterDownButton; = new JoystickButton(op, op.getPOV(0)); //Down on the D-Pad
-
     /* Drum */
 
     // private final JoystickButton drumAgitateButton; = new JoystickButton(op, Button.kStart.value);
@@ -49,11 +44,6 @@ public class Controller {
     // private final JoystickButton drumPreShootAgitateButton;
     private final JoystickButton drumCCWButton;
     private final JoystickButton drumCCWSetButton;
-
-    /* Flywheel */
-     
-    private final JoystickButton flywheelRightButton;
-    // private final JoystickButton flywheelLeftButton;
 
     /* Transfer */
 
@@ -93,11 +83,6 @@ public class Controller {
 
         intakeSpinButton = new JoystickButton(op, Button.kA.value);
 
-        /* Angled Shooter */
-
-        // private final JoystickButton shooterUpButton = new JoystickButton(op, op.getPOV(180)); //Up on the D-Pad
-        // shooterDownButton = new JoystickButton(op, op.getPOV(0)); //Down on the D-Pad
-
         /* Drum */
 
         // private final JoystickButton drumAgitateButton = new JoystickButton(op, Button.kStart.value);
@@ -109,11 +94,6 @@ public class Controller {
         // drumPreShootAgitateButton = new JoystickButton(op, Button.kStart.value); //Layer 2
         drumCCWButton = new JoystickButton(op, Button.kBack.value); //Layer 1 but not usable
         drumCCWSetButton = new JoystickButton(op, Button.kBack.value); //Layer 2 but usable
-
-        /* Flywheel */
-     
-        flywheelRightButton = new JoystickButton(op, Button.kY.value); //Right on the D-Pad
-        // flywheelLeftButton = new JoystickButton(op, Button.kX.value); //Left on the D-Pad
 
         /* Transfer */
 
@@ -170,7 +150,6 @@ public class Controller {
     public JoystickButton getVisionButton() {return visionButton;}
     public JoystickButton getDefenseButton() {return defenseButton;}
     public JoystickButton getReZeroGyroButton() {return reZeroGyroButton;}
-    // public JoystickButton getSlalomButton() {return slalomButton;}
     public boolean isFieldCentricButtonPressed() {return fieldCentricButton.get();}
     public boolean isRobotCentricButtonPressed() {return robotCentricButton.get();}
     public boolean isBackRobotCentricButtonPressed() {return backRobotCentricButton.get();}
@@ -179,37 +158,12 @@ public class Controller {
 
     public JoystickButton getIntakeSpinButton() {return intakeSpinButton;}
 
-    /* Angled Shooter*/
-
-    // public boolean getUpDPADB() {
-    //     if(op.getPOV() == 180) {return true;}
-    //     return false;
-    // }
-
-    // public boolean getDownDPADB() {
-    //     if(op.getPOV() == 0) {return true;}
-    //     return false;
-    // }
-
-    // public JoystickButton getUpDPAD() {return shooterUpButton;}
-    // public JoystickButton getDownDPAD() {return shooterDownButton;}
-
     /* Drum */
 
     // public JoystickButton getDrumAgitateButton() {return drumAgitateButton;}
     public JoystickButton getDrumUpButton() {return drumUpButton;}
     public JoystickButton getDrumDownButton() {return drumDownButton;}
     public JoystickButton getDrumCCWSetButton() {return drumCCWSetButton;}
-
-    /* Flywheel */
-
-    // public JoystickButton getFlywheelLeft() {
-    //     return flywheelLeftButton;
-    // }
-
-    public JoystickButton getFlywheelRight() {
-        return flywheelRightButton;
-    }
 
     // public JoystickButton getRightDPAD() {return flywheelRightButton;}
     // public JoystickButton getLeftDPAD() {return flywheelLeftButton;}
@@ -223,35 +177,15 @@ public class Controller {
 
     public JoystickButton getShootCMDButton() {return shootCMD;}
 
-    /* Button Get Methods */
+    /* Triggers and DPAD Get Methods */
 
-    public int getPOVLocation() {return op.getPOV();} // 0 = Up // 90 = Right // 180 = Down // 270 = Left //
-
-    public boolean getPOVRight() {
-        return op.getPOV() == 90;
-    }
-
-    public boolean getPOVLeft() {
-        return op.getPOV() == 270;
-    }
-
-    public boolean getPOVUp() {
-        return op.getPOV() == 0;
-    }
-
-    public boolean getPOVDown() {
-        return op.getPOV() == 180;
-    }
-    /**
-     * @return If the Left Trigger is pressed for half and then shifts the controls
-     */
-    public double getShiftValue() {
-        return op.getTriggerAxis(Hand.kLeft);
-    }
-
-    public double getRTriggerValue() {
-        return op.getTriggerAxis(Hand.kRight);
-    }
+    public boolean getPOVRight() {return op.getPOV() == 90;}    //Right
+    public boolean getPOVLeft() {return op.getPOV() == 270;}    //Left
+    public boolean getPOVUp() {return op.getPOV() == 0;}        //Up
+    public boolean getPOVDown() {return op.getPOV() == 180;}    //Down
+    
+    public double getShiftValue() {return op.getTriggerAxis(Hand.kLeft);}
+    public double getRTriggerValue() {return op.getTriggerAxis(Hand.kRight);}
 
     /* ##############################################################
      * BEGIN: EXAMPLE USAGE OF DoubleButton / LoneButton classes

@@ -89,7 +89,6 @@ public class RobotContainer {
       m_Controller.getDrumDownButton().whenPressed(new DrumVelocitySlow2());
 
       m_Controller.getIntakeSpinButton().whenPressed(new IntakeRoll());
-      // m_Controller.getIntakeSwitchButton().whenPressed(new IntakeSwitch());
 
       if(m_Controller.getPOVRight()) {new FlywheelSpeed();}
       if(m_Controller.getPOVLeft()) {new FlywheelSlow();}
@@ -98,9 +97,6 @@ public class RobotContainer {
       m_Controller.getTransferPivotButton().whenPressed(new BallTransferPivotAndRoll());
 
       m_Controller.getShootCMDButton().whenPressed(new DrumTransferFlywheelTest());
-
-      // m_Controller.getFlywheelLeft().whenPressed(new FlywheelSlow());
-      m_Controller.getFlywheelRight().whenPressed(new FlywheelSpeed());
 
       if(m_Controller.getRTriggerValue() > 0.5) {new Shoot();}
 
