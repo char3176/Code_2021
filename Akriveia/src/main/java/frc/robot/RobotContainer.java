@@ -77,10 +77,9 @@ public class RobotContainer {
       () -> m_Controller.getPOVTransStick()));
 
     if(m_Controller.getShiftValue() < 0.5) { //REGULAR
-      if(m_Controller.getPOVLocation() == 0) {new AngledShooterUp();}
-      else if(m_Controller.getPOVLocation() == 180) {new AngledShooterDown();}
-      // m_Controller.getUpDPAD().whenPressed(new AngledShooterUp());
-      // m_Controller.getDownDPAD().whenPressed(new AngledShooterDown());
+      
+      if(m_Controller.getPOVUp()) {new AngledShooterUp();}
+      if(m_Controller.getPOVDown()) {new AngledShooterDown();}
 
       // m_Controller.getDrumAgitateButton().whenPressed(new DrumAgitate());
       m_Controller.getDrumCCWSetButton().whenPressed(new DrumCCWSet());
@@ -92,10 +91,8 @@ public class RobotContainer {
       m_Controller.getIntakeSpinButton().whenPressed(new IntakeRoll());
       // m_Controller.getIntakeSwitchButton().whenPressed(new IntakeSwitch());
 
-      if(m_Controller.getPOVLocation() == 90) {new FlywheelSpeed();}
-      else if(m_Controller.getPOVLocation() == 270) {new FlywheelSlow();}
-      // m_Controller.getLeftDPAD().whenPressed(new FlywheelSlow());
-      // m_Controller.getRightDPAD().whenPressed(new FlywheelSpeed());
+      if(m_Controller.getPOVRight()) {new FlywheelSpeed();}
+      if(m_Controller.getPOVLeft()) {new FlywheelSlow();}
 
       m_Controller.getTransferStraightButton().whenPressed(new BallTransferStraight());
       m_Controller.getTransferPivotButton().whenPressed(new BallTransferPivotAndRoll());
@@ -106,8 +103,11 @@ public class RobotContainer {
       m_Controller.getFlywheelRight().whenPressed(new FlywheelSpeed());
 
       if(m_Controller.getRTriggerValue() > 0.5) {new Shoot();}
+
     } else { //SHIFTED
+
       if(m_Controller.getRTriggerValue() > 0.5) {new ShootReset();}
+      
     }
   }
 

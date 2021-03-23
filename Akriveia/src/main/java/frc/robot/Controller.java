@@ -225,7 +225,23 @@ public class Controller {
 
     /* Button Get Methods */
 
-    public int getPOVLocation() {return op.getPOV();}
+    public int getPOVLocation() {return op.getPOV();} // 0 = Up // 90 = Right // 180 = Down // 270 = Left //
+
+    public boolean getPOVRight() {
+        return op.getPOV() == 90;
+    }
+
+    public boolean getPOVLeft() {
+        return op.getPOV() == 270;
+    }
+
+    public boolean getPOVUp() {
+        return op.getPOV() == 0;
+    }
+
+    public boolean getPOVDown() {
+        return op.getPOV() == 180;
+    }
     /**
      * @return If the Left Trigger is pressed for half and then shifts the controls
      */
