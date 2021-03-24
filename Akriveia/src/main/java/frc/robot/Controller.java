@@ -18,8 +18,10 @@ public class Controller {
     private final XboxController op; 
 
     /* Drivetrain */
-
-    private final JoystickButton orbitButton; 
+    //TODO: Talk about if we should name the buttons by function (Would need two for the same button if we do so) or name the buttons by their name (Kyle - I just wanted a reminder to talk about this) 
+    //i.e. An IntakeRoll button and an reverseIntakeRoll button or an 'A' Button
+    
+    private final JoystickButton orbitButton;
     private final JoystickButton dosadoButton;
     private final JoystickButton visionButton;
     private final JoystickButton defenseButton;
@@ -169,9 +171,6 @@ public class Controller {
     public JoystickButton getDrumDownButton() {return drumDownButton;}
     public JoystickButton getDrumCCWSetButton() {return drumCCWSetButton;}
 
-    // public JoystickButton getRightDPAD() {return flywheelRightButton;}
-    // public JoystickButton getLeftDPAD() {return flywheelLeftButton;}
-
     /* Transfer */
 
     public JoystickButton getTransferStraightButton() {return transferStraightButton;}
@@ -243,6 +242,25 @@ public class Controller {
      * ############################################################## */
 
 }
-
-
-
+/**
+ * Unshifted:                   | Shifted:
+ * A - Intake Roll              | Reverse Intake Roll
+ * B - DrumSpinReverse          | CCW Drum
+ * X - targetMode               |
+ * Y - visionDrive              |
+ * Start - Agitate Drum         | Agitate Drum Pre Shoot
+ * Back -                       |
+ * D-Pad Up - Shooter Up        |
+ * D-Pad Down - Shooter Down    |
+ * D-Pad Left - Flywheel Slow   |
+ * D-Pad Right - Flywheel Speed |
+ * Left Joy Button -            |
+ * Right Joy Button -           |
+ * Left Joy Y -                 |
+ * Left Joy X -                 |
+ * Right Joy Y -                |
+ * Left Bumper - DrumSlow       | BallTransferStraight
+ * Right Bumper - DrumSpeed     | BallTransferPivot
+ * Left Trigger - Hold To Shift | Release to Unshift
+ * Right Trigger - Shoot        | ShootReset
+ */
