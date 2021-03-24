@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import frc.robot.constants.FlywheelConstants;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Flywheel extends SubsystemBase {
@@ -32,6 +33,7 @@ public class Flywheel extends SubsystemBase {
         lastSetting = level;
         double ticsPer100ms = (FlywheelConstants.FlywheelSpeeds[level] * 2048.0) / 600.0;
         flywheelController.set(TalonFXControlMode.Velocity, ticsPer100ms);
+        SmartDashboard.putNumber("Flywheel RPM", (ticsPer100ms * 600 / 2048));
     }
 
     /**

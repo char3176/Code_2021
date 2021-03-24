@@ -59,6 +59,8 @@ public class Controller {
 
     private final JoystickButton extend;
     private final JoystickButton retract;
+    private final JoystickButton shootButton;
+    private final JoystickButton resetShootButton;
 
     public Controller() {
 
@@ -109,6 +111,8 @@ public class Controller {
 
         extend = new JoystickButton(op, Button.kBumperLeft.value);
         retract = new JoystickButton(op, Button.kBumperRight.value);
+        shootButton = new JoystickButton(op, Button.kX.value); 
+        resetShootButton = new JoystickButton(op, Button.kY.value);
     }
 
 
@@ -121,22 +125,22 @@ public class Controller {
         if (Math.abs(-transStick.getY())<.06) {
             return 0.0;
         } else {
-            return -1 * (Math.pow((transStick.getY()),1)*1);}
+            return 1 * (Math.pow((transStick.getY()),1)*1);} // -1 for 2019 and +1 for 2021
     }
     
     public double getStrafe() { 
         if (Math.abs(transStick.getX())<.06) {
             return 0.0;
-        } else {
-            return -1 * (Math.pow((-1 * transStick.getX()),1) * 1);}
+        } else { 
+            return 1 * (Math.pow((-1 * transStick.getX()),1) * 1);} // -1 for 2019 and +1 for 2021
     }
 
     public double getSpin() { 
         if (Math.abs(rotStick.getX())<.06) {
             return 0.0;
         } else {
-            return Math.pow(rotStick.getX(),1) / 7.0;}
-    }
+            return -1 * Math.pow(rotStick.getX(),1) / 7.0;} // +1 for 2019 and -1 for 2021
+    } 
     
     
     public int getPOVTransStick() {
@@ -186,6 +190,14 @@ public class Controller {
     
     public double getShiftValue() {return op.getTriggerAxis(Hand.kLeft);}
     public double getRTriggerValue() {return op.getTriggerAxis(Hand.kRight);}
+
+    public JoystickButton getShootButton() {
+        return shootButton;
+    }
+
+    public JoystickButton getResetShootButton() {
+        return resetShootButton;
+    }
 
     /* ##############################################################
      * BEGIN: EXAMPLE USAGE OF DoubleButton / LoneButton classes

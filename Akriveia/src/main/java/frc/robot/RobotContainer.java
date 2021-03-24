@@ -76,15 +76,15 @@ public class RobotContainer {
       () -> m_Controller.getForward(),
       () -> m_Controller.getPOVTransStick()));
 
-    if(m_Controller.getShiftValue() < 0.5) { //REGULAR
+    if(m_Controller.getShiftValue() < 0.75) { //REGULAR
       
       if(m_Controller.getPOVUp()) {new AngledShooterUp();}
       if(m_Controller.getPOVDown()) {new AngledShooterDown();}
 
       // m_Controller.getDrumAgitateButton().whenPressed(new DrumAgitate());
       m_Controller.getDrumCCWSetButton().whenPressed(new DrumCCWSet());
-      m_Controller.getDrumUpButton().whenPressed(new DrumInputReset());
-      m_Controller.getDrumDownButton().whenPressed(new DrumInputReset());
+      m_Controller.getDrumUpButton().whenPressed(/*new DrumInputReset()*/new AngledShooterUp());
+      m_Controller.getDrumDownButton().whenPressed(/*new DrumInputReset()*/new AngledShooterDown());
       m_Controller.getDrumUpButton().whenPressed(new DrumVelocitySpeed2());
       m_Controller.getDrumDownButton().whenPressed(new DrumVelocitySlow2());
 
@@ -98,11 +98,17 @@ public class RobotContainer {
 
       m_Controller.getShootCMDButton().whenPressed(new DrumTransferFlywheelTest());
 
-      if(m_Controller.getRTriggerValue() > 0.5) {new Shoot();}
+      // if(m_Controller.getRTriggerValue() > 0.75) {
+      //   new Shoot();
+      //   System.out.println("Right Trigger Value" + m_Controller.getRTriggerValue());
+      // }
+
+      m_Controller.getShootButton().whenPressed(new Shoot());
+      m_Controller.getResetShootButton().whenPressed(new ShootReset());
 
     } else { //SHIFTED
 
-      if(m_Controller.getRTriggerValue() > 0.5) {new ShootReset();}
+      // if(m_Controller.getRTriggerValue() > 0.75) {new ShootReset();}
       
     }
   }
