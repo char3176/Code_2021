@@ -11,16 +11,15 @@ import frc.robot.subsystems.Drivetrain.driveMode;
 public class SwerveOrbit extends CommandBase {
   private Drivetrain drivetrain = Drivetrain.getInstance();
 
-  private DoubleSupplier forwardCommand;
+  private DoubleSupplier orbitSpeed;
   private DoubleSupplier pov;
 
-  // 24 inches for radius on right/left side and about 48 inches for orbiting cones
   private double orbitEtherRadius = 30.0; // inches
 
   private boolean wasFieldCentric;
 
-  public SwerveOrbit(DoubleSupplier forwardCommand, DoubleSupplier pov) {
-    this.forwardCommand = forwardCommand;
+  public SwerveOrbit(DoubleSupplier orbitSpeed, DoubleSupplier pov) {
+    this.orbitSpeed = orbitSpeed;
     this.pov = pov;
     addRequirements(drivetrain);
   }
@@ -40,11 +39,11 @@ public class SwerveOrbit extends CommandBase {
   public void execute() {
     if(pov.getAsDouble() == 45.0 || pov.getAsDouble() == 90.0 || pov.getAsDouble() == 135.0) { // If on right side
       // Orbit Clockwise
-      drivetrain.drive(forwardCommand.getAsDouble(), 0.0, forwardCommand.getAsDouble() / orbitEtherRadius /* inches */);
+      drivetrain.drive(orbitSpeed.getAsDouble(), 0.0, orbitSpeed.getAsDouble() / orbitEtherRadius /* inches */);
     } 
     else if (pov.getAsDouble() == 225.0 || pov.getAsDouble() == 270.0 || pov.getAsDouble() == 315.0) { // If on left side
       // Orbit Counter-Clockwise
-      drivetrain.drive(forwardCommand.getAsDouble(), 0.0, -forwardCommand.getAsDouble() / orbitEtherRadius /* inches */);
+      drivetrain.drive(orbitSpeed.getAsDouble(), 0.0, -orbitSpeed.getAsDouble() / orbitEtherRadius /* inches */);
     }
     
     

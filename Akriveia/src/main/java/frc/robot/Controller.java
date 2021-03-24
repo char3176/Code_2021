@@ -28,7 +28,8 @@ public class Controller {
     private final JoystickButton fieldCentricButton;
     private final JoystickButton robotCentricButton;
     private final JoystickButton backRobotCentricButton; 
-    private final JoystickButton reZeroGyroButton;
+    private final JoystickButton resetGyroButton;
+    private final JoystickButton lockSpinButton;
     // private final JoystickButton slalomButton = new JoystickButton(transStick, 7);
     
     /* Intake */
@@ -79,7 +80,8 @@ public class Controller {
         fieldCentricButton = new JoystickButton(transStick, 4);
         robotCentricButton = new JoystickButton(transStick, 5);
         backRobotCentricButton = new JoystickButton(transStick, 6);
-        reZeroGyroButton = new JoystickButton(rotStick, 4);
+        resetGyroButton = new JoystickButton(rotStick, 8);
+        lockSpinButton = new JoystickButton(rotStick, 9);
         // slalomButton = new JoystickButton(transStick, 7);
 
            
@@ -124,24 +126,31 @@ public class Controller {
     /* Swerve Axis Data */
 
     public double getForward() { 
-        if (Math.abs(-transStick.getY())<.06) {
+        if (Math.abs(-transStick.getY()) < 0.06) {
             return 0.0;
         } else {
-            return 1 * (Math.pow((transStick.getY()),1)*1);} // -1 for 2019 and +1 for 2021
+            return ControllerConstants.FORWARD__AXIS_INVERSION * Math.pow(transStick.getY(), 1); }
     }
     
     public double getStrafe() { 
-        if (Math.abs(transStick.getX())<.06) {
+        if (Math.abs(transStick.getX()) < 0.06) {
             return 0.0;
         } else { 
-            return 1 * (Math.pow((-1 * transStick.getX()),1) * 1);} // -1 for 2019 and +1 for 2021
+            return ControllerConstants.STRAFE_AXIS_INVERSION * Math.pow(transStick.getX(), 1); }
     }
 
     public double getSpin() { 
-        if (Math.abs(rotStick.getX())<.06) {
+        if (Math.abs(rotStick.getX()) < 0.06) {
             return 0.0;
         } else {
-            return -1 * Math.pow(rotStick.getX(),1) / 7.0;} // +1 for 2019 and -1 for 2021
+            return ControllerConstants.SPIN_AXIS_INVERSION * (Math.pow(rotStick.getX(), 1) / 7.0); }
+    } 
+
+    public double getOrbitSpeed() { 
+        if (Math.abs(rotStick.getY()) < 0.06) {
+            return 0.0;
+        } else {
+            return Math.pow(rotStick.getY(), 1) / 7.0; }
     } 
     
     
@@ -155,7 +164,9 @@ public class Controller {
     public JoystickButton getDosadoButton() {return dosadoButton;}
     public JoystickButton getVisionButton() {return visionButton;}
     public JoystickButton getDefenseButton() {return defenseButton;}
-    public JoystickButton getReZeroGyroButton() {return reZeroGyroButton;}
+    public JoystickButton getResetGyroButton() {return resetGyroButton;}
+    public JoystickButton getLockSpinButton() {return lockSpinButton;}
+    public boolean isGetLockSpinButtonPressed() {return lockSpinButton.get();}
     public boolean isFieldCentricButtonPressed() {return fieldCentricButton.get();}
     public boolean isRobotCentricButtonPressed() {return robotCentricButton.get();}
     public boolean isBackRobotCentricButtonPressed() {return backRobotCentricButton.get();}

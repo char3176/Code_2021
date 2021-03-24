@@ -100,7 +100,8 @@ public class Drivetrain extends SubsystemBase {
     DRIVE,
     TURBO,
     VISION,
-    ORBIT
+    ORBIT,
+    SPIN_LOCK
   }
 
   public enum coordType {
@@ -406,6 +407,10 @@ public class Drivetrain extends SubsystemBase {
 
   public coordType getCurrentCoordType() {
     return currentCoordType;
+  }
+
+  public driveMode getCurrentDriveMode() {
+    return currentDriveMode;
   }
 
   public double getGyroAngle() {
