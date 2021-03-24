@@ -43,7 +43,8 @@ public class TargetVision extends CommandBase {
     if (resultArray != null) {
       wantedAngleTicks = resultArray[1] * (180 / Math.PI) * (AngledShooterConstants.TICS_EQUAL_TO_5DEGREES / 5);
 
-      // whether it is in the range of the hood might be checked in vision already, this is for safety until we're sure of that
+      // whether it is in the range of the hood might be checked in vision and/or Angled Shooter already,
+      // this is for safety until we're sure of that
       m_AngledShooter.setPosition(wantedAngleTicks);
 
       // m/s to rad/s (using alpha = r * omega) to rev/s to deg/s to tics/s to tics/100 ms
