@@ -129,7 +129,7 @@ public class Drivetrain extends SubsystemBase {
     pods.add(podBR);
 
     //currentCoordType = coordType.FIELD_CENTRIC;
-    currentCoordType = coordType.ROBOT_CENTRIC;
+    currentCoordType = coordType.FIELD_CENTRIC;
 
     autonVision = false;
 
@@ -408,6 +408,9 @@ public class Drivetrain extends SubsystemBase {
     return currentCoordType;
   }
 
+  public double getGyroAngle() {
+    return gyro.getAngle();
+  }
  
   /*
   public void drive(double drivePercent, double spinPercent) {

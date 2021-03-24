@@ -8,7 +8,6 @@ import frc.robot.constants.DrivetrainConstants;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Drivetrain.coordType;
 import frc.robot.subsystems.Drivetrain.driveMode;
-
 public class SwerveOrbit extends CommandBase {
   private Drivetrain drivetrain = Drivetrain.getInstance();
 
