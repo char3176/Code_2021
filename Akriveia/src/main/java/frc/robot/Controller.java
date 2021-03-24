@@ -2,6 +2,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+//import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController.Button;
@@ -65,6 +67,8 @@ public class Controller {
     private final JoystickButton shootButton;
     private final JoystickButton resetShootButton;
 
+    private final POVButton dpadUp;
+
     public Controller() {
 
         // Define control sticks: Translation stick, Rotation stick, and XboxController(aka "op")
@@ -117,6 +121,8 @@ public class Controller {
         retract = new JoystickButton(op, Button.kBumperRight.value);
         shootButton = new JoystickButton(op, Button.kX.value); 
         resetShootButton = new JoystickButton(op, Button.kY.value);
+
+        dpadUp = new POVButton(op, 90);
     }
 
 
@@ -193,13 +199,15 @@ public class Controller {
 
     /* Triggers and DPAD Get Methods */
 
-    public boolean getPOVRight() {return op.getPOV() == 90;}    //Right
+    public boolean getPOVRight() { if (op.getPOV() == 90) {return true;} else { return false;}}    //Right
+    public POVButton testPOVRight() {return dpadUp;}
     public boolean getPOVLeft() {return op.getPOV() == 270;}    //Left
     public boolean getPOVUp() {return op.getPOV() == 0;}        //Up
     public boolean getPOVDown() {return op.getPOV() == 180;}    //Down
     
     public double getShiftValue() {return op.getTriggerAxis(Hand.kLeft);}
     public double getRTriggerValue() {return op.getTriggerAxis(Hand.kRight);}
+  
 
     public JoystickButton getShootButton() {
         return shootButton;

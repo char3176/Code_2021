@@ -92,6 +92,8 @@ public class RobotContainer {
 
       m_Controller.getIntakeSpinButton().whenPressed(new IntakeRoll());
 
+      m_Controller.testPOVRight().whenPressed(new FlywheelSpeed());
+
       if(m_Controller.getPOVRight()) {new FlywheelSpeed();}
       if(m_Controller.getPOVLeft()) {new FlywheelSlow();}
 
