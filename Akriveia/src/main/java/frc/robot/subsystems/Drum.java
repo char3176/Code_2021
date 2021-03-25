@@ -150,10 +150,10 @@ public class Drum extends SubsystemBase {
 
   public boolean PreShootSpinAgitate() {
     isRateLimitOff = true;
-    if (shakeIterations < 5) {
+    if (shakeIterations < 4) {
       if (shakeStartTime == -1) {
         drumMotor.set(DrumConstants.drumShakePct * direction);
-        shakeStartTime = DrumConstants.drumMilli;
+        shakeStartTime = System.nanoTime() / DrumConstants.drumMilli;
         direction *= -1;
       }
       if ((System.nanoTime() / DrumConstants.drumMilli) - shakeStartTime >= 150) {
@@ -163,12 +163,15 @@ public class Drum extends SubsystemBase {
         shakeStartTime = System.nanoTime() / DrumConstants.drumMilli;
       }
     } else {
-      shakeIterations = 0;
-      shakeStartTime = -1;
-      direction = 1;
       return true;
     }
     return false;
+  }
+
+  public void resetShakeVariables() {
+    shakeIterations = 0;
+    shakeStartTime = -1;
+    direction = 1;
   }
 
   /**
