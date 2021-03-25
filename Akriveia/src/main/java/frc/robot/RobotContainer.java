@@ -76,14 +76,6 @@ public class RobotContainer {
       () -> m_Controller.isRobotCentricButtonPressed(),
       () -> m_Controller.isBackRobotCentricButtonPressed()));
 
-    /* ##############################################################
-     * Temp code for Integration test of Drum+BallTransfer+Flywheel
-     * ############################################################# */
-    SmartDashboard.putNumber("DrumOutputPercent", 0);
-    SmartDashboard.putNumber("BallTransferOutputPercent", 0);
-    SmartDashboard.putNumber("FlywheelOutputPercent", 0);
-    SmartDashboard.putBoolean("StopTest06", false);
-
     configureButtonBindings();
 
     m_autonChooser = new SendableChooser<>();
@@ -114,43 +106,30 @@ public class RobotContainer {
       () -> m_Controller.getOrbitSpeed(),
       () -> m_Controller.getPOVTransStick()));
 
-    if(m_Controller.getShiftValue() < 0.75) { //REGULAR
-      
-      if(m_Controller.getPOVUp()) {new AngledShooterUp();}
-      if(m_Controller.getPOVDown()) {new AngledShooterDown();}
+    m_Controller.getIntakeSpinButton().whenPressed(new IntakeRoll());
+    m_Controller.getIntakeReverseButton().whenActive(new IntakeReverse());
 
-      // m_Controller.getDrumAgitateButton().whenPressed(new DrumAgitate());
-      m_Controller.getDrumCCWSetButton().whenPressed(new DrumCCWSet());
-      //m_Controller.getDrumUpButton().whenPressed(/*new DrumInputReset()*/new AngledShooterUp());
-      //m_Controller.getDrumDownButton().whenPressed(/*new DrumInputReset()*/new AngledShooterDown());
-      m_Controller.getDrumUpButton().whenPressed(new DrumVelocitySpeed2());
-      m_Controller.getDrumDownButton().whenActive(new DrumVelocitySlow2());
+    m_Controller.getDrumUpButton().whenPressed(new DrumVelocitySpeed());
+    m_Controller.getDrumDownButton().whenActive(new DrumVelocitySlow());
 
-      m_Controller.getIntakeSpinButton().whenPressed(new IntakeRoll());
+    m_Controller.getTransferStraightButton().whenPressed(new BallTransferStraight());
+    m_Controller.getTransferPivotButton().whenActive(new BallTransferPivotAndRoll());
 
-      m_Controller.testPOVRight().whenHeld(new FlywheelSpeed());
+    m_Controller.getIntakeHarvestButton().whenPressed(new IntakeHarvest());
+    m_Controller.getIntakeHarvestResetButton().whenActive(new IntakeHarvestReset());
 
-      if(m_Controller.getPOVRight()) {new FlywheelSpeed();}
-      if(m_Controller.getPOVLeft()) {new FlywheelSlow();}
+    m_Controller.getDrumAgitateButton().whenPressed(new DrumAgitate());
+    m_Controller.getDrumAgitatePreShootButton().whenActive(new DrumAgitatePreShoot());
 
-      m_Controller.getTransferStraightButton().whenPressed(new BallTransferStraight());
-      m_Controller.getTransferPivotButton().whenActive(new BallTransferPivotAndRoll());
+    m_Controller.getDrumCCWButton().whenPressed(new DrumCCW());
 
-      m_Controller.getShootCMDButton().whenPressed(new DrumTransferFlywheelTest());
+    m_Controller.getPOVUp().whenHeld(new AngledShooterUp());
+    m_Controller.getPOVDown().whenHeld(new AngledShooterDown());
+    m_Controller.getPOVLeft().whenHeld(new FlywheelSlow());
+    m_Controller.getPOVRight().whenHeld(new FlywheelSpeed());
 
-      // if(m_Controller.getRTriggerValue() > 0.75) {
-      //   new Shoot();
-      //   System.out.println("Right Trigger Value" + m_Controller.getRTriggerValue());
-      // }
-
-      m_Controller.getShootButton().whenPressed(new Shoot());
-      m_Controller.getResetShootButton().whenPressed(new ShootReset());
-
-    } else { //SHIFTED
-
-      // if(m_Controller.getRTriggerValue() > 0.75) {new ShootReset();}
-      
-    }
+    m_Controller.getShootButton().whenPressed(new Shoot());
+    m_Controller.getResetShootButton().whenActive(new ShootReset());
   }
 
   public Command getAutonomousCommand() {

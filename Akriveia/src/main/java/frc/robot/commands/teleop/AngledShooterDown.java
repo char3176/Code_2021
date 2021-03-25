@@ -14,7 +14,7 @@ public class AngledShooterDown extends InstantCommand {
 
   @Override
   public void initialize() {
-    
+    System.out.println("AngledShooterDown.initialize executed. ############################################################");
     /* Gets the current encoder position and see where it should go */
     
     double temp = m_AngledShooter.getEncoderPosition();

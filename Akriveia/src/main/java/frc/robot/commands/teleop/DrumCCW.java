@@ -13,6 +13,7 @@ public class DrumCCW extends InstantCommand {
 
   @Override
   public void initialize() {
+    System.out.println("DrumCCW.initialize executed. ############################################################");
     m_Drum.CounterClockwise();
   }
 }

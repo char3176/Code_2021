@@ -13,6 +13,7 @@ public class DrumAgitatePreShoot extends InstantCommand {
 
   @Override
   public void initialize() {
+    System.out.println("DrumAgitatePreShoot.initialize executed. ############################################################");
     m_Drum.PreShootSpinAgitate();
   }
 }
