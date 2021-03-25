@@ -32,27 +32,27 @@ public class Controller {
     
     /* Intake */
 
-    private final JoystickButton intakeSpinButton;
+    private final Trigger intakeSpinButton;
     private final Trigger intakeReverseButton;
-    private final JoystickButton intakeHarvestButton;
+    private final Trigger intakeHarvestButton;
     private final Trigger intakeHarvestResetButton;
 
     /* Drum */
 
     private final Trigger drumDownButton;
-    private final JoystickButton drumUpButton;
+    private final Trigger drumUpButton;
     private final JoystickButton drumCCWButton;
-    private final JoystickButton drumAgitateButton;
+    private final Trigger drumAgitateButton;
     private final Trigger drumAgitatePreShootButton;
 
     /* Transfer */
 
-    private final JoystickButton transferStraightButton;
+    private final Trigger transferStraightButton;
     private final Trigger transferPivotButton;
 
     /* Command Buttons */
 
-    private final JoystickButton shootButton;
+    private final Trigger shootButton;
     private final Trigger resetShootButton;
 
     /* DPad POV Buttons */
@@ -82,28 +82,28 @@ public class Controller {
            
         /* Intake */
 
-        intakeSpinButton = new JoystickButton(op, Button.kA.value);
+        intakeSpinButton = new JoystickButton(op, Button.kA.value).and(new JoystickButton(op, Button.kStickLeft.value));
         intakeReverseButton = new JoystickButton(op, Button.kA.value).and(new JoystickButton(op, Button.kBumperLeft.value));
         // intakeReverseButton = new JoystickButton(op, Button.kBumperLeft.value).and(new JoystickButton(op, Button.kA.value));
-        intakeHarvestButton = new JoystickButton(op, Button.kY.value);
+        intakeHarvestButton = new JoystickButton(op, Button.kY.value).and(new JoystickButton(op, Button.kStickLeft.value));
         intakeHarvestResetButton = new JoystickButton(op, Button.kY.value).and(new JoystickButton(op, Button.kBumperLeft.value));
 
         /* Drum */
 
         drumDownButton = new JoystickButton(op, Button.kB.value).and(new JoystickButton(op, Button.kBumperLeft.value));
-        drumUpButton = new JoystickButton(op, Button.kB.value);    
+        drumUpButton = new JoystickButton(op, Button.kB.value).and(new JoystickButton(op, Button.kStickLeft.value));    
         drumCCWButton = new JoystickButton(op, Button.kBack.value);
-        drumAgitateButton = new JoystickButton(op, Button.kStart.value);
+        drumAgitateButton = new JoystickButton(op, Button.kStart.value).and(new JoystickButton(op, Button.kStickLeft.value));
         drumAgitatePreShootButton = new JoystickButton(op, Button.kStart.value).and(new JoystickButton(op, Button.kBumperLeft.value));
 
         /* Transfer */
 
         transferPivotButton = new JoystickButton(op, Button.kX.value).and(new JoystickButton(op, Button.kBumperLeft.value));
-        transferStraightButton = new JoystickButton(op, Button.kX.value);
+        transferStraightButton = new JoystickButton(op, Button.kX.value).and(new JoystickButton(op, Button.kStickLeft.value));
 
         /* Command Buttons */
 
-        shootButton = new JoystickButton(op, Button.kBumperRight.value); 
+        shootButton = new JoystickButton(op, Button.kBumperRight.value).and(new JoystickButton(op, Button.kStickLeft.value)); 
         resetShootButton = new JoystickButton(op, Button.kBumperRight.value).and(new JoystickButton(op, Button.kBumperLeft.value));
 
         /* DPad POV Buttons */
@@ -164,27 +164,27 @@ public class Controller {
 
     /* Intake Buttons */
 
-    public JoystickButton getIntakeSpinButton() {return intakeSpinButton;}
+    public Trigger getIntakeSpinButton() {return intakeSpinButton;}
     public Trigger getIntakeReverseButton() {return intakeReverseButton;}
-    public JoystickButton getIntakeHarvestButton() {return intakeHarvestButton;}
+    public Trigger getIntakeHarvestButton() {return intakeHarvestButton;}
     public Trigger getIntakeHarvestResetButton() {return intakeHarvestResetButton;}
 
     /* Drum */
 
-    public JoystickButton getDrumUpButton() {return drumUpButton;}
+    public Trigger getDrumUpButton() {return drumUpButton;}
     public Trigger getDrumDownButton() {return drumDownButton;}
     public JoystickButton getDrumCCWButton() {return drumCCWButton;}
-    public JoystickButton getDrumAgitateButton() {return drumAgitateButton;}
+    public Trigger getDrumAgitateButton() {return drumAgitateButton;}
     public Trigger getDrumAgitatePreShootButton() {return drumAgitatePreShootButton;}
 
     /* Transfer */
 
-    public JoystickButton getTransferStraightButton() {return transferStraightButton;}
+    public Trigger getTransferStraightButton() {return transferStraightButton;}
     public Trigger getTransferPivotButton() {return transferPivotButton;}
 
     /* Command Buttons */
 
-    public JoystickButton getShootButton() {return shootButton;}
+    public Trigger getShootButton() {return shootButton;}
     public Trigger getResetShootButton() {return resetShootButton;}
 
     /* DPAD Methods */

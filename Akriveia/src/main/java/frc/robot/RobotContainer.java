@@ -106,6 +106,32 @@ public class RobotContainer {
       () -> m_Controller.getOrbitSpeed(),
       () -> m_Controller.getPOVTransStick()));
 
+    m_Controller.getIntakeSpinButton().whenActive(new IntakeRoll());
+    m_Controller.getIntakeReverseButton().whenActive(new IntakeReverse());
+  
+    m_Controller.getDrumUpButton().whenActive(new DrumVelocitySpeed());
+    m_Controller.getDrumDownButton().whenActive(new DrumVelocitySlow());
+  
+    m_Controller.getTransferStraightButton().whenActive(new BallTransferStraight());
+    m_Controller.getTransferPivotButton().whenActive(new BallTransferPivotAndRoll());
+  
+    m_Controller.getIntakeHarvestButton().whenActive(new IntakeHarvest());
+    m_Controller.getIntakeHarvestResetButton().whenActive(new IntakeHarvestReset());
+  
+    m_Controller.getDrumAgitateButton().whenActive(new DrumAgitate());
+    m_Controller.getDrumAgitatePreShootButton().whenActive(new DrumAgitatePreShoot());
+  
+    m_Controller.getDrumCCWButton().whenPressed(new DrumCCW());
+  
+    m_Controller.getPOVUp().whenHeld(new AngledShooterUp());
+    m_Controller.getPOVDown().whenHeld(new AngledShooterDown());
+    m_Controller.getPOVLeft().whenHeld(new FlywheelSlow());
+    m_Controller.getPOVRight().whenHeld(new FlywheelSpeed());
+  
+    m_Controller.getShootButton().whenActive(new Shoot());
+    m_Controller.getResetShootButton().whenActive(new ShootReset());
+    
+      /*
     m_Controller.getIntakeSpinButton().whenPressed(new IntakeRoll());
     m_Controller.getIntakeReverseButton().whenActive(new IntakeReverse());
 
@@ -129,7 +155,7 @@ public class RobotContainer {
     m_Controller.getPOVRight().whenHeld(new FlywheelSpeed());
 
     m_Controller.getShootButton().whenPressed(new Shoot());
-    m_Controller.getResetShootButton().whenActive(new ShootReset());
+    m_Controller.getResetShootButton().whenActive(new ShootReset()); */
   }
 
   public Command getAutonomousCommand() {
