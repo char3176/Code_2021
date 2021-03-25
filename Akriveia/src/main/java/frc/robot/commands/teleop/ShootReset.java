@@ -18,6 +18,7 @@ public class ShootReset extends InstantCommand {
 
   @Override
   public void initialize() {
+    System.out.println("ShootReset.initialize executed. ############################################################");
     mDrum.simpleSet(0);
     mFlywheel.spinVelocityOutputPercent(0);
     mTransfer.setPercentControl(0);

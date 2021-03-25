@@ -85,20 +85,20 @@ public class RobotContainer {
 
       // m_Controller.getDrumAgitateButton().whenPressed(new DrumAgitate());
       m_Controller.getDrumCCWSetButton().whenPressed(new DrumCCWSet());
-      m_Controller.getDrumUpButton().whenPressed(/*new DrumInputReset()*/new AngledShooterUp());
-      m_Controller.getDrumDownButton().whenPressed(/*new DrumInputReset()*/new AngledShooterDown());
+      //m_Controller.getDrumUpButton().whenPressed(/*new DrumInputReset()*/new AngledShooterUp());
+      //m_Controller.getDrumDownButton().whenPressed(/*new DrumInputReset()*/new AngledShooterDown());
       m_Controller.getDrumUpButton().whenPressed(new DrumVelocitySpeed2());
-      m_Controller.getDrumDownButton().whenPressed(new DrumVelocitySlow2());
+      m_Controller.getDrumDownButton().whenActive(new DrumVelocitySlow2());
 
       m_Controller.getIntakeSpinButton().whenPressed(new IntakeRoll());
 
-      m_Controller.testPOVRight().whenPressed(new FlywheelSpeed());
+      m_Controller.testPOVRight().whenHeld(new FlywheelSpeed());
 
       if(m_Controller.getPOVRight()) {new FlywheelSpeed();}
       if(m_Controller.getPOVLeft()) {new FlywheelSlow();}
 
       m_Controller.getTransferStraightButton().whenPressed(new BallTransferStraight());
-      m_Controller.getTransferPivotButton().whenPressed(new BallTransferPivotAndRoll());
+      m_Controller.getTransferPivotButton().whenActive(new BallTransferPivotAndRoll());
 
       m_Controller.getShootCMDButton().whenPressed(new DrumTransferFlywheelTest());
 

@@ -19,6 +19,7 @@ public class DrumVelocitySlow2 extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    System.out.println("DrumVelocitySlow2.initialized executed. ########################################################");
     tempSetting = m_Drum.getLastSetting();
   }
 

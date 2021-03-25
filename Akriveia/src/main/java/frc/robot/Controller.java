@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 //import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -41,7 +42,7 @@ public class Controller {
     /* Drum */
 
     // private final JoystickButton drumAgitateButton; = new JoystickButton(op, Button.kStart.value);
-    private final JoystickButton drumDownButton;
+    private final Trigger drumDownButton;
     private final JoystickButton drumUpButton;
     //3 MORE BUTTONS
     
@@ -53,7 +54,7 @@ public class Controller {
     /* Transfer */
 
     private final JoystickButton transferStraightButton;
-    private final JoystickButton transferPivotButton;
+    private final Trigger transferPivotButton;
 
     /* Command Buttons */
 
@@ -62,8 +63,8 @@ public class Controller {
 
     /* TEMP */
 
-    private final JoystickButton extend;
-    private final JoystickButton retract;
+    //private final JoystickButton extend;
+    //private final JoystickButton retract;
     private final JoystickButton shootButton;
     private final JoystickButton resetShootButton;
 
@@ -96,7 +97,8 @@ public class Controller {
         /* Drum */
 
         // private final JoystickButton drumAgitateButton = new JoystickButton(op, Button.kStart.value);
-        drumDownButton = new JoystickButton(op, Button.kBumperLeft.value);
+        // B - Drum Speed               | Drum Slow 
+        drumDownButton = new JoystickButton(op, Button.kB.value).and(new JoystickButton(op, Button.kBumperLeft.value));
         drumUpButton = new JoystickButton(op, Button.kBumperRight.value);
         //3 MORE BUTTONS
     
@@ -106,9 +108,10 @@ public class Controller {
         drumCCWSetButton = new JoystickButton(op, Button.kBack.value); //Layer 2 but usable
 
         /* Transfer */
-
+            // x-button = Pivot, x-button + LBummper = transferStraight
+        transferPivotButton = new JoystickButton(op, Button.kX.value).and(new JoystickButton(op, Button.kBumperLeft.value));
         transferStraightButton = new JoystickButton(op, Button.kA.value);
-        transferPivotButton = new JoystickButton(op, Button.kB.value);
+        //transferPivotButton = new JoystickButton(op, Button.kX.value);
 
         /* Command Buttons */
 
@@ -117,17 +120,17 @@ public class Controller {
 
         /* TEMP */
 
-        extend = new JoystickButton(op, Button.kBumperLeft.value);
-        retract = new JoystickButton(op, Button.kBumperRight.value);
-        shootButton = new JoystickButton(op, Button.kX.value); 
+        //extend = new JoystickButton(op, Button.kBumperLeft.value);
+        //retract = new JoystickButton(op, Button.kBumperRight.value);
+        shootButton = new JoystickButton(op, Button.kBumperRight.value); 
         resetShootButton = new JoystickButton(op, Button.kY.value);
 
         dpadUp = new POVButton(op, 90);
     }
 
 
-    public boolean getExtend() {return extend.get();}
-    public boolean getRetract() {return retract.get();}
+    //public boolean getExtend() {return extend.get();}
+    //public boolean getRetract() {return retract.get();}
 
     /* Swerve Axis Data */
 
@@ -183,15 +186,15 @@ public class Controller {
 
     /* Drum */
 
-    // public JoystickButton getDrumAgitateButton() {return drumAgitateButton;}
+    //public JoystickButton getDrumAgitateButton() {return drumAgitateButton;}
     public JoystickButton getDrumUpButton() {return drumUpButton;}
-    public JoystickButton getDrumDownButton() {return drumDownButton;}
+    public Trigger getDrumDownButton() {return drumDownButton;}
     public JoystickButton getDrumCCWSetButton() {return drumCCWSetButton;}
 
     /* Transfer */
 
     public JoystickButton getTransferStraightButton() {return transferStraightButton;}
-    public JoystickButton getTransferPivotButton() {return transferPivotButton;}
+    public Trigger getTransferPivotButton() {return transferPivotButton;}
 
     /* Command Buttons */
 
@@ -216,6 +219,13 @@ public class Controller {
     public JoystickButton getResetShootButton() {
         return resetShootButton;
     }
+
+
+    //new JoystickButton(exampleController, XBoxController.Button.kX.value)
+    //    .and(new JoystickButton(exampleController, XboxController.Button.kY.value))
+    //    .whenActive(new ExampleCommand());
+
+       // https://docs.wpilib.org/en/latest/docs/software/commandbased/binding-commands-to-triggers.html
 
     /* ##############################################################
      * BEGIN: EXAMPLE USAGE OF DoubleButton / LoneButton classes
@@ -260,15 +270,14 @@ public class Controller {
      * END: EXAMPLE USAGE OF DoubleButton / LoneButton classes
      * ############################################################## */
 
-}
 /**
  * Unshifted:                   | Shifted:
  * A - Intake Roll              | Reverse Intake Roll
- * B - DrumSpinReverse          | CCW Drum
- * X - targetMode               |
- * Y - visionDrive              |
+ * B - Drum Speed               | Drum Slow 
+ * X - BallTransferPivotAndRoll | BallTransferPivot 
+ * Y - Harvest                  | HarvestRest
  * Start - Agitate Drum         | Agitate Drum Pre Shoot
- * Back -                       |
+ * Back - CCW Drum              | 
  * D-Pad Up - Shooter Up        |
  * D-Pad Down - Shooter Down    |
  * D-Pad Left - Flywheel Slow   |
@@ -278,8 +287,20 @@ public class Controller {
  * Left Joy Y -                 |
  * Left Joy X -                 |
  * Right Joy Y -                |
- * Left Bumper - DrumSlow       | BallTransferStraight
- * Right Bumper - DrumSpeed     | BallTransferPivot
- * Left Trigger - Hold To Shift | Release to Unshift
- * Right Trigger - Shoot        | ShootReset
+ * Left Bumper -  Hold to Shift | Release to Unshift 
+ * Right Bumper - Shoot         | ShootReset
+ * Left Trigger -               | 
+ * Right Trigger -         | 
+ * 
+ * make a Harvest cmd that executes 1) CCW Drum, 2) Intake Roll
+ * make a HarvestReset cmd that executes 1) Intake Reverse, 2) Drum Agitate
+ *  
+ * 
+ * whenActive/whenPressed
+ * whileActiveContinuous/whileHeld
+ * whileActiveOnce/whenHeld
+ * whenInactive/whenReleased
+ * toggleWhenActive/toggleWhenPressed
  */
+
+}

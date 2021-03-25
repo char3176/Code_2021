@@ -14,6 +14,7 @@ public class BallTransferStraight extends InstantCommand {
 
   @Override
   public void initialize() {
+    System.out.println("BallTranferStraight.initialized executed. ########################################################");
     m_BallTransfer.Extend();
     m_BallTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT);
   }
