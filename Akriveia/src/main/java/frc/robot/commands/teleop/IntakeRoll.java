@@ -14,7 +14,7 @@ public class IntakeRoll extends InstantCommand {
 
   @Override
   public void initialize() {
-
+    System.out.println("IntakeRoll.initialize executed. ############################################################");
     /* Gets the current intake speed and sets to the opposite */
 
     if (m_Intake.getIntakeMotorSpeed() == 0) {

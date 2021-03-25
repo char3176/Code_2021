@@ -13,6 +13,7 @@ public class DrumAgitate extends InstantCommand {
 
   @Override
   public void initialize() {
+    System.out.println("DrumAgitate.initialize executed. ############################################################");
     m_Drum.shakeDrum();
   }
 
