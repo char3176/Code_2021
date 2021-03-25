@@ -9,13 +9,17 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
+//import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -38,6 +42,8 @@ import java.util.ArrayList;
 public class Drivetrain extends SubsystemBase {
   private static Drivetrain instance = new Drivetrain();
   private Controller controller = Controller.getInstance();
+
+  private SwerveDriveOdometry odometry;
 
   private PowerDistributionPanel PDP = new PowerDistributionPanel(0);
   private AHRS gyro;
@@ -84,6 +90,8 @@ public class Drivetrain extends SubsystemBase {
   private double forwardCommand;
   private double strafeCommand;
   private double spinCommand;
+
+  public Rotation2d rotation = new Rotation2d();
 
   /* ##################################################################################
    *  BEGIN: Temporary Code for PIDController of rotation to stop drift in AutonCrude
@@ -148,6 +156,8 @@ public class Drivetrain extends SubsystemBase {
     gyro.reset();
     gyroUpdateOffset();
     updateAngle();
+    odometry = new SwerveDriveOdometry(DrivetrainConstants.DRIVE_KINEMATICS, gyro.getRotation2d().times(1));
+    
     // SmartDashboard.putNumber("currentAngle", this.currentAngle);
 
     // SmartDashboard.putNumber("forwardCommand", 0);
@@ -438,15 +448,8 @@ public class Drivetrain extends SubsystemBase {
   public Rotation2d getAngle() {
     return Rotation2d.fromDegrees(-gyro.getAngle());
   }
-
-  public Pose2d getCurrentPose() {
-    return odometry.getPoseMeters();
-  }
-
-  public DifferentialDriveKinematics getKinematics() {
-    return kinematics;
-  }
   */
+
 
 /* ##################################################################################
  *  BEGIN: Temporary Code for PIDController of rotation to stop drift in AutonCrude
@@ -459,21 +462,55 @@ public class Drivetrain extends SubsystemBase {
   public double getAutonCrudeGyroAngleAvg() {
     return this.autonCrudeGyroAngleAvg;
   }
+  /* ##################################################################################
+  *  END: Temporary Code for PIDController of rotation to stop drift in AutonCrude
+  * ################################################################################## */
+
+  public Pose2d getCurrentPose() { 
+    return odometry.getPoseMeters();  //Does this work?
+  }
+
+  public void setModuleStates(SwerveModuleState[] desiredStates) {
+    SwerveDriveKinematics.normalizeWheelSpeeds(
+      desiredStates, 4.468); //Unist.inchesToMeters(DrivetrainConstants.MAX_WHEEL_SPEED_INCHES_PER_SECOND));
+    
+    podFR.setDesiredState(desiredStates[0]);
+    podFL.setDesiredState(desiredStates[1]);
+    podBL.setDesiredState(desiredStates[2]);
+    podBR.setDesiredState(desiredStates[3]);
+
+  }
+
+  public void resetOdometry(Pose2d pose) {
+    odometry.resetPosition(pose, gyro.getRotation2d().times(Math.PI/180));  //Not sure, gyroAngle);
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     
-    calcAutonCrudeGyroAngleAvg();
-    this.arraytrack++;
-    if (this.arraytrack > 3) {
-      this.arraytrack = 0;
-    } 
-/* ##################################################################################
- *  END: Temporary Code for PIDController of rotation to stop drift in AutonCrude
- * ################################################################################## */
+    /* ##################################################################################
+    *  BEGIN: Temporary Code for PIDController of rotation to stop drift in AutonCrude
+    * ################################################################################## */
+    //calcAutonCrudeGyroAngleAvg();
+    //this.arraytrack++;
+    //if (this.arraytrack > 3) {
+    //  this.arraytrack = 0;
+    //} 
+    /* ##################################################################################
+    *  END: Temporary Code for PIDController of rotation to stop drift in AutonCrude
+    * ################################################################################## */
 
+    odometry.update(
+        new Rotation2d(getHeading()),
+        podFR.getState(),
+        podFL.getState(),
+        podBL.getState(),
+        podBR.getState());
+  }
 
+  public double getHeading() {
+    return gyro.getRotation2d().getRadians() ; //+ Math.PI/2;
   }
 
 }

@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import java.util.function.DoubleSupplier;
 
-//TODO: Recognize the red dependecys because seeing red is annoying
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -20,13 +19,22 @@ import com.revrobotics.ControlType;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
+import frc.robot.RobotContainer;
+import edu.wpi.first.wpilibj.SpeedController;
 
+import frc.robot.constants.DrivetrainConstants;
 import frc.robot.constants.SwervePodConstants;
 
 public class SwervePod {
@@ -70,6 +78,10 @@ public class SwervePod {
 
     private double startTics;
 
+    private final PIDController m_drivePIDController;
+    private final ProfiledPIDController m_turningPIDController;
+    private SwerveModuleState state;
+
     public SwervePod(int id, TalonFX driveController, TalonSRX spinController) {
         this.id = id;
 
@@ -80,8 +92,16 @@ public class SwervePod {
         kSlotIdx_spin = SwervePodConstants.TALON_SPIN_PID_SLOT_ID;
         kPIDLoopIdx_spin = SwervePodConstants.TALON_SPIN_PID_LOOP_ID;
         kTimeoutMs_spin = SwervePodConstants.TALON_SPIN_PID_TIMEOUT_MS;
+
+        m_drivePIDController = new PIDController(DrivetrainConstants.P_MODULE_DRIVE_CONTROLLER, 0, 0);
+
+        m_turningPIDController = new ProfiledPIDController(
+            DrivetrainConstants.P_MODULE_DRIVE_CONTROLLER, 0, 0,
+            new TrapezoidProfile.Constraints(
+                DrivetrainConstants.MAX_MODULE_ANGULAR_SPEED_RADIANS_PER_SECOND,
+                DrivetrainConstants.MAX_MODULE_ANGULAR_SPEED_RADIANS_PER_SECOND));
         
-        
+
         /**
 		 * Config the allowable closed-loop error, Closed-Loop output will be
 		 * neutral within this range. See Table in Section 17.2.1 for native
@@ -265,4 +285,42 @@ public class SwervePod {
 
     public boolean isInverted() { return spinController.getInverted(); }
     public void setInverted() { spinController.setInverted(!isInverted()); }
+
+    public void setDesiredState(SwerveModuleState desiredState) {
+        // Optimize the reference state to avoid spinning further than 90 degrees
+        Rotation2d rotation = new Rotation2d(tics2Rads(spinController.getSelectedSensorPosition()));
+        state = 
+            SwerveModuleState.optimize(desiredState, rotation); //I do not know if this is the angle of the encoder.
+            SmartDashboard.putNumber("1Degrees", desiredState.angle.getDegrees());
+            SmartDashboard.putNumber("2Degrees", rotation.getDegrees());
+            double driveOutput =    
+            m_drivePIDController.calculate(getVelocity(), state.speedMetersPerSecond);
+            driveOutput = .25 * Units.metersToInches(driveOutput)/DrivetrainConstants.MAX_WHEEL_SPEED_INCHES_PER_SECOND;
+
+            final var turnOutput = 
+            m_turningPIDController.calculate(tics2Rads(spinController.getSelectedSensorPosition()), state.angle.getRadians());
+            SmartDashboard.putNumber("TurnOutput",turnOutput);
+            SmartDashboard.putNumber("DriveOutput",driveOutput);
+          
+            set(driveOutput,turnOutput);//Units.metersToFeet(driveOutput),turnOutput);     
+    }
+
+    public double getVelocity() {
+        double speed = driveController.getSelectedSensorVelocity(1);
+        SmartDashboard.putNumber("GetSensorVelocity", speed);
+
+        speed = speed * 1 * Units.inchesToMeters(3.25*PI)/SwervePodConstants.DRIVE_ENCODER_UNITS_PER_REVOLUTION;
+        SmartDashboard.putNumber("Velocity", speed);
+        return speed;     
+    }
+
+    public SwerveModuleState getState() {
+        state = new SwerveModuleState(getVelocity(), new Rotation2d(tics2Rads(spinController.getSelectedSensorVelocity())));
+                /*drivetrain.gyro.getRate() * DrivetrainConstants.DEGREES_PER_SECOND_TO_METERS_PER_SECOND_OF_WHEEL,
+        drivetrain.getRotation2d())*/;       
+        return state;                                                                         //Not sure if this works
+  }                   
+
+ // public double getRate(){
+ // }
 }

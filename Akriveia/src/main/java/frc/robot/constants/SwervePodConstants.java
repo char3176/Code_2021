@@ -141,5 +141,8 @@ public final class SwervePodConstants {
 
     public static final double DRIVE_SPEED_MAX_EMPIRICAL_FEET_PER_SECOND = 13.79;
 
+    public static final double METERS_TO_FEET_CONSTANT = 3.28084;
+    public static final double FEET_TO_METERS_CONSTANT = 0.3048;
+
 }
 

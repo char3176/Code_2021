@@ -1,18 +1,33 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import frc.robot.subsystems.AngledShooter;
-import frc.robot.subsystems.Drum;
-import frc.robot.subsystems.BallTransfer;
-import frc.robot.subsystems.Flywheel;
-import frc.robot.commands.auton.Slalom;
-import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import frc.robot.commands.auton.FollowGivenPath;
+import frc.robot.commands.auton.Slalom;
 import frc.robot.commands.teleop.*;
+import frc.robot.constants.DrivetrainConstants;
+import frc.robot.constants.MasterConstants;
+import frc.robot.subsystems.AngledShooter;
+import frc.robot.subsystems.BallTransfer;
+import frc.robot.subsystems.Drum;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Flywheel;
+import frc.robot.subsystems.Intake;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
 
 public class RobotContainer {
   public Intake m_Intake;
@@ -25,10 +40,20 @@ public class RobotContainer {
   private Flywheel m_Flywheel;
 
   private SendableChooser<String> m_autonChooser;
-  private static final String auto1 = "Galactic Search";
-  private static final String auto2 = "Barrel Racing";
-  private static final String auto3 = "Bounce Path";
-  private static final String auto4 = "Slalom Path";
+  private static final String galactic_search = "Galactic Search";
+  private static final String barrel_racing = "Barrel Racing";
+  private static final String bounce_path = "Bounce Path";
+  private static final String slalom = "Slalom Path";
+  private static final String easy = "Easy";
+  private static final String forward = "Forward";
+  private static final String forward_and_back = "Forward_and_Back";
+  private static final String l_shape = "L_Shape";
+
+  public Trajectory m_Trajectory;
+
+  public ProfiledPIDController thetaController;
+
+  public SwerveControllerCommand swerveControllerCommand;
 
   public RobotContainer() {
     m_Compressor = new Compressor();
@@ -60,6 +85,17 @@ public class RobotContainer {
     SmartDashboard.putBoolean("StopTest06", false);
 
     configureButtonBindings();
+
+    m_autonChooser = new SendableChooser<>();
+    m_autonChooser.addOption("Barrel Racing", barrel_racing);
+    m_autonChooser.addOption("Bounce Path", bounce_path);
+    m_autonChooser.addOption("Forward", forward);
+    m_autonChooser.addOption("Forward and Back", forward_and_back);
+    m_autonChooser.addOption("Easy", easy);
+    m_autonChooser.addOption("Galactic Search", galactic_search);
+    m_autonChooser.addOption("L_Shape", l_shape);
+    m_autonChooser.addOption("Slalom", slalom);
+
   }
 
   private void configureButtonBindings() {
@@ -118,15 +154,32 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
+
+    thetaController = new ProfiledPIDController(
+      DrivetrainConstants.P_THETA_CONTROLLER, 0, 0, DrivetrainConstants.THETA_CONTROLLER_CONSTRAINTS);
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);
+
     if(m_autonChooser.getSelected().equals("Galactic Search")) {
       // return new TwoSecondDrive();
     } else if(m_autonChooser.getSelected().equals("Barrel Racing")) {
       // return new ThreeSecondDriveAndShoot();
-    } else if(m_autonChooser.getSelected().equals("Bounce Path")) {
+    } else if(m_autonChooser.getSelected().equals("Bounce")) {
       // return new FarShootAndDrive();
-    } else if(m_autonChooser.getSelected().equals("Slalom Path")) {
+    } else if(m_autonChooser.getSelected().equals("Slalom")) {
       //return new cmd();
+      
     }
     return new Slalom(); //Hand Crafted Auton Version
+  }
+
+  public void createTrajectory(String path){
+    String trajectoryJSON = "paths/" + path + ".wpilib.json";
+    m_Trajectory = null;
+    try {
+      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+      m_Trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    } catch (IOException ex) {
+      DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
+    }
   }
 }
