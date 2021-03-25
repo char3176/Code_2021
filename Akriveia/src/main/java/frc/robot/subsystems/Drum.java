@@ -8,7 +8,8 @@ import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.SlewRateLimiter;
 import frc.robot.constants.DrumConstants;
-import frc.robot.PowerManagement;
+import frc.robot.constants.PowerManagementConstants;
+import frc.robot.subsystems.PowerManagement;
 
 /**
  * <b> The Drum subsystem </b>
@@ -33,6 +34,8 @@ public class Drum extends SubsystemBase {
   private double shakeStartTime = -1;
   private double shakeIterations = 0;
 
+  private PowerManagement m_PowerManagement;
+
   /**
    * Initializes the Drum subsystem once at code deploy.
    * <p>
@@ -40,6 +43,7 @@ public class Drum extends SubsystemBase {
    */
 
   public Drum() {
+    m_PowerManagement = PowerManagement.getInstance();
     drumMotor.restoreFactoryDefaults();
     drumPIDController = drumMotor.getPIDController();
     drumEncoder = drumMotor.getEncoder();
@@ -168,14 +172,13 @@ public class Drum extends SubsystemBase {
   }
 
   /**
-   * Gets the Voltage of the Drum and if it is past a certain voltage it stops the intake
-   * <p><b> DOESN'T WORK </b>
+   * Gets the Current/Amp of the Drum and if it is past a certain voltage it stops the intake
    */
-
-  public void CheckForVoltageDrop() {
-    double volt = PowerManagement.getDrumCurrent();
-    if (volt >= 0) {
+  public void checkForCurrentSpike() {
+    double amps = m_PowerManagement.getDrumAvgAmp();
+    if (amps >= 20) {
       drumMotor.set(0);
+      drumMotor.disable();
     }
   }
 
@@ -215,5 +218,7 @@ public class Drum extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {}
+  public void periodic() {
+    checkForCurrentSpike();
+  }
 }

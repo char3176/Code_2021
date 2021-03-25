@@ -24,6 +24,7 @@ import frc.robot.subsystems.Drum;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.PowerManagement;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -38,6 +39,7 @@ public class RobotContainer {
   private Drivetrain m_Drivetrain;
   private BallTransfer m_BallTransfer;
   private Flywheel m_Flywheel;
+  private PowerManagement m_PowerManagement;
 
   private SendableChooser<String> m_autonChooser;
   private static final String galactic_search = "Galactic Search";
@@ -66,6 +68,7 @@ public class RobotContainer {
     m_BallTransfer = BallTransfer.getInstance();
     m_Flywheel = Flywheel.getInstance();
     m_AngledShooter = AngledShooter.getInstance();
+    m_PowerManagement = PowerManagement.getInstance();
 
     m_Drivetrain = Drivetrain.getInstance();
     m_Drivetrain.setDefaultCommand(new SwerveDrive(

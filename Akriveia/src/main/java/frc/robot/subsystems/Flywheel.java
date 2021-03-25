@@ -13,6 +13,7 @@ public class Flywheel extends SubsystemBase {
     private static int lastSetting = 0;
     
     public Flywheel() {
+
         flywheelController.configFactoryDefault();
         flywheelController.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, FlywheelConstants.kPIDLoopIdx, FlywheelConstants.kTimeoutMs);
         flywheelController.configAllowableClosedloopError(0, FlywheelConstants.kPIDLoopIdx, FlywheelConstants.kTimeoutMs);
@@ -28,7 +29,6 @@ public class Flywheel extends SubsystemBase {
     /**
      * @param level of speed to multipy by 2048 and then divide by 600 and set it to that velocity
      */
-
     public void spinVelocityPIDF(int level) {
         lastSetting = level;
         double ticsPer100ms = (FlywheelConstants.FlywheelSpeeds[level] * 2048.0) / 600.0;
@@ -39,7 +39,6 @@ public class Flywheel extends SubsystemBase {
     /**
      * @param pct The input of a percent to set the motor to that percent
      */
-
     public void spinVelocityOutputPercent(double pct) {
         flywheelController.set(TalonFXControlMode.PercentOutput, pct);
     }
@@ -47,16 +46,19 @@ public class Flywheel extends SubsystemBase {
     /**
      * @return the last speed setting of the Flywheel
      */
-
     public int getLastSetting() {
         return lastSetting;
     }
 
     /**
-     * @return A single, universal Intake instance to be used anywhere else in the code
+     * @return A single, universal instance to be used anywhere else in the code
      */
-
     public static Flywheel getInstance() {
         return instance;
+    }
+
+    @Override
+    public void periodic() {
+        
     }
 }
