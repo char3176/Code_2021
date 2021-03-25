@@ -99,7 +99,7 @@ public class Controller {
         // private final JoystickButton drumAgitateButton = new JoystickButton(op, Button.kStart.value);
         // B - Drum Speed               | Drum Slow 
         drumDownButton = new JoystickButton(op, Button.kB.value).and(new JoystickButton(op, Button.kBumperLeft.value));
-        drumUpButton = new JoystickButton(op, Button.kBumperRight.value);
+        drumUpButton = new JoystickButton(op, Button.kB.value);
         //3 MORE BUTTONS
     
         // drumSpinReverseButton = new JoystickButton(op, Button.kA.value); //Layer 2
@@ -110,7 +110,7 @@ public class Controller {
         /* Transfer */
             // x-button = Pivot, x-button + LBummper = transferStraight
         transferPivotButton = new JoystickButton(op, Button.kX.value).and(new JoystickButton(op, Button.kBumperLeft.value));
-        transferStraightButton = new JoystickButton(op, Button.kA.value);
+        transferStraightButton = new JoystickButton(op, Button.kX.value);
         //transferPivotButton = new JoystickButton(op, Button.kX.value);
 
         /* Command Buttons */
