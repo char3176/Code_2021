@@ -5,10 +5,11 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.constants.ControllerConstants;
 import frc.robot.util.XboxLoneButton;
-
+import frc.robot.util.XboxAxisAsButton;
 public class Controller {
     private static Controller instance = new Controller();
     public static Controller getInstance() {return instance;}
@@ -106,7 +107,8 @@ public class Controller {
         /* Command Buttons */
 
         shootButton = new JoystickButton(op, Button.kBumperRight.value).and(new JoystickButton(op, Button.kStickLeft.value)); 
-        resetShootButton = new JoystickButton(op, Button.kBumperRight.value).and(new JoystickButton(op, Button.kBumperLeft.value));
+        //resetShootButton = new JoystickButton(op, Button.kBumperRight.value).and(new JoystickButton(op, Button.kBumperLeft.value));
+        resetShootButton = new XboxAxisAsButton(op, Axis.kRightTrigger.value, 0.5);
 
         /* DPad POV Buttons */
 
