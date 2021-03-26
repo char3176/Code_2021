@@ -93,6 +93,8 @@ public class Drivetrain extends SubsystemBase {
 
   public Rotation2d rotation = new Rotation2d();
 
+  private double angleOffset = 90.0;
+
   /* ##################################################################################
    *  BEGIN: Temporary Code for PIDController of rotation to stop drift in AutonCrude
    * ################################################################################## */
@@ -373,16 +375,20 @@ public class Drivetrain extends SubsystemBase {
     }
   }
 
+  private double getAngle() {
+    return (gyro.getAngle() + this.gyroOffset);
+  }
+
   private void updateAngle() {
     // -pi to pi; 0 = straight
-    this.currentAngle = (((((gyro.getAngle()) - this.gyroOffset) * Math.PI/180.0)) % (2*Math.PI));
+    this.currentAngle = ((((getAngle()) * Math.PI/180.0)) % (2*Math.PI));
     // gyro.getAngle is returned in degrees.
     // Then converted to radians via "* pi/180".
     // And finally, it's modulus against 2pi is taken and returned as currentAngle.
   }
 
   public void gyroUpdateOffset() {
-    this.gyroOffset = (gyro.getAngle());
+    this.gyroOffset = (getAngle());
   }
 
   private double getRadius(String component) {
@@ -424,7 +430,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getGyroAngle() {
-    return gyro.getAngle();
+    return getAngle();
   }
  
   /*
