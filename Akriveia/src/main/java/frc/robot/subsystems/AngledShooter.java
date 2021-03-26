@@ -41,8 +41,8 @@ public class AngledShooter extends SubsystemBase {
     hoodController.setInverted(AngledShooterConstants.angledShooterMotorInvert);
     hoodController.configNominalOutputForward(0, AngledShooterConstants.angledShooterTimeoutMs);
     hoodController.configNominalOutputReverse(0, AngledShooterConstants.angledShooterTimeoutMs);
-    hoodController.configPeakOutputForward(/*1*/0.5, AngledShooterConstants.angledShooterTimeoutMs);
-    hoodController.configPeakOutputReverse(/*-1*/-0.5, AngledShooterConstants.angledShooterTimeoutMs);
+    hoodController.configPeakOutputForward(/*1*/0.25, AngledShooterConstants.angledShooterTimeoutMs);
+    hoodController.configPeakOutputReverse(/*-1*/-0.25, AngledShooterConstants.angledShooterTimeoutMs);
     hoodController.configAllowableClosedloopError(0, AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.angledShooterTimeoutMs);
     hoodController.config_kF(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pid[3], AngledShooterConstants.angledShooterTimeoutMs);
 		hoodController.config_kP(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pid[0], AngledShooterConstants.angledShooterTimeoutMs);
@@ -55,6 +55,9 @@ public class AngledShooter extends SubsystemBase {
     hoodPositions_Tics = new ArrayList<Double>();
     hoodPositions_persistingIndex = 0;
 
+    findMinPosTicMaxPosTic();
+    buildHoodPositions(4);
+
   }
 
 
@@ -62,11 +65,11 @@ public class AngledShooter extends SubsystemBase {
   public void findMinPosTicMaxPosTic() {
     double targetPos = startPosTic;
     while (checkForCurrentSpike() == 0) {
-      targetPos = targetPos + (350);
+      targetPos = targetPos - (350);
       hoodController.set(ControlMode.Position, targetPos);
     }
     hoodController.set(ControlMode.Position, targetPos - 350);
-    double maxPosTicCalc = (targetPos - 350);
+    double maxPosTicCalc = (targetPos + 350);
     maxPosTic = hoodController.getSelectedSensorPosition();
     SmartDashboard.putNumber("maxPosTic_Calculated", maxPosTicCalc);
     SmartDashboard.putNumber("maxPosTic_Sensored", maxPosTic);
@@ -74,11 +77,11 @@ public class AngledShooter extends SubsystemBase {
     System.out.println("********** maxPosTic_Sensored (maxPosTic) = " + maxPosTic + "***************************");
     targetPos = maxPosTic;
     while (checkForCurrentSpike() == 0) {
-      targetPos = targetPos - (350);
+      targetPos = targetPos + (350);
       hoodController.set(ControlMode.Position, targetPos);
     }
     hoodController.set(ControlMode.Position, targetPos + 350);
-    double minPosTicCalc = (targetPos + 350);
+    double minPosTicCalc = (targetPos - 350);
     minPosTic = hoodController.getSelectedSensorPosition();
     SmartDashboard.putNumber("minPosTic_Calculated", minPosTicCalc);
     SmartDashboard.putNumber("minPosTic_Sensored", minPosTic);
