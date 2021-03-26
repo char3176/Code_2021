@@ -17,15 +17,11 @@ public class PowerManagement extends SubsystemBase {
     private ElectricalData DrumPM; 
    
     public PowerManagement() {
-        PowerDistributionPanel PDP = new PowerDistributionPanel(PowerManagementConstants.PDP_CAN_ID);
-        ElectricalData HoodPM = new ElectricalData(PowerManagementConstants.ANGLED_SHOOTER_PDP_CHANNEL, "Angled Shooter", 5);
-        ElectricalData DrumPM = new ElectricalData(PowerManagementConstants.DRUM_PDP_CHANNEL, "Drum", 5);
+        PDP = new PowerDistributionPanel(PowerManagementConstants.PDP_CAN_ID);
+        HoodPM = new ElectricalData(PowerManagementConstants.ANGLED_SHOOTER_PDP_CHANNEL, "Angled Shooter", 5);
+        DrumPM = new ElectricalData(PowerManagementConstants.DRUM_PDP_CHANNEL, "Drum", 5);
     }
 
-    private double getInstantaneousAmp(int pdpChannel) {
-        return PDP.getCurrent(pdpChannel);
-    }
-    
     public double getAngledShooterInstantAmp() {
         return HoodPM.getInstantaneousAmp();
     }

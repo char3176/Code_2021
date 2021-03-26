@@ -80,14 +80,14 @@ public class ElectricalData {
         return PDP.getCurrent(pdpChannel);
     }
     public void addAmpData() {
-        if (windowTdx > windowTdxMax) {windowTdx = 0;}
+        if (windowTdx >= windowTdxMax) {windowTdx = 0;}
         ampHist[windowTdx] = getInstantaneousAmp();
         windowTdx += 1;
 
     }
 
     public void addAmpData(double amp) {
-        if (windowTdx > windowTdxMax) {windowTdx = 0;}
+        if (windowTdx >= windowTdxMax) {windowTdx = 0;}
         ampHist[windowTdx] = amp;
         windowTdx += 1;
     }
