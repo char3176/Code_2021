@@ -84,10 +84,10 @@ public class Controller {
            
         /* Intake */
 
-        intakeSpinButton = new JoystickButton(op, Button.kA.value).and(new JoystickButton(op, Button.kStickLeft.value));
+        intakeSpinButton = new XboxLoneButton(op, Button.kA.value, Button.kBumperLeft.value);
         intakeReverseButton = new JoystickButton(op, Button.kA.value).and(new JoystickButton(op, Button.kBumperLeft.value));
         // intakeReverseButton = new JoystickButton(op, Button.kBumperLeft.value).and(new JoystickButton(op, Button.kA.value));
-        intakeHarvestButton = new JoystickButton(op, Button.kY.value).and(new JoystickButton(op, Button.kStickLeft.value));
+        intakeHarvestButton = new XboxLoneButton(op, Button.kY.value, Button.kBumperLeft.value);
         intakeHarvestResetButton = new JoystickButton(op, Button.kY.value).and(new JoystickButton(op, Button.kBumperLeft.value));
 
         /* Drum */
@@ -96,17 +96,17 @@ public class Controller {
         drumUpButton = new XboxLoneButton(op, Button.kB.value, Button.kBumperLeft.value);
         
         drumCCWButton = new JoystickButton(op, Button.kBack.value);
-        drumAgitateButton = new JoystickButton(op, Button.kStart.value).and(new JoystickButton(op, Button.kStickLeft.value));
+        drumAgitateButton = new XboxLoneButton(op, Button.kStart.value, Button.kBumperLeft.value);
         drumAgitatePreShootButton = new JoystickButton(op, Button.kStart.value).and(new JoystickButton(op, Button.kBumperLeft.value));
 
         /* Transfer */
 
         transferPivotButton = new JoystickButton(op, Button.kX.value).and(new JoystickButton(op, Button.kBumperLeft.value));
-        transferStraightButton = new JoystickButton(op, Button.kX.value).and(new JoystickButton(op, Button.kStickLeft.value));
+        transferStraightButton = new XboxLoneButton(op, Button.kX.value, Button.kBumperLeft.value);
 
         /* Command Buttons */
 
-        shootButton = new JoystickButton(op, Button.kBumperRight.value).and(new JoystickButton(op, Button.kStickLeft.value)); 
+        shootButton = new JoystickButton(op, Button.kBumperRight.value);
         //resetShootButton = new JoystickButton(op, Button.kBumperRight.value).and(new JoystickButton(op, Button.kBumperLeft.value));
         resetShootButton = new XboxAxisAsButton(op, Axis.kRightTrigger.value, 0.5);
 
@@ -218,7 +218,7 @@ public class Controller {
  * Left Bumper -  Hold to Shift | Release to Unshift 
  * Right Bumper - Shoot         | ShootReset
  * Left Trigger -               | 
- * Right Trigger -         | 
+ * Right Trigger -        ShootReset 
  * 
  * make a Harvest cmd that executes 1) CCW Drum, 2) Intake Roll
  * make a HarvestReset cmd that executes 1) Intake Reverse, 2) Drum Agitate
