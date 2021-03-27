@@ -2,97 +2,155 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.constants.ControllerConstants;
-
+import frc.robot.util.XboxLoneButton;
+import frc.robot.util.XboxAxisAsButton;
 public class Controller {
     private static Controller instance = new Controller();
     public static Controller getInstance() {return instance;}
 
     /* Controllers */
 
-    private final Joystick transStick = new Joystick(ControllerConstants.TRANSLATION_STICK_ID);
-    private final Joystick rotStick = new Joystick(ControllerConstants.ROTATION_STICK_ID);
-    private final XboxController op = new XboxController(ControllerConstants.XBOX_CONTROLLER_ID);;
+    private final Joystick transStick; 
+    private final Joystick rotStick; 
+    private final XboxController op; 
 
     /* Drivetrain */
-
-    private final JoystickButton orbitButton = new JoystickButton(rotStick, 2);
-    private final JoystickButton dosadoButton = new JoystickButton(rotStick, 3);
-    private final JoystickButton visionButton = new JoystickButton(op, Button.kY.value);
-    private final JoystickButton defenseButton = new JoystickButton(transStick, 2);
-    private final JoystickButton fieldCentricButton = new JoystickButton(transStick, 4);
-    private final JoystickButton robotCentricButton = new JoystickButton(transStick, 5);
-    private final JoystickButton backRobotCentricButton = new JoystickButton(transStick, 6);
-    private final JoystickButton reZeroGyroButton = new JoystickButton(rotStick, 4);
-    // private final JoystickButton slalomButton = new JoystickButton(transStick, 7);
+    
+    private final JoystickButton orbitButton;
+    private final JoystickButton dosadoButton;
+    private final JoystickButton visionButton;
+    private final JoystickButton defenseButton;
+    private final JoystickButton fieldCentricButton;
+    private final JoystickButton robotCentricButton;
+    private final JoystickButton backRobotCentricButton; 
+    private final JoystickButton resetGyroButton;
+    private final JoystickButton lockSpinButton;
     
     /* Intake */
 
-    private final JoystickButton intakeSpinButton = new JoystickButton(op, Button.kA.value);
-
-    /* Angled Shooter */
-
-    // private final JoystickButton shooterUpButton = new JoystickButton(op, op.getPOV(180)); //Up on the D-Pad
-    // private final JoystickButton shooterDownButton = new JoystickButton(op, op.getPOV(0)); //Down on the D-Pad
+    private final Trigger intakeSpinButton;
+    private final Trigger intakeReverseButton;
+    private final Trigger intakeHarvestButton;
+    private final Trigger intakeHarvestResetButton;
 
     /* Drum */
 
-    // private final JoystickButton drumAgitateButton = new JoystickButton(op, Button.kStart.value);
-    private final JoystickButton drumDownButton = new JoystickButton(op, Button.kBumperLeft.value);
-    private final JoystickButton drumUpButton = new JoystickButton(op, Button.kBumperRight.value);
-    //3 MORE BUTTONS
-    
-    // private final JoystickButton drumSpinReverseButton = new JoystickButton(op, Button.kA.value); //Layer 2
-    // private final JoystickButton drumPreShootAgitateButton = new JoystickButton(op, Button.kStart.value); //Layer 2
-    private final JoystickButton drumCCWButton = new JoystickButton(op, Button.kBack.value); //Layer 1 but not usable
-    private final JoystickButton drumCCWSetButton = new JoystickButton(op, Button.kBack.value); //Layer 2 but usable
-
-    /* Flywheel */
-     
-    private final JoystickButton flywheelRightButton = new JoystickButton(op, Button.kY.value); //Right on the D-Pad
-    // private final JoystickButton flywheelLeftButton = new JoystickButton(op, Button.kX.value); //Left on the D-Pad
+    private final Trigger drumDownButton;
+    private final Trigger drumUpButton;
+    private final JoystickButton drumCCWButton;
+    private final Trigger drumAgitateButton;
+    private final Trigger drumAgitatePreShootButton;
 
     /* Transfer */
 
-    private final JoystickButton transferStraightButton = new JoystickButton(op, Button.kA.value);
-    private final JoystickButton transferPivotButton = new JoystickButton(op, Button.kB.value);
+    private final Trigger transferStraightButton;
+    private final Trigger transferPivotButton;
 
     /* Command Buttons */
 
-    private final JoystickButton shootCMD = new JoystickButton(op, Button.kStart.value);
-    // private final JoystickButton shift = new JoystickButton(op, Trig);
+    private final Trigger shootButton;
+    private final Trigger resetShootButton;
 
-    /* TEMP */
+    /* DPad POV Buttons */
 
-    private final JoystickButton extend = new JoystickButton(op, Button.kBumperLeft.value);
-    private final JoystickButton retract = new JoystickButton(op, Button.kBumperRight.value);
-    public boolean getExtend() {return extend.get();}
-    public boolean getRetract() {return retract.get();}
+    private final POVButton dpadUp;
+    private final POVButton dpadDown;
+    private final POVButton dpadLeft;
+    private final POVButton dpadRight;
+
+    public Controller() {
+
+        // Define control sticks: Translation stick, Rotation stick, and XboxController(aka "op")
+        transStick = new Joystick(ControllerConstants.TRANSLATION_STICK_ID);
+        rotStick = new Joystick(ControllerConstants.ROTATION_STICK_ID);
+        op = new XboxController(ControllerConstants.XBOX_CONTROLLER_ID);;
+
+        // All buttons numbers subject to change
+        orbitButton = new JoystickButton(transStick, 1);
+        dosadoButton = new JoystickButton(rotStick, 3);
+        defenseButton = new JoystickButton(transStick, 2);
+        visionButton = new JoystickButton(transStick, 3); //Should be part of the xbox controller later
+        fieldCentricButton = new JoystickButton(transStick, 4);
+        robotCentricButton = new JoystickButton(transStick, 5);
+        backRobotCentricButton = new JoystickButton(transStick, 6);
+        resetGyroButton = new JoystickButton(rotStick, 8);
+        lockSpinButton = new JoystickButton(rotStick, 9);
+           
+        /* Intake */
+
+        intakeSpinButton = new XboxLoneButton(op, Button.kA.value, Button.kBumperLeft.value);
+        intakeReverseButton = new JoystickButton(op, Button.kA.value).and(new JoystickButton(op, Button.kBumperLeft.value));
+        // intakeReverseButton = new JoystickButton(op, Button.kBumperLeft.value).and(new JoystickButton(op, Button.kA.value));
+        intakeHarvestButton = new XboxLoneButton(op, Button.kY.value, Button.kBumperLeft.value);
+        intakeHarvestResetButton = new JoystickButton(op, Button.kY.value).and(new JoystickButton(op, Button.kBumperLeft.value));
+
+        /* Drum */
+
+        drumDownButton = new JoystickButton(op, Button.kB.value).and(new JoystickButton(op, Button.kBumperLeft.value));
+        drumUpButton = new XboxLoneButton(op, Button.kB.value, Button.kBumperLeft.value);
+        
+        drumCCWButton = new JoystickButton(op, Button.kBack.value);
+        drumAgitateButton = new XboxLoneButton(op, Button.kStart.value, Button.kBumperLeft.value);
+        drumAgitatePreShootButton = new JoystickButton(op, Button.kStart.value).and(new JoystickButton(op, Button.kBumperLeft.value));
+
+        /* Transfer */
+
+        transferPivotButton = new JoystickButton(op, Button.kX.value).and(new JoystickButton(op, Button.kBumperLeft.value));
+        transferStraightButton = new XboxLoneButton(op, Button.kX.value, Button.kBumperLeft.value);
+
+        /* Command Buttons */
+
+        shootButton = new JoystickButton(op, Button.kBumperRight.value);
+        //resetShootButton = new JoystickButton(op, Button.kBumperRight.value).and(new JoystickButton(op, Button.kBumperLeft.value));
+        resetShootButton = new XboxAxisAsButton(op, Axis.kRightTrigger.value, 0.5);
+
+        /* DPad POV Buttons */
+
+        dpadUp = new POVButton(op, 0);
+        dpadDown = new POVButton(op, 180);
+        dpadRight = new POVButton(op, 90);
+        dpadLeft = new POVButton(op, 270);
+    }
 
     /* Swerve Axis Data */
 
     public double getForward() { 
-        if (Math.abs(-transStick.getY())<.06) {
+        if (Math.abs(-transStick.getY()) < 0.06) {
             return 0.0;
         } else {
-            return -1 * (Math.pow((transStick.getY()),1)*1);}
+            return ControllerConstants.FORWARD__AXIS_INVERSION * Math.pow(transStick.getY(), 1); }
     }
     
     public double getStrafe() { 
-        if (Math.abs(transStick.getX())<.06) {
+        if (Math.abs(transStick.getX()) < 0.06) {
             return 0.0;
-        } else {
-            return -1 * (Math.pow((-1 * transStick.getX()),1) * 1);}
+        } else { 
+            return ControllerConstants.STRAFE_AXIS_INVERSION * Math.pow(transStick.getX(), 1); }
     }
 
     public double getSpin() { 
-        if (Math.abs(rotStick.getX())<.06) {
+        if (Math.abs(rotStick.getX()) < 0.06) {
             return 0.0;
         } else {
-            return Math.pow(rotStick.getX(),1) / 7.0;}
+            return ControllerConstants.SPIN_AXIS_INVERSION * (Math.pow(rotStick.getX(), 1) / 7.0); }
+    } 
+
+    public double getOrbitSpeed() { 
+        if (Math.abs(rotStick.getY()) < 0.06) {
+            return 0.0;
+        } else {
+            return Math.pow(rotStick.getY(), 1) / 7.0; }
+    } 
+    
+    
+    public int getPOVTransStick() {
+        return transStick.getPOV();
     }
 
     /* Drivetrain Buttons */
@@ -101,117 +159,68 @@ public class Controller {
     public JoystickButton getDosadoButton() {return dosadoButton;}
     public JoystickButton getVisionButton() {return visionButton;}
     public JoystickButton getDefenseButton() {return defenseButton;}
-    public JoystickButton getReZeroGyroButton() {return reZeroGyroButton;}
-    // public JoystickButton getSlalomButton() {return slalomButton;}
+    public JoystickButton getResetGyroButton() {return resetGyroButton;}
+    public JoystickButton getLockSpinButton() {return lockSpinButton;}
+    public boolean isGetLockSpinButtonPressed() {return lockSpinButton.get();}
     public boolean isFieldCentricButtonPressed() {return fieldCentricButton.get();}
     public boolean isRobotCentricButtonPressed() {return robotCentricButton.get();}
     public boolean isBackRobotCentricButtonPressed() {return backRobotCentricButton.get();}
 
     /* Intake Buttons */
 
-    public JoystickButton getIntakeSpinButton() {return intakeSpinButton;}
-
-    /* Angled Shooter*/
-
-    // public boolean getUpDPADB() {
-    //     if(op.getPOV() == 180) {return true;}
-    //     return false;
-    // }
-
-    // public boolean getDownDPADB() {
-    //     if(op.getPOV() == 0) {return true;}
-    //     return false;
-    // }
-
-    // public JoystickButton getUpDPAD() {return shooterUpButton;}
-    // public JoystickButton getDownDPAD() {return shooterDownButton;}
+    public Trigger getIntakeSpinButton() {return intakeSpinButton;}
+    public Trigger getIntakeReverseButton() {return intakeReverseButton;}
+    public Trigger getIntakeHarvestButton() {return intakeHarvestButton;}
+    public Trigger getIntakeHarvestResetButton() {return intakeHarvestResetButton;}
 
     /* Drum */
 
-    // public JoystickButton getDrumAgitateButton() {return drumAgitateButton;}
-    public JoystickButton getDrumUpButton() {return drumUpButton;}
-    public JoystickButton getDrumDownButton() {return drumDownButton;}
-    public JoystickButton getDrumCCWSetButton() {return drumCCWSetButton;}
-
-    /* Flywheel */
-
-    // public JoystickButton getFlywheelLeft() {
-    //     return flywheelLeftButton;
-    // }
-
-    public JoystickButton getFlywheelRight() {
-        return flywheelRightButton;
-    }
-
-    // public JoystickButton getRightDPAD() {return flywheelRightButton;}
-    // public JoystickButton getLeftDPAD() {return flywheelLeftButton;}
+    public Trigger getDrumUpButton() {return drumUpButton;}
+    public Trigger getDrumDownButton() {return drumDownButton;}
+    public JoystickButton getDrumCCWButton() {return drumCCWButton;}
+    public Trigger getDrumAgitateButton() {return drumAgitateButton;}
+    public Trigger getDrumAgitatePreShootButton() {return drumAgitatePreShootButton;}
 
     /* Transfer */
 
-    public JoystickButton getTransferStraightButton() {return transferStraightButton;}
-    public JoystickButton getTransferPivotButton() {return transferPivotButton;}
+    public Trigger getTransferStraightButton() {return transferStraightButton;}
+    public Trigger getTransferPivotButton() {return transferPivotButton;}
 
     /* Command Buttons */
 
-    public JoystickButton getShootCMDButton() {return shootCMD;}
+    public Trigger getShootButton() {return shootButton;}
+    public Trigger getResetShootButton() {return resetShootButton;}
 
-    /* Button Get Methods */
+    /* DPAD Methods */
 
-    public int getPOVLocation() {return op.getPOV();}
-    /**
-     * @return If the Left Trigger is pressed for half and then shifts the controls
-     */
-    public boolean getShift() {
-        if(op.getTriggerAxis(Hand.kLeft) >= 0.5) {return true;}
-        return false;
-    }
+    public POVButton getPOVUp() {return dpadUp;}
+    public POVButton getPOVDown() {return dpadDown;}
+    public POVButton getPOVLeft() {return dpadLeft;}
+    public POVButton getPOVRight() {return dpadRight;}
 
-
-
-    /* ##############################################################
-     * BEGIN: EXAMPLE USAGE OF DoubleButton / LoneButton classes
-     * ############################################################## 
-     *
-     *  // This example uses 3 buttons:  blueButton, rightBumperButton, and leftBumperButton
-     *  // DoubleButton pairs together two "normal" buttons (ie blueButton & leftBummperButton in
-     *  // this example) into one "DoubleButton" object named myNewButton.
-     *  // However, the logic of DoubleButton.java could potentially foul-up independent 
-     *  // operation of blueButton as a sole button.   
-     *  // So we "re-create" (ie reassign) blueButton as a LoneButton object which checks that 
-     *  // none of the modifer buttons (ie rightBumperButton or leftBumperButton) are also 
-     *  // being presssed.  If that is true, then blueButton (or more specifically loneBlueButton) activate
-     *  // "MySecondCommand() when pressed (ie loneBlueButton.whenPressed() etc etc).
-     *  
-     * // include the DoubleButton class
-     *  import frc.robot.util.DoubleButton.java
-     * 
-     * // Create an object (named myjoystick) of Joystick class
-     *  private Joystick myjoystick = new Joystick(Joystick_ID_Number_from_Drivestation); 
-     *  
-     * // Create an object (named myNewButton in this example) using DoubleButton class.
-     * // Pass the "myjoystick" object, and the numbers of the first and second button on the joystick
-     * // to the DoubleButton(). 
-     *  private Button myNewButton = new DoubleButton(myjoystick, BLUE_BUTTON_ID, LEFT_BUMPER_ID);
-     *
-     * // MyCommand will now only "fire" when both button numbers 1 & 2 are pressed together
-     *   myNewButton.whenPressed(new MyCommand());
-     *
-     * 
-     * // NOW CREATE LONE BUTTONS for buttons blueButton, rightBumperButton, & leftBumperButton using the LoneButton class
-     *   JoystickButton blueButton = new JoystickButton(myjoystick, BLUE_BUTTON_ID);
-     *   JoystickButton rightBumperButton = new JoystickButton(myjoystick, RIGHT_BUMPER_ID);
-     *   JoystickButton leftBumperButton = new JoystickButton(myjoystick, LEFT_BUMPER_ID);
-
-     *   LoneButton loneBlueButton = new LoneButton(blueButton, leftBumperButton, rightBumperButton);
-     * 
-     *   loneBlueButton.whenPressed(new MySecondCommand());
-     *  
-     * 
-     * ##############################################################
-     * END: EXAMPLE USAGE OF DoubleButton / LoneButton classes
-     * ############################################################## */
-
+/**
+ * Unshifted:                   | Shifted:
+ * A - Intake Roll              | Reverse Intake Roll
+ * B - Drum Speed               | Drum Slow 
+ * X - BallTransferPivotAndRoll | BallTransferPivot 
+ * Y - Harvest                  | HarvestRest
+ * Start - Agitate Drum         | Agitate Drum Pre Shoot
+ * Back - CCW Drum              | 
+ * D-Pad Up - Shooter Up        |
+ * D-Pad Down - Shooter Down    |
+ * D-Pad Left - Flywheel Slow   |
+ * D-Pad Right - Flywheel Speed |
+ * Left Joy Button -            |
+ * Right Joy Button -           |
+ * Left Joy Y -                 |
+ * Left Joy X -                 |
+ * Right Joy Y -                |
+ * Left Bumper -  Hold to Shift | Release to Unshift 
+ * Right Bumper - Shoot         | ShootReset
+ * Left Trigger -               | 
+ * Right Trigger -        ShootReset 
+ * 
+ * make a Harvest cmd that executes 1) CCW Drum, 2) Intake Roll
+ * make a HarvestReset cmd that executes 1) Intake Reverse, 2) Drum Agitate
+ */
 }
-
-
-

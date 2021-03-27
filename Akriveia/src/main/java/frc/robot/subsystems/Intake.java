@@ -11,25 +11,21 @@ import frc.robot.constants.IntakeConstants;
  * The mechanism that pulls power cells from the ground and deposits them into the Drum.
  * @see subsystems.Drum
  */
-
 public class Intake extends SubsystemBase {
 
-  /** Creates a new Intake. */
 
   private static Intake instance = new Intake();
   private WPI_TalonSRX motor = new WPI_TalonSRX(IntakeConstants.MOTOR_CAN_ID);
   private double intakeMotorSpeed = 0;
 
   /**
-   * Initializes the Intake once upon code deploy
+   * Instantiates the Intake object
    */
-
   public Intake() {}
 
   /**
    * @return A single, universal Intake instance to be used anywhere else in the code
    */
-
   public static Intake getInstance() {
     return instance;
   }
@@ -38,7 +34,6 @@ public class Intake extends SubsystemBase {
    * Sets the speed of the intake wheels.
    * @param percent between -1 and 1
    */
-
   public void setPercentControl(double percent) {
     motor.set(ControlMode.PercentOutput, percent);
     intakeMotorSpeed = percent;
@@ -47,7 +42,6 @@ public class Intake extends SubsystemBase {
   /**
    * @return the intake's motor speed
    */
-  
   public double getIntakeMotorSpeed() {
     return intakeMotorSpeed;
   }

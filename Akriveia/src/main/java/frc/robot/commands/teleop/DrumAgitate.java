@@ -1,27 +1,39 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
 package frc.robot.commands.teleop;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drum;
 
-public class DrumAgitate extends InstantCommand {
-
+public class DrumAgitate extends CommandBase {
+  /** Creates a new DrumAgitate. */
   Drum m_Drum = Drum.getInstance();
-
+  private boolean ranThroughSequence;
+  
   public DrumAgitate() {
+    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Drum);
   }
 
   @Override
   public void initialize() {
-    m_Drum.shakeDrum();
+    System.out.println("DrumAgitate.initialize executed. ############################################################");
   }
 
-  /*
-  From Jared:
-    This probably has to be a normal (not instant) command because of how the method in the subsystem works for interruptability.
-    When I made it, the call to shakeDrum saved the returned boolean to a variable. Then, isFinished returned that variable, which the
-    method in Drum makes true if the shake cycle is done, and false otherwise. This helps the commandScheduler not get stuck because of
-    loops, and also allows the shaking to be interrupted before the cycle is complete.
-  */
+  @Override
+  public void execute() {
+    ranThroughSequence = m_Drum.shakeDrum();
+  }
 
+  @Override
+  public void end(boolean interrupted) {
+    m_Drum.resetShakeVariables();
+  }
+
+  @Override
+  public boolean isFinished() {
+    return ranThroughSequence;
+  }
 }

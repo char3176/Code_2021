@@ -6,8 +6,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class LoneButton extends Trigger {
   private final Joystick m_joystick;
   private final int m_include;
-  private final int m_exclude1;
-  private final int m_exclude2;
+  private final int m_exclude;
 
   /**
    * Class to create Double button trigger.
@@ -16,16 +15,15 @@ public class LoneButton extends Trigger {
    * @param excludeButton1 The first button in the pair to exclude
    * @param excludeButton2 The second button in the pair to exclude
    */ 
-  public LoneButton(Joystick joystick, int includeButton, int excludeButton1, int excludeButton2) {
+  public LoneButton(Joystick joystick, int includeButton, int excludeButton) {
     this.m_joystick = joystick;
     this.m_include = includeButton;
-    this.m_exclude1 = excludeButton1;
-    this.m_exclude2 = excludeButton2;
+    this.m_exclude = excludeButton;
   } 
 
   @Override
   public boolean get() {
-    if (m_joystick.getRawButton(m_include) && !m_joystick.getRawButton(m_exclude1) && !m_joystick.getRawButton(m_exclude2)) {
+    if (m_joystick.getRawButton(m_include) && !m_joystick.getRawButton(m_exclude)) {
       return true;
     }
     return false;

@@ -1,14 +1,42 @@
 package frc.robot.subsystems;
 
-//TODO: Recognize the red dependecys because seeing red is annoying
+import java.util.function.DoubleSupplier;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.*; 
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANPIDController;
+import com.revrobotics.ControlType;
+
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
+import frc.robot.RobotContainer;
+import edu.wpi.first.wpilibj.SpeedController;
+
+import frc.robot.constants.DrivetrainConstants;
 import frc.robot.constants.SwervePodConstants;
+import frc.robot.constants.MasterConstants;
 
 public class SwervePod {
 
@@ -19,7 +47,7 @@ public class SwervePod {
     private int kEncoderOffset; 
     private double kSpinEncoderUnitsPerRevolution;
     private double kDriveEncoderUnitsPerRevolution;
-    // private int off = 0;
+    private int off = 0;
 
     private double lastEncoderPos;
     private double radianError;
@@ -47,29 +75,40 @@ public class SwervePod {
     private double maxVelTicsPer100ms;
 
     private double PI = Math.PI;
-    // private double maxFps = SwervePodConstants.DRIVE_SPEED_MAX_EMPIRICAL_FEET_PER_SECOND;
+    private double maxFps = SwervePodConstants.DRIVE_SPEED_MAX_EMPIRICAL_FEET_PER_SECOND;
 
-    // private int startTics;
+    private double startTics;
+
+    private final PIDController m_drivePIDController;
+    private final ProfiledPIDController m_turningPIDController;
+    private SwerveModuleState state;
 
     public SwervePod(int id, TalonFX driveController, TalonSRX spinController) {
         this.id = id;
 
-        // this.kEncoderOffset = SwervePodConstants.SPIN_OFFSET[this.id];
-        this.kEncoderOffset = 0;
+        this.kEncoderOffset = SwervePodConstants.SPIN_OFFSET[this.id];
         ///System.out.println("P"+(this.id+1)+" kEncoderOffset: "+this.kEncoderOffset);
 
         kSpinEncoderUnitsPerRevolution = SwervePodConstants.SPIN_ENCODER_UNITS_PER_REVOLUTION;
         kSlotIdx_spin = SwervePodConstants.TALON_SPIN_PID_SLOT_ID;
         kPIDLoopIdx_spin = SwervePodConstants.TALON_SPIN_PID_LOOP_ID;
         kTimeoutMs_spin = SwervePodConstants.TALON_SPIN_PID_TIMEOUT_MS;
+
+        m_drivePIDController = new PIDController(DrivetrainConstants.P_MODULE_DRIVE_CONTROLLER, 0, 0);
+
+        m_turningPIDController = new ProfiledPIDController(
+            DrivetrainConstants.P_MODULE_DRIVE_CONTROLLER, 0, 0,
+            new TrapezoidProfile.Constraints(
+                DrivetrainConstants.MAX_MODULE_ANGULAR_SPEED_RADIANS_PER_SECOND,
+                DrivetrainConstants.MAX_MODULE_ANGULAR_SPEED_RADIANS_PER_SECOND));
         
-        
+
         /**
 		 * Config the allowable closed-loop error, Closed-Loop output will be
 		 * neutral within this range. See Table in Section 17.2.1 for native
 		 * units per rotation.
 		 */
-	    //spinController.configAllowableClosedloopError(0, SwervePodConstants.kPIDLoopIdx, SwervePodConstants.kTimeoutMs);
+        //spinController.configAllowableClosedloopError(0, SwervePodConstants.kPIDLoopIdx, SwervePodConstants.kTimeoutMs);
 
         kDriveEncoderUnitsPerRevolution = SwervePodConstants.DRIVE_ENCODER_UNITS_PER_REVOLUTION;
         kSlotIdx_drive = SwervePodConstants.TALON_DRIVE_PID_SLOT_ID;
@@ -93,16 +132,34 @@ public class SwervePod {
         this.driveController.configFactoryDefault();
         this.spinController.configFactoryDefault();
 
+        this.driveController.configClosedloopRamp(0.5);
+
+       // this.driveController.setNeutralMode(NeutralMode.Brake);
+       // this.driveController.setNeutralMode(NeutralMode.Brake);
+
         this.driveController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
         this.spinController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);   //TODO: investigate QuadEncoder vs CTRE_MagEncoder_Absolute.  Are the two equivalent?  Why QuadEncoder instead of CTRE_MagEncoder_Absolute
 
-        if (this.id < 2) {
-            this.spinController.setSensorPhase(SwervePodConstants.kSensorPhase);
-            this.spinController.setInverted(SwervePodConstants.kMotorInverted);
-        }
-        if (this.id == 3 || this.id == 2) {
-            this.spinController.setSensorPhase(true);
-            this.spinController.setInverted(true);
+       if (MasterConstants.is2021Bot) { 
+           // 2021 Code
+            if (this.id == 0 || this.id == 1) {
+                this.spinController.setSensorPhase(SwervePodConstants.kSensorPhase);
+                this.spinController.setInverted(SwervePodConstants.kMotorInverted);
+            }
+            if (this.id == 2 || this.id == 3) {
+                this.spinController.setSensorPhase(true);
+                this.spinController.setInverted(true);
+           }
+        } else { 
+            // 2019 Code
+            if (this.id < 2) {
+                this.spinController.setSensorPhase(SwervePodConstants.kSensorPhase);
+                this.spinController.setInverted(SwervePodConstants.kMotorInverted);
+            }
+            if (this.id == 3) {
+                this.spinController.setSensorPhase(true);
+                this.spinController.setInverted(true);
+            }
         }
 
             //TODO: check out "Feedback Device Not Continuous"  under config tab in CTRE-tuner.  Is the available via API and set-able?  Caps encoder to range[-4096,4096], correct?
@@ -124,9 +181,7 @@ public class SwervePod {
         this.spinController.config_kD(kPIDLoopIdx_spin, kD_Spin, kTimeoutMs_spin);
         this.spinController.config_kF(kPIDLoopIdx_spin, kF_Spin, kTimeoutMs_spin);
 
-        
-
-        // startTics = spinController.getSelectedSensorPosition();
+        startTics = spinController.getSelectedSensorPosition();
         // SmartDashboard.putNumber("startTics", startTics);
 
         // SmartDashboard.putBoolean("pod" + (id + 1) + " inversion", isInverted());
@@ -150,7 +205,7 @@ public class SwervePod {
         this.maxVelTicsPer100ms = 1 * 987.2503 * kDriveEncoderUnitsPerRevolution / 600.0;
         this.velTicsPer100ms = this.podDrive * 2000.0 * kDriveEncoderUnitsPerRevolution / 600.0;  //TODO: rework "podDrive * 2000.0"
         double encoderSetPos = calcSpinPos(this.podSpin);
-        // double tics = rads2Tics(this.podSpin);
+        double tics = rads2Tics(this.podSpin);
         // SmartDashboard.putNumber("P" + (id + 1) + " tics", tics);
         // SmartDashboard.putNumber("P" + (id + 1) + " absTics", spinController.getSelectedSensorPosition());
         //if (this.id == 3) {spinController.set(ControlMode.Position, 0.0); } else {   // TODO: Try this to force pod4 to jump lastEncoderPos
@@ -162,8 +217,7 @@ public class SwervePod {
             this.lastEncoderPos = encoderSetPos;
             // SmartDashboard.putNumber("P" + (id + 1) + " lastEncoderPos", this.lastEncoderPos);
         }    
-        if(id == 2) { SmartDashboard.putNumber("P" + (id) + "getSelSenPos", spinController.getSelectedSensorPosition()); }
-        if(id == 1) { SmartDashboard.putNumber("P" + (id) + "getSelSenPos", spinController.getSelectedSensorPosition()); }
+        SmartDashboard.putNumber("P" + (id) + "getSelSenPos", spinController.getSelectedSensorPosition());
 
         SmartDashboard.putNumber("podDrive", podDrive);
         //SmartDashboard.putNumber("actualVel", driveController.getVoltage());
@@ -231,4 +285,42 @@ public class SwervePod {
 
     public boolean isInverted() { return spinController.getInverted(); }
     public void setInverted() { spinController.setInverted(!isInverted()); }
+
+    public void setDesiredState(SwerveModuleState desiredState) {
+        // Optimize the reference state to avoid spinning further than 90 degrees
+        Rotation2d rotation = new Rotation2d(tics2Rads(spinController.getSelectedSensorPosition()));
+        state = 
+            SwerveModuleState.optimize(desiredState, rotation); //I do not know if this is the angle of the encoder.
+            SmartDashboard.putNumber("1Degrees", desiredState.angle.getDegrees());
+            SmartDashboard.putNumber("2Degrees", rotation.getDegrees());
+            double driveOutput =    
+            m_drivePIDController.calculate(getVelocity(), state.speedMetersPerSecond);
+            driveOutput = .25 * Units.metersToInches(driveOutput)/DrivetrainConstants.MAX_WHEEL_SPEED_INCHES_PER_SECOND;
+
+            final var turnOutput = 
+            m_turningPIDController.calculate(tics2Rads(spinController.getSelectedSensorPosition()), state.angle.getRadians());
+            SmartDashboard.putNumber("TurnOutput",turnOutput);
+            SmartDashboard.putNumber("DriveOutput",driveOutput);
+          
+            set(driveOutput,turnOutput);//Units.metersToFeet(driveOutput),turnOutput);     
+    }
+
+    public double getVelocity() {
+        double speed = driveController.getSelectedSensorVelocity(1);
+        SmartDashboard.putNumber("GetSensorVelocity", speed);
+
+        speed = speed * 1 * Units.inchesToMeters(3.25*PI)/SwervePodConstants.DRIVE_ENCODER_UNITS_PER_REVOLUTION;
+        SmartDashboard.putNumber("Velocity", speed);
+        return speed;     
+    }
+
+    public SwerveModuleState getState() {
+        state = new SwerveModuleState(getVelocity(), new Rotation2d(tics2Rads(spinController.getSelectedSensorVelocity())));
+                /*drivetrain.gyro.getRate() * DrivetrainConstants.DEGREES_PER_SECOND_TO_METERS_PER_SECOND_OF_WHEEL,
+        drivetrain.getRotation2d())*/;       
+        return state;                                                                         //Not sure if this works
+  }                   
+
+ // public double getRate(){
+ // }
 }

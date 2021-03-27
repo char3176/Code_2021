@@ -14,9 +14,10 @@ public class AngledShooterUp extends InstantCommand {
 
   @Override
   public void initialize() {
-    
+    System.out.println("AngledShooterUp.initialize executed. ############################################################");
     /* Gets the current encoder position and see where it should go */
-    
+   
+    /*
     double temp = m_AngledShooter.getEncoderPosition();
     if(temp >= AngledShooterConstants.pos[3] - 100) {
       m_AngledShooter.setPosition(AngledShooterConstants.pos[4]);
@@ -27,5 +28,10 @@ public class AngledShooterUp extends InstantCommand {
     } else if(temp >= AngledShooterConstants.pos[0] - 100 && temp <= AngledShooterConstants.pos[2] + 100){
       m_AngledShooter.setPosition(AngledShooterConstants.pos[1]);
     }
+    */
+
+    m_AngledShooter.goUpToNextHoodPosition_Tic();
+
+
   }
 }

@@ -8,7 +8,8 @@ import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.SlewRateLimiter;
 import frc.robot.constants.DrumConstants;
-import frc.robot.PowerManagement;
+import frc.robot.constants.PowerManagementConstants;
+import frc.robot.subsystems.PowerManagement;
 
 /**
  * <b> The Drum subsystem </b>
@@ -33,6 +34,8 @@ public class Drum extends SubsystemBase {
   private double shakeStartTime = -1;
   private double shakeIterations = 0;
 
+  private PowerManagement m_PowerManagement;
+
   /**
    * Initializes the Drum subsystem once at code deploy.
    * <p>
@@ -40,6 +43,7 @@ public class Drum extends SubsystemBase {
    */
 
   public Drum() {
+    m_PowerManagement = PowerManagement.getInstance();
     drumMotor.restoreFactoryDefaults();
     drumPIDController = drumMotor.getPIDController();
     drumEncoder = drumMotor.getEncoder();
@@ -146,10 +150,10 @@ public class Drum extends SubsystemBase {
 
   public boolean PreShootSpinAgitate() {
     isRateLimitOff = true;
-    if (shakeIterations < 5) {
+    if (shakeIterations < 4) {
       if (shakeStartTime == -1) {
         drumMotor.set(DrumConstants.drumShakePct * direction);
-        shakeStartTime = DrumConstants.drumMilli;
+        shakeStartTime = System.nanoTime() / DrumConstants.drumMilli;
         direction *= -1;
       }
       if ((System.nanoTime() / DrumConstants.drumMilli) - shakeStartTime >= 150) {
@@ -159,23 +163,25 @@ public class Drum extends SubsystemBase {
         shakeStartTime = System.nanoTime() / DrumConstants.drumMilli;
       }
     } else {
-      shakeIterations = 0;
-      shakeStartTime = -1;
-      direction = 1;
       return true;
     }
     return false;
   }
 
-  /**
-   * Gets the Voltage of the Drum and if it is past a certain voltage it stops the intake
-   * <p><b> DOESN'T WORK </b>
-   */
+  public void resetShakeVariables() {
+    shakeIterations = 0;
+    shakeStartTime = -1;
+    direction = 1;
+  }
 
-  public void CheckForVoltageDrop() {
-    double volt = PowerManagement.getDrumCurrent();
-    if (volt >= 0) {
+  /**
+   * Gets the Current/Amp of the Drum and if it is past a certain voltage it stops the intake
+   */
+  public void checkForCurrentSpike() {
+    double amps = m_PowerManagement.getDrumAvgAmp();
+    if (amps >= 20) {
       drumMotor.set(0);
+      drumMotor.disable();
     }
   }
 
@@ -215,5 +221,7 @@ public class Drum extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {}
+  public void periodic() {
+    checkForCurrentSpike();
+  }
 }

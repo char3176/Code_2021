@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.Drivetrain;
 
-public class SwerveReZeroGyro extends CommandBase {
+public class SwerveResetGyro extends CommandBase {
   private Drivetrain drivetrain = Drivetrain.getInstance();
   private boolean isreset;
 
-  public SwerveReZeroGyro() {
+  public SwerveResetGyro() {
     addRequirements(drivetrain);
     isreset = false;
   }
