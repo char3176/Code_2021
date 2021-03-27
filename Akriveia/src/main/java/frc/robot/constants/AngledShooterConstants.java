@@ -8,7 +8,7 @@ public class AngledShooterConstants {
     public static boolean angledShooterSensorPhase = true;
     public static boolean angledShooterMotorInvert = false;
     
-    public static final double[] pid = {/*P*/.31,/*I*/0.002,/*D*/1.12,/*F*/0};
+    public static final double[] pid = {/*P*/.31,/*I*/0.002,/*D*/2.12,/*F*/0.35};
 
     public static final double GEAR_RATIO = 4/1;
 	

@@ -23,10 +23,12 @@ public class Shoot extends InstantCommand {
   @Override
   public void initialize() {
     System.out.println("Shoot.initialize executed. ############################################################");
-    mDrum.simpleSet(0.3);
+    mDrum.setSpeed(1);
     mFlywheel.spinVelocityPIDF(3);
+    mTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT/2);
     Timer.delay(2);
     mTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT);
+    Timer.delay(2);
     mTransfer.Extend();
     System.out.println("Shoot Init");
   }

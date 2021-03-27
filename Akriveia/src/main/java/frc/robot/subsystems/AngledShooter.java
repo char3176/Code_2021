@@ -33,13 +33,13 @@ public class AngledShooter extends SubsystemBase {
 	  /* Setting up the Motor */
 	  
     hoodController.configFactoryDefault();
-    hoodController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.angledShooterTimeoutMs);
+    hoodController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.angledShooterTimeoutMs);
     hoodController.setSensorPhase(AngledShooterConstants.angledShooterSensorPhase);
     hoodController.setInverted(AngledShooterConstants.angledShooterMotorInvert);
     hoodController.configNominalOutputForward(0, AngledShooterConstants.angledShooterTimeoutMs);
     hoodController.configNominalOutputReverse(0, AngledShooterConstants.angledShooterTimeoutMs);
-    hoodController.configPeakOutputForward(/*1*/0.25, AngledShooterConstants.angledShooterTimeoutMs);
-    hoodController.configPeakOutputReverse(/*-1*/-0.25, AngledShooterConstants.angledShooterTimeoutMs);
+    hoodController.configPeakOutputForward(/*1*/0.35, AngledShooterConstants.angledShooterTimeoutMs);
+    hoodController.configPeakOutputReverse(/*-1*/-0.35, AngledShooterConstants.angledShooterTimeoutMs);
     hoodController.configAllowableClosedloopError(0, AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.angledShooterTimeoutMs);
     hoodController.config_kF(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pid[3], AngledShooterConstants.angledShooterTimeoutMs);
 		hoodController.config_kP(AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.pid[0], AngledShooterConstants.angledShooterTimeoutMs);
