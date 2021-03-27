@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -96,6 +97,7 @@ public class Drivetrain extends SubsystemBase {
   private double spinLockAngle;
   private boolean isSpinLocked;
   private PIDLoop spinLockPID;
+  //private PIDController spinLockPID;
 
   public Rotation2d rotation = new Rotation2d();
 
@@ -193,6 +195,7 @@ public class Drivetrain extends SubsystemBase {
     this.spinCommand = 0.0;
     
     spinLockPID = new PIDLoop(0.3, 0.0, 0.0, 0.0);
+    //spinLockPID = new PIDController(0.3, 0.0, 0.0, 0.0);
   }
   
   // Prevents more than one instance of drivetrian
@@ -244,7 +247,9 @@ public class Drivetrain extends SubsystemBase {
     }
 
     if(currentDriveMode != driveMode.SPIN_LOCK) {
-      this.spinCommand = spinLockPID.returnOutput(gyro.getAngle(), spinLockAngle);
+      this.spinCommand = spinLockPID.returnOutput(getAngle(), spinLockAngle);
+      //this.spinCommand = spinLockPID.calculate(getAngle(), spinLockAngle);
+
     }
 
     if(currentCoordType == coordType.FIELD_CENTRIC) {
