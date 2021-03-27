@@ -36,6 +36,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 
 import frc.robot.constants.DrivetrainConstants;
 import frc.robot.constants.SwervePodConstants;
+import frc.robot.constants.MasterConstants;
 
 public class SwervePod {
 
@@ -139,28 +140,27 @@ public class SwervePod {
         this.driveController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
         this.spinController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);   //TODO: investigate QuadEncoder vs CTRE_MagEncoder_Absolute.  Are the two equivalent?  Why QuadEncoder instead of CTRE_MagEncoder_Absolute
 
-        
-        // 2021 Code
-        if (this.id == 0 || this.id == 1) {
-            this.spinController.setSensorPhase(SwervePodConstants.kSensorPhase);
-            this.spinController.setInverted(SwervePodConstants.kMotorInverted);
+       if (MasterConstants.is2021Bot) { 
+           // 2021 Code
+            if (this.id == 0 || this.id == 1) {
+                this.spinController.setSensorPhase(SwervePodConstants.kSensorPhase);
+                this.spinController.setInverted(SwervePodConstants.kMotorInverted);
+            }
+            if (this.id == 2 || this.id == 3) {
+                this.spinController.setSensorPhase(true);
+                this.spinController.setInverted(true);
+           }
+        } else { 
+            // 2019 Code
+            if (this.id < 2) {
+                this.spinController.setSensorPhase(SwervePodConstants.kSensorPhase);
+                this.spinController.setInverted(SwervePodConstants.kMotorInverted);
+            }
+            if (this.id == 3) {
+                this.spinController.setSensorPhase(true);
+                this.spinController.setInverted(true);
+            }
         }
-        if (this.id == 2 || this.id == 3) {
-            this.spinController.setSensorPhase(true);
-            this.spinController.setInverted(true);
-        }
-
-        // 2019 Code
-         /*
-         if (this.id < 2) {
-            this.spinController.setSensorPhase(SwervePodConstants.kSensorPhase);
-            this.spinController.setInverted(SwervePodConstants.kMotorInverted);
-        }
-        if (this.id == 3) {
-            this.spinController.setSensorPhase(true);
-            this.spinController.setInverted(true);
-        }
-        */
 
             //TODO: check out "Feedback Device Not Continuous"  under config tab in CTRE-tuner.  Is the available via API and set-able?  Caps encoder to range[-4096,4096], correct?
                 //this.spinController.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition), 0, 0);
