@@ -217,7 +217,7 @@ public class SwervePod {
             this.lastEncoderPos = encoderSetPos;
             // SmartDashboard.putNumber("P" + (id + 1) + " lastEncoderPos", this.lastEncoderPos);
         }    
-        SmartDashboard.putNumber("P" + (id) + "getSelSenPos", spinController.getSelectedSensorPosition());
+        //SmartDashboard.putNumber("P" + (id) + "getSelSenPos", spinController.getSelectedSensorPosition());
 
         SmartDashboard.putNumber("podDrive", podDrive);
         //SmartDashboard.putNumber("actualVel", driveController.getVoltage());

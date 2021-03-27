@@ -25,10 +25,10 @@ public class Shoot extends InstantCommand {
     System.out.println("Shoot.initialize executed. ############################################################");
     mDrum.setSpeed(1);
     mFlywheel.spinVelocityPIDF(3);
-    mTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT/2);
-    Timer.delay(2);
+    // mTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT/2);
+    // Timer.delay(5);
     mTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT);
-    Timer.delay(2);
+    // Timer.delay(5);
     mTransfer.Extend();
     System.out.println("Shoot Init");
   }

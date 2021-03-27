@@ -246,7 +246,7 @@ public class Drivetrain extends SubsystemBase {
       this.spinCommand *= DrivetrainConstants.NON_TURBO_PERCENT_OUT_CAP;
     }
 
-    if(currentDriveMode != driveMode.SPIN_LOCK) {
+    if(currentDriveMode == driveMode.SPIN_LOCK) {
       this.spinCommand = spinLockPID.returnOutput(getAngle(), spinLockAngle);
       //this.spinCommand = spinLockPID.calculate(getAngle(), spinLockAngle);
 
@@ -530,13 +530,14 @@ public class Drivetrain extends SubsystemBase {
     /* ##################################################################################
     *  END: Temporary Code for PIDController of rotation to stop drift in AutonCrude
     * ################################################################################## */
-
+/*
     odometry.update(
         new Rotation2d(getHeading()),
         podFR.getState(),
         podFL.getState(),
         podBL.getState(),
         podBR.getState());
+*/
   }
 
   public double getHeading() {
