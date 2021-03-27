@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -28,6 +29,7 @@ import frc.robot.constants.DrivetrainConstants;
 import frc.robot.Controller;
 // import frc.robot.Controller;
 // import frc.robot.VisionClient;
+import frc.robot.VisionClient;
 
 import java.util.ArrayList;
 
@@ -42,6 +44,7 @@ import java.util.ArrayList;
 public class Drivetrain extends SubsystemBase {
   private static Drivetrain instance = new Drivetrain();
   private Controller controller = Controller.getInstance();
+  private VisionClient visionClient = VisionClient.getInstance();
 
   private SwerveDriveOdometry odometry;
 
@@ -90,6 +93,11 @@ public class Drivetrain extends SubsystemBase {
   private double forwardCommand;
   private double strafeCommand;
   private double spinCommand;
+
+  private double spinLockAngle;
+  private boolean isSpinLocked;
+  private PIDLoop spinLockPID;
+  //private PIDController spinLockPID;
 
   public Rotation2d rotation = new Rotation2d();
 
@@ -186,6 +194,8 @@ public class Drivetrain extends SubsystemBase {
     this.strafeCommand = 0.0;
     this.spinCommand = 0.0;
     
+    spinLockPID = new PIDLoop(0.3, 0.0, 0.0, 0.0);
+    //spinLockPID = new PIDController(0.3, 0.0, 0.0, 0.0);
   }
   
   // Prevents more than one instance of drivetrian
@@ -234,6 +244,12 @@ public class Drivetrain extends SubsystemBase {
       this.forwardCommand *= DrivetrainConstants.NON_TURBO_PERCENT_OUT_CAP;
       this.strafeCommand *= DrivetrainConstants.NON_TURBO_PERCENT_OUT_CAP;
       this.spinCommand *= DrivetrainConstants.NON_TURBO_PERCENT_OUT_CAP;
+    }
+
+    if(currentDriveMode != driveMode.SPIN_LOCK) {
+      this.spinCommand = spinLockPID.returnOutput(getAngle(), spinLockAngle);
+      //this.spinCommand = spinLockPID.calculate(getAngle(), spinLockAngle);
+
     }
 
     if(currentCoordType == coordType.FIELD_CENTRIC) {
@@ -431,6 +447,14 @@ public class Drivetrain extends SubsystemBase {
 
   public double getGyroAngle() {
     return getAngle();
+  }
+
+  public void setSpinLockAngle() {
+    spinLockAngle = gyro.getAngle();
+  }
+
+  public void setSpinLocked(boolean isSpinLocked) {
+    this.isSpinLocked = isSpinLocked;
   }
  
   /*
