@@ -33,7 +33,7 @@ public class AngledShooter extends SubsystemBase {
 	  /* Setting up the Motor */
 	  
     hoodController.configFactoryDefault();
-    hoodController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.angledShooterTimeoutMs);
+    hoodController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, AngledShooterConstants.angledShooterPIDLoopIdx, AngledShooterConstants.angledShooterTimeoutMs);
     hoodController.setSensorPhase(AngledShooterConstants.angledShooterSensorPhase);
     hoodController.setInverted(AngledShooterConstants.angledShooterMotorInvert);
     hoodController.configNominalOutputForward(0, AngledShooterConstants.angledShooterTimeoutMs);
@@ -48,7 +48,7 @@ public class AngledShooter extends SubsystemBase {
 
     startPosTic = hoodController.getSelectedSensorPosition();
     minPosTic = startPosTic;
-    maxPosTic = startPosTic - 1500;
+    maxPosTic = startPosTic + 1500;
     numPositions = 0;
     SmartDashboard.putNumber("Hood startPosTic", startPosTic);
     SmartDashboard.putNumber("Hood minPosTic", minPosTic);
@@ -109,11 +109,23 @@ public class AngledShooter extends SubsystemBase {
     double ticsBetweenHoodPositions = range / (numberOfPositionsDesired - 1);
     int ticsBetweenHoodPositions_truncd = (int)ticsBetweenHoodPositions;
     double candidateHoodPosition = minPosTic;
+    hoodPositions_Tics.add(70.0);
+    hoodPositions_Tics.add(800.0);
+    hoodPositions_Tics.add(1500.0);
+    tempCandidateHoodPosition[0]=hoodPositions_Tics.get(0);
+    tempCandidateHoodPosition[1]=hoodPositions_Tics.get(1);
+    tempCandidateHoodPosition[2]=hoodPositions_Tics.get(2);
+    hoodPositions_persistingIndex = 0;
+
+    
+    /*
     for(int idx = 0; idx <= (int)numberOfPositionsDesired-1 ; idx++) {
       hoodPositions_Tics.add(candidateHoodPosition);
       candidateHoodPosition += ticsBetweenHoodPositions_truncd;
       tempCandidateHoodPosition[idx] = hoodPositions_Tics.get(idx);
     }
+    */
+
     SmartDashboard.putNumber("Hood_NumOfPositions", hoodPositions_Tics.size());
     SmartDashboard.putNumberArray("Hood_Positions_in_Tics", tempCandidateHoodPosition);
     return 1;

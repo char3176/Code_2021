@@ -43,7 +43,8 @@ public class Controller {
 
     private final Trigger drumDownButton;
     private final Trigger drumUpButton;
-    private final JoystickButton drumCCWButton;
+    private final Trigger drumCCWButton;
+    private final Trigger drumInputResetButton;
     private final Trigger drumAgitateButton;
     private final Trigger drumAgitatePreShootButton;
 
@@ -94,8 +95,8 @@ public class Controller {
 
         drumDownButton = new JoystickButton(op, Button.kB.value).and(new JoystickButton(op, Button.kBumperLeft.value));
         drumUpButton = new XboxLoneButton(op, Button.kB.value, Button.kBumperLeft.value);
-        
-        drumCCWButton = new JoystickButton(op, Button.kBack.value);
+        drumInputResetButton = new XboxLoneButton(op, Button.kBack.value, Button.kBumperLeft.value);
+        drumCCWButton = new JoystickButton(op, Button.kBack.value).and(new JoystickButton(op, Button.kBumperLeft.value));
         drumAgitateButton = new XboxLoneButton(op, Button.kStart.value, Button.kBumperLeft.value);
         drumAgitatePreShootButton = new JoystickButton(op, Button.kStart.value).and(new JoystickButton(op, Button.kBumperLeft.value));
 
@@ -177,7 +178,8 @@ public class Controller {
 
     public Trigger getDrumUpButton() {return drumUpButton;}
     public Trigger getDrumDownButton() {return drumDownButton;}
-    public JoystickButton getDrumCCWButton() {return drumCCWButton;}
+    public Trigger getDrumCCWButton() {return drumCCWButton;}
+    public Trigger getDrumInputResetButton() {return drumInputResetButton;}
     public Trigger getDrumAgitateButton() {return drumAgitateButton;}
     public Trigger getDrumAgitatePreShootButton() {return drumAgitatePreShootButton;}
 
@@ -205,7 +207,7 @@ public class Controller {
  * X - BallTransferPivotAndRoll | BallTransferPivot 
  * Y - Harvest                  | HarvestRest
  * Start - Agitate Drum         | Agitate Drum Pre Shoot
- * Back - CCW Drum              | 
+ * Back - DrumInputReset        | CCWDrum
  * D-Pad Up - Shooter Up        |
  * D-Pad Down - Shooter Down    |
  * D-Pad Left - Flywheel Slow   |

@@ -11,7 +11,9 @@ import frc.robot.constants.DrumConstants;
 public class DrumVelocitySpeed extends CommandBase {
   /** Creates a new DrumVelocitySpeed2. */
   Drum m_Drum = Drum.getInstance();
+  // boolean hasRan;
   int tempSetting;
+
   public DrumVelocitySpeed() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Drum);
@@ -22,16 +24,17 @@ public class DrumVelocitySpeed extends CommandBase {
   public void initialize() {
     System.out.println("DrumVelocitySpeed.initialized executed. ########################################################");
     tempSetting = m_Drum.getLastSetting();
+    // hasRan = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    if (tempSetting + 1 < DrumConstants.drumSpeeds.length) {
-      m_Drum.setSpeed(tempSetting + 1);
+    if (tempSetting + 1 < DrumConstants.speeds.length) {
+      m_Drum.setSpeed(tempSetting + 1, 1);
     }
-
+    // hasRan = true;
   }
 
   // Called once the command ends or is interrupted.
@@ -41,6 +44,7 @@ public class DrumVelocitySpeed extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    // return hasRan;
     return false;
   }
 }

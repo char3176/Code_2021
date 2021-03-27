@@ -19,5 +19,6 @@ public class IntakeHarvest extends InstantCommand {
     System.out.println("IntakeHarvest.initialize executed. ############################################################");
     mDrum.CounterClockwise();
     mIntake.setPercentControl(IntakeConstants.INTAKE_PERCENT);
+    System.out.println("HARVEST");
   }
 }

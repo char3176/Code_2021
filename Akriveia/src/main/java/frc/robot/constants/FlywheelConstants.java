@@ -10,5 +10,5 @@ public class FlywheelConstants {
     public static final double kPeakOutput = 1.0;
     public static final int kTimeoutMs = 30;
     public static final int kPIDLoopIdx = 0;
-    public static final int[] FlywheelSpeeds = {0, 1024, 4000, 4150};
+    public static final int[] FlywheelSpeeds = {0, 3000, 4000, 4150};
 }

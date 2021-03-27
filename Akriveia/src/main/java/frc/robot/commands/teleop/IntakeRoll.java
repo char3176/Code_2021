@@ -19,8 +19,10 @@ public class IntakeRoll extends InstantCommand {
 
     if (m_Intake.getIntakeMotorSpeed() == 0) {
       m_Intake.setPercentControl(IntakeConstants.INTAKE_PERCENT);
+      System.out.println("The intake is set to: " + IntakeConstants.INTAKE_PERCENT);
     } else {
       m_Intake.setPercentControl(0);
+      System.out.println("The intake is 0");
     }
   }
 }

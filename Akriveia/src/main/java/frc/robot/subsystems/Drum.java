@@ -7,9 +7,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.SlewRateLimiter;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.constants.DrumConstants;
-import frc.robot.constants.PowerManagementConstants;
-import frc.robot.subsystems.PowerManagement;
 
 /**
  * <b> The Drum subsystem </b>
@@ -30,12 +29,14 @@ public class Drum extends SubsystemBase {
   public boolean drumPctOutputMode = false;
   private boolean isRateLimitOff = true;
   private int lastSetting = 0;
+  private int fQuarter, half, tQuarter; //First Quarter, Half, Third Quarter
+  private int range; //The range of the lastSetting and the level
   private int direction = 1;
   private double shakeStartTime = -1;
   private double shakeIterations = 0;
 
   private PowerManagement m_PowerManagement;
-
+  private Timer time;
   /**
    * Initializes the Drum subsystem once at code deploy.
    * <p>
@@ -51,6 +52,8 @@ public class Drum extends SubsystemBase {
     drumPIDController.setReference(0.0, ControlType.kVelocity);
 
     rateLimiter = new SlewRateLimiter(DrumConstants.drumKRampRate, 0);
+
+    time = new Timer();
     
     /* Set PID constants */
 
@@ -70,25 +73,62 @@ public class Drum extends SubsystemBase {
    */
 
   public void reengageRampLimit() {
-    if (isRateLimitOff) {
+    // System.out.println("************ Drum.reengageRampLimit():  Entered the method.....");
+     if (isRateLimitOff) {
       rateLimiter.reset(drumEncoder.getVelocity());
-      isRateLimitOff = false;
-    }
+      // System.out.println("********* Drum.reengageRampLimit():  getVelocity()= "+drumEncoder.getVelocity());
+      //isRateLimitOff = false;
+     }
   }
 
   /**
    * <b> Spin </b>
    * <p>
    * Sets the Drum motor to whatever the index level is in the drumSpeeds array.
+   * @param level the index in the speeds array that it is set to
+   * @param direction the direction of the velocity, 1 = Fast, 0 = Slow, 2 = Same, Others = No Speed
    * @see commands.teleop.DrumVelocitySlow
    * @see commands.teleop.DrumVelocitySpeed
    */
 
-  public void setSpeed(int level) {
+  public void setSpeed(int level, int direction) {
+    time.start();
+    time.reset();
     reengageRampLimit();
     // if(level == 0) {isRateLimitOff = true;}
-    lastSetting = level;
-    drumPIDController.setReference(rateLimiter.calculate(DrumConstants.drumSpeeds[level]), ControlType.kVelocity);
+    // System.out.println("*********************** Drum.setSpeed:  level="+level+" lastSetting="+lastSetting);
+    // System.out.println("Magic");
+    // System.out.println(level);
+    range = Math.abs(DrumConstants.speeds[lastSetting] - DrumConstants.speeds[level]);
+    if(direction == 1) {//Up
+      fQuarter = DrumConstants.speeds[lastSetting] + (range) / 4;
+      half = DrumConstants.speeds[lastSetting] + range / 2;
+      tQuarter = DrumConstants.speeds[lastSetting] + 3 * (range) / 4;
+    } else if(direction == 0) {//Down
+      fQuarter = DrumConstants.speeds[level] + (3 * (range) / 4);
+      half = DrumConstants.speeds[level] + range / 2;
+      tQuarter = DrumConstants.speeds[level] + (range) / 4;
+    } else {
+      fQuarter = 3 * DrumConstants.speeds[lastSetting] / 4;
+      half = DrumConstants.speeds[lastSetting] / 2;
+      tQuarter = DrumConstants.speeds[lastSetting] / 4;
+      level = 0;
+    }
+    if(time.get() % 2 == 0) System.out.println("The last setting is /*Should be currently there*/: " + DrumConstants.speeds[lastSetting] + ", fQuarter: " + fQuarter + ", half" + half + ", tQuarter" + tQuarter + ", level " + DrumConstants.speeds[level]);
+    drumPIDController.setReference(DrumConstants.speeds[lastSetting], ControlType.kVelocity);
+    if(direction != 2) {
+      Timer.delay(1);
+      drumPIDController.setReference(fQuarter, ControlType.kVelocity);
+      Timer.delay(1);
+      drumPIDController.setReference(half, ControlType.kVelocity);
+      Timer.delay(1);
+      drumPIDController.setReference(tQuarter, ControlType.kVelocity);
+      Timer.delay(1);
+      drumPIDController.setReference(DrumConstants.speeds[level], ControlType.kVelocity);
+      lastSetting = level;
+    }
+    time.stop(); 
+
   }
 
   /**
@@ -143,9 +183,9 @@ public class Drum extends SubsystemBase {
 
   public void ShortSpinInReverse() {
     if (System.nanoTime() / DrumConstants.drumSec >= 2) {
-      drumPIDController.setReference(rateLimiter.calculate(DrumConstants.drumSpeeds[1] * -1), ControlType.kVelocity);
+      drumPIDController.setReference(rateLimiter.calculate(DrumConstants.speeds[1] * -1), ControlType.kVelocity);
     }
-    setSpeed(lastSetting);
+    setSpeed(lastSetting, 2);
   }
 
   public boolean PreShootSpinAgitate() {
@@ -222,6 +262,6 @@ public class Drum extends SubsystemBase {
 
   @Override
   public void periodic() {
-    checkForCurrentSpike();
+    //checkForCurrentSpike();
   }
 }

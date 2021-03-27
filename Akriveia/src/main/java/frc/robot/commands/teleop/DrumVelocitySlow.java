@@ -4,7 +4,6 @@
 
 package frc.robot.commands.teleop;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drum;
 
@@ -12,19 +11,17 @@ public class DrumVelocitySlow extends CommandBase {
   /** Creates a new DrumVelocitySlow2. */
   Drum m_Drum = Drum.getInstance();
   int tempSetting;
-  double sTime;
+  // boolean hasRan;
 
   public DrumVelocitySlow() {
-    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Drum);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     System.out.println("DrumVelocitySlow.initialized executed. ########################################################");
     tempSetting = m_Drum.getLastSetting();
-    sTime = Timer.getFPGATimestamp();
+    // hasRan = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -32,9 +29,9 @@ public class DrumVelocitySlow extends CommandBase {
   public void execute() {
 
     if (tempSetting - 1 >= 0) {
-      m_Drum.setSpeed(tempSetting - 1);
+      m_Drum.setSpeed(tempSetting - 1, 0);
     }
-
+    // hasRan = true;
   }
 
   // Called once the command ends or is interrupted.
@@ -44,7 +41,7 @@ public class DrumVelocitySlow extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(Timer.getFPGATimestamp() - sTime >= 2) {return true;}
-    else {return false;}
+    // return hasRan;
+    return false;
   }
 }

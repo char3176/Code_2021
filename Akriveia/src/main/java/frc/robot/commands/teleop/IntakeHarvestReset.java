@@ -18,5 +18,6 @@ public class IntakeHarvestReset extends InstantCommand {
     System.out.println("IntakeHarvestReset.initialize executed. ############################################################");
     mDrum.shakeDrum();
     mIntake.setPercentControl(0);
+    System.out.println("SPRING");
   }
 }

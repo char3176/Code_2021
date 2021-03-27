@@ -25,8 +25,13 @@ public class IntakeReverse extends InstantCommand {
 
     if (m_Intake.getIntakeMotorSpeed() == IntakeConstants.INTAKE_PERCENT) {
       m_Intake.setPercentControl(-IntakeConstants.INTAKE_PERCENT);
+      System.out.println("The intake is set to: " + -IntakeConstants.INTAKE_PERCENT);
+    } else if(m_Intake.getIntakeMotorSpeed() == -IntakeConstants.INTAKE_PERCENT) {
+      m_Intake.setPercentControl(IntakeConstants.INTAKE_PERCENT);
+      System.out.println("The intake is set to: " + IntakeConstants.INTAKE_PERCENT);
     } else {
       m_Intake.setPercentControl(0);
+      System.out.println("The intake is set to 0");
     }
   }
 }

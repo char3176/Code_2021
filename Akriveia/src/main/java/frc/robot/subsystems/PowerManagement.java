@@ -44,6 +44,10 @@ public class PowerManagement extends SubsystemBase {
         DrumPM.addAmpData();
     }
 
+    public void clearFaults() {
+        PDP.clearStickyFaults();
+    }
+
     public static PowerManagement getInstance() {
         return instance; 
     }

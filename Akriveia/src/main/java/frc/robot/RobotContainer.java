@@ -70,6 +70,8 @@ public class RobotContainer {
     m_AngledShooter = AngledShooter.getInstance();
     m_PowerManagement = PowerManagement.getInstance();
 
+    m_PowerManagement.clearFaults();
+
     m_Drivetrain = Drivetrain.getInstance();
     m_Drivetrain.setDefaultCommand(new SwerveDrive(
       () -> m_Controller.getForward(), 
@@ -122,7 +124,8 @@ public class RobotContainer {
     m_Controller.getDrumAgitateButton().whenActive(new DrumAgitate());
     m_Controller.getDrumAgitatePreShootButton().whenActive(new DrumAgitatePreShoot());
   
-    m_Controller.getDrumCCWButton().whenPressed(new DrumCCW());
+    m_Controller.getDrumInputResetButton().whenActive(new DrumInputReset());
+    m_Controller.getDrumCCWButton().whenActive(new DrumCCW());
   
     m_Controller.getPOVUp().whenHeld(new AngledShooterUp());
     m_Controller.getPOVDown().whenHeld(new AngledShooterDown());
