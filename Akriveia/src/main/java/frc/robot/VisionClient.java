@@ -108,7 +108,7 @@ public class VisionClient{
      * -initial velocity of ball to make it into target
      * @return if the method has found a valid solution
      */
-    public double[] targetRecogControlLoop(){
+    public boolean targetRecogControlLoop(){
         // used to calculate latency
         double startTime = Timer.getFPGATimestamp();
 
