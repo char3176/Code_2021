@@ -47,5 +47,24 @@ public class PowerManagement extends SubsystemBase {
     public static PowerManagement getInstance() {
         return instance; 
     }
-
+/**
+ * PDP CHANNEL MAP
+ * System / Motor / Motor Controller / Encoder? / AmpFuse / CodeName / Slot#(Channel)
+ * Swerve	Falcon	N/A	N/A	40A	D1	1
+ * Swerve	Falcon	N/A	N/A	40A	D2	14
+ * Swerve	Falcon	N/A	N/A	40A	D3	15
+ * Swerve	Falcon	N/A	N/A	40A	D4	0
+ * Swerve	775Pro	TalonSRX	Y- Versa	30A	G1	5
+ * Swerve	775Pro	TalonSRX	Y- Versa	40A	G2	10
+ * Swerve	775Pro	TalonSRX	Y- Versa	30A	G3	11
+ * Swerve	775Pro	TalonSRX	Y- Versa	30A	G4	4
+ * Intake	775Pro	TalonSRX	Y- Versa	30A	IN	6
+ * Shooter	Falcon	N/A	N/A	40A	Shoot	12
+ * Hood 	775Pro	Talon RX	Y- Versa	30A	Angle	8
+ * Drum NEO550	SparkMAX	N/A	40A	Drum	3
+ * Transfer	775Pro	TalonSRX	N/A	30A	Trans	9
+ * Limelight	N/A	N/A	N/A	5A	LL	7
+ * 
+ */
 }
+
