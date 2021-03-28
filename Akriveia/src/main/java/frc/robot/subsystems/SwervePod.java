@@ -132,7 +132,7 @@ public class SwervePod {
         this.driveController.configFactoryDefault();
         this.spinController.configFactoryDefault();
 
-        this.driveController.configClosedloopRamp(0.5);
+        this.driveController.configClosedloopRamp(0.5);    
 
        // this.driveController.setNeutralMode(NeutralMode.Brake);
        // this.driveController.setNeutralMode(NeutralMode.Brake);
@@ -152,7 +152,7 @@ public class SwervePod {
            }
         } else { 
             // 2019 Code
-            if (this.id < 2) {
+            if (this.id < 3) {
                 this.spinController.setSensorPhase(SwervePodConstants.kSensorPhase);
                 this.spinController.setInverted(SwervePodConstants.kMotorInverted);
             }
@@ -249,12 +249,21 @@ public class SwervePod {
         //if (Math.abs(radianError) > (5 * (PI / 2))) {
         //    System.out.println("Error: Overload");
         //} else if (Math.abs(radianError) > (3 * (PI / 2))) {
+
+        /* #############################################################################################################
+         *      BEGIN COMMENTED OUT SPIN-OPTIMIZED SECTION
+         *          SPECIAL NOTE:  BEGINNINING FROM HERE THESE LINES ARE COMMENTED OUT IN AUTON OF OFFSEASONSWERVE2021 (Due to SwerveModuleState.optimize()).
+         * ############################################################################################################ */
         if (Math.abs(radianError) > (3 * (PI / 2))) {      // TODO: See if commenting out "Thrust-vector sign-flip" fixes
             radianError -= Math.copySign(2 * PI, radianError);
         } else if (Math.abs(radianError) > (PI / 2)) {
             radianError -= Math.copySign(PI, radianError);
             this.velTicsPer100ms = -this.velTicsPer100ms;
         }
+        /* #############################################################################################################
+         *      END COMMENTED OUT SPIN-OPTIMIZED SECTION
+         *          SPECIAL NOTE:  ENDING HERE, THE ABOVE LINES ARE COMMENTED OUT IN AUTON OF OFFSEASONSWERVE2021 (Due to SwerveModuleState.optimize()).
+         * ############################################################################################################ */
         encoderError = rads2Tics(radianError);
         // SmartDashboard.putNumber("P" + (id + 1) + " encoderError", encoderError);
         driveCommand = encoderError + this.encoderPos + this.kEncoderOffset;
@@ -288,9 +297,10 @@ public class SwervePod {
 
     public void setDesiredState(SwerveModuleState desiredState) {
         // Optimize the reference state to avoid spinning further than 90 degrees
-        Rotation2d rotation = new Rotation2d(tics2Rads(spinController.getSelectedSensorPosition()));
-        state = 
-            SwerveModuleState.optimize(desiredState, rotation); //I do not know if this is the angle of the encoder.
+        SwerveModuleState newDesiredState = new SwerveModuleState(desiredState.speedMetersPerSecond, desiredState.angle.times(-1));
+        Rotation2d rotation = new Rotation2d(-tics2Rads(spinController.getSelectedSensorPosition()));
+        state = newDesiredState;
+            //SwerveModuleState.optimize(desiredState, rotation); //I do not know if this is the angle of the encoder.
             SmartDashboard.putNumber("1Degrees", desiredState.angle.getDegrees());
             SmartDashboard.putNumber("2Degrees", rotation.getDegrees());
             double driveOutput =    
@@ -301,21 +311,26 @@ public class SwervePod {
             m_turningPIDController.calculate(tics2Rads(spinController.getSelectedSensorPosition()), state.angle.getRadians());
             SmartDashboard.putNumber("TurnOutput",turnOutput);
             SmartDashboard.putNumber("DriveOutput",driveOutput);
-          
-            set(driveOutput,turnOutput);//Units.metersToFeet(driveOutput),turnOutput);     
+
+            Rotation2d tempTurnOutput = new Rotation2d(turnOutput);
+
+            SwerveModuleState calculatedState = new SwerveModuleState(driveOutput, tempTurnOutput);
+            SwerveModuleState optimizedState = SwerveModuleState.optimize(calculatedState, tempTurnOutput);
+            
+            set(driveOutput,optimizedState.angle.getRadians());//Units.metersToFeet(driveOutput),turnOutput);     
     }
 
     public double getVelocity() {
         double speed = driveController.getSelectedSensorVelocity(1);
-        SmartDashboard.putNumber("GetSensorVelocity", speed);
+        //SmartDashboard.putNumber("GetSensorVelocity", speed);
 
-        speed = speed * 1 * Units.inchesToMeters(3.25*PI)/SwervePodConstants.DRIVE_ENCODER_UNITS_PER_REVOLUTION;
+        speed = speed * 1 * Units.inchesToMeters(3.25*PI)/(SwervePodConstants.DRIVE_ENCODER_UNITS_PER_REVOLUTION * 6.17);  //6.17 = gear ratio
         SmartDashboard.putNumber("Velocity", speed);
         return speed;     
     }
 
     public SwerveModuleState getState() {
-        state = new SwerveModuleState(getVelocity(), new Rotation2d(tics2Rads(spinController.getSelectedSensorVelocity())));
+        state = new SwerveModuleState(getVelocity(), new Rotation2d(tics2Rads(spinController.getSelectedSensorPosition())));
                 /*drivetrain.gyro.getRate() * DrivetrainConstants.DEGREES_PER_SECOND_TO_METERS_PER_SECOND_OF_WHEEL,
         drivetrain.getRotation2d())*/;       
         return state;                                                                         //Not sure if this works
