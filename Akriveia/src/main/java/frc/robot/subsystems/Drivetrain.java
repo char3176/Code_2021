@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
-
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -164,9 +163,9 @@ public class Drivetrain extends SubsystemBase {
     // Instantiating the gyro
     gyro = new AHRS(SPI.Port.kMXP);
     gyro.reset();
-    gyroUpdateOffset();
+    //gyroUpdateOffset();
     updateAngle();
-    odometry = new SwerveDriveOdometry(DrivetrainConstants.DRIVE_KINEMATICS, gyro.getRotation2d().times(1));
+    odometry = new SwerveDriveOdometry(DrivetrainConstants.DRIVE_KINEMATICS, gyro.getRotation2d());
     
     // SmartDashboard.putNumber("currentAngle", this.currentAngle);
 
@@ -374,8 +373,8 @@ public class Drivetrain extends SubsystemBase {
         for(int idx = 0; idx < (pods.size()); idx++) {
         pods.get(idx).set(podDrive[idx], podSpin[idx]);   //TODO: try doing pods.size() - 1 in for conditional, then outside for loop
                                                           //  do a hardcode set of pods.get(3).set(0.1, 0.0);
-        SmartDashboard.putNumber("pod" + idx + " drive", podDrive[idx]);    
-        SmartDashboard.putNumber("pod" + idx + " spin", podSpin[idx]);
+        //SmartDashboard.putNumber("pod" + idx + " drive", podDrive[idx]);    
+        //SmartDashboard.putNumber("pod" + idx + " spin", podSpin[idx]);
         }
         //pods.get(3).set(0.1,1.57);
         
@@ -418,6 +417,7 @@ public class Drivetrain extends SubsystemBase {
       if(component.equals("A") || component.equals("B")) { return length / 2.0 ; }
       else { return width / 2.0; }  //TODO: place to check for forward vs back pods working vs not working
     // }
+    ///return 0.0;   // TODO: this method needs cleanup and logic-checking
   }
 
   public void setDriveMode(driveMode wantedDriveMode) {
@@ -496,8 +496,10 @@ public class Drivetrain extends SubsystemBase {
   *  END: Temporary Code for PIDController of rotation to stop drift in AutonCrude
   * ################################################################################## */
 
-  public Pose2d getCurrentPose() { 
-    return odometry.getPoseMeters();  //Does this work?
+  public Pose2d getCurrentPose() {
+    SmartDashboard.putNumber("odometry X", odometry.getPoseMeters().getX());
+    SmartDashboard.putNumber("odometry Y", odometry.getPoseMeters().getY());
+    return odometry.getPoseMeters() ; //Does this work?
   }
 
   public void setModuleStates(SwerveModuleState[] desiredStates) {
@@ -512,7 +514,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void resetOdometry(Pose2d pose) {
-    odometry.resetPosition(pose, gyro.getRotation2d().times(Math.PI/180));  //Not sure, gyroAngle);
+    odometry.resetPosition(pose, gyro.getRotation2d().times(1));  //Not sure, gyroAngle);
   }
 
   @Override
@@ -530,17 +532,18 @@ public class Drivetrain extends SubsystemBase {
     /* ##################################################################################
     *  END: Temporary Code for PIDController of rotation to stop drift in AutonCrude
     * ################################################################################## */
-/*
+
     odometry.update(
         new Rotation2d(getHeading()),
         podFR.getState(),
         podFL.getState(),
         podBL.getState(),
         podBR.getState());
-*/
+
   }
 
   public double getHeading() {
+    SmartDashboard.putNumber("get Heading", gyro.getRotation2d().getDegrees());
     return gyro.getRotation2d().getRadians() ; //+ Math.PI/2;
   }
 
