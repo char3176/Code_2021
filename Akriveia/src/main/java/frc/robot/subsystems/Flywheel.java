@@ -21,10 +21,10 @@ public class Flywheel extends SubsystemBase {
         flywheelController.configAllowableClosedloopError(0, FlywheelConstants.kPIDLoopIdx, FlywheelConstants.kTimeoutMs);
         flywheelController.setSensorPhase(true);
 
-        flywheelController.config_kF(FlywheelConstants.kPIDLoopIdx, FlywheelConstants.kF, FlywheelConstants.kTimeoutMs);
-        flywheelController.config_kP(FlywheelConstants.kPIDLoopIdx, FlywheelConstants.kP, FlywheelConstants.kTimeoutMs);
-        flywheelController.config_kI(FlywheelConstants.kPIDLoopIdx, FlywheelConstants.kI, FlywheelConstants.kTimeoutMs);
-        flywheelController.config_kD(FlywheelConstants.kPIDLoopIdx, FlywheelConstants.kD, FlywheelConstants.kTimeoutMs);
+        flywheelController.config_kF(FlywheelConstants.kPIDLoopIdx, FlywheelConstants.PIDF[3], FlywheelConstants.kTimeoutMs);
+        flywheelController.config_kP(FlywheelConstants.kPIDLoopIdx, FlywheelConstants.PIDF[0], FlywheelConstants.kTimeoutMs);
+        flywheelController.config_kI(FlywheelConstants.kPIDLoopIdx, FlywheelConstants.PIDF[1], FlywheelConstants.kTimeoutMs);
+        flywheelController.config_kD(FlywheelConstants.kPIDLoopIdx, FlywheelConstants.PIDF[2], FlywheelConstants.kTimeoutMs);
 
     }
     
@@ -33,7 +33,7 @@ public class Flywheel extends SubsystemBase {
      */
     public void spinVelocityPIDF(int level) {
         lastSetting = level;
-        double wantedRPM = FlywheelConstants.FlywheelSpeeds[level];
+        double wantedRPM = FlywheelConstants.SPEEDS[level];
         spinVelocityPIDFPart2(wantedRPM);
     }
 

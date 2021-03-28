@@ -1,14 +1,14 @@
 package frc.robot.constants;
 
 public class AngledShooterConstants {
-    public static final int angledShooterCANID = 60;
-	public static final int angledShooterSlotIdx = 0;
-    public static final int angledShooterPIDLoopIdx = 0;
-    public static final int angledShooterTimeoutMs = 30;
-    public static boolean angledShooterSensorPhase = true;
-    public static boolean angledShooterMotorInvert = false;
+    public static final int MOTOR_CAN_ID = 60;
+	public static final int SlotIdx = 0;
+    public static final int PIDLoopIdx = 0;
+    public static final int TimeoutMs = 30;
+    public static boolean SENSOR_PHASE = true;
+    public static boolean MOTOR_INVERT = false;
     
-    public static final double[] pid = {/*P*/.31,/*I*/0.002,/*D*/2.12,/*F*/0.35};
+    public static final double[] PIDF = {.31, 0.002, 2.12, 0.35};
 
     public static final double GEAR_RATIO = 4/1;
 	
@@ -19,5 +19,5 @@ public class AngledShooterConstants {
     public static final double MAX_TICS = -2461 ;
     public static final double RANGE = (MAX_TICS-MIN_TICS);
 
-    public static final double[] pos = {MIN_TICS, MIN_TICS + (RANGE*.25), MIN_TICS+ (RANGE*.5), MIN_TICS + (RANGE*.75), MAX_TICS};
+    public static final double[] POS = {MIN_TICS, MIN_TICS + (RANGE*.25), MIN_TICS+ (RANGE*.5), MIN_TICS + (RANGE*.75), MAX_TICS};
 }

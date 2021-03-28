@@ -31,7 +31,7 @@ public class DrumVelocitySpeed extends CommandBase {
   @Override
   public void execute() {
 
-    if (tempSetting + 1 < DrumConstants.speeds.length) {
+    if (tempSetting + 1 < DrumConstants.SPEEDS.length) {
       m_Drum.setSpeed(tempSetting + 1, 1);
     }
     // hasRan = true;

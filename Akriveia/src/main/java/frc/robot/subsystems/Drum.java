@@ -14,14 +14,14 @@ import frc.robot.constants.DrumConstants;
  * <b> The Drum subsystem </b>
  * <p>
  * This mechanism holds up to 5 power cells, after the Intake and before the ball transfer / Flywheel. It spins at variable
- * speeds to unload power cells, and can shake to dislodge power cells stuck on top of one another inside the Drum.
+ * SPEEDS to unload power cells, and can shake to dislodge power cells stuck on top of one another inside the Drum.
  */
 
 public class Drum extends SubsystemBase {
 
   /** Creates a new Drum. */
 
-  private CANSparkMax drumMotor = new CANSparkMax(DrumConstants.drumMotorCANID, MotorType.kBrushless);
+  private CANSparkMax drumMotor = new CANSparkMax(DrumConstants.MOTOR_CAN_ID, MotorType.kBrushless);
   private CANPIDController drumPIDController;
   private CANEncoder drumEncoder;
   private SlewRateLimiter rateLimiter;
@@ -51,18 +51,18 @@ public class Drum extends SubsystemBase {
 
     drumPIDController.setReference(0.0, ControlType.kVelocity);
 
-    rateLimiter = new SlewRateLimiter(DrumConstants.drumKRampRate, 0);
+    rateLimiter = new SlewRateLimiter(DrumConstants.kRampRate, 0);
 
     time = new Timer();
     
     /* Set PID constants */
 
-    drumPIDController.setP(DrumConstants.drumKP);
-    drumPIDController.setI(DrumConstants.drumKI);
-    drumPIDController.setD(DrumConstants.drumKD);
-    drumPIDController.setFF(DrumConstants.drumKF);
-    drumPIDController.setIZone(DrumConstants.drumKIZone);
-    drumPIDController.setOutputRange(DrumConstants.drumKMinOutput, DrumConstants.drumKMaxOutput);    
+    drumPIDController.setP(DrumConstants.PIDF[0]);
+    drumPIDController.setI(DrumConstants.PIDF[1]);
+    drumPIDController.setD(DrumConstants.PIDF[2]);
+    drumPIDController.setFF(DrumConstants.PIDF[3]);
+    drumPIDController.setIZone(DrumConstants.kIZone);
+    drumPIDController.setOutputRange(DrumConstants.kMinOutput, DrumConstants.kMaxOutput);    
   }
 
   /**
@@ -84,8 +84,8 @@ public class Drum extends SubsystemBase {
   /**
    * <b> Spin </b>
    * <p>
-   * Sets the Drum motor to whatever the index level is in the drumSpeeds array.
-   * @param level the index in the speeds array that it is set to
+   * Sets the Drum motor to whatever the index level is in the drumSPEEDS array.
+   * @param level the index in the SPEEDS array that it is set to
    * @param direction the direction of the velocity, 1 = Fast, 0 = Slow, 2 = Same, Others = No Speed
    * @see commands.teleop.DrumVelocitySlow
    * @see commands.teleop.DrumVelocitySpeed
@@ -99,23 +99,23 @@ public class Drum extends SubsystemBase {
     // System.out.println("*********************** Drum.setSpeed:  level="+level+" lastSetting="+lastSetting);
     // System.out.println("Magic");
     // System.out.println(level);
-    range = Math.abs(DrumConstants.speeds[lastSetting] - DrumConstants.speeds[level]);
+    range = Math.abs(DrumConstants.SPEEDS[lastSetting] - DrumConstants.SPEEDS[level]);
     if(direction == 1) {//Up
-      fQuarter = DrumConstants.speeds[lastSetting] + (range) / 4;
-      half = DrumConstants.speeds[lastSetting] + range / 2;
-      tQuarter = DrumConstants.speeds[lastSetting] + 3 * (range) / 4;
+      fQuarter = DrumConstants.SPEEDS[lastSetting] + (range) / 4;
+      half = DrumConstants.SPEEDS[lastSetting] + range / 2;
+      tQuarter = DrumConstants.SPEEDS[lastSetting] + 3 * (range) / 4;
     } else if(direction == 0) {//Down
-      fQuarter = DrumConstants.speeds[level] + (3 * (range) / 4);
-      half = DrumConstants.speeds[level] + range / 2;
-      tQuarter = DrumConstants.speeds[level] + (range) / 4;
+      fQuarter = DrumConstants.SPEEDS[level] + (3 * (range) / 4);
+      half = DrumConstants.SPEEDS[level] + range / 2;
+      tQuarter = DrumConstants.SPEEDS[level] + (range) / 4;
     } else {
-      fQuarter = 3 * DrumConstants.speeds[lastSetting] / 4;
-      half = DrumConstants.speeds[lastSetting] / 2;
-      tQuarter = DrumConstants.speeds[lastSetting] / 4;
+      fQuarter = 3 * DrumConstants.SPEEDS[lastSetting] / 4;
+      half = DrumConstants.SPEEDS[lastSetting] / 2;
+      tQuarter = DrumConstants.SPEEDS[lastSetting] / 4;
       level = 0;
     }
-    if(time.get() % 2 == 0) System.out.println("The last setting is /*Should be currently there*/: " + DrumConstants.speeds[lastSetting] + ", fQuarter: " + fQuarter + ", half" + half + ", tQuarter" + tQuarter + ", level " + DrumConstants.speeds[level]);
-    drumPIDController.setReference(DrumConstants.speeds[lastSetting], ControlType.kVelocity);
+    if(time.get() % 2 == 0) System.out.println("The last setting is /*Should be currently there*/: " + DrumConstants.SPEEDS[lastSetting] + ", fQuarter: " + fQuarter + ", half" + half + ", tQuarter" + tQuarter + ", level " + DrumConstants.SPEEDS[level]);
+    drumPIDController.setReference(DrumConstants.SPEEDS[lastSetting], ControlType.kVelocity);
     if(direction != 2) {
       Timer.delay(1);
       drumPIDController.setReference(fQuarter, ControlType.kVelocity);
@@ -124,7 +124,7 @@ public class Drum extends SubsystemBase {
       Timer.delay(1);
       drumPIDController.setReference(tQuarter, ControlType.kVelocity);
       Timer.delay(1);
-      drumPIDController.setReference(DrumConstants.speeds[level], ControlType.kVelocity);
+      drumPIDController.setReference(DrumConstants.SPEEDS[level], ControlType.kVelocity);
       lastSetting = level;
     }
     time.stop(); 
@@ -154,15 +154,15 @@ public class Drum extends SubsystemBase {
     isRateLimitOff = true;
     if (shakeIterations < 10) {
       if (shakeStartTime == -1) {
-        drumMotor.set(DrumConstants.drumShakePct * direction);
-        shakeStartTime = System.nanoTime() / DrumConstants.drumMilli;
+        drumMotor.set(DrumConstants.SHAKE_PCT * direction);
+        shakeStartTime = System.nanoTime() / DrumConstants.MILLI;
         direction *= -1;
       }
-      if ((System.nanoTime() / DrumConstants.drumMilli) - shakeStartTime >= 150) {
-        drumMotor.set(DrumConstants.drumShakePct * direction);
+      if ((System.nanoTime() / DrumConstants.MILLI) - shakeStartTime >= 150) {
+        drumMotor.set(DrumConstants.SHAKE_PCT * direction);
         direction *= -1;
         shakeIterations += 1;
-        shakeStartTime = System.nanoTime() / DrumConstants.drumMilli;
+        shakeStartTime = System.nanoTime() / DrumConstants.MILLI;
       }
     } else {
       shakeIterations = 0;
@@ -182,8 +182,8 @@ public class Drum extends SubsystemBase {
    */
 
   public void ShortSpinInReverse() {
-    if (System.nanoTime() / DrumConstants.drumSec >= 2) {
-      drumPIDController.setReference(rateLimiter.calculate(DrumConstants.speeds[1] * -1), ControlType.kVelocity);
+    if (System.nanoTime() / DrumConstants.SEC >= 2) {
+      drumPIDController.setReference(rateLimiter.calculate(DrumConstants.SPEEDS[1] * -1), ControlType.kVelocity);
     }
     setSpeed(lastSetting, 2);
   }
@@ -192,15 +192,15 @@ public class Drum extends SubsystemBase {
     isRateLimitOff = true;
     if (shakeIterations < 4) {
       if (shakeStartTime == -1) {
-        drumMotor.set(DrumConstants.drumShakePct * direction);
-        shakeStartTime = System.nanoTime() / DrumConstants.drumMilli;
+        drumMotor.set(DrumConstants.SHAKE_PCT * direction);
+        shakeStartTime = System.nanoTime() / DrumConstants.MILLI;
         direction *= -1;
       }
-      if ((System.nanoTime() / DrumConstants.drumMilli) - shakeStartTime >= 150) {
-        drumMotor.set(DrumConstants.drumShakePct * direction);
+      if ((System.nanoTime() / DrumConstants.MILLI) - shakeStartTime >= 150) {
+        drumMotor.set(DrumConstants.SHAKE_PCT * direction);
         direction *= -1;
         shakeIterations += 1;
-        shakeStartTime = System.nanoTime() / DrumConstants.drumMilli;
+        shakeStartTime = System.nanoTime() / DrumConstants.MILLI;
       }
     } else {
       return true;

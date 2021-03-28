@@ -18,7 +18,7 @@ public class FlywheelSpeed extends InstantCommand {
     /* Gets the current speed of the Flywheel and sets it one speed higher */
     System.out.println("FlywheelSpeed.initialize executed. ##################################################");
     int tempSetting = m_Flywheel.getLastSetting();
-    if (tempSetting + 1 < FlywheelConstants.FlywheelSpeeds.length) {
+    if (tempSetting + 1 < FlywheelConstants.SPEEDS.length) {
       m_Flywheel.spinVelocityPIDF(tempSetting + 1);
     }
   }
