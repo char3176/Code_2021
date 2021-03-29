@@ -6,6 +6,7 @@ package frc.robot.commands.auton;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.constants.VisionConstants;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.*;
@@ -13,18 +14,19 @@ import frc.robot.*;
 public class AutonSelector extends CommandBase{
   private VisionClient mVisionClient = VisionClient.getInstance();
   private Drivetrain mDrivetrain = Drivetrain.getInstance();
+  private CommandScheduler commandScheduler = CommandScheduler.getInstance();
 
   private double angle;
 
-  public AutonSelector(){}
+  public AutonSelector(){
+    addRequirements(mDrivetrain);
+  }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize(){
     mVisionClient.controlLoopBallRecog();
     angle = (mVisionClient.hasTarget == 1) ? mVisionClient.ballAngle * -VisionConstants.DEG2RAD : -999;
-
-    addRequirements(mDrivetrain);
   }
 
   /**
@@ -33,9 +35,17 @@ public class AutonSelector extends CommandBase{
    * A - blue: about -.3805063771 radians
    * B - red: about .463647609 radians
    * B - blue: about -.197395598 radians
+   * 
+   * distance between left edge and Ab: 17.2 degrees
+   * distance between Ab and Bb: 10.5 degrees
+   * distance between Bb and Ar: 11.3 degrees
+   * distance between Ar and Br: 26.6 degrees
+   * distance between Br and right edge: 1.1 degrees
    */
   @Override
   public void execute(){
+    commandScheduler.schedule(new IntakeDropViaSpinning());
+
     SmartDashboard.putNumber("Received Angle (rad)", angle);
     if(angle == -999){
       // print out an error message
@@ -61,13 +71,11 @@ public class AutonSelector extends CommandBase{
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted){
-    mDrivetrain.drive(0, 0, 0);
-  }
+  public void end(boolean interrupted){}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished(){
-    return false;
+    return true;
   }
 }
