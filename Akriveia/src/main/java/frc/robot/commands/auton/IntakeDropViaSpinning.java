@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
-public class DropIntake extends CommandBase {
+public class IntakeDropViaSpinning extends CommandBase {
   /** Creates a new DropIntake. */
   Drivetrain m_Drivetrain = Drivetrain.getInstance();
   private double startTime;
 
-  public DropIntake() {
+  public IntakeDropViaSpinning() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Drivetrain);
   }
