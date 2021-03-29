@@ -131,6 +131,8 @@ public class RobotContainer {
     m_Controller.getPOVDown().whenHeld(new AngledShooterDown());
     m_Controller.getPOVLeft().whenHeld(new FlywheelSlow());
     m_Controller.getPOVRight().whenHeld(new FlywheelSpeed());
+
+    m_Controller.getAngledShooterOffButton().whenActive(new AngledShooterOff());
   
     m_Controller.getShootButton().whenActive(new Shoot());
     m_Controller.getResetShootButton().whenActive(new ShootReset());

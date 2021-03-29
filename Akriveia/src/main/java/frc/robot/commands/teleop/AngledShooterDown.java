@@ -29,7 +29,8 @@ public class AngledShooterDown extends InstantCommand {
      m_AngledShooter.setPosition(AngledShooterConstants.pos[3]);
      */
 
-    m_AngledShooter.goDownToNextHoodPosition_Tic();
+    // m_AngledShooter.goDownToNextHoodPosition_Tic();
 
+    m_AngledShooter.goUpToNextHoodPosition(-.4);
   }
 }
