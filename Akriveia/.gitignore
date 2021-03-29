@@ -136,7 +136,8 @@ $RECYCLE.BIN/
 
 ### Gradle ###
 .gradle
-/build/
+/build/  
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -156,6 +157,20 @@ gradle-app.setting
 .settings/
 bin/
 imgui.ini
+
+## Characterization-project specific settings
+characterization-project/.gradle 
+characterization-project/.gradletasknamecache
+characterization-project/build
+characterization-project/.classpath
+characterization-project/.project
+characterization-project/.settings
+characterization-project/bin
+characterization-project/imgui.ini
+characterization-project/.vscode/*
+characterization-project/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+
+
 
 
 # End of https://www.gitignore.io/api/c++,java,linux,macos,gradle,windows,visualstudiocode
