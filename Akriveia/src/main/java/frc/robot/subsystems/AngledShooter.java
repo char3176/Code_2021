@@ -26,7 +26,9 @@ public class AngledShooter extends SubsystemBase {
   private ArrayList<Double> hoodPositions_Tics; 
 
   public AngledShooter() {
-   
+    boolean pidPosCtrlActive = false;  //set True if doing PID Position Ctrl.  Set False if doing OutputPercent Ctrl.
+    boolean pctCtrlActive = ! pidPosCtrlActive;
+
     m_PowerManagement = PowerManagement.getInstance();
     
 
@@ -46,6 +48,19 @@ public class AngledShooter extends SubsystemBase {
 		hoodController.config_kI(AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.PIDF[1], AngledShooterConstants.TimeoutMs);
     hoodController.config_kD(AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.PIDF[2], AngledShooterConstants.TimeoutMs);
 
+    ampSpikeCount = 0;
+    
+
+    if (pidPosCtrlActive) {
+      pidPosCtrl_createPositionsAndGoToInitialPos(); 
+    } 
+      
+
+    //hoodController.configContinuousCurrentLimit(20);   //using 20amps b/c that's what was shown in DS logs
+    //hoodController.configPeakCurrentDuration(1000);   //1000ms .... is totally a guess.
+  }
+
+  public void pidPosCtrl_createPositionsAndGoToInitialPos() {
     startPosTic = hoodController.getSelectedSensorPosition();
     minPosTic = startPosTic;
     maxPosTic = startPosTic + 1500;
@@ -53,25 +68,14 @@ public class AngledShooter extends SubsystemBase {
     SmartDashboard.putNumber("Hood startPosTic", startPosTic);
     SmartDashboard.putNumber("Hood minPosTic", minPosTic);
     SmartDashboard.putNumber("Hood maxPosTic", maxPosTic);
-
-
-    hoodDirection = 1;
-    ampSpikeCount = 0;
-    
+    //pidPosCtrl_findMinPosTicMaxPosTic();
+    pidPosCtrl_buildHoodPositions(3);
+    hoodController.set(ControlMode.Position, hoodPositions_Tics.get(hoodPositions_persistingIndex));
     hoodPositions_Tics = new ArrayList<Double>();
     hoodPositions_persistingIndex = 0;
-
-    //findMinPosTicMaxPosTic();
-    buildHoodPositions(3);
-    hoodController.set(ControlMode.Position, hoodPositions_Tics.get(hoodPositions_persistingIndex));
-
-    //hoodController.configContinuousCurrentLimit(20);   //using 20amps b/c that's what was shown in DS logs
-    //hoodController.configPeakCurrentDuration(1000);   //1000ms .... is totally a guess.
   }
 
-
-
-  public void findMinPosTicMaxPosTic() {
+  public void pidPosCtrl_findMinPosTicMaxPosTic() {
     double targetPos = startPosTic;
    // while (checkForCurrentSpike() == 0) {
       targetPos = targetPos - (350);
@@ -98,7 +102,7 @@ public class AngledShooter extends SubsystemBase {
     System.out.println("********** minPosTic_Sensored (minPosTic) = " + minPosTic + "***************************");
   }
 
-  public int buildHoodPositions(int numberOfPositionsDesired) {
+  public int pidPosCtrl_buildHoodPositions(int numberOfPositionsDesired) {
     numPositions = numberOfPositionsDesired;
     double range = Math.abs(maxPosTic - minPosTic);
     if (range == 0) {
@@ -131,7 +135,7 @@ public class AngledShooter extends SubsystemBase {
     return 1;
   }
 
-  public void goUpToNextHoodPosition_Tic_PosCtrl(){
+  public void pidPosCtrl_goUpToNextHoodPosition_Tic(){
     if (hoodPositions_Tics.get(hoodPositions_persistingIndex+1) < hoodController.getSelectedSensorPosition() ) {
       hoodPositions_persistingIndex += 1;
       hoodController.set(ControlMode.Position, hoodPositions_Tics.get(hoodPositions_persistingIndex));
@@ -140,7 +144,7 @@ public class AngledShooter extends SubsystemBase {
     }
   }
 
-  public void goUpToNextHoodPosition_Tic(){
+  public void pidPosCtrl_goUpToNextHoodPosition_Tic_version2(){
     if (hoodPositions_persistingIndex + 1 < numPositions ) {
       hoodPositions_persistingIndex += 1;
       hoodController.set(ControlMode.Position, hoodPositions_Tics.get(hoodPositions_persistingIndex));
@@ -150,7 +154,7 @@ public class AngledShooter extends SubsystemBase {
   }
   
   
-  public void goDownToNextHoodPosition_Tic(){
+  public void pidPosCtrl_goDownToNextHoodPosition_Tic(){
     if (hoodPositions_persistingIndex - 1 >= 0) {
       hoodPositions_persistingIndex -= 1;
       hoodController.set(ControlMode.Position, hoodPositions_Tics.get(hoodPositions_persistingIndex));
@@ -170,10 +174,30 @@ public class AngledShooter extends SubsystemBase {
    * @see commands.teleop.AngledShooterUp
    * @see commands.teleop.AngledShooterDown
    */
-  public void setPosition(double targetPosition) {
+  public void pidPosCtrl_setPosition(double targetPosition) {
     if (targetPosition >= AngledShooterConstants.MIN_TICS && targetPosition <= AngledShooterConstants.MAX_TICS){
       hoodController.set(ControlMode.Position, targetPosition);
     }
+  }
+
+  public void pctCtrl_set(double pct) {
+    hoodController.set(ControlMode.PercentOutput, pct);
+  }
+
+  public void pctCtrl_raiseHoodPosition() {
+    pctCtrl_set(40);
+  }
+
+  public void pctCtrl_holdHoodPosition() {
+    pctCtrl_set(30);
+  }
+  
+  public void pctCtrl_lowerHoodPosition() {
+    pctCtrl_set(-40);
+  }
+
+  public void pctCtrl_stopHoodMotor() {
+    pctCtrl_set(0);
   }
 
 	/**

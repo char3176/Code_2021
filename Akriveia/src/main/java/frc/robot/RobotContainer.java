@@ -42,7 +42,8 @@ public class RobotContainer {
   private PowerManagement powerManagement;
 
   private SendableChooser<String> autonChooser;
-  private static final String galactic_search = "Galactic Search";
+  private static final String galactic_search_a = "Galactic Search A";
+  private static final String galactic_search_b = "Galactic Search B";
   private static final String barrel_racing = "Barrel Racing";
   private static final String bounce_path = "Bounce Path";
   private static final String slalom = "Slalom Path";
@@ -89,7 +90,8 @@ public class RobotContainer {
     autonChooser.addOption("Forward", forward);
     autonChooser.addOption("Forward and Back", forward_and_back);
     autonChooser.addOption("Easy", easy);
-    autonChooser.addOption("Galactic Search", galactic_search);
+    autonChooser.addOption("Galactic Search A", galactic_search_a);
+    autonChooser.addOption("Galactic Search B", galactic_search_b);
     autonChooser.addOption("L_Shape", l_shape);
     autonChooser.addOption("Slalom", slalom);
 
@@ -181,19 +183,31 @@ public class RobotContainer {
       createTrajectory("slalom");
       new FollowGivenPath(trajectory);
     }
-
     else if(autonChooser.getSelected().equals("easy")) {
       createTrajectory("easy");
       return new FollowGivenPath(trajectory);
     } 
-    /*
-    else if(autonChooser.getSelected().equals("bouncePath")) {
-      return new FarShootAndDrive();
-    }
-    */
     else if(autonChooser.getSelected().equals("forward")) {
       createTrajectory("forward");
-      //return new FollowGivenPath(trajectory);
+      return new FollowGivenPath(trajectory);
+    }
+    else if (autonChooser.getSelected().equals("barrel_racing")) {
+      createTrajectory("barrel_racing");
+      return new FollowGivenPath(trajectory);
+    }
+    else if(autonChooser.getSelected().equals("bouncePath")) {
+      createTrajectory("bounce");
+      return new FollowGivenPath(trajectory);
+    }
+    else if (autonChooser.getSelected().equals("galactic_search_a")) {
+      createTrajectory("galactic_search.pathA_redBalls");
+      return new FollowGivenPath(trajectory);
+    }
+    else if (autonChooser.getSelected().equals("galactic_search_b")) {
+      createTrajectory("galactic_search>pathA_redBalls");
+      return new FollowGivenPath(trajectory);
+    }
+    else if (autonChooser.getSelected().equals("")) {
       /*String trajectoryJSON = "paths/forward.wpilib.json";
    trajectory = null;
     try {
