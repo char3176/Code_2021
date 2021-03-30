@@ -40,8 +40,8 @@ public class AngledShooter extends SubsystemBase {
     hoodController.setInverted(AngledShooterConstants.MOTOR_INVERT);
     hoodController.configNominalOutputForward(0, AngledShooterConstants.TimeoutMs);
     hoodController.configNominalOutputReverse(0, AngledShooterConstants.TimeoutMs);
-    hoodController.configPeakOutputForward(/*1*/0.35, AngledShooterConstants.TimeoutMs);
-    hoodController.configPeakOutputReverse(/*-1*/-0.35, AngledShooterConstants.TimeoutMs);
+    hoodController.configPeakOutputForward(/*1*/0.2, AngledShooterConstants.TimeoutMs);
+    hoodController.configPeakOutputReverse(/*-1*/-0.2, AngledShooterConstants.TimeoutMs);
     hoodController.configAllowableClosedloopError(0, AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.TimeoutMs);
     hoodController.config_kF(AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.PIDF[3], AngledShooterConstants.TimeoutMs);
 		hoodController.config_kP(AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.PIDF[0], AngledShooterConstants.TimeoutMs);
@@ -153,6 +153,9 @@ public class AngledShooter extends SubsystemBase {
     }
   }
   
+  public void goUpToNextHoodPosition(double pct) {
+    hoodController.set(ControlMode.PercentOutput, pct);
+  }
   
   public void pidPosCtrl_goDownToNextHoodPosition_Tic(){
     if (hoodPositions_persistingIndex - 1 >= 0) {

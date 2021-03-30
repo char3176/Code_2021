@@ -31,15 +31,15 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class RobotContainer {
-  public Intake intake;
-  private Controller controller;
-  private Compressor compressor;
-  private AngledShooter angledShooter;
-  private Drum drum;
-  private Drivetrain drivetrain;
-  private BallTransfer ballTransfer;
-  private Flywheel flywheel;
-  private PowerManagement powerManagement;
+  public Intake m_Intake;
+  private Controller m_Controller;
+  private Compressor m_Compressor;
+  private AngledShooter m_AngledShooter;
+  private Drum m_Drum;
+  private Drivetrain m_Drivetrain;
+  private BallTransfer m_BallTransfer;
+  private Flywheel m_Flywheel;
+  private PowerManagement m_PowerManagement;
 
   private SendableChooser<String> autonChooser;
   private static final String galactic_search_a = "Galactic Search A";
@@ -59,28 +59,28 @@ public class RobotContainer {
   public SwerveControllerCommand swerveControllerCommand;
 
   public RobotContainer() {
-    compressor = new Compressor();
-    compressor.start();
+    m_Compressor = new Compressor();
+    m_Compressor.start();
 
-    controller = Controller.getInstance();
+    m_Controller = Controller.getInstance();
 
-    intake = Intake.getInstance();
-    drum = Drum.getInstance();
-    ballTransfer = BallTransfer.getInstance();
-    flywheel = Flywheel.getInstance();
-    angledShooter = AngledShooter.getInstance();
-    powerManagement = PowerManagement.getInstance();
+    m_Intake = Intake.getInstance();
+    m_Drum = Drum.getInstance();
+    m_BallTransfer = BallTransfer.getInstance();
+    m_Flywheel = Flywheel.getInstance();
+    m_AngledShooter = AngledShooter.getInstance();
+    m_PowerManagement = PowerManagement.getInstance();
 
-    powerManagement.clearFaults();
+    m_PowerManagement.clearFaults();
 
-    drivetrain = Drivetrain.getInstance();
-    drivetrain.setDefaultCommand(new SwerveDrive(
-      () -> controller.getForward(), 
-      () -> controller.getStrafe(),
-      () -> controller.getSpin(),
-      () -> controller.isFieldCentricButtonPressed(),
-      () -> controller.isRobotCentricButtonPressed(),
-      () -> controller.isBackRobotCentricButtonPressed()));
+    m_Drivetrain = Drivetrain.getInstance();
+    m_Drivetrain.setDefaultCommand(new SwerveDrive(
+      () -> m_Controller.getForward(), 
+      () -> m_Controller.getStrafe(),
+      () -> m_Controller.getSpin(),
+      () -> m_Controller.isFieldCentricButtonPressed(),
+      () -> m_Controller.isRobotCentricButtonPressed(),
+      () -> m_Controller.isBackRobotCentricButtonPressed()));
 
     configureButtonBindings();
 
@@ -100,68 +100,70 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // Drivetrain buttons
-    controller.getDefenseButton().whenHeld(new SwerveDefense());
-    controller.getVisionButton().whenHeld(new SwerveVision( 
-      () -> controller.getForward(), 
-      () -> controller.getStrafe()));
-    controller.getResetGyroButton().whenHeld(new SwerveResetGyro());
-    controller.getResetGyroButton().whenPressed(new SwerveResetGyro());
-    controller.getLockSpinButton().whenPressed(new SwerveLockedSpin());
-    controller.getOrbitButton().whenHeld(new SwerveOrbit(
-      () -> controller.getOrbitSpeed(),
-      () -> controller.getPOVTransStick()));
+    m_Controller.getDefenseButton().whenHeld(new SwerveDefense());
+    m_Controller.getVisionButton().whenHeld(new SwerveVision( 
+      () -> m_Controller.getForward(), 
+      () -> m_Controller.getStrafe()));
+    m_Controller.getResetGyroButton().whenHeld(new SwerveResetGyro());
+    m_Controller.getResetGyroButton().whenPressed(new SwerveResetGyro());
+    m_Controller.getLockSpinButton().whenPressed(new SwerveLockedSpin());
+    m_Controller.getOrbitButton().whenHeld(new SwerveOrbit(
+      () -> m_Controller.getOrbitSpeed(),
+      () -> m_Controller.getPOVTransStick()));
 
-    controller.getIntakeSpinButton().whenActive(new IntakeRoll());
-    controller.getIntakeReverseButton().whenActive(new IntakeReverse());
+    m_Controller.getIntakeSpinButton().whenActive(new IntakeRoll());
+    m_Controller.getIntakeReverseButton().whenActive(new IntakeReverse());
   
-    controller.getDrumUpButton().whenActive(new DrumVelocitySpeed());
-    controller.getDrumDownButton().whenActive(new DrumVelocitySlow());
+    m_Controller.getDrumUpButton().whenActive(new DrumVelocitySpeed());
+    m_Controller.getDrumDownButton().whenActive(new DrumVelocitySlow());
   
-    controller.getTransferStraightButton().whenActive(new BallTransferStraight());
-    controller.getTransferPivotButton().whenActive(new BallTransferPivotAndRoll());
+    m_Controller.getTransferStraightButton().whenActive(new BallTransferStraight());
+    m_Controller.getTransferPivotButton().whenActive(new BallTransferPivotAndRoll());
   
-    controller.getIntakeHarvestButton().whenActive(new IntakeHarvest());
-    controller.getIntakeHarvestResetButton().whenActive(new IntakeHarvestReset());
+    m_Controller.getIntakeHarvestButton().whenActive(new IntakeHarvest());
+    m_Controller.getIntakeHarvestResetButton().whenActive(new IntakeHarvestReset());
   
-    controller.getDrumAgitateButton().whenActive(new DrumAgitate());
-    controller.getDrumAgitatePreShootButton().whenActive(new DrumAgitatePreShoot());
+    // m_Controller.getDrumAgitateButton().whenActive(new DrumAgitate());
+    m_Controller.getDrumAgitatePreShootButton().whenActive(new DrumAgitatePreShoot());
   
-    controller.getDrumInputResetButton().whenActive(new DrumInputReset());
-    controller.getDrumCCWButton().whenActive(new DrumCCW());
+    m_Controller.getDrumInputResetButton().whenActive(new DrumInputReset());
+    m_Controller.getDrumCCWButton().whenActive(new DrumCCW());
   
-    controller.getPOVUp().whenHeld(new AngledShooterUp());
-    controller.getPOVDown().whenHeld(new AngledShooterDown());
-    controller.getPOVLeft().whenHeld(new FlywheelSlow());
-    controller.getPOVRight().whenHeld(new FlywheelSpeed());
+    m_Controller.getPOVUp().whenHeld(new AngledShooterUp());
+    m_Controller.getPOVDown().whenHeld(new AngledShooterDown());
+    m_Controller.getPOVLeft().whenHeld(new FlywheelSlow());
+    m_Controller.getPOVRight().whenHeld(new FlywheelSpeed());
+
+    m_Controller.getAngledShooterOffButton().whenActive(new AngledShooterOff());
   
-    controller.getShootButton().whenActive(new Shoot());
-    controller.getResetShootButton().whenActive(new ShootReset());
+    m_Controller.getShootButton().whenActive(new Shoot());
+    m_Controller.getResetShootButton().whenActive(new ShootReset());
     
       /*
-    controller.getIntakeSpinButton().whenPressed(new IntakeRoll());
-    controller.getIntakeReverseButton().whenActive(new IntakeReverse());
+    m_Controller.getIntakeSpinButton().whenPressed(new IntakeRoll());
+    m_Controller.getIntakeReverseButton().whenActive(new IntakeReverse());
 
-    controller.getDrumUpButton().whenPressed(new DrumVelocitySpeed());
-    controller.getDrumDownButton().whenActive(new DrumVelocitySlow());
+    m_Controller.getDrumUpButton().whenPressed(new DrumVelocitySpeed());
+    m_Controller.getDrumDownButton().whenActive(new DrumVelocitySlow());
 
-    controller.getTransferStraightButton().whenPressed(new BallTransferStraight());
-    controller.getTransferPivotButton().whenActive(new BallTransferPivotAndRoll());
+    m_Controller.getTransferStraightButton().whenPressed(new BallTransferStraight());
+    m_Controller.getTransferPivotButton().whenActive(new BallTransferPivotAndRoll());
 
-    controller.getIntakeHarvestButton().whenPressed(new IntakeHarvest());
-    controller.getIntakeHarvestResetButton().whenActive(new IntakeHarvestReset());
+    m_Controller.getIntakeHarvestButton().whenPressed(new IntakeHarvest());
+    m_Controller.getIntakeHarvestResetButton().whenActive(new IntakeHarvestReset());
 
-    controller.getDrumAgitateButton().whenPressed(new DrumAgitate());
-    controller.getDrumAgitatePreShootButton().whenActive(new DrumAgitatePreShoot());
+    m_Controller.getDrumAgitateButton().whenPressed(new DrumAgitate());
+    m_Controller.getDrumAgitatePreShootButton().whenActive(new DrumAgitatePreShoot());
 
-    controller.getDrumCCWButton().whenPressed(new DrumCCW());
+    m_Controller.getDrumCCWButton().whenPressed(new DrumCCW());
 
-    controller.getPOVUp().whenHeld(new AngledShooterUp());
-    controller.getPOVDown().whenHeld(new AngledShooterDown());
-    controller.getPOVLeft().whenHeld(new FlywheelSlow());
-    controller.getPOVRight().whenHeld(new FlywheelSpeed());
+    m_Controller.getPOVUp().whenHeld(new AngledShooterUp());
+    m_Controller.getPOVDown().whenHeld(new AngledShooterDown());
+    m_Controller.getPOVLeft().whenHeld(new FlywheelSlow());
+    m_Controller.getPOVRight().whenHeld(new FlywheelSpeed());
 
-    controller.getShootButton().whenPressed(new Shoot());
-    controller.getResetShootButton().whenActive(new ShootReset()); */
+    m_Controller.getShootButton().whenPressed(new Shoot());
+    m_Controller.getResetShootButton().whenActive(new ShootReset()); */
   }
 
   public Command getAutonomousCommand() {
@@ -237,23 +239,23 @@ public class RobotContainer {
 
 */
 
-  drivetrain.resetOdometry(trajectory.getInitialPose());
+  m_Drivetrain.resetOdometry(trajectory.getInitialPose());
       swerveControllerCommand =
     new SwerveControllerCommand(
         trajectory,
-        drivetrain::getCurrentPose, 
+        m_Drivetrain::getCurrentPose, 
         DrivetrainConstants.DRIVE_KINEMATICS,
 
         // Position controllers
         new PIDController(DrivetrainConstants.P_X_Controller, 0, 0),
         new PIDController(DrivetrainConstants.P_Y_Controller, 0, 0),
         thetaController,
-        drivetrain::setModuleStates, //Not sure about setModuleStates
-        drivetrain);
+        m_Drivetrain::setModuleStates, //Not sure about setModuleStates
+        m_Drivetrain);
 if(swerveControllerCommand == null) { System.out.println("long thing is null 2"); }
 
 // Reset odometry to the starting pose of the trajectory.
-drivetrain.resetOdometry(trajectory.getInitialPose());
+m_Drivetrain.resetOdometry(trajectory.getInitialPose());
     }
     
     else if(autonChooser.getSelected().equals("forward_and_back")) {
@@ -267,8 +269,8 @@ drivetrain.resetOdometry(trajectory.getInitialPose());
     }
 
     if(swerveControllerCommand == null) { System.out.println("long thing is null"); }
-    if(drivetrain == null) { System.out.println("drivetrain is null"); }
-    return swerveControllerCommand.andThen(() -> drivetrain.drive(0, 0, 0));
+    if(m_Drivetrain == null) { System.out.println("drivetrain is null"); }
+    return swerveControllerCommand.andThen(() -> m_Drivetrain.drive(0, 0, 0));
   }
  
   

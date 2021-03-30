@@ -37,7 +37,7 @@ public class Flywheel extends SubsystemBase {
         spinVelocityPIDFPart2(wantedRPM);
     }
 
-    private void spinVelocityPIDFPart2(double rpmSetPoint) {
+    public void spinVelocityPIDFPart2(double rpmSetPoint) {
         double ticsPer100ms = (rpmSetPoint * 2048.0) / 600.0;
         flywheelController.set(TalonFXControlMode.Velocity, ticsPer100ms);
         SmartDashboard.putNumber("Flywheel RPM Requested", (ticsPer100ms * 600 / 2048));
