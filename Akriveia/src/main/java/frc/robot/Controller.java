@@ -184,7 +184,7 @@ public class Controller {
     public Trigger getDrumDownButton() {return drumDownButton;}
     public Trigger getDrumCCWButton() {return drumCCWButton;}
     public Trigger getDrumInputResetButton() {return drumInputResetButton;}
-    public Trigger getDrumAgitateButton() {return drumAgitateButton;}
+    // public Trigger getDrumAgitateButton() {return drumAgitateButton;}
     public Trigger getDrumAgitatePreShootButton() {return drumAgitatePreShootButton;}
 
     /* Transfer */

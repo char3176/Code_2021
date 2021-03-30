@@ -32,6 +32,6 @@ public class AngledShooterUp extends InstantCommand {
 
     // m_AngledShooter.goUpToNextHoodPosition_Tic();
 
-    m_AngledShooter.goUpToNextHoodPosition(.4);
+    m_AngledShooter.goUpToNextHoodPosition(.2);
   }
 }

@@ -121,7 +121,7 @@ public class RobotContainer {
     m_Controller.getIntakeHarvestButton().whenActive(new IntakeHarvest());
     m_Controller.getIntakeHarvestResetButton().whenActive(new IntakeHarvestReset());
   
-    m_Controller.getDrumAgitateButton().whenActive(new DrumAgitate());
+    // m_Controller.getDrumAgitateButton().whenActive(new DrumAgitate());
     m_Controller.getDrumAgitatePreShootButton().whenActive(new DrumAgitatePreShoot());
   
     m_Controller.getDrumInputResetButton().whenActive(new DrumInputReset());
