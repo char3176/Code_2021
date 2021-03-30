@@ -8,11 +8,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drum;
 import frc.robot.constants.DrumConstants;
 
+import java.util.UUID;
 public class DrumVelocitySpeed extends CommandBase {
   /** Creates a new DrumVelocitySpeed2. */
   Drum m_Drum = Drum.getInstance();
-  // boolean hasRan;
   int tempSetting;
+  String procTag;
 
   public DrumVelocitySpeed() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -24,7 +25,7 @@ public class DrumVelocitySpeed extends CommandBase {
   public void initialize() {
     System.out.println("DrumVelocitySpeed.initialized executed. ########################################################");
     tempSetting = m_Drum.getLastSetting();
-    // hasRan = false;
+    procTag = UUID.randomUUID().toString();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -32,9 +33,9 @@ public class DrumVelocitySpeed extends CommandBase {
   public void execute() {
 
     if (tempSetting + 1 < DrumConstants.SPEEDS.length) {
-      m_Drum.setSpeed(tempSetting + 1, 1);
+      m_Drum.pidVelCtrl_setRpmLevel(tempSetting + 1, procTag);
+      //m_Drum.pidVelCtrl_step4LevelsToDesiredSpeed(tempSetting + 1, 1, procTag);
     }
-    // hasRan = true;
   }
 
   // Called once the command ends or is interrupted.
@@ -43,8 +44,7 @@ public class DrumVelocitySpeed extends CommandBase {
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
-    // return hasRan;
-    return false;
+  public boolean isFinished() {    
+    return (procTag == m_Drum.getProcTag()) ? true : false;
   }
 }

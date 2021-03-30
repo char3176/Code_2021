@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.SlewRateLimiter;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.constants.DrumConstants;
 
+import java.util.UUID;
+
 /**
  * <b> The Drum subsystem </b>
  * <p>
@@ -37,6 +39,10 @@ public class Drum extends SubsystemBase {
 
   private PowerManagement m_PowerManagement;
   private Timer time;
+
+  String procTag;
+
+
   /**
    * Initializes the Drum subsystem once at code deploy.
    * <p>
@@ -48,6 +54,8 @@ public class Drum extends SubsystemBase {
     drumMotor.restoreFactoryDefaults();
     drumPIDController = drumMotor.getPIDController();
     drumEncoder = drumMotor.getEncoder();
+
+    drumMotor.setClosedLoopRampRate(0.3);
 
     drumPIDController.setReference(0.0, ControlType.kVelocity);
 
@@ -91,7 +99,17 @@ public class Drum extends SubsystemBase {
    * @see commands.teleop.DrumVelocitySpeed
    */
 
-  public void setSpeed(int level, int direction) {
+  public void pidVelCtrl_step4LevelsToDesiredSpeed(int level, int direction, String procTag) {
+    pidVelCtrl_step4LevelsToDesiredSpeed(level, direction);
+    this.procTag = procTag; 
+  }
+
+   /**
+    * 
+    * @param level Corresponds to the index of an array containing the RPM speeds
+    * @param direction  Determines if we are stepping up or down to the desired "speed level"
+    */
+  public boolean pidVelCtrl_step4LevelsToDesiredSpeed(int level, int direction) {
     time.start();
     time.reset();
     reengageRampLimit();
@@ -118,24 +136,56 @@ public class Drum extends SubsystemBase {
     drumPIDController.setReference(DrumConstants.SPEEDS[lastSetting], ControlType.kVelocity);
     if(direction != 2) {
       Timer.delay(1);
-      drumPIDController.setReference(fQuarter, ControlType.kVelocity);
+      pidVelCtrl_set(fQuarter);
       Timer.delay(1);
-      drumPIDController.setReference(half, ControlType.kVelocity);
+      pidVelCtrl_set(half);
       Timer.delay(1);
-      drumPIDController.setReference(tQuarter, ControlType.kVelocity);
+      pidVelCtrl_set(tQuarter);
       Timer.delay(1);
-      drumPIDController.setReference(DrumConstants.SPEEDS[level], ControlType.kVelocity);
+      pidVelCtrl_set(DrumConstants.SPEEDS[level]);
       lastSetting = level;
     }
     time.stop(); 
-
+    return true;
   }
 
   /**
    * @param pct The percentage to set the Drum to
    */
-  public void simpleSet(double pct) {
+  public void pctCtrl_set(double pct) {
     drumMotor.set(pct);
+  }
+
+  /**
+   * 
+   * @param rpm desired RPM to be used as setpoint for velocity of Drum
+   */
+  public void pidVelCtrl_set(int rpm) {
+    drumPIDController.setReference(rpm, ControlType.kVelocity);
+  }
+
+
+  public boolean pidVelCtrl_setRpmLevel(int lvl, String procTag) {
+    boolean rtnVal = pidVelCtrl_setRpmLevel(lvl);
+    this.procTag = procTag;
+    return rtnVal;
+  }
+
+
+  /**
+   * 
+   * @param lvl Corresponds to index of DrumConstants.SPEEDS array.  Typical Range = [0,1,2,3,4].
+   * @return True if lvl within accepted range.
+   */
+  public boolean pidVelCtrl_setRpmLevel(int lvl) {
+    if ((lvl < 0) || (lvl > DrumConstants.SPEEDS.length)) {
+      System.out.println("Drum.pidVelCtrl_setRPMLevel("+lvl+"): index out of range.");
+      System.out.println("Drum.pidVelCtrl_setRPMLevel("+lvl+"):  Parameter input value of "+lvl+" exceeds length of DrumConstants.SPEEDS array which is "+DrumConstants.SPEEDS.length+" elements long.");
+      return false;
+    } else {
+      pidVelCtrl_set(DrumConstants.SPEEDS[lvl]);
+      return true;
+    }
   }
 
   /**
@@ -185,7 +235,7 @@ public class Drum extends SubsystemBase {
     if (System.nanoTime() / DrumConstants.SEC >= 2) {
       drumPIDController.setReference(rateLimiter.calculate(DrumConstants.SPEEDS[1] * -1), ControlType.kVelocity);
     }
-    setSpeed(lastSetting, 2);
+    pidVelCtrl_step4LevelsToDesiredSpeed(lastSetting, 2);
   }
 
   public boolean PreShootSpinAgitate() {
@@ -247,6 +297,10 @@ public class Drum extends SubsystemBase {
 
   public int getLastSetting() {
     return lastSetting;
+  }
+
+  public String getProcTag() {
+    return procTag;
   }
 
   /**

@@ -23,7 +23,7 @@ public class DrumTransferFlywheelTest extends CommandBase {
     double drumOutputPercent = SmartDashboard.getNumber("DrumOutputPercent", 0);
     // double transferOutputPercent = SmartDashboard.getNumber("BallTransferOutputPercent", 0);
     double flywheelOutputPercent = SmartDashboard.getNumber("FlywheelOutputPercent", 0);
-    m_Drum.simpleSet(drumOutputPercent);
+    m_Drum.pctCtrl_set(drumOutputPercent);
     // m_BallTransfer.setPercentControl(transferOutputPercent);
     m_Flywheel.spinVelocityOutputPercent(flywheelOutputPercent);
   }
@@ -33,7 +33,7 @@ public class DrumTransferFlywheelTest extends CommandBase {
     double drumOutputPercent = SmartDashboard.getNumber("DrumOutputPercent", 0);
     // double transferOutputPercent = SmartDashboard.getNumber("BallTransferOutputPercent", 0);
     double flywheelOutputPercent = SmartDashboard.getNumber("FlywheelOutputPercent", 0);
-    m_Drum.simpleSet(drumOutputPercent);
+    m_Drum.pctCtrl_set(drumOutputPercent);
     // m_BallTransfer.setPercentControl(transferOutputPercent);
     m_Flywheel.spinVelocityOutputPercent(flywheelOutputPercent);
   }
@@ -49,7 +49,7 @@ public class DrumTransferFlywheelTest extends CommandBase {
 
   @Override
   public void end(boolean interrupted) { 
-    m_Drum.simpleSet(0.0);
+    m_Drum.pctCtrl_set(0.0);
     // m_BallTransfer.setPercentControl(0.0);
     m_Flywheel.spinVelocityOutputPercent(0.0);
 
