@@ -13,48 +13,38 @@ import frc.robot.subsystems.Flywheel;
 
 public class TargetVision extends CommandBase {
   /** Creates a new TargetVision. */
-
   AngledShooter m_AngledShooter = AngledShooter.getInstance();
   VisionClient m_VisionClient = VisionClient.getInstance();
   Flywheel m_Flywheel = Flywheel.getInstance();
   private double wantedAngleTicks;
-  private int wantedVelocityTicks; // Ticks per 100 ms
+  private double wantedVelocityTicks; // Ticks per 100 ms
 
   public TargetVision() {
-    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_AngledShooter);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //boolean foundTarget = m_VisionClient.targetRecogControlLoop() == null ? false : true;
-
     double[] resultArray = m_VisionClient.targetRecogControlLoop();
     if (resultArray != null) {
       wantedAngleTicks = resultArray[1] * (180 / Math.PI) * (AngledShooterConstants.TICS_EQUAL_TO_5DEGREES / 5);
 
-      // whether it is in the range of the hood might be checked in vision and/or Angled Shooter already,
-      // this is for safety until we're sure of that
+      // whether it is in the range of the hood is likely checked in AngledShooter method
       m_AngledShooter.setPosition(wantedAngleTicks);
 
-      // m/s to rad/s (using alpha = r * omega) to rev/s to deg/s to tics/s to tics/100 ms
-      wantedVelocityTicks = (int) (( resultArray[0] / VisionConstants.FLYWHEEL_RADIUS / (2 * Math.PI) * 360 * 
-                              (AngledShooterConstants.TICS_EQUAL_TO_5DEGREES / 5) * 0.1 ) + 0.5 );
-
-      m_Flywheel.spinVelocityPIDF(wantedVelocityTicks);
+      // m/s to rad/s (using alpha = r * omega) to rev/s to rev/min (rpm)
+      wantedVelocityTicks = (resultArray[0] / VisionConstants.FLYWHEEL_RADIUS / (2 * Math.PI) * 60);
+      
+      m_Flywheel.spinVelocityPIDFPart2(wantedVelocityTicks);
     }
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

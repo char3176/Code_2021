@@ -121,16 +121,18 @@ public class RobotContainer {
     controller.getIntakeHarvestButton().whenActive(new IntakeHarvest());
     controller.getIntakeHarvestResetButton().whenActive(new IntakeHarvestReset());
   
-    controller.getDrumAgitateButton().whenActive(new DrumAgitate());
-    controller.getDrumAgitatePreShootButton().whenActive(new DrumAgitatePreShoot());
+    // m_Controller.getDrumAgitateButton().whenActive(new DrumAgitate());
+    m_Controller.getDrumAgitatePreShootButton().whenActive(new DrumAgitatePreShoot());
   
     controller.getDrumInputResetButton().whenActive(new DrumInputReset());
     controller.getDrumCCWButton().whenActive(new DrumCCW());
   
-    controller.getPOVUp().whenHeld(new AngledShooterUp());
-    controller.getPOVDown().whenHeld(new AngledShooterDown());
-    controller.getPOVLeft().whenHeld(new FlywheelSlow());
-    controller.getPOVRight().whenHeld(new FlywheelSpeed());
+    m_Controller.getPOVUp().whenHeld(new AngledShooterUp());
+    m_Controller.getPOVDown().whenHeld(new AngledShooterDown());
+    m_Controller.getPOVLeft().whenHeld(new FlywheelSlow());
+    m_Controller.getPOVRight().whenHeld(new FlywheelSpeed());
+
+    m_Controller.getAngledShooterOffButton().whenActive(new AngledShooterOff());
   
     controller.getShootButton().whenActive(new Shoot());
     controller.getResetShootButton().whenActive(new ShootReset());

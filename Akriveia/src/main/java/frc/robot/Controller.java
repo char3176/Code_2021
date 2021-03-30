@@ -65,6 +65,8 @@ public class Controller {
     private final POVButton dpadLeft;
     private final POVButton dpadRight;
 
+    private final Trigger angledShooterOffButton;
+
     public Controller() {
 
         // Define control sticks: Translation stick, Rotation stick, and XboxController(aka "op")
@@ -117,6 +119,8 @@ public class Controller {
         dpadDown = new POVButton(op, 180);
         dpadRight = new POVButton(op, 90);
         dpadLeft = new POVButton(op, 270);
+
+        angledShooterOffButton = new XboxLoneButton(op, Button.kStart.value, Button.kBumperLeft.value);
     }
 
     /* Swerve Axis Data */
@@ -180,7 +184,7 @@ public class Controller {
     public Trigger getDrumDownButton() {return drumDownButton;}
     public Trigger getDrumCCWButton() {return drumCCWButton;}
     public Trigger getDrumInputResetButton() {return drumInputResetButton;}
-    public Trigger getDrumAgitateButton() {return drumAgitateButton;}
+    // public Trigger getDrumAgitateButton() {return drumAgitateButton;}
     public Trigger getDrumAgitatePreShootButton() {return drumAgitatePreShootButton;}
 
     /* Transfer */
@@ -200,13 +204,15 @@ public class Controller {
     public POVButton getPOVLeft() {return dpadLeft;}
     public POVButton getPOVRight() {return dpadRight;}
 
+    public Trigger getAngledShooterOffButton() {return angledShooterOffButton;}
+
 /**
  * Unshifted:                   | Shifted:
  * A - Intake Roll              | Reverse Intake Roll
  * B - Drum Speed               | Drum Slow 
  * X - BallTransferPivotAndRoll | BallTransferPivot 
  * Y - Harvest                  | HarvestRest
- * Start - Agitate Drum         | Agitate Drum Pre Shoot
+ * Start - AngledShooterOff     | Agitate Drum Pre Shoot
  * Back - DrumInputReset        | CCWDrum
  * D-Pad Up - Shooter Up        |
  * D-Pad Down - Shooter Down    |
