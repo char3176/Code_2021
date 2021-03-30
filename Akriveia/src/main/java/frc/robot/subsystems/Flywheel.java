@@ -20,6 +20,7 @@ public class Flywheel extends SubsystemBase {
         flywheelController.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, FlywheelConstants.kPIDLoopIdx, FlywheelConstants.kTimeoutMs);
         flywheelController.configAllowableClosedloopError(0, FlywheelConstants.kPIDLoopIdx, FlywheelConstants.kTimeoutMs);
         flywheelController.setSensorPhase(true);
+        flywheelController.configClosedloopRamp(0.5);    
 
         flywheelController.config_kF(FlywheelConstants.kPIDLoopIdx, FlywheelConstants.PIDF[3], FlywheelConstants.kTimeoutMs);
         flywheelController.config_kP(FlywheelConstants.kPIDLoopIdx, FlywheelConstants.PIDF[0], FlywheelConstants.kTimeoutMs);
