@@ -33,7 +33,7 @@ public class TargetVision extends CommandBase {
       wantedAngleTicks = resultArray[1] * (180 / Math.PI) * (AngledShooterConstants.TICS_EQUAL_TO_5DEGREES / 5);
 
       // whether it is in the range of the hood is likely checked in AngledShooter method
-      m_AngledShooter.setPosition(wantedAngleTicks);
+      m_AngledShooter.pidPosCtrl_setPosition(wantedAngleTicks);
 
       // m/s to rad/s (using alpha = r * omega) to rev/s to rev/min (rpm)
       wantedVelocityTicks = (resultArray[0] / VisionConstants.FLYWHEEL_RADIUS / (2 * Math.PI) * 60);
