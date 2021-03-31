@@ -44,20 +44,20 @@ public class RobotContainer {
   private Flywheel m_Flywheel;
   private PowerManagement m_PowerManagement;
 
-  private SendableChooser<String> autonChooser;
-  private static final String galactic_search_a = "Galactic Search A";
-  private static final String galactic_search_b = "Galactic Search B";
-  private static final String barrel_racing = "Barrel Racing";
-  private static final String bounce = "Bounce Path";
-  private static final String slalom = "Slalom Path";
-  private static final String easy = "Easy";
-  private static final String forward = "Forward";
-  private static final String forward_and_back = "Forward_and_Back";
-  private static final String l_shape = "L_Shape";
+  private SendableChooser<String> m_autonChooser;
+  private static final String m_bounce = "s_bounce";
+  private static final String m_barrel_racing = "s_barrel_racing";
+  private static final String m_galactic_search_a = "s_galactic_search_a";
+  private static final String m_galactic_search_b = "s_galactic_search_b";
+  private static final String m_slalom = "s_slalom";
+  private static final String m_easy = "s_easy";
+  private static final String m_forward = "s_forward";
+  private static final String m_forward_and_back = "s_forward_and_back";
+  private static final String m_l_shape = "s_l_shape";
 
-  public Trajectory trajectory;
+  public Trajectory m_trajectory;
 
-  private ArrayList<Trajectory> trajLibrary; 
+  private ArrayList<Trajectory> m_trajLibrary; 
 
   public ProfiledPIDController thetaController;
 
@@ -89,17 +89,17 @@ public class RobotContainer {
 
     configureButtonBindings();
 
-    autonChooser = new SendableChooser<>();
-    autonChooser.addOption("Barrel Racing", barrel_racing);
-    autonChooser.addOption("Bounce Path", bounce);
-    autonChooser.addOption("Forward", forward);
-    autonChooser.addOption("Forward and Back", forward_and_back);
-    autonChooser.addOption("Easy", easy);
-    autonChooser.addOption("Galactic Search A", galactic_search_a);
-    autonChooser.addOption("Galactic Search B", galactic_search_b);
-    autonChooser.addOption("L_Shape", l_shape);
-    autonChooser.addOption("Slalom", slalom);
-    SmartDashboard.putData("Auton Choice", autonChooser);
+    m_autonChooser = new SendableChooser<>();
+    m_autonChooser.addOption("Barrel Racing", m_barrel_racing);
+    m_autonChooser.addOption("Bounce Path", m_bounce);
+    m_autonChooser.setDefaultOption("Forward", m_forward);
+    m_autonChooser.addOption("Forward and Back", m_forward_and_back);
+    m_autonChooser.addOption("Easy", m_easy);
+    m_autonChooser.addOption("Galactic Search A", m_galactic_search_a);
+    m_autonChooser.addOption("Galactic Search B", m_galactic_search_b);
+    m_autonChooser.addOption("L_Shape", m_l_shape);
+    m_autonChooser.addOption("Slalom", m_slalom);
+    SmartDashboard.putData("Auton Choice", m_autonChooser);
 
 
     // Please keep below array trajFilelist in alphabetical order.  Makes it easier to keep track.
@@ -107,9 +107,9 @@ public class RobotContainer {
       "galactic_search_pathA_blueBalls", "galactic_search_pathA_redBalls", 
       "galactic_search_pathB_blueBalls", "galactic_search_pathB_redBalls",
       "L_shape", "slalom"};
-    trajLibrary = new ArrayList<Trajectory>();
+    m_trajLibrary = new ArrayList<Trajectory>();
     for (String var : trajFilelist)  {
-      trajLibrary.add(preloadCreateTrajectory(var));
+      m_trajLibrary.add(preloadCreateTrajectory(var));
     }
     //preloadTrajectoryFiles();
 
@@ -195,65 +195,73 @@ public class RobotContainer {
 
     */
 
-    thetaController = new ProfiledPIDController(
-      DrivetrainConstants.P_THETA_CONTROLLER, 0, 0, DrivetrainConstants.THETA_CONTROLLER_CONSTRAINTS);
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-    trajectory = trajLibrary.get(4);
-    if (autonChooser.getSelected().equals("barrel_racing")) {
-      trajectory = trajLibrary.get(0);
+    if (m_autonChooser.getSelected().equals("s_barrel_racing")) {
+      System.out.print("################ INFO: setting trajectory = barrel_racing ###########################");
+      m_trajectory = m_trajLibrary.get(0);
       //createTrajectory("barrel_racing");
       //return new FollowGivenPath(trajectory);
     }
-    else if(autonChooser.getSelected().equals("bounce")) {
-      trajectory = trajLibrary.get(1);
+    else if(m_autonChooser.getSelected().equals("s_bounce")) {
+      System.out.print("################ INFO: setting trajectory = bounce ###########################");
+      m_trajectory = m_trajLibrary.get(1);
       //createTrajectory("bounce");
       //return new FollowGivenPath(trajectory);
     }
-    else if(autonChooser.getSelected().equals("easy")) {
-      trajectory = trajLibrary.get(2);
+    else if(m_autonChooser.getSelected().equals("s_easy")) {
+      System.out.print("################ INFO: setting trajectory = easy ###########################");
+      m_trajectory = m_trajLibrary.get(2);
       //createTrajectory("easy");
       //return new FollowGivenPath(trajectory);
     } 
-    else if(autonChooser.getSelected().equals("forward_and_back")) {
-      trajectory = trajLibrary.get(3);
+    else if(m_autonChooser.getSelected().equals("s_forward_and_back")) {
+      System.out.print("################ INFO: setting trajectory = forward_and_back ###########################");
+      m_trajectory = m_trajLibrary.get(3);
       //createTrajectory("forward_and_back");
       //return new FollowGivenPath(trajectory);
     }
-    else if(autonChooser.getSelected().equals("Forward")) {
-      trajectory = trajLibrary.get(4);
+    else if(m_autonChooser.getSelected().equals("s_forward")) {
+      System.out.print("################ INFO: setting trajectory = forward ###########################");
+      m_trajectory = m_trajLibrary.get(4);
       //createTrajectory("forward");
       //return new FollowGivenPath(trajectory);
     }
-    else if (autonChooser.getSelected().equals("galactic_search_a")) {
+    else if (m_autonChooser.getSelected().equals("s_galactic_search_a")) {
+      System.out.print("################ INFO: setting trajectory = galactic_search_a ###########################");
       //createTrajectory("galactic_search.pathA_redBalls");
       //return new FollowGivenPath(trajectory);
     }
-    else if (autonChooser.getSelected().equals("galactic_search_b")) {
+    else if (m_autonChooser.getSelected().equals("s_galactic_search_b")) {
+      System.out.print("################ INFO: setting trajectory = galactic_search_b ###########################");
       //createTrajectory("galactic_search>pathA_redBalls");
       //return new FollowGivenPath(trajectory);
     }
-    else if(autonChooser.getSelected().equals("L_shape")) {
-      trajectory = trajLibrary.get(9);
+    else if(m_autonChooser.getSelected().equals("s_l_shape")) {
+      System.out.print("################ INFO: setting trajectory = l_shape ###########################");
+      m_trajectory = m_trajLibrary.get(9);
       //createTrajectory("L_shape");
       //return new FollowGivenPath(trajectory);
     }
-    else if(autonChooser.getSelected().equals("slalom")) {
-      trajectory = trajLibrary.get(10);
+    else if(m_autonChooser.getSelected().equals("s_slalom")) {
+      System.out.print("################ INFO: setting trajectory = slalom ###########################");
+      m_trajectory = m_trajLibrary.get(10);
       //createTrajectory("slalom");
       //new FollowGivenPath(trajectory);
     }
-    //else if (autonChooser.getSelected().equals("")) {
-      /*String trajectoryJSON = "paths/forward.wpilib.json";
-   trajectory = null;
-    try {
-      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-    } catch (IOException ex) {
-      DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
-    }*/
-    //trajectory = trajLibrary.get(4);
-    System.out.println("################ INFO:  tractory object contains:  "+trajectory.toString()); 
+   
+    System.out.println("#####################################################");
+    System.out.println("################               WARNING      WARNING:               ############");
+    System.out.println("#####              BIG OLE CHUNK OF DATA     ########"); 
+    System.out.println("#####              ABOUT TO DUMPED HERE.     ########"); 
+    System.out.println("############     tractory object contains following: ");
+    System.out.println("###############  ");
+    System.out.println("###############   BEGIN TRAJECTORY DATA:  ");
+    System.out.println("");
+    System.out.println(m_trajectory.toString()); 
+    System.out.println("");
+    System.out.println("###############   END TRAJECTORY DATA:  ");
+    System.out.println("###############  ");
+    System.out.println("############        THAT'S ALL, FOLKS!!   ############"); 
+    System.out.println("######################################################");
     TrajectoryConfig config = 
       new TrajectoryConfig(
       4.48,
@@ -274,34 +282,36 @@ public class RobotContainer {
             config); 
       */
     
+    Pose2d initialTrajPose = m_trajectory.getInitialPose();
+
+
+    m_Drivetrain.resetOdometry(initialTrajPose);  // Reset odometry to the starting pose of the trajectory.
+
+    thetaController = new ProfiledPIDController(
+      DrivetrainConstants.AUTON_THETA_CONTROLLER_PIDF[0], /*kP*/
+      DrivetrainConstants.AUTON_THETA_CONTROLLER_PIDF[1], /*kI*/
+      DrivetrainConstants.AUTON_THETA_CONTROLLER_PIDF[2], /*kD*/ 
+      DrivetrainConstants.THETA_CONTROLLER_CONSTRAINTS    /*Contraints on PIDController. Equal to: a.) max rotation speed in radians per second, and b.) max rotational velocity in radians per second^2 */
+    );
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);  /*Set output from thetaController's PID such that range of output is [-pi, pi] (ie (+pi_value + 1 = -pi_value) and (-pi_value -1 = +pi_value) */ 
+    thetaController.reset(0.0, 0.0); /*resets thetaController PID error and integral terms to the two values passed as parameters to reset()*/
     
-    Pose2d newpose = trajectory.getInitialPose();
-    m_Drivetrain.resetOdometry(trajectory.getInitialPose());
     m_SwerveControllerCommand =
       new SwerveControllerCommand(
-      trajectory,
-      m_Drivetrain::getCurrentPose, 
-      DrivetrainConstants.DRIVE_KINEMATICS,
+        m_trajectory,
+        m_Drivetrain::getCurrentPose, 
+        DrivetrainConstants.DRIVE_KINEMATICS,
 
         // Position controllers
-      new PIDController(DrivetrainConstants.P_X_Controller, 0, 0),
-      new PIDController(DrivetrainConstants.P_Y_Controller, 0, 0),
-      thetaController,
-      m_Drivetrain::setModuleStates, //Not sure about setModuleStates
-      m_Drivetrain);
+        new PIDController(DrivetrainConstants.P_X_Controller, 0, 0),
+        new PIDController(DrivetrainConstants.P_Y_Controller, 0, 0),
+        thetaController,
+        m_Drivetrain::setModuleStates, //Not sure about setModuleStates
+        m_Drivetrain);
 
     if(m_SwerveControllerCommand == null) { 
+       System.out.println("#############                        Ya screwed up, bub.                                      #########"); 
        System.out.println("###########  ERROR: RobotContainer.getAutonoumousCommand() m_SwerveControllerCommand is null. #########"); 
-    }
-
-    // Reset odometry to the starting pose of the trajectory.
-    m_Drivetrain.resetOdometry(trajectory.getInitialPose());
-
-    if(m_SwerveControllerCommand == null) {
-       System.out.println("###########  ERROR: RobotContainer.getAutonoumousCommand() m_SwerveControllerCommand is null #2 #########"); 
-    }
-    if(m_Drivetrain == null) { 
-       System.out.println("###########  ERROR: RobotContainer.getAutonoumousCommand() m_Drivetrain is null. #########"); 
     }
 
     return m_SwerveControllerCommand.andThen(() -> m_Drivetrain.drive(0, 0, 0)); //NULL POINTER ex TODO:FIX PRI
@@ -315,7 +325,7 @@ public class RobotContainer {
     //trajectory = null;
     try {
       Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+      m_trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
     } catch (IOException ex) {
       DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
     }

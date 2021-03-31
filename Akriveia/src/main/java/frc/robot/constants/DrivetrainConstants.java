@@ -61,12 +61,13 @@ public class DrivetrainConstants {
         new Translation2d(Units.inchesToMeters(LENGTH_CENTER_TO_CENTER) / 2, -Units.inchesToMeters(WIDTH_CENTER_TO_CENTER) / 2)
     );
 
-    public static final double P_THETA_CONTROLLER = 1;
+    public static final double[] AUTON_THETA_CONTROLLER_PIDF = { 1.0 /*kP*/, 0.0 /*kI*/, 0.0 /*kD*/, 0.0 /*kF*/};
 
     public static final TrapezoidProfile.Constraints THETA_CONTROLLER_CONSTRAINTS =
-    new TrapezoidProfile.Constraints(
-        //MAX_ROT_SPEED_RADIANS_PER_SECOND, MAX_ROT_ACCELERATION_RADIANS_PER_SECOND_SQUARED);
-        2*Math.PI, 2*Math.PI);
+        new TrapezoidProfile.Constraints(
+            //MAX_ROT_SPEED_RADIANS_PER_SECOND, MAX_ROT_ACCELERATION_RADIANS_PER_SECOND_SQUARED);
+            2*Math.PI, 2*Math.PI
+        );
 
     public static final double P_X_Controller = 1;
     public static final double P_Y_Controller = 1;
