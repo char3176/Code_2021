@@ -56,7 +56,7 @@ public class RobotContainer {
 
   public ProfiledPIDController thetaController;
 
-  public SwerveControllerCommand m_swerveControllerCommand;
+  public SwerveControllerCommand m_SwerveControllerCommand;
 
   public RobotContainer() {
     m_Compressor = new Compressor();
@@ -210,7 +210,15 @@ public class RobotContainer {
       createTrajectory("galactic_search>pathA_redBalls");
       return new FollowGivenPath(trajectory);
     }
-    else if (autonChooser.getSelected().equals("")) {
+    else if(autonChooser.getSelected().equals("forward_and_back")) {
+      createTrajectory("forward_and_back");
+      return new FollowGivenPath(trajectory);
+    }
+    else if(autonChooser.getSelected().equals("L_shape")) {
+      createTrajectory("L_shape");
+      return new FollowGivenPath(trajectory);
+    }
+    //else if (autonChooser.getSelected().equals("")) {
       /*String trajectoryJSON = "paths/forward.wpilib.json";
    trajectory = null;
     try {
@@ -219,12 +227,14 @@ public class RobotContainer {
     } catch (IOException ex) {
       DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
     }*/
-    TrajectoryConfig config =
-        new TrajectoryConfig(
-                4.48,
-                1.631)
-            // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(DrivetrainConstants.DRIVE_KINEMATICS);
+
+  
+    TrajectoryConfig config = 
+      new TrajectoryConfig(
+      4.48,
+      1.631)
+      // Add kinematics to ensure max speed is actually obeyed
+      .setKinematics(DrivetrainConstants.DRIVE_KINEMATICS);
 
     // An example trajectory to follow.  All units in meters.
     /*
@@ -236,42 +246,38 @@ public class RobotContainer {
             List.of(new Translation2d(1, 0), new Translation2d(2, 0)),
             // End 3 meters straight ahead of where we started, facing forward
             new Pose2d(3, 0, new Rotation2d(0)),
-            config);
+            config); 
+      */
 
-*/
-
-  m_Drivetrain.resetOdometry(trajectory.getInitialPose());
-      m_swerveControllerCommand =
-    new SwerveControllerCommand(
-        trajectory,
-        m_Drivetrain::getCurrentPose, 
-        DrivetrainConstants.DRIVE_KINEMATICS,
+    m_Drivetrain.resetOdometry(trajectory.getInitialPose());
+    m_SwerveControllerCommand =
+      new SwerveControllerCommand(
+      trajectory,
+      m_Drivetrain::getCurrentPose, 
+      DrivetrainConstants.DRIVE_KINEMATICS,
 
         // Position controllers
-        new PIDController(DrivetrainConstants.P_X_Controller, 0, 0),
-        new PIDController(DrivetrainConstants.P_Y_Controller, 0, 0),
-        thetaController,
-        m_Drivetrain::setModuleStates, //Not sure about setModuleStates
-        m_Drivetrain);
-if(m_swerveControllerCommand == null) { System.out.println("long thing is null 2"); }
+      new PIDController(DrivetrainConstants.P_X_Controller, 0, 0),
+      new PIDController(DrivetrainConstants.P_Y_Controller, 0, 0),
+      thetaController,
+      m_Drivetrain::setModuleStates, //Not sure about setModuleStates
+      m_Drivetrain);
 
-// Reset odometry to the starting pose of the trajectory.
-m_Drivetrain.resetOdometry(trajectory.getInitialPose());
-    }
-    
-    else if(autonChooser.getSelected().equals("forward_and_back")) {
-      createTrajectory("forward_and_back");
-      return new FollowGivenPath(trajectory);
+    if(m_SwerveControllerCommand == null) { 
+       System.out.println("###########  ERROR: RobotContainer.getAutonoumousCommand() m_SwerveControllerCommand is null. #########"); 
     }
 
-    else if(autonChooser.getSelected().equals("L_shape")) {
-      createTrajectory("L_shape");
-      return new FollowGivenPath(trajectory);
+    // Reset odometry to the starting pose of the trajectory.
+    m_Drivetrain.resetOdometry(trajectory.getInitialPose());
+
+    if(m_SwerveControllerCommand == null) {
+       System.out.println("###########  ERROR: RobotContainer.getAutonoumousCommand() m_SwerveControllerCommand is null #2 #########"); 
+    }
+    if(m_Drivetrain == null) { 
+       System.out.println("###########  ERROR: RobotContainer.getAutonoumousCommand() m_Drivetrain is null. #########"); 
     }
 
-    if(m_swerveControllerCommand == null) { System.out.println("long thing is null"); }
-    if(m_Drivetrain == null) { System.out.println("drivetrain is null"); }
-    return m_swerveControllerCommand.andThen(() -> m_Drivetrain.drive(0, 0, 0)); //NULL POINTER ex TODO:FIX PRI
+    return m_SwerveControllerCommand.andThen(() -> m_Drivetrain.drive(0, 0, 0)); //NULL POINTER ex TODO:FIX PRI
   }
  
   
