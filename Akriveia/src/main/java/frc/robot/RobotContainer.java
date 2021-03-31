@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
@@ -238,7 +240,7 @@ public class RobotContainer {
 
     // An example trajectory to follow.  All units in meters.
     /*
-    Trajectory exampleTrajectory =
+    Trajectory trajectory =
         TrajectoryGenerator.generateTrajectory(
             // Start at the origin facing the +X direction
             new Pose2d(0, 0, new Rotation2d(0)),
@@ -248,7 +250,9 @@ public class RobotContainer {
             new Pose2d(3, 0, new Rotation2d(0)),
             config); 
       */
-
+    
+    
+    Pose2d newpose = trajectory.getInitialPose();
     m_Drivetrain.resetOdometry(trajectory.getInitialPose());
     m_SwerveControllerCommand =
       new SwerveControllerCommand(
@@ -284,7 +288,7 @@ public class RobotContainer {
 
   public void createTrajectory(String path){
     String trajectoryJSON = "paths/" + path + ".wpilib.json";
-    trajectory = null;
+    //trajectory = null;
     try {
       Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
       trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
