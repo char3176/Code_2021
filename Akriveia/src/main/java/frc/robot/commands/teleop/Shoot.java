@@ -6,12 +6,15 @@ import frc.robot.constants.BallTransferConstants;
 import frc.robot.subsystems.Drum;
 import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.BallTransfer;
+import frc.robot.VisionClient;
 
 public class Shoot extends InstantCommand {
   Drum mDrum = Drum.getInstance();
   Flywheel mFlywheel = Flywheel.getInstance();
   BallTransfer mTransfer = BallTransfer.getInstance();
+  VisionClient m_VisionClient = VisionClient.getInstance();
   // Timer time = new Timer();
+  double visionAngle, visionDistanceX;
   
   public Shoot() {
     addRequirements(mDrum);
@@ -23,6 +26,8 @@ public class Shoot extends InstantCommand {
   @Override
   public void initialize() {
     System.out.println("Shoot.initialize executed. ############################################################");
+    visionAngle = m_VisionClient.getTargetAngle();
+    visionDistanceX = m_VisionClient.getTargetDistanceX();
     mDrum.pidVelCtrl_setRpmLevel(1);
     mFlywheel.spinVelocityPIDF(1);
     // mTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT/2);

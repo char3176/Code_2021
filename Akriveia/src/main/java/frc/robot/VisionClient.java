@@ -367,4 +367,12 @@ public class VisionClient{
     public double getBallDegrees(){
         return ballDegrees;
     }
+
+    public double getTargetDistanceX() {
+        return deltaX;
+    }
+
+    public double getTargetAngle() {
+        return initialTheta;
+    }
 }
