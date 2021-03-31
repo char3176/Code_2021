@@ -188,15 +188,15 @@ public class AngledShooter extends SubsystemBase {
   }
 
   public void pctCtrl_raiseHoodPosition() {
-    pctCtrl_set(.4);
+    pctCtrl_set(AngledShooterConstants.MOVE_PCT);
   }
 
   public void pctCtrl_holdHoodPosition() {
-    pctCtrl_set(.3);
+    pctCtrl_set(AngledShooterConstants.HOLD_PCT);
   }
   
   public void pctCtrl_lowerHoodPosition() {
-    pctCtrl_set(-.4);
+    pctCtrl_set(-AngledShooterConstants.MOVE_PCT);
   }
 
   public void pctCtrl_stopHoodMotor() {

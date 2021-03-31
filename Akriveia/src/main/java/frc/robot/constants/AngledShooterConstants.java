@@ -7,6 +7,9 @@ public class AngledShooterConstants {
     public static final int TimeoutMs = 30;
     public static boolean SENSOR_PHASE = true;
     public static boolean MOTOR_INVERT = false;
+
+    public static final double MOVE_PCT = .4;
+    public static final double HOLD_PCT = .3;
     
     public static final double[] PIDF = {.31, 0.002, 2.12, 0.35};
 
