@@ -199,6 +199,7 @@ public class RobotContainer {
       DrivetrainConstants.P_THETA_CONTROLLER, 0, 0, DrivetrainConstants.THETA_CONTROLLER_CONSTRAINTS);
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
+    trajectory = trajLibrary.get(4);
     if (autonChooser.getSelected().equals("barrel_racing")) {
       trajectory = trajLibrary.get(0);
       //createTrajectory("barrel_racing");
@@ -219,7 +220,7 @@ public class RobotContainer {
       //createTrajectory("forward_and_back");
       //return new FollowGivenPath(trajectory);
     }
-    else if(autonChooser.getSelected().equals("forward")) {
+    else if(autonChooser.getSelected().equals("Forward")) {
       trajectory = trajLibrary.get(4);
       //createTrajectory("forward");
       //return new FollowGivenPath(trajectory);
@@ -251,8 +252,8 @@ public class RobotContainer {
     } catch (IOException ex) {
       DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
     }*/
-
-  
+    //trajectory = trajLibrary.get(4);
+    System.out.println("################ INFO:  tractory object contains:  "+trajectory.toString()); 
     TrajectoryConfig config = 
       new TrajectoryConfig(
       4.48,
