@@ -29,7 +29,7 @@ public class Shoot extends InstantCommand {
     visionAngle = m_VisionClient.getTargetAngle();
     visionDistanceX = m_VisionClient.getTargetDistanceX();
     mDrum.pidVelCtrl_setRpmLevel(1);
-    mFlywheel.spinVelocityPIDF(1);
+    mFlywheel.spinVelocityPIDF(5);
     // mTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT/2);
     // Timer.delay(2);
     mTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT);

@@ -56,7 +56,7 @@ public class RobotContainer {
 
   public ProfiledPIDController thetaController;
 
-  public SwerveControllerCommand swerveControllerCommand;
+  public SwerveControllerCommand m_swerveControllerCommand;
 
   public RobotContainer() {
     m_Compressor = new Compressor();
@@ -94,6 +94,7 @@ public class RobotContainer {
     autonChooser.addOption("Galactic Search B", galactic_search_b);
     autonChooser.addOption("L_Shape", l_shape);
     autonChooser.addOption("Slalom", slalom);
+    SmartDashboard.putData("Auton Choice", autonChooser);
 
   }
 
@@ -240,7 +241,7 @@ public class RobotContainer {
 */
 
   m_Drivetrain.resetOdometry(trajectory.getInitialPose());
-      swerveControllerCommand =
+      m_swerveControllerCommand =
     new SwerveControllerCommand(
         trajectory,
         m_Drivetrain::getCurrentPose, 
@@ -252,7 +253,7 @@ public class RobotContainer {
         thetaController,
         m_Drivetrain::setModuleStates, //Not sure about setModuleStates
         m_Drivetrain);
-if(swerveControllerCommand == null) { System.out.println("long thing is null 2"); }
+if(m_swerveControllerCommand == null) { System.out.println("long thing is null 2"); }
 
 // Reset odometry to the starting pose of the trajectory.
 m_Drivetrain.resetOdometry(trajectory.getInitialPose());
@@ -268,9 +269,9 @@ m_Drivetrain.resetOdometry(trajectory.getInitialPose());
       return new FollowGivenPath(trajectory);
     }
 
-    if(swerveControllerCommand == null) { System.out.println("long thing is null"); }
+    if(m_swerveControllerCommand == null) { System.out.println("long thing is null"); }
     if(m_Drivetrain == null) { System.out.println("drivetrain is null"); }
-    return swerveControllerCommand.andThen(() -> m_Drivetrain.drive(0, 0, 0));
+    return m_swerveControllerCommand.andThen(() -> m_Drivetrain.drive(0, 0, 0)); //NULL POINTER ex TODO:FIX PRI
   }
  
   
