@@ -28,6 +28,7 @@ import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.PowerManagement;
 
+import java.util.ArrayList;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
@@ -47,7 +48,7 @@ public class RobotContainer {
   private static final String galactic_search_a = "Galactic Search A";
   private static final String galactic_search_b = "Galactic Search B";
   private static final String barrel_racing = "Barrel Racing";
-  private static final String bounce_path = "Bounce Path";
+  private static final String bounce = "Bounce Path";
   private static final String slalom = "Slalom Path";
   private static final String easy = "Easy";
   private static final String forward = "Forward";
@@ -55,6 +56,8 @@ public class RobotContainer {
   private static final String l_shape = "L_Shape";
 
   public Trajectory trajectory;
+
+  private ArrayList<Trajectory> trajLibrary; 
 
   public ProfiledPIDController thetaController;
 
@@ -88,7 +91,7 @@ public class RobotContainer {
 
     autonChooser = new SendableChooser<>();
     autonChooser.addOption("Barrel Racing", barrel_racing);
-    autonChooser.addOption("Bounce Path", bounce_path);
+    autonChooser.addOption("Bounce Path", bounce);
     autonChooser.addOption("Forward", forward);
     autonChooser.addOption("Forward and Back", forward_and_back);
     autonChooser.addOption("Easy", easy);
@@ -97,6 +100,18 @@ public class RobotContainer {
     autonChooser.addOption("L_Shape", l_shape);
     autonChooser.addOption("Slalom", slalom);
     SmartDashboard.putData("Auton Choice", autonChooser);
+
+
+    // Please keep below array trajFilelist in alphabetical order.  Makes it easier to keep track.
+    String[] trajFilelist = {"barrel_racing", "bounce", "easy", "forward_and_back", "forward",
+      "galactic_search_pathA_blueBalls", "galactic_search_pathA_redBalls", 
+      "galactic_search_pathB_blueBalls", "galactic_search_pathB_redBalls",
+      "L_shape", "slalom"};
+    trajLibrary = new ArrayList<Trajectory>();
+    for (String var : trajFilelist)  {
+      trajLibrary.add(preloadCreateTrajectory(var));
+    }
+    //preloadTrajectoryFiles();
 
   }
 
@@ -184,41 +199,48 @@ public class RobotContainer {
       DrivetrainConstants.P_THETA_CONTROLLER, 0, 0, DrivetrainConstants.THETA_CONTROLLER_CONSTRAINTS);
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
-    if(autonChooser.getSelected().equals("slalom")) {
-      createTrajectory("slalom");
-      new FollowGivenPath(trajectory);
+    if (autonChooser.getSelected().equals("barrel_racing")) {
+      trajectory = trajLibrary.get(0);
+      //createTrajectory("barrel_racing");
+      //return new FollowGivenPath(trajectory);
+    }
+    else if(autonChooser.getSelected().equals("bounce")) {
+      trajectory = trajLibrary.get(1);
+      //createTrajectory("bounce");
+      //return new FollowGivenPath(trajectory);
     }
     else if(autonChooser.getSelected().equals("easy")) {
-      createTrajectory("easy");
-      return new FollowGivenPath(trajectory);
+      trajectory = trajLibrary.get(2);
+      //createTrajectory("easy");
+      //return new FollowGivenPath(trajectory);
     } 
+    else if(autonChooser.getSelected().equals("forward_and_back")) {
+      trajectory = trajLibrary.get(3);
+      //createTrajectory("forward_and_back");
+      //return new FollowGivenPath(trajectory);
+    }
     else if(autonChooser.getSelected().equals("forward")) {
-      createTrajectory("forward");
-      return new FollowGivenPath(trajectory);
-    }
-    else if (autonChooser.getSelected().equals("barrel_racing")) {
-      createTrajectory("barrel_racing");
-      return new FollowGivenPath(trajectory);
-    }
-    else if(autonChooser.getSelected().equals("bouncePath")) {
-      createTrajectory("bounce");
-      return new FollowGivenPath(trajectory);
+      trajectory = trajLibrary.get(4);
+      //createTrajectory("forward");
+      //return new FollowGivenPath(trajectory);
     }
     else if (autonChooser.getSelected().equals("galactic_search_a")) {
-      createTrajectory("galactic_search.pathA_redBalls");
-      return new FollowGivenPath(trajectory);
+      //createTrajectory("galactic_search.pathA_redBalls");
+      //return new FollowGivenPath(trajectory);
     }
     else if (autonChooser.getSelected().equals("galactic_search_b")) {
-      createTrajectory("galactic_search>pathA_redBalls");
-      return new FollowGivenPath(trajectory);
-    }
-    else if(autonChooser.getSelected().equals("forward_and_back")) {
-      createTrajectory("forward_and_back");
-      return new FollowGivenPath(trajectory);
+      //createTrajectory("galactic_search>pathA_redBalls");
+      //return new FollowGivenPath(trajectory);
     }
     else if(autonChooser.getSelected().equals("L_shape")) {
-      createTrajectory("L_shape");
-      return new FollowGivenPath(trajectory);
+      trajectory = trajLibrary.get(9);
+      //createTrajectory("L_shape");
+      //return new FollowGivenPath(trajectory);
+    }
+    else if(autonChooser.getSelected().equals("slalom")) {
+      trajectory = trajLibrary.get(10);
+      //createTrajectory("slalom");
+      //new FollowGivenPath(trajectory);
     }
     //else if (autonChooser.getSelected().equals("")) {
       /*String trajectoryJSON = "paths/forward.wpilib.json";
@@ -283,6 +305,7 @@ public class RobotContainer {
 
     return m_SwerveControllerCommand.andThen(() -> m_Drivetrain.drive(0, 0, 0)); //NULL POINTER ex TODO:FIX PRI
   }
+
  
   
 
@@ -295,5 +318,17 @@ public class RobotContainer {
     } catch (IOException ex) {
       DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
     }
+  }
+
+  public Trajectory preloadCreateTrajectory(String path){
+    String trajectoryJSON = "paths/" + path + ".wpilib.json";
+    Trajectory tempTrajectory = null;
+    try {
+      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+      tempTrajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    } catch (IOException ex) {
+      DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
+    }
+    return tempTrajectory;
   }
 }
