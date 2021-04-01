@@ -309,7 +309,7 @@ public class RobotContainer {
         new PIDController(DrivetrainConstants.P_X_Controller, 0, 0),
         new PIDController(DrivetrainConstants.P_Y_Controller, 0, 0),
         thetaController,
-        m_Drivetrain::setModuleStates, //Not sure about setModuleStates
+        m_Drivetrain::setModuleStates,
         m_Drivetrain);
 
     if(m_SwerveControllerCommand == null) { 
@@ -317,7 +317,7 @@ public class RobotContainer {
        System.out.println("###########  ERROR: RobotContainer.getAutonoumousCommand() m_SwerveControllerCommand is null. #########"); 
     }
 
-    return m_SwerveControllerCommand.andThen(() -> m_Drivetrain.drive(0, 0, 0)); //NULL POINTER ex TODO:FIX PRI
+    return m_SwerveControllerCommand.andThen(() -> m_Drivetrain.drive(0, 0, 0)); 
   }
 
  

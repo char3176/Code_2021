@@ -146,5 +146,10 @@ public final class SwervePodConstants {
     public static final double METERS_TO_FEET_CONSTANT = 3.28084;
     public static final double FEET_TO_METERS_CONSTANT = 0.3048;
 
+
+    public static final double P_MODULE_DRIVE_CONTROLLER = 1;
+    public static final double P_MODULE_TURNING_CONTROLLER = 1;
+    public static final double MAX_MODULE_ANGULAR_SPEED_RADIANS_PER_SECOND = 2 * Math.PI;
+    public static final double MAX_MODULE_ANGULAR_ACCELERATION_RADIANS_PER_SECOND_SQUARED = 2* Math.PI;
 }
 

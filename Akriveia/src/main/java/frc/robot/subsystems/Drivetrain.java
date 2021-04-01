@@ -356,7 +356,7 @@ public class Drivetrain extends SubsystemBase {
       // SmartDashboard.putNumber("c", c);
       // SmartDashboard.putNumber("d", d);
       for (int idx = 0; idx < 4; idx++) {
-        // .putNumber("preScale P" + (idx + 1) + " podDrive", podDrive[idx]);
+        // SmartDashboard.putNumber("preScale P" + (idx + 1) + " podDrive", podDrive[idx]);
       }
 
       // Find the highest pod speed then normalize if a pod is exceeding our max speed
@@ -370,8 +370,8 @@ public class Drivetrain extends SubsystemBase {
       // Set calculated drive and spins to each pod
       //for(int idx = 0; idx < pods.size(); idx++) {
         for(int idx = 0; idx < (pods.size()); idx++) {
-        pods.get(idx).set(podDrive[idx], podSpin[idx]);   //TODO: try doing pods.size() - 1 in for conditional, then outside for loop
-                                                          //  do a hardcode set of pods.get(3).set(0.1, 0.0);
+          pods.get(idx).set(podDrive[idx], podSpin[idx]);   //TODO: try doing pods.size() - 1 in for conditional, then outside for loop
+                                                            //  do a hardcode set of pods.get(3).set(0.1, 0.0);
         //SmartDashboard.putNumber("pod" + idx + " drive", podDrive[idx]);    
         //SmartDashboard.putNumber("pod" + idx + " spin", podSpin[idx]);
         }
