@@ -165,7 +165,8 @@ public class Drivetrain extends SubsystemBase {
     gyro.reset();
     //gyroUpdateOffset();
     updateNavxAngle();
-    odometry = new SwerveDriveOdometry(DrivetrainConstants.DRIVE_KINEMATICS, gyro.getRotation2d());    // <<-- getRotation2d is continuous. ie 360+1=361 not 0 or -361.
+    //odometry = new SwerveDriveOdometry(DrivetrainConstants.DRIVE_KINEMATICS, gyro.getRotation2d());    // <<-- getRotation2d is continuous. ie 360+1=361 not 0 or -361. gyro.getRotation2d() uses NWU Axis Convention
+    odometry = new SwerveDriveOdometry(DrivetrainConstants.DRIVE_KINEMATICS, getNavxAngle_inRadians_asRotation2d());    // <<-- getRotation2d is continuous. ie 360+1=361 not 0 or -361. getNavxAngle_asRotation2d() should be same Axis Convention as Teleop, I believe.
     
     // SmartDashboard.putNumber("currentAngle", this.currentAngle);
 
@@ -245,7 +246,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     if(currentDriveMode == driveMode.SPIN_LOCK) {
-      this.spinCommand = spinLockPID.returnOutput(getNavxAngle(), spinLockAngle);
+      this.spinCommand = spinLockPID.returnOutput(getNavxAngle_inDegrees(), spinLockAngle);
       //this.spinCommand = spinLockPID.calculate(getNavxAngle(), spinLockAngle);
 
     }
@@ -390,20 +391,34 @@ public class Drivetrain extends SubsystemBase {
   }
 
   
-  private double getNavxAngle() {
+  private double getNavxAngle_inDegrees() {
     return (gyro.getAngle() + DrivetrainConstants.GYRO_COORDSYS_ROTATIONAL_OFFSET + this.gyroOffset);
+  }
+  
+  private double getNavxAngle_inRadians() {
+    return (Units.degreesToRadians(getNavxAngle_inDegrees()));
+  }
+
+  public Rotation2d getNavxAngle_inRadians_asRotation2d() {
+    Rotation2d angle = new Rotation2d(getNavxAngle_inRadians());
+    return angle;
+  }
+  
+  public Rotation2d getNavxAngle_inDegrees_asRotation2d() {
+    Rotation2d angle = new Rotation2d(getNavxAngle_inDegrees());
+    return angle;
   }
 
   private void updateNavxAngle() {
     // -pi to pi; 0 = straight
-    this.currentAngle = (((Units.degreesToRadians(getNavxAngle()))) % (2*Math.PI));
+    this.currentAngle = (((Units.degreesToRadians(getNavxAngle_inDegrees()))) % (2*Math.PI));
     // gyro.getNavxAngle is returned in degrees.
     // Then converted to radians (ie *(Math.PI/180)).
     // And finally, it's modulus against 2pi is taken and returned as currentAngle.
   }
 
   public void gyroUpdateOffset() {
-    this.gyroOffset = (getNavxAngle());
+    this.gyroOffset = (getNavxAngle_inDegrees());
   }
 
   private double getRadius(String component) {
@@ -446,11 +461,11 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getGyroAngle() {
-    return getNavxAngle();
+    return getNavxAngle_inDegrees();
   }
 
   public void setSpinLockAngle() {
-    spinLockAngle = getNavxAngle();
+    spinLockAngle = getNavxAngle_inDegrees();
   }
 
   public void setSpinLocked(boolean isSpinLocked) {
@@ -514,7 +529,8 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void resetOdometry(Pose2d pose) {
-    odometry.resetPosition(pose, gyro.getRotation2d().times(1));  //Not sure, gyroAngle);a   // <-- Note getRotation2d is continuous, ie 360+1=361 not 0 or -359 
+    //odometry.resetPosition(pose, gyro.getRotation2d().times(1));  //Not sure, gyroAngle);a   // <-- Note getRotation2d is continuous, ie 360+1=361 not 0 or -359 
+    odometry.resetPosition(pose, getNavxAngle_inRadians_asRotation2d());  
   }
 
   @Override
@@ -543,8 +559,10 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getHeading() {
-    SmartDashboard.putNumber("get Heading", gyro.getRotation2d().getDegrees());
-    return gyro.getRotation2d().getRadians() ; //+ Math.PI/2;
+    SmartDashboard.putNumber("Drivetrain.getHeading_as_gyro.getRotation2d.getDegrees()", gyro.getRotation2d().getDegrees());
+    SmartDashboard.putNumber("Drivetrain.getHeading_as_getNavxAngle_inDegrees()", getNavxAngle_inDegrees());
+    //return gyro.getRotation2d().getRadians() ; //+ Math.PI/2;
+    return getNavxAngle_inRadians() ; //+ Math.PI/2;
   }
 
 }

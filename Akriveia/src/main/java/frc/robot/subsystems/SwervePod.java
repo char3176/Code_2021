@@ -221,7 +221,7 @@ public class SwervePod {
         }    
         //SmartDashboard.putNumber("P" + (id) + "getSelSenPos", spinController.getSelectedSensorPosition());
 
-        SmartDashboard.putNumber("podDrive", podDrive);
+        SmartDashboard.putNumber("P"+this.id+".podDrive", podDrive);
         //SmartDashboard.putNumber("actualVel", driveController.getVoltage());
         
         driveController.set(TalonFXControlMode.Velocity, velTicsPer100ms);
@@ -298,16 +298,16 @@ public class SwervePod {
         Rotation2d rotation = new Rotation2d(-tics2Rads(spinController.getSelectedSensorPosition()));
         state = newDesiredState;
         //SwerveModuleState.optimize(desiredState, rotation); //I do not know if this is the angle of the encoder.
-        SmartDashboard.putNumber("1Degrees", desiredState.angle.getDegrees());
-        SmartDashboard.putNumber("2Degrees", rotation.getDegrees());
+        SmartDashboard.putNumber("P"+this.id+".setDesiredState_desiredDegrees", desiredState.angle.getDegrees());
+        SmartDashboard.putNumber("P"+this.id+".setdesiredState_sensoredDegrees", rotation.getDegrees());
         double driveOutput =    
             m_drivePIDController.calculate(getVelocity_metersPerSec(), state.speedMetersPerSecond);
         driveOutput = .25 * driveOutput/DrivetrainConstants.MAX_WHEEL_SPEED_METERS_PER_SECOND;   //TODO: <-- Ask Chase, why we multiply by 0.25?
 
         final var turnOutput = 
             m_turningPIDController.calculate(tics2Rads(spinController.getSelectedSensorPosition()), state.angle.getRadians());
-        SmartDashboard.putNumber("P"+this.id+"_TurnOutput",turnOutput);
-        SmartDashboard.putNumber("P"+this.id+"_DriveOutput",driveOutput);
+        SmartDashboard.putNumber("P"+this.id+".setDesiredState_TurnOutput",turnOutput);
+        SmartDashboard.putNumber("P"+this.id+".setDesiredState_DriveOutput",driveOutput);
 
         Rotation2d tempTurnOutput = new Rotation2d(turnOutput);
 
