@@ -74,7 +74,8 @@ public class DrivetrainConstants {
      *              BR (back right pod) = +x -y
      *      and +x is considered the forward direction (fore) and +y is 
      *      considered the direction to port on the chassis
-     *      IT MUST BE NOTED that raw gyro units from NavX-MXP give +y = fore and +x = starboard.
+     *      IT MUST BE NOTED that with current orientation of NavX-MXP on the 2021 bot
+     *      the raw navx gyro/angle values from NavX-MXP give +y = fore and +x = starboard.
      *      THEREFORE, all raw gyro angles retrieved from the NavX-MXP must be 
      *      rotated by 90-degrees such that +x = fore and +y = port.
      * 
