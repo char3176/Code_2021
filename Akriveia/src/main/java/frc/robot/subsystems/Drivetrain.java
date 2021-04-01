@@ -391,14 +391,14 @@ public class Drivetrain extends SubsystemBase {
   }
 
   private double getAngle() {
-    return (gyro.getAngle() + this.gyroOffset);
+    return (gyro.getAngle() + DrivetrainConstants.GYRO_COORDSYS_ROTATIONAL_OFFSET + this.gyroOffset);
   }
 
   private void updateAngle() {
     // -pi to pi; 0 = straight
-    this.currentAngle = ((((getAngle()) * Math.PI/180.0)) % (2*Math.PI));
+    this.currentAngle = (((Units.degreesToRadians(getAngle()))) % (2*Math.PI));
     // gyro.getAngle is returned in degrees.
-    // Then converted to radians via "* pi/180".
+    // Then converted to radians (ie *(Math.PI/180)).
     // And finally, it's modulus against 2pi is taken and returned as currentAngle.
   }
 
