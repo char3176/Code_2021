@@ -164,8 +164,8 @@ public class Drivetrain extends SubsystemBase {
     gyro = new AHRS(SPI.Port.kMXP);
     gyro.reset();
     //gyroUpdateOffset();
-    updateAngle();
-    odometry = new SwerveDriveOdometry(DrivetrainConstants.DRIVE_KINEMATICS, gyro.getRotation2d());
+    updateNavxAngle();
+    odometry = new SwerveDriveOdometry(DrivetrainConstants.DRIVE_KINEMATICS, gyro.getRotation2d());    // <<-- getRotation2d is continuous. ie 360+1=361 not 0 or -361.
     
     // SmartDashboard.putNumber("currentAngle", this.currentAngle);
 
@@ -234,9 +234,8 @@ public class Drivetrain extends SubsystemBase {
 
     
 
-    // TODO: Make the gyro reset if a certain button is pushed
-    updateAngle();
-    // board.putNumber("Drive updated currentAngle Degrees", (this.currentAngle * 180/Math.PI));
+    updateNavxAngle();
+    // SmartDashboard.putNumber("Drive updated currentAngle Degrees", (this.currentAngle * 180/Math.PI));
     // SmartDashboard.putString("Drive currentCoordType", currentCoordType.toString());
 
     if(currentDriveMode != driveMode.TURBO) {
@@ -246,8 +245,8 @@ public class Drivetrain extends SubsystemBase {
     }
 
     if(currentDriveMode == driveMode.SPIN_LOCK) {
-      this.spinCommand = spinLockPID.returnOutput(getAngle(), spinLockAngle);
-      //this.spinCommand = spinLockPID.calculate(getAngle(), spinLockAngle);
+      this.spinCommand = spinLockPID.returnOutput(getNavxAngle(), spinLockAngle);
+      //this.spinCommand = spinLockPID.calculate(getNavxAngle(), spinLockAngle);
 
     }
 
@@ -390,20 +389,21 @@ public class Drivetrain extends SubsystemBase {
     }
   }
 
-  private double getAngle() {
+  
+  private double getNavxAngle() {
     return (gyro.getAngle() + DrivetrainConstants.GYRO_COORDSYS_ROTATIONAL_OFFSET + this.gyroOffset);
   }
 
-  private void updateAngle() {
+  private void updateNavxAngle() {
     // -pi to pi; 0 = straight
-    this.currentAngle = (((Units.degreesToRadians(getAngle()))) % (2*Math.PI));
-    // gyro.getAngle is returned in degrees.
+    this.currentAngle = (((Units.degreesToRadians(getNavxAngle()))) % (2*Math.PI));
+    // gyro.getNavxAngle is returned in degrees.
     // Then converted to radians (ie *(Math.PI/180)).
     // And finally, it's modulus against 2pi is taken and returned as currentAngle.
   }
 
   public void gyroUpdateOffset() {
-    this.gyroOffset = (getAngle());
+    this.gyroOffset = (getNavxAngle());
   }
 
   private double getRadius(String component) {
@@ -446,11 +446,11 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getGyroAngle() {
-    return getAngle();
+    return getNavxAngle();
   }
 
   public void setSpinLockAngle() {
-    spinLockAngle = gyro.getAngle();
+    spinLockAngle = getNavxAngle();
   }
 
   public void setSpinLocked(boolean isSpinLocked) {
@@ -514,7 +514,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void resetOdometry(Pose2d pose) {
-    odometry.resetPosition(pose, gyro.getRotation2d().times(1));  //Not sure, gyroAngle);
+    odometry.resetPosition(pose, gyro.getRotation2d().times(1));  //Not sure, gyroAngle);a   // <-- Note getRotation2d is continuous, ie 360+1=361 not 0 or -359 
   }
 
   @Override
