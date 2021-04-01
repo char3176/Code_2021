@@ -73,6 +73,7 @@ public class SwervePod {
     private double kF_Drive;
 
     private double maxVelTicsPer100ms;
+    private boolean isAutonSwerveControllerOptimizingSpinPos = false;
 
     private double PI = Math.PI;
     private double maxFps = SwervePodConstants.DRIVE_SPEED_MAX_EMPIRICAL_FEET_PER_SECOND;
@@ -251,20 +252,14 @@ public class SwervePod {
         //    System.out.println("Error: Overload");
         //} else if (Math.abs(radianError) > (3 * (PI / 2))) {
 
-        /* #############################################################################################################
-         *      BEGIN COMMENTED OUT SPIN-OPTIMIZED SECTION
-         *          SPECIAL NOTE:  BEGINNINING FROM HERE THESE LINES ARE COMMENTED OUT IN AUTON OF OFFSEASONSWERVE2021 (Due to SwerveModuleState.optimize()).
-         * ############################################################################################################ */
-        if (Math.abs(radianError) > (3 * (PI / 2))) {      // TODO: See if commenting out "Thrust-vector sign-flip" fixes
-            radianError -= Math.copySign(2 * PI, radianError);
-        } else if (Math.abs(radianError) > (PI / 2)) {
-            radianError -= Math.copySign(PI, radianError);
-            this.velTicsPer100ms = -this.velTicsPer100ms;
+        if (isAutonSwerveControllerOptimizingSpinPos = false) { 
+            if (Math.abs(radianError) > (3 * (PI / 2))) {      // TODO: See if commenting out "Thrust-vector sign-flip" fixes
+                radianError -= Math.copySign(2 * PI, radianError);
+            } else if (Math.abs(radianError) > (PI / 2)) {
+                radianError -= Math.copySign(PI, radianError);
+                this.velTicsPer100ms = -this.velTicsPer100ms;
+            }
         }
-        /* #############################################################################################################
-         *      END COMMENTED OUT SPIN-OPTIMIZED SECTION
-         *          SPECIAL NOTE:  ENDING HERE, THE ABOVE LINES ARE COMMENTED OUT IN AUTON OF OFFSEASONSWERVE2021 (Due to SwerveModuleState.optimize()).
-         * ############################################################################################################ */
         encoderError = rads2Tics(radianError);
         // SmartDashboard.putNumber("P" + (id + 1) + " encoderError", encoderError);
         driveCommand = encoderError + this.encoderPos + this.kEncoderOffset;
@@ -297,6 +292,7 @@ public class SwervePod {
     public void setInverted() { spinController.setInverted(!isInverted()); }
 
     public void setDesiredState(SwerveModuleState desiredState) {
+        this.isAutonSwerveControllerOptimizingSpinPos = true;
         // Optimize the reference state to avoid spinning further than 90 degrees
         SwerveModuleState newDesiredState = new SwerveModuleState(desiredState.speedMetersPerSecond, desiredState.angle.times(-1));
         Rotation2d rotation = new Rotation2d(-tics2Rads(spinController.getSelectedSensorPosition()));
@@ -316,9 +312,13 @@ public class SwervePod {
         Rotation2d tempTurnOutput = new Rotation2d(turnOutput);
 
         SwerveModuleState calculatedState = new SwerveModuleState(driveOutput, tempTurnOutput);
-        SwerveModuleState optimizedState = SwerveModuleState.optimize(calculatedState, tempTurnOutput);
-            
-        set(driveOutput,optimizedState.angle.getRadians());//Units.metersToFeet(driveOutput),turnOutput);     
+        if (this.isAutonSwerveControllerOptimizingSpinPos = true) { 
+            SwerveModuleState optimizedState = SwerveModuleState.optimize(calculatedState, tempTurnOutput);
+            set(driveOutput,optimizedState.angle.getRadians());//Units.metersToFeet(driveOutput),turnOutput);     
+        } else {
+            set(driveOutput,calculatedState.angle.getRadians());//Units.metersToFeet(driveOutput),turnOutput);     
+        }   
+        this.isAutonSwerveControllerOptimizingSpinPos = false;
     }
 
     public double getVelocity_metersPerSec() {
