@@ -98,10 +98,10 @@ public class SwervePod {
         m_drivePIDController = new PIDController(SwervePodConstants.P_MODULE_DRIVE_CONTROLLER, 0, 0);
 
         m_turningPIDController = new ProfiledPIDController(
-            SwervePodConstants.P_MODULE_DRIVE_CONTROLLER, 0, 0,
+            SwervePodConstants.P_MODULE_TURNING_CONTROLLER, 0, 0,
             new TrapezoidProfile.Constraints(
-                SwervePodConstants.MAX_MODULE_ANGULAR_SPEED_RADIANS_PER_SECOND,
-                SwervePodConstants.MAX_MODULE_ANGULAR_SPEED_RADIANS_PER_SECOND));
+                (-SwervePodConstants.MAX_MODULE_ANGULAR_SPEED_RADIANS_PER_SECOND),
+                (SwervePodConstants.MAX_MODULE_ANGULAR_SPEED_RADIANS_PER_SECOND)));
         m_turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
         
 
@@ -252,7 +252,7 @@ public class SwervePod {
         //    System.out.println("Error: Overload");
         //} else if (Math.abs(radianError) > (3 * (PI / 2))) {
 
-        if (isAutonSwerveControllerOptimizingSpinPos = false) { 
+        if (isAutonSwerveControllerOptimizingSpinPos == false) { 
             if (Math.abs(radianError) > (3 * (PI / 2))) {      // TODO: See if commenting out "Thrust-vector sign-flip" fixes
                 radianError -= Math.copySign(2 * PI, radianError);
             } else if (Math.abs(radianError) > (PI / 2)) {
@@ -292,7 +292,7 @@ public class SwervePod {
     public void setInverted() { spinController.setInverted(!isInverted()); }
 
     public void setDesiredState(SwerveModuleState desiredState) {
-        this.isAutonSwerveControllerOptimizingSpinPos = true;
+        //this.isAutonSwerveControllerOptimizingSpinPos = true;
         // Optimize the reference state to avoid spinning further than 90 degrees
         SwerveModuleState newDesiredState = new SwerveModuleState(desiredState.speedMetersPerSecond, desiredState.angle.times(-1));
         Rotation2d rotation = new Rotation2d(-tics2Rads(spinController.getSelectedSensorPosition()));
@@ -302,6 +302,7 @@ public class SwervePod {
         SmartDashboard.putNumber("P"+this.id+".setdesiredState_sensoredDegrees", rotation.getDegrees());
         double driveOutput =    
             m_drivePIDController.calculate(getVelocity_metersPerSec(), state.speedMetersPerSecond);
+
         driveOutput = .25 * driveOutput/DrivetrainConstants.MAX_WHEEL_SPEED_METERS_PER_SECOND;   //TODO: <-- Ask Chase, why we multiply by 0.25?
 
         final var turnOutput = 
@@ -312,12 +313,12 @@ public class SwervePod {
         Rotation2d tempTurnOutput = new Rotation2d(turnOutput);
 
         SwerveModuleState calculatedState = new SwerveModuleState(driveOutput, tempTurnOutput);
-        if (this.isAutonSwerveControllerOptimizingSpinPos = true) { 
-            SwerveModuleState optimizedState = SwerveModuleState.optimize(calculatedState, tempTurnOutput);
-            set(driveOutput,optimizedState.angle.getRadians());//Units.metersToFeet(driveOutput),turnOutput);     
-        } else {
+        //if (this.isAutonSwerveControllerOptimizingSpinPos == true) { 
+        //    SwerveModuleState optimizedState = SwerveModuleState.optimize(calculatedState, tempTurnOutput);
+        //    set(driveOutput,optimizedState.angle.getRadians());//Units.metersToFeet(driveOutput),turnOutput);     
+        //} else {
             set(driveOutput,calculatedState.angle.getRadians());//Units.metersToFeet(driveOutput),turnOutput);     
-        }   
+        //}   
         this.isAutonSwerveControllerOptimizingSpinPos = false;
     }
 
@@ -326,7 +327,7 @@ public class SwervePod {
         //SmartDashboard.putNumber("GetSensorVelocity", speed);
         double wheelCircumferance = Units.inchesToMeters(DrivetrainConstants.WHEEL_DIAMETER_INCHES * Math.PI);
         double metersPer100ms = sensoredVelInTicsPer100ms * 1 * wheelCircumferance / (SwervePodConstants.DRIVE_ENCODER_UNITS_PER_REVOLUTION * 6.17);  //6.17 = gear ratio  <--should this be 6.17 here, or (1 / 6.17)?
-        double metersPerSecond = metersPer100ms * 1000 /*ms*/ / 1 /*sec*/;
+        double metersPerSecond = metersPer100ms * 10 /*ms*/ / 1 /*sec*/;
         SmartDashboard.putNumber("Velocity", metersPerSecond);
         return metersPerSecond;     
     }
