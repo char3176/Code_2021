@@ -163,6 +163,7 @@ public class Drivetrain extends SubsystemBase {
     // Instantiating the gyro
     gyro = new AHRS(SPI.Port.kMXP);
     gyro.reset();
+    //gyro.setAngleAdjustment(90.0);
     //gyroUpdateOffset();
     updateNavxAngle();
     //odometry = new SwerveDriveOdometry(DrivetrainConstants.DRIVE_KINEMATICS, gyro.getRotation2d());    // <<-- getRotation2d is continuous. ie 360+1=361 not 0 or -361. gyro.getRotation2d() uses NWU Axis Convention

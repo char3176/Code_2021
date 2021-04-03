@@ -11,6 +11,6 @@ public class ControllerConstants {
 
     // Constants
     public static int FORWARD__AXIS_INVERSION = (MasterConstants.is2021Bot) ?  1 : -1;
-    public static int STRAFE_AXIS_INVERSION = (MasterConstants.is2021Bot) ?  -1 : 1;
-    public static int SPIN_AXIS_INVERSION = (MasterConstants.is2021Bot) ?  -1 : 1;
+    public static int STRAFE_AXIS_INVERSION = (MasterConstants.is2021Bot) ?  1 : 1;
+    public static int SPIN_AXIS_INVERSION = (MasterConstants.is2021Bot) ?  1 : 1;
 }

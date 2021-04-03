@@ -297,7 +297,7 @@ public class RobotContainer {
       DrivetrainConstants.THETA_CONTROLLER_CONSTRAINTS    /*Contraints on PIDController. Equal to: a.) max rotation speed in radians per second, and b.) max rotational velocity in radians per second^2 */
     );
     thetaController.enableContinuousInput(-Math.PI, Math.PI);  /*Set output from thetaController's PID such that range of output is [-pi, pi] (ie (+pi_value + 1 = -pi_value) and (-pi_value -1 = +pi_value) */ 
-    thetaController.reset(0.0, 0.0); /*resets thetaController PID error and integral terms to the two values passed as parameters to reset()*/
+    //thetaController.reset(0.0, 0.0); /*resets thetaController PID error and integral terms to the two values passed as parameters to reset()*/
     
     m_SwerveControllerCommand =
       new SwerveControllerCommand(

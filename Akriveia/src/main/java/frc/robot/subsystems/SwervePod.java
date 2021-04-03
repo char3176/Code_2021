@@ -98,7 +98,7 @@ public class SwervePod {
         m_drivePIDController = new PIDController(SwervePodConstants.P_MODULE_DRIVE_CONTROLLER, 0, 0);
 
         m_turningPIDController = new ProfiledPIDController(
-            SwervePodConstants.P_MODULE_TURNING_CONTROLLER, 0, 0,
+            SwervePodConstants.P_MODULE_TURNING_CONTROLLER[0], 0, SwervePodConstants.P_MODULE_TURNING_CONTROLLER[2],
             new TrapezoidProfile.Constraints(
                 (-SwervePodConstants.MAX_MODULE_ANGULAR_SPEED_RADIANS_PER_SECOND),
                 (SwervePodConstants.MAX_MODULE_ANGULAR_SPEED_RADIANS_PER_SECOND)));
@@ -317,7 +317,8 @@ public class SwervePod {
         //    SwerveModuleState optimizedState = SwerveModuleState.optimize(calculatedState, tempTurnOutput);
         //    set(driveOutput,optimizedState.angle.getRadians());//Units.metersToFeet(driveOutput),turnOutput);     
         //} else {
-            set(driveOutput,calculatedState.angle.getRadians());//Units.metersToFeet(driveOutput),turnOutput);     
+            set(driveOutput,calculatedState.angle.getRadians());//Units.metersToFeet(driveOutput),turnOutput);
+            // set(driveOutput, state.angle.getRadians());     
         //}   
         this.isAutonSwerveControllerOptimizingSpinPos = false;
     }

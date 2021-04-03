@@ -92,10 +92,10 @@ public class DrivetrainConstants {
      */ 
 
      // Below line contains offset needed to rotate raw navx angle output such that +x=fore and +y=port
-    public static final double GYRO_COORDSYS_ROTATIONAL_OFFSET = Units.radiansToDegrees(Math.PI / 2); // Currently equivalent to +90 Degrees 
+    public static final double GYRO_COORDSYS_ROTATIONAL_OFFSET = /*Units.radiansToDegrees(Math.PI / 2); */ 0; // Currently equivalent to +90 Degrees 
 
 
-    public static final double[] AUTON_THETA_CONTROLLER_PIDF = { 1.0 /*kP*/, 0.0 /*kI*/, 0.0 /*kD*/, 0.0 /*kF*/};
+    public static final double[] AUTON_THETA_CONTROLLER_PIDF = { 3.0 /*kP*/, 0.0 /*kI*/, 0.0 /*kD*/, 0.0 /*kF*/};
 
     public static final TrapezoidProfile.Constraints THETA_CONTROLLER_CONSTRAINTS =
         new TrapezoidProfile.Constraints(
