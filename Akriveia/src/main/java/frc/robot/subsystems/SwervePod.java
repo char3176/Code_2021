@@ -338,7 +338,7 @@ public class SwervePod {
     public SwerveModuleState getState() {
         state = new SwerveModuleState(getVelocity_metersPerSec(), new Rotation2d(tics2Rads(spinController.getSelectedSensorPosition())));
                 /*drivetrain.gyro.getRate() * DrivetrainConstants.DEGREES_PER_SECOND_TO_METERS_PER_SECOND_OF_WHEEL,
-        drivetrain.getRotation2d())*/;       
+        drivetrain.getRotation2d());*/       
         return state;                                                                         //Not sure if this works
   }                   
 

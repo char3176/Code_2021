@@ -10,6 +10,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 //import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
@@ -32,11 +33,11 @@ import frc.robot.VisionClient;
 
 import java.util.ArrayList;
 
-
 /* ##################################################################################
  *  BEGIN: Temporary Code for PIDController of rotation to stop drift in AutonCrude
  * ################################################################################## */
-    import frc.robot.util.PIDLoop;
+import frc.robot.util.PIDLoop;
+
 /* ##################################################################################
  *  END: Temporary Code for PIDController of rotation to stop drift in AutonCrude
  * ################################################################################## */
@@ -61,19 +62,17 @@ public class Drivetrain extends SubsystemBase {
 
   private double lastGyroClock;
 
-  public TalonFX[] driveControllers = {new TalonFX(DrivetrainConstants.DRIVE_ONE_CID),
-                                            new TalonFX(DrivetrainConstants.DRIVE_TWO_CID),
-                                            new TalonFX(DrivetrainConstants.DRIVE_THREE_CID),
-                                            new TalonFX(DrivetrainConstants.DRIVE_FOUR_CID)};
+  public TalonFX[] driveControllers = { new TalonFX(DrivetrainConstants.DRIVE_ONE_CID),
+      new TalonFX(DrivetrainConstants.DRIVE_TWO_CID), new TalonFX(DrivetrainConstants.DRIVE_THREE_CID),
+      new TalonFX(DrivetrainConstants.DRIVE_FOUR_CID) };
 
-  public TalonSRX[] spinControllers = {new TalonSRX(DrivetrainConstants.STEER_ONE_CID),
-                                        new TalonSRX(DrivetrainConstants.STEER_TWO_CID),
-                                        new TalonSRX(DrivetrainConstants.STEER_THREE_CID),
-                                        new TalonSRX(DrivetrainConstants.STEER_FOUR_CID)};
+  public TalonSRX[] spinControllers = { new TalonSRX(DrivetrainConstants.STEER_ONE_CID),
+      new TalonSRX(DrivetrainConstants.STEER_TWO_CID), new TalonSRX(DrivetrainConstants.STEER_THREE_CID),
+      new TalonSRX(DrivetrainConstants.STEER_FOUR_CID) };
 
-  private double length;   // robot's wheelbase 
-  private double width;    // robot's trackwidth
-  private double k_etherRadius;  // radius used in A,B,C,D component calc's of ether decomposition
+  private double length; // robot's wheelbase
+  private double width; // robot's trackwidth
+  private double k_etherRadius; // radius used in A,B,C,D component calc's of ether decomposition
 
   private double maxSpeed_InchesPerSec;
   private double maxVel;
@@ -96,35 +95,36 @@ public class Drivetrain extends SubsystemBase {
   private double spinLockAngle;
   private boolean isSpinLocked;
   private PIDLoop spinLockPID;
-  //private PIDController spinLockPID;
+  // private PIDController spinLockPID;
 
   public Rotation2d rotation = new Rotation2d();
 
   private double angleOffset = 90.0;
 
-  /* ##################################################################################
-   *  BEGIN: Temporary Code for PIDController of rotation to stop drift in AutonCrude
-   * ################################################################################## */
-    private int arraytrack;
-    double[] AngleHist = {0.0, 0.0, 0.0, 0.0, 0.0};
-    double autonCrudeGyroAngleAvg;
-  /* ##################################################################################
-   *  END: Temporary Code for PIDController of rotation to stop drift in AutonCrude
-   * ################################################################################## */
+  /*
+   * #############################################################################
+   * ##### BEGIN: Temporary Code for PIDController of rotation to stop drift in
+   * AutonCrude
+   * #############################################################################
+   * #####
+   */
+  private int arraytrack;
+  double[] AngleHist = { 0.0, 0.0, 0.0, 0.0, 0.0 };
+  double autonCrudeGyroAngleAvg;
+  /*
+   * #############################################################################
+   * ##### END: Temporary Code for PIDController of rotation to stop drift in
+   * AutonCrude
+   * #############################################################################
+   * #####
+   */
 
-   public enum driveMode {
-    DEFENSE,
-    DRIVE,
-    TURBO,
-    VISION,
-    ORBIT,
-    SPIN_LOCK
+  public enum driveMode {
+    DEFENSE, DRIVE, TURBO, VISION, ORBIT, SPIN_LOCK
   }
 
   public enum coordType {
-    BACK_ROBOT_CENTRIC,
-    FIELD_CENTRIC,
-    ROBOT_CENTRIC
+    BACK_ROBOT_CENTRIC, FIELD_CENTRIC, ROBOT_CENTRIC
   }
 
   private SwervePod podFR;
@@ -146,7 +146,7 @@ public class Drivetrain extends SubsystemBase {
     pods.add(podBL);
     pods.add(podBR);
 
-    //currentCoordType = coordType.FIELD_CENTRIC;
+    // currentCoordType = coordType.FIELD_CENTRIC;
     currentCoordType = coordType.FIELD_CENTRIC;
 
     autonVision = false;
@@ -154,7 +154,7 @@ public class Drivetrain extends SubsystemBase {
     // Setting constants
     length = DrivetrainConstants.LENGTH;
     width = DrivetrainConstants.WIDTH;
-    k_etherRadius = Math.sqrt(Math.pow(length,2) / Math.pow(width,2))/2; 
+    k_etherRadius = Math.sqrt(Math.pow(length, 2) / Math.pow(width, 2)) / 2;
 
     maxSpeed_InchesPerSec = DrivetrainConstants.MAX_WHEEL_SPEED_INCHES_PER_SECOND;
     maxRotation = DrivetrainConstants.MAX_ROT_SPEED;
@@ -163,12 +163,33 @@ public class Drivetrain extends SubsystemBase {
     // Instantiating the gyro
     gyro = new AHRS(SPI.Port.kMXP);
     gyro.reset();
-    //gyro.setAngleAdjustment(90.0);
-    //gyroUpdateOffset();
+    // gyro.setAngleAdjustment(90.0);
+    // gyroUpdateOffset();
     updateNavxAngle();
-    //odometry = new SwerveDriveOdometry(DrivetrainConstants.DRIVE_KINEMATICS, gyro.getRotation2d());    // <<-- getRotation2d is continuous. ie 360+1=361 not 0 or -361. gyro.getRotation2d() uses NWU Axis Convention
-    odometry = new SwerveDriveOdometry(DrivetrainConstants.DRIVE_KINEMATICS, getNavxAngle_inRadians_asRotation2d());    // <<-- getRotation2d is continuous. ie 360+1=361 not 0 or -361. getNavxAngle_asRotation2d() should be same Axis Convention as Teleop, I believe.
-    
+    // odometry = new SwerveDriveOdometry(DrivetrainConstants.DRIVE_KINEMATICS,
+    // gyro.getRotation2d()); // <<-- getRotation2d is continuous. ie 360+1=361 not
+    // 0 or -361. gyro.getRotation2d() uses NWU Axis Convention
+    odometry = new SwerveDriveOdometry(DrivetrainConstants.DRIVE_KINEMATICS, getNavxAngle_inRadians_asRotation2d()); // <<--
+                                                                                                                     // getRotation2d
+                                                                                                                     // is
+                                                                                                                     // continuous.
+                                                                                                                     // ie
+                                                                                                                     // 360+1=361
+                                                                                                                     // not
+                                                                                                                     // 0
+                                                                                                                     // or
+                                                                                                                     // -361.
+                                                                                                                     // getNavxAngle_asRotation2d()
+                                                                                                                     // should
+                                                                                                                     // be
+                                                                                                                     // same
+                                                                                                                     // Axis
+                                                                                                                     // Convention
+                                                                                                                     // as
+                                                                                                                     // Teleop,
+                                                                                                                     // I
+                                                                                                                     // believe.
+
     // SmartDashboard.putNumber("currentAngle", this.currentAngle);
 
     // SmartDashboard.putNumber("forwardCommand", 0);
@@ -177,101 +198,113 @@ public class Drivetrain extends SubsystemBase {
 
     isVisionDriving = false;
 
-  /* ##################################################################################
-   *  BEGIN: Temporary Code for PIDController of rotation to stop drift in AutonCrude
-   * ################################################################################## */
+    /*
+     * #############################################################################
+     * ##### BEGIN: Temporary Code for PIDController of rotation to stop drift in
+     * AutonCrude
+     * #############################################################################
+     * #####
+     */
     arraytrack = 0;
     autonCrudeGyroAngleAvg = 0;
-  /* ##################################################################################
-   *  END: Temporary Code for PIDController of rotation to stop drift in AutonCrude
-   * ################################################################################## */
+    /*
+     * #############################################################################
+     * ##### END: Temporary Code for PIDController of rotation to stop drift in
+     * AutonCrude
+     * #############################################################################
+     * #####
+     */
 
     // TODO: We initialize to face forward but how do we make this into a command?
     // Maybe we say drive with the below parameters, but where?
     /*
-    // Start wheels in a forward facing direction */
-    
+     * // Start wheels in a forward facing direction
+     */
+
     this.forwardCommand = Math.pow(10, -15); // Has to be positive to turn that direction?
     this.strafeCommand = 0.0;
     this.spinCommand = 0.0;
-    
-    spinLockPID = new PIDLoop(0.3, 0.0, 0.0, 0.0);
-    //spinLockPID = new PIDController(0.3, 0.0, 0.0, 0.0);
-  }
-  
-  // Prevents more than one instance of drivetrian
-  public static Drivetrain getInstance() { return instance; }
-/** 
-  public void drive(double forwardCommand, double strafeCommand, double spinCommand, int uselessVariable) {
-    double smallNum = Math.pow(10, -15);
-    //spinCommand = (spinCommand - (-1))/(1 - (-1));  //rescales spinCommand to a 0..1 range
-    double angle = (spinCommand * Math.PI) + Math.PI;  // <- diff coord system than -1..1 = 0..2Pi
-                                                       // This coord system is 0..1 = Pi..2Pi, & 
-                                                       //                      0..-1 = Pi..-2PI
-                                                       //                      right?
-                                                       //             Fixed by new rescaling at line 140?
-    pods.get(0).set(smallNum, angle);
-  }
-  */
 
+    spinLockPID = new PIDLoop(0.3, 0.0, 0.0, 0.0);
+    // spinLockPID = new PIDController(0.3, 0.0, 0.0, 0.0);
+  }
+
+  // Prevents more than one instance of drivetrian
+  public static Drivetrain getInstance() {
+    return instance;
+  }
+
+  /**
+   * public void drive(double forwardCommand, double strafeCommand, double
+   * spinCommand, int uselessVariable) { double smallNum = Math.pow(10, -15);
+   * //spinCommand = (spinCommand - (-1))/(1 - (-1)); //rescales spinCommand to a
+   * 0..1 range double angle = (spinCommand * Math.PI) + Math.PI; // <- diff coord
+   * system than -1..1 = 0..2Pi // This coord system is 0..1 = Pi..2Pi, & // 0..-1
+   * = Pi..-2PI // right? // Fixed by new rescaling at line 140?
+   * pods.get(0).set(smallNum, angle); }
+   */
 
   /**
    * 
    * @param forwardCommand range of {-1,1}
-   * @param strafeCommand range of {-1, 1}
-   * @param spinCommand range of {-1, 1}
+   * @param strafeCommand  range of {-1, 1}
+   * @param spinCommand    range of {-1, 1}
    */
   public void drive(double forwardCommand, double strafeCommand, double spinCommand) {
     this.forwardCommand = forwardCommand;
     this.strafeCommand = strafeCommand;
     this.spinCommand = spinCommand;
 
-    //this.forwardCommand = SmartDashboard.getNumber("forwardCommand", 0);
-    //this.strafeCommand = SmartDashboard.getNumber("strafeCommand", 0);
-    //this.spinCommand = SmartDashboard.getNumber("spinCommand", 0);
+    // this.forwardCommand = SmartDashboard.getNumber("forwardCommand", 0);
+    // this.strafeCommand = SmartDashboard.getNumber("strafeCommand", 0);
+    // this.spinCommand = SmartDashboard.getNumber("spinCommand", 0);
 
     // SmartDashboard.putNumber("drive()InputForwardCommand", forwardCommand);
     // SmartDashboard.putNumber("drive()InputStrafeCommand", strafeCommand);
     // SmartDashboard.putNumber("drive()InputSpinCommand", spinCommand);
 
-    
-
     updateNavxAngle();
-    // SmartDashboard.putNumber("Drive updated currentAngle Degrees", (this.currentAngle * 180/Math.PI));
-    // SmartDashboard.putString("Drive currentCoordType", currentCoordType.toString());
+    // SmartDashboard.putNumber("Drive updated currentAngle Degrees",
+    // (this.currentAngle * 180/Math.PI));
+    // SmartDashboard.putString("Drive currentCoordType",
+    // currentCoordType.toString());
 
-    if(currentDriveMode != driveMode.TURBO) {
+    if (currentDriveMode != driveMode.TURBO) {
       this.forwardCommand *= DrivetrainConstants.NON_TURBO_PERCENT_OUT_CAP;
       this.strafeCommand *= DrivetrainConstants.NON_TURBO_PERCENT_OUT_CAP;
       this.spinCommand *= DrivetrainConstants.NON_TURBO_PERCENT_OUT_CAP;
     }
 
-    if(currentDriveMode == driveMode.SPIN_LOCK) {
+    if (currentDriveMode == driveMode.SPIN_LOCK) {
       this.spinCommand = spinLockPID.returnOutput(getNavxAngle_inDegrees(), spinLockAngle);
-      //this.spinCommand = spinLockPID.calculate(getNavxAngle(), spinLockAngle);
+      // this.spinCommand = spinLockPID.calculate(getNavxAngle(), spinLockAngle);
 
     }
 
-    if(currentCoordType == coordType.FIELD_CENTRIC) {
-      final double temp = (this.forwardCommand * Math.cos(this.currentAngle) + this.strafeCommand * Math.sin(this.currentAngle));
-      this.strafeCommand = (-this.forwardCommand * Math.sin(this.currentAngle) + this.strafeCommand * Math.cos(this.currentAngle));
+    if (currentCoordType == coordType.FIELD_CENTRIC) {
+      final double temp = (this.forwardCommand * Math.cos(this.currentAngle)
+          + this.strafeCommand * Math.sin(this.currentAngle));
+      this.strafeCommand = (-this.forwardCommand * Math.sin(this.currentAngle)
+          + this.strafeCommand * Math.cos(this.currentAngle));
       this.forwardCommand = temp;
     }
     // TODO: Find out why we multiply by 0.75
-    if(currentCoordType == coordType.ROBOT_CENTRIC) {
-      this.strafeCommand *= 1; //0.75;
-      this.forwardCommand *= 1; //0.75;
-      this.spinCommand *= 1; //0.75;
+    if (currentCoordType == coordType.ROBOT_CENTRIC) {
+      this.strafeCommand *= 1; // 0.75;
+      this.forwardCommand *= 1; // 0.75;
+      this.spinCommand *= 1; // 0.75;
     }
-    if(currentCoordType == coordType.BACK_ROBOT_CENTRIC) {
+    if (currentCoordType == coordType.BACK_ROBOT_CENTRIC) {
       this.strafeCommand *= -1;
       this.forwardCommand *= -1;
     }
-    // SmartDashboard.putNumber("this.forwardComDriveTrain.drive", this.forwardCommand);
-    // SmartDashboard.putNumber("this.strafeComDriveTrain.drive", this.strafeCommand);
+    // SmartDashboard.putNumber("this.forwardComDriveTrain.drive",
+    // this.forwardCommand);
+    // SmartDashboard.putNumber("this.strafeComDriveTrain.drive",
+    // this.strafeCommand);
     // SmartDashboard.putNumber("this.spinComDriveTrain.drive", this.spinCommand);
-    calculateNSetPodPositions(this.forwardCommand, this.strafeCommand, this.spinCommand);  
-    
+    calculateNSetPodPositions(this.forwardCommand, this.strafeCommand, this.spinCommand);
+
     SmartDashboard.putBoolean("isOrbiting", currentDriveMode == driveMode.ORBIT);
     SmartDashboard.putBoolean("isRobotCentric", currentCoordType == coordType.ROBOT_CENTRIC);
     SmartDashboard.putBoolean("isFieldCentric", currentCoordType == coordType.FIELD_CENTRIC);
@@ -280,35 +313,35 @@ public class Drivetrain extends SubsystemBase {
   /**
    * 
    * @param forwardCommand range of {-1,1} coming from translation stick Y-Axis
-   * @param strafeCommand range of {-1,1} coming from translation stick X-Axis
-   * @param spinCommand range of {}
+   * @param strafeCommand  range of {-1,1} coming from translation stick X-Axis
+   * @param spinCommand    range of {}
    */
   private void calculateNSetPodPositions(double forwardCommand, double strafeCommand, double spinCommand) {
-    
-    this.forwardCommand = forwardCommand;
-    this.strafeCommand = strafeCommand; 
-    this.spinCommand = spinCommand; 
 
-    if(currentDriveMode != driveMode.DEFENSE) {
+    this.forwardCommand = forwardCommand;
+    this.strafeCommand = strafeCommand;
+    this.spinCommand = spinCommand;
+
+    if (currentDriveMode != driveMode.DEFENSE) {
       // Create arrays for the speed and angle of each pod
       double[] podDrive = new double[4];
       double[] podSpin = new double[4];
 
-      
       // ###########################################################
-      // BEGIN:   Ether Eqns -- Ether's official derivation
-      //          +Y :=  axis of chassis forward movement
-      //          +X :=  axis of chassis strafe to starboard/right
+      // BEGIN: Ether Eqns -- Ether's official derivation
+      // +Y := axis of chassis forward movement
+      // +X := axis of chassis strafe to starboard/right
       // ###########################################################
       double a = strafeCommand - spinCommand * getRadius("A");
-      double b = strafeCommand + spinCommand * getRadius("B");;
-      double c = forwardCommand - spinCommand * getRadius("C");  
+      double b = strafeCommand + spinCommand * getRadius("B");
+      ;
+      double c = forwardCommand - spinCommand * getRadius("C");
       double d = forwardCommand + spinCommand * getRadius("D");
-      
+
       // Calculate speed (podDrive[idx]) and angle (podSpin[idx]) of each pod
       podDrive[0] = Math.sqrt(Math.pow(b, 2) + Math.pow(c, 2));
       podSpin[0] = Math.atan2(b, c);
-      
+
       podDrive[1] = Math.sqrt(Math.pow(b, 2) + Math.pow(d, 2));
       podSpin[1] = Math.atan2(b, d);
 
@@ -318,84 +351,80 @@ public class Drivetrain extends SubsystemBase {
       podDrive[3] = Math.sqrt(Math.pow(a, 2) + Math.pow(c, 2));
       podSpin[3] = Math.atan2(a, c);
       // ###########################################################
-      // /END     Ether Eqns -- Ether's official derivation
+      // /END Ether Eqns -- Ether's official derivation
       // ###########################################################
-      
-
 
       /*
-      // ###########################################################
-      // BEGIN:   Ether Eqns -- JonH derivation 2021-02-15
-      //          +X :=  axis of chassis forward movement ... we think
-      //          -Y :=  axis of chassis strafe to starboard/right ... we think
-      // ###########################################################
-      double a = this.forwardCommand - this.spinCommand * width/2;
-      double b = this.forwardCommand + this.spinCommand * width/2;
-      double c = this.strafeCommand - this.spinCommand * length/2;
-      double d = this.strafeCommand + this.spinCommand * length/2;
-
-      // Calculate speed and angle of each pod
-      // TODO: Verify order of atan2 parameters. atan2(y,x) is formal java def, 
-      //        but past implementations and ether use atan2(x,y).
-      podDrive[0] = Math.sqrt(Math.pow(b,2) + Math.pow(d,2));
-      podSpin[0] = Math.atan2(d, b);
-
-      podDrive[1] = Math.sqrt(Math.pow(b,2) + Math.pow(c,2));
-      podSpin[1] = Math.atan2(c, b);
-      
-      podDrive[2] = Math.sqrt(Math.pow(a,2) + Math.pow(c,2));
-      podSpin[2] = Math.atan2(c, a);
-      
-      podDrive[3] = Math.sqrt(Math.pow(a,2) + Math.pow(d,2));
-      podSpin[3] = Math.atan2(d, a);
-      // ###########################################################
-      // END:   Ether Eqns -- JonH derivation 2021-02-15
-      // ###########################################################
-      */
+       * // ########################################################### // BEGIN:
+       * Ether Eqns -- JonH derivation 2021-02-15 // +X := axis of chassis forward
+       * movement ... we think // -Y := axis of chassis strafe to starboard/right ...
+       * we think // ###########################################################
+       * double a = this.forwardCommand - this.spinCommand * width/2; double b =
+       * this.forwardCommand + this.spinCommand * width/2; double c =
+       * this.strafeCommand - this.spinCommand * length/2; double d =
+       * this.strafeCommand + this.spinCommand * length/2;
+       * 
+       * // Calculate speed and angle of each pod // TODO: Verify order of atan2
+       * parameters. atan2(y,x) is formal java def, // but past implementations and
+       * ether use atan2(x,y). podDrive[0] = Math.sqrt(Math.pow(b,2) + Math.pow(d,2));
+       * podSpin[0] = Math.atan2(d, b);
+       * 
+       * podDrive[1] = Math.sqrt(Math.pow(b,2) + Math.pow(c,2)); podSpin[1] =
+       * Math.atan2(c, b);
+       * 
+       * podDrive[2] = Math.sqrt(Math.pow(a,2) + Math.pow(c,2)); podSpin[2] =
+       * Math.atan2(c, a);
+       * 
+       * podDrive[3] = Math.sqrt(Math.pow(a,2) + Math.pow(d,2)); podSpin[3] =
+       * Math.atan2(d, a); //
+       * ########################################################### // END: Ether
+       * Eqns -- JonH derivation 2021-02-15 //
+       * ###########################################################
+       */
 
       // SmartDashboard.putNumber("a", a);
       // SmartDashboard.putNumber("b", b);
       // SmartDashboard.putNumber("c", c);
       // SmartDashboard.putNumber("d", d);
       for (int idx = 0; idx < 4; idx++) {
-        // SmartDashboard.putNumber("preScale P" + (idx + 1) + " podDrive", podDrive[idx]);
+        // SmartDashboard.putNumber("preScale P" + (idx + 1) + " podDrive",
+        // podDrive[idx]);
       }
 
       // Find the highest pod speed then normalize if a pod is exceeding our max speed
       relMaxSpeed = Math.max(Math.max(podDrive[0], podDrive[1]), Math.max(podDrive[2], podDrive[3]));
-      if(relMaxSpeed > maxSpeed_InchesPerSec) {
-        for(int idx = 0; idx < pods.size(); idx++) {
+      if (relMaxSpeed > maxSpeed_InchesPerSec) {
+        for (int idx = 0; idx < pods.size(); idx++) {
           podDrive[idx] /= relMaxSpeed / maxSpeed_InchesPerSec;
         }
       }
 
       // Set calculated drive and spins to each pod
-      //for(int idx = 0; idx < pods.size(); idx++) {
-        for(int idx = 0; idx < (pods.size()); idx++) {
-          pods.get(idx).set(podDrive[idx], podSpin[idx]);   //TODO: try doing pods.size() - 1 in for conditional, then outside for loop
-                                                            //  do a hardcode set of pods.get(3).set(0.1, 0.0);
-        //SmartDashboard.putNumber("pod" + idx + " drive", podDrive[idx]);    
-        //SmartDashboard.putNumber("pod" + idx + " spin", podSpin[idx]);
-        }
-        //pods.get(3).set(0.1,1.57);
-        
+      // for(int idx = 0; idx < pods.size(); idx++) {
+      for (int idx = 0; idx < (pods.size()); idx++) {
+        pods.get(idx).set(podDrive[idx], podSpin[idx]); // TODO: try doing pods.size() - 1 in for conditional, then
+                                                        // outside for loop
+                                                        // do a hardcode set of pods.get(3).set(0.1, 0.0);
+        // SmartDashboard.putNumber("pod" + idx + " drive", podDrive[idx]);
+        // SmartDashboard.putNumber("pod" + idx + " spin", podSpin[idx]);
+      }
+      // pods.get(3).set(0.1,1.57);
 
-    //} else { // Enter defenseive position
-    //  double smallNum = Math.pow(10, -15);
-    //  pods.get(0).set(smallNum, -1.0 * Math.PI / 4.0);
-    //  pods.get(1).set(smallNum, 1.0 * Math.PI / 4.0);
-    //  pods.get(2).set(smallNum, 3.0 * Math.PI / 4.0);
-    //  pods.get(3).set(smallNum, -3.0 * Math.PI / 4.0);
+      // } else { // Enter defenseive position
+      // double smallNum = Math.pow(10, -15);
+      // pods.get(0).set(smallNum, -1.0 * Math.PI / 4.0);
+      // pods.get(1).set(smallNum, 1.0 * Math.PI / 4.0);
+      // pods.get(2).set(smallNum, 3.0 * Math.PI / 4.0);
+      // pods.get(3).set(smallNum, -3.0 * Math.PI / 4.0);
 
-    SmartDashboard.putBoolean("orbiting", isOrbiting());
+      SmartDashboard.putBoolean("orbiting", isOrbiting());
     }
   }
 
-  
   private double getNavxAngle_inDegrees() {
     return (gyro.getAngle() + DrivetrainConstants.GYRO_COORDSYS_ROTATIONAL_OFFSET + this.gyroOffset);
   }
-  
+
   private double getNavxAngle_inRadians() {
     return (Units.degreesToRadians(getNavxAngle_inDegrees()));
   }
@@ -404,7 +433,7 @@ public class Drivetrain extends SubsystemBase {
     Rotation2d angle = new Rotation2d(getNavxAngle_inRadians());
     return angle;
   }
-  
+
   public Rotation2d getNavxAngle_inDegrees_asRotation2d() {
     Rotation2d angle = new Rotation2d(getNavxAngle_inDegrees());
     return angle;
@@ -412,7 +441,7 @@ public class Drivetrain extends SubsystemBase {
 
   private void updateNavxAngle() {
     // -pi to pi; 0 = straight
-    this.currentAngle = (((Units.degreesToRadians(getNavxAngle_inDegrees()))) % (2*Math.PI));
+    this.currentAngle = (((Units.degreesToRadians(getNavxAngle_inDegrees()))) % (2 * Math.PI));
     // gyro.getNavxAngle is returned in degrees.
     // Then converted to radians (ie *(Math.PI/180)).
     // And finally, it's modulus against 2pi is taken and returned as currentAngle.
@@ -426,14 +455,18 @@ public class Drivetrain extends SubsystemBase {
     // Omitted if driveStatements where we pivoted around a pod
     // This'll be orbit and dosado in the future
     // if(currentDriveMode == driveMode.ORBIT) {
-      // if(component.equals("A") || component.equals("B")) { return length / 2.0; }
-      // else if(component.equals("C")) { return width; }
-      // else /* component D */ { return 2 * width; } // Puts radius to the right of bot at distance w
+    // if(component.equals("A") || component.equals("B")) { return length / 2.0; }
+    // else if(component.equals("C")) { return width; }
+    // else /* component D */ { return 2 * width; } // Puts radius to the right of
+    // bot at distance w
     // } else {
-      if(component.equals("A") || component.equals("B")) { return length / 2.0 ; }
-      else { return width / 2.0; }  //TODO: place to check for forward vs back pods working vs not working
+    if (component.equals("A") || component.equals("B")) {
+      return length / 2.0;
+    } else {
+      return width / 2.0;
+    } // TODO: place to check for forward vs back pods working vs not working
     // }
-    ///return 0.0;   // TODO: this method needs cleanup and logic-checking
+    /// return 0.0; // TODO: this method needs cleanup and logic-checking
   }
 
   public void setDriveMode(driveMode wantedDriveMode) {
@@ -445,7 +478,9 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public boolean isOrbiting() {
-    if(currentDriveMode == driveMode.ORBIT) { return true; }
+    if (currentDriveMode == driveMode.ORBIT) {
+      return true;
+    }
     return false;
   }
 
@@ -472,45 +507,51 @@ public class Drivetrain extends SubsystemBase {
   public void setSpinLocked(boolean isSpinLocked) {
     this.isSpinLocked = isSpinLocked;
   }
- 
-  /*
-  public void drive(double drivePercent, double spinPercent) {
-    SmartDashboard.putBoolean("Are we calling drive", true);
-    pod1.velocityPIDDriveNSpin(drivePercent, spinPercent);
-    // pod1.percentFFDriveNSpin(drivePercent, spinPercent);
-    if(drivePercent > 1.4) {
-      pod.velocityPIDDriveNSpin(5.0, 0.0);
-    } else {
-      pod.velocityPIDDriveNSpin(0.0, 0.0);
-    }
-  }
-  */
 
   /*
-  public void setPose(Pose2d setPose) {
-    odometry.resetPosition(setPose, getAngle());
-  }
+   * public void drive(double drivePercent, double spinPercent) {
+   * SmartDashboard.putBoolean("Are we calling drive", true);
+   * pod1.velocityPIDDriveNSpin(drivePercent, spinPercent); //
+   * pod1.percentFFDriveNSpin(drivePercent, spinPercent); if(drivePercent > 1.4) {
+   * pod.velocityPIDDriveNSpin(5.0, 0.0); } else { pod.velocityPIDDriveNSpin(0.0,
+   * 0.0); } }
+   */
 
-  public Rotation2d getAngle() {
-    return Rotation2d.fromDegrees(-gyro.getAngle());
-  }
-  */
+  /*
+   * public void setPose(Pose2d setPose) { odometry.resetPosition(setPose,
+   * getAngle()); }
+   * 
+   * public Rotation2d getAngle() { return
+   * Rotation2d.fromDegrees(-gyro.getAngle()); }
+   */
 
-
-/* ##################################################################################
- *  BEGIN: Temporary Code for PIDController of rotation to stop drift in AutonCrude
- * ################################################################################## */
+  /*
+   * #############################################################################
+   * ##### BEGIN: Temporary Code for PIDController of rotation to stop drift in
+   * AutonCrude
+   * #############################################################################
+   * #####
+   */
   private void calcAutonCrudeGyroAngleAvg() {
     this.AngleHist[this.arraytrack] = this.currentAngle;
-    autonCrudeGyroAngleAvg = ( this.AngleHist[0] + this.AngleHist[1] + this.AngleHist[2] + this.AngleHist[3] + this.AngleHist[4] ) / 5;
+    autonCrudeGyroAngleAvg = (this.AngleHist[0] + this.AngleHist[1] + this.AngleHist[2] + this.AngleHist[3]
+        + this.AngleHist[4]) / 5;
   }
 
   public double getAutonCrudeGyroAngleAvg() {
     return this.autonCrudeGyroAngleAvg;
   }
-  /* ##################################################################################
-  *  END: Temporary Code for PIDController of rotation to stop drift in AutonCrude
-  * ################################################################################## */
+  /*
+   * #############################################################################
+   * ##### END: Temporary Code for PIDController of rotation to stop drift in
+   * AutonCrude
+   * #############################################################################
+   * #####
+   */
+
+  public ChassisSpeeds getChassisSpeed() {
+    return toChassisSpeeds(podFR.getState(), podFL.getState(), podBL.getState(), podBR.getState());
+  }
 
   public Pose2d getCurrentPose() {
     SmartDashboard.putNumber("odometry X", odometry.getPoseMeters().getX());
@@ -556,7 +597,6 @@ public class Drivetrain extends SubsystemBase {
         podFL.getState(),
         podBL.getState(),
         podBR.getState());
-
   }
 
   public double getHeading() {

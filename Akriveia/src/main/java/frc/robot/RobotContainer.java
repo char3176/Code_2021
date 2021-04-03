@@ -3,19 +3,24 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.controller.HolonomicDriveController;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
+import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.commands.auton.FollowGivenPath;
+import frc.robot.commands.auton.HolonomicAuton;
 import frc.robot.commands.auton.Slalom;
 import frc.robot.commands.teleop.*;
 import frc.robot.constants.DrivetrainConstants;
@@ -195,6 +200,8 @@ public class RobotContainer {
 
     */
 
+    double startTime = Timer.getFPGATimestamp();
+
     if (m_autonChooser.getSelected().equals("s_barrel_racing")) {
       System.out.print("################ INFO: setting trajectory = barrel_racing ###########################");
       m_trajectory = m_trajLibrary.get(0);
@@ -290,15 +297,7 @@ public class RobotContainer {
 
     m_Drivetrain.resetOdometry(initialTrajPose);  // Reset odometry to the starting pose of the trajectory.
 
-    thetaController = new ProfiledPIDController(
-      DrivetrainConstants.AUTON_THETA_CONTROLLER_PIDF[0], /*kP*/
-      DrivetrainConstants.AUTON_THETA_CONTROLLER_PIDF[1], /*kI*/
-      DrivetrainConstants.AUTON_THETA_CONTROLLER_PIDF[2], /*kD*/ 
-      DrivetrainConstants.THETA_CONTROLLER_CONSTRAINTS    /*Contraints on PIDController. Equal to: a.) max rotation speed in radians per second, and b.) max rotational velocity in radians per second^2 */
-    );
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);  /*Set output from thetaController's PID such that range of output is [-pi, pi] (ie (+pi_value + 1 = -pi_value) and (-pi_value -1 = +pi_value) */ 
-    //thetaController.reset(0.0, 0.0); /*resets thetaController PID error and integral terms to the two values passed as parameters to reset()*/
-    
+    /*
     m_SwerveControllerCommand =
       new SwerveControllerCommand(
         m_trajectory,
@@ -318,10 +317,10 @@ public class RobotContainer {
     }
 
     return m_SwerveControllerCommand.andThen(() -> m_Drivetrain.drive(0, 0, 0)); 
-  }
+    */
 
- 
-  
+    new HolonomicAuton(m_trajectory);
+  }
 
   public void createTrajectory(String path){
     String trajectoryJSON = "paths/" + path + ".wpilib.json";
