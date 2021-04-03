@@ -100,9 +100,11 @@ public class SwervePod {
         m_turningPIDController = new ProfiledPIDController(
             SwervePodConstants.P_MODULE_TURNING_CONTROLLER[0], 0, SwervePodConstants.P_MODULE_TURNING_CONTROLLER[2],
             new TrapezoidProfile.Constraints(
-                (-SwervePodConstants.MAX_MODULE_ANGULAR_SPEED_RADIANS_PER_SECOND),
+                (SwervePodConstants.MAX_MODULE_ANGULAR_SPEED_RADIANS_PER_SECOND),
                 (SwervePodConstants.MAX_MODULE_ANGULAR_SPEED_RADIANS_PER_SECOND)));
         m_turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
+
+        m_turningPIDController.reset(0.0, 0.0);
         
 
         /**
@@ -317,7 +319,7 @@ public class SwervePod {
         //    SwerveModuleState optimizedState = SwerveModuleState.optimize(calculatedState, tempTurnOutput);
         //    set(driveOutput,optimizedState.angle.getRadians());//Units.metersToFeet(driveOutput),turnOutput);     
         //} else {
-            set(driveOutput,calculatedState.angle.getRadians());//Units.metersToFeet(driveOutput),turnOutput);
+            set(-driveOutput, calculatedState.angle.getRadians());//Units.metersToFeet(driveOutput),turnOutput);
             // set(driveOutput, state.angle.getRadians());     
         //}   
         this.isAutonSwerveControllerOptimizingSpinPos = false;
@@ -326,8 +328,8 @@ public class SwervePod {
     public double getVelocity_metersPerSec() {
         double sensoredVelInTicsPer100ms = driveController.getSelectedSensorVelocity(1);
         //SmartDashboard.putNumber("GetSensorVelocity", speed);
-        double wheelCircumferance = Units.inchesToMeters(DrivetrainConstants.WHEEL_DIAMETER_INCHES * Math.PI);
-        double metersPer100ms = sensoredVelInTicsPer100ms * 1 * wheelCircumferance / (SwervePodConstants.DRIVE_ENCODER_UNITS_PER_REVOLUTION * 6.17);  //6.17 = gear ratio  <--should this be 6.17 here, or (1 / 6.17)?
+        double wheelCircumference = Units.inchesToMeters(DrivetrainConstants.WHEEL_DIAMETER_INCHES * Math.PI);
+        double metersPer100ms = sensoredVelInTicsPer100ms * 1 * wheelCircumference / (SwervePodConstants.DRIVE_ENCODER_UNITS_PER_REVOLUTION * 6.17);  //6.17 = gear ratio  <--should this be 6.17 here, or (1 / 6.17)?
         double metersPerSecond = metersPer100ms * 10 /*ms*/ / 1 /*sec*/;
         SmartDashboard.putNumber("Velocity", metersPerSecond);
         return metersPerSecond;     
