@@ -12,6 +12,7 @@ public class Flywheel extends SubsystemBase {
     private static Flywheel instance = new Flywheel();
     private static int lastSetting = 0;
     private double manualRPMInput;
+    private double visionCtrlRPM;
     
     public Flywheel() {
         manualRPMInput = 0; 
@@ -87,5 +88,13 @@ public class Flywheel extends SubsystemBase {
         } else {
             SmartDashboard.putNumber("Flywheel RPM Wanted", 0);
         }
+    }
+
+    public double getVisionCtrlRPM(){
+        return visionCtrlRPM;
+    }
+
+    public void setVisionCtrlRPM(double rpm){
+        visionCtrlRPM = rpm;
     }
 }

@@ -6,6 +6,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.constants.VisionConstants;
 
 /**
@@ -63,6 +64,8 @@ public class VisionClient{
 
     private static VisionClient instance = new VisionClient();
 
+    public boolean shouldCommandRun = false;
+
     /**
      * Creates the default references for VisionClient, specifically for Limelight values
      */
@@ -95,6 +98,16 @@ public class VisionClient{
         camMode = limelightTable.getEntry("camMode");
         ledMode = limelightTable.getEntry("ledMode");
         activePipeline = pipeline.getDouble(0);
+    }
+
+    public void update(){
+        pipeline.setNumber(1);
+        targetRecogControlLoop();
+
+        SmartDashboard.putString("Viz_ZONE", findShootingZone());
+        SmartDashboard.putNumber("Viz_deltaX (m)", deltaX);
+        SmartDashboard.putNumber("Viz_deltaX (ft)", deltaX / VisionConstants.FEET2METER);
+        SmartDashboard.putNumber("Viz_initialTheta", initialTheta);
     }
     
     /**
@@ -308,6 +321,21 @@ public class VisionClient{
         }
     }
 
+    public String findShootingZone(){
+        if(deltaX > 0 && deltaX <= 7.5 * VisionConstants.FEET2METER){
+            return "GREEN";
+        } else if(deltaX > 7.5 * VisionConstants.FEET2METER && deltaX <= 12.5 * VisionConstants.FEET2METER){
+            return "YELLOW";
+        } else if(deltaX > 12.5 * VisionConstants.FEET2METER && deltaX <= 17.5 * VisionConstants.FEET2METER){
+            return "BLUE";
+        } else if(deltaX > 17.5 * VisionConstants.FEET2METER && deltaX <= 22.5 * VisionConstants.FEET2METER){
+            return "RED";
+        } else if(deltaX > 22.5 * VisionConstants.FEET2METER && deltaX <= 32.5 * VisionConstants.FEET2METER){
+            return "RE-INTRODUCTION";
+        }
+        return "NULL";
+    }
+
     /**
      * Turns on Limelight's LEDs.  Duh.
      */
@@ -374,5 +402,17 @@ public class VisionClient{
 
     public double getTargetAngle() {
         return initialTheta;
+    }
+
+    public boolean getShouldCommandRun(){
+        return shouldCommandRun;
+    }
+
+    public void setShouldCommandRun(boolean value){
+        shouldCommandRun = value;
+    }
+
+    public double getDeltaX(){
+        return deltaX;
     }
 }
