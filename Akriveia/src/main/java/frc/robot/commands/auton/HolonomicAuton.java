@@ -42,16 +42,17 @@ public class HolonomicAuton extends CommandBase {
   
   @Override
   public void execute() {
-    double trajTime = 0;
+    double trajTime = 0.0;
     for(int idx = stateNumber; idx < trajectory.getStates().size(); idx++) {
-        if(trajectory.getStates().get(idx).timeSeconds < startTime + Timer.getFPGATimestamp()) {
-            trajTime = trajectory.getStates().get(idx - 1).timeSeconds;
-            stateNumber = idx - 1;
-        }
+      if(trajectory.getStates().get(idx).timeSeconds < Timer.getFPGATimestamp() - startTime) {
+        trajTime = trajectory.getStates().get(idx - 1).timeSeconds;
+        stateNumber = idx - 1;
+        break;
+      }
     }
        
     Trajectory.State nextState = trajectory.sample(trajTime);
-    ChassisSpeeds adjustedSpeeds = holonomicController.calculate(drivetrain.getCurrentPose(), nextState, drivetrain.getNavxAngle_inDegrees_asRotation2d());
+    ChassisSpeeds adjustedSpeeds = holonomicController.calculate(drivetrain.getCurrentPose(), nextState, nextState.poseMeters.getRotation());
 
     // Simpily normalizing to get -1 to 1
     double forwardCommand = adjustedSpeeds.vxMetersPerSecond / DrivetrainConstants.MAX_WHEEL_SPEED_METERS_PER_SECOND;
@@ -67,6 +68,6 @@ public class HolonomicAuton extends CommandBase {
   
   @Override
   public boolean isFinished() {
-    return trajectory.getTotalTimeSeconds() < startTime + Timer.getFPGATimestamp();
+    return trajectory.getTotalTimeSeconds() < Timer.getFPGATimestamp() - startTime;
   } 
 }
