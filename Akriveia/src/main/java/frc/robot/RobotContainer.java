@@ -319,7 +319,7 @@ public class RobotContainer {
     return m_SwerveControllerCommand.andThen(() -> m_Drivetrain.drive(0, 0, 0)); 
     */
 
-    new HolonomicAuton(m_trajectory);
+    return new HolonomicAuton(m_trajectory);
   }
 
   public void createTrajectory(String path){

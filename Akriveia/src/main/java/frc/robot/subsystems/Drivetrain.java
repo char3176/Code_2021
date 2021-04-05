@@ -169,27 +169,7 @@ public class Drivetrain extends SubsystemBase {
     // odometry = new SwerveDriveOdometry(DrivetrainConstants.DRIVE_KINEMATICS,
     // gyro.getRotation2d()); // <<-- getRotation2d is continuous. ie 360+1=361 not
     // 0 or -361. gyro.getRotation2d() uses NWU Axis Convention
-    odometry = new SwerveDriveOdometry(DrivetrainConstants.DRIVE_KINEMATICS, getNavxAngle_inRadians_asRotation2d()); // <<--
-                                                                                                                     // getRotation2d
-                                                                                                                     // is
-                                                                                                                     // continuous.
-                                                                                                                     // ie
-                                                                                                                     // 360+1=361
-                                                                                                                     // not
-                                                                                                                     // 0
-                                                                                                                     // or
-                                                                                                                     // -361.
-                                                                                                                     // getNavxAngle_asRotation2d()
-                                                                                                                     // should
-                                                                                                                     // be
-                                                                                                                     // same
-                                                                                                                     // Axis
-                                                                                                                     // Convention
-                                                                                                                     // as
-                                                                                                                     // Teleop,
-                                                                                                                     // I
-                                                                                                                     // believe.
-
+    odometry = new SwerveDriveOdometry(DrivetrainConstants.DRIVE_KINEMATICS, getNavxAngle_inRadians_asRotation2d()); // <<-- // getRotation2d // is // continuous. // ie // 360+1=361 // not // 0 // or // -361. // getNavxAngle_asRotation2d() // should // be // same // Axis // Convention // as // Teleop, // I // believe. 
     // SmartDashboard.putNumber("currentAngle", this.currentAngle);
 
     // SmartDashboard.putNumber("forwardCommand", 0);
@@ -550,7 +530,7 @@ public class Drivetrain extends SubsystemBase {
    */
 
   public ChassisSpeeds getChassisSpeed() {
-    return toChassisSpeeds(podFR.getState(), podFL.getState(), podBL.getState(), podBR.getState());
+    return DrivetrainConstants.DRIVE_KINEMATICS.toChassisSpeeds(podFR.getState(), podFL.getState(), podBL.getState(), podBR.getState());
   }
 
   public Pose2d getCurrentPose() {
