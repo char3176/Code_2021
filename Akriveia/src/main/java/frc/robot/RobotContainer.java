@@ -118,6 +118,8 @@ public class RobotContainer {
     }
     //preloadTrajectoryFiles();
 
+    SmartDashboard.putData("ATAS IntStellarAccuracy", new AtasForInterstellarAccuracy());
+    SmartDashboard.putData("ATAS Global Off", new AtasOff());
   }
 
   private void configureButtonBindings() {

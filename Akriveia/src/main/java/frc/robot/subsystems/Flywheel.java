@@ -90,11 +90,12 @@ public class Flywheel extends SubsystemBase {
         }
     }
 
-    public double getVisionCtrlRPM(){
-        return visionCtrlRPM;
-    }
+    //public double getVisionCtrlRPM(){
+    //    return visionCtrlRPM;
+    //}
 
     public void setVisionCtrlRPM(double rpm){
         visionCtrlRPM = rpm;
+        spinVelocityPIDFPart2(rpm);   //TODO: in future, would like to set struct containing RPM speed, and flywheel motor doesn't actually get ran here, but in seperate fxn
     }
 }
