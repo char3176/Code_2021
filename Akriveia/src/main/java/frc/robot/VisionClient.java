@@ -66,8 +66,8 @@ public class VisionClient{
 
     //AGAS = Advanced Guidance Assistance System (For used with Drivetrain & Swerve)
     private boolean isAgasOn = false;
-    //ATAS = Advanced Targeting Assistance System (For use with Shooting subsystems, excluding Swerve)
-    private boolean isAtasOn = false;
+    //ATLAS = Advanced Targeting Launch Assistance System (For use with Shooting subsystems, excluding Swerve)
+    private boolean isAtlasOn = false;
 
     /**
      * Creates the default references for VisionClient, specifically for Limelight values
@@ -419,12 +419,12 @@ public class VisionClient{
         return isAgasOn;
     }
 
-    public void setAtasOn(boolean value){
-        isAtasOn = value;
+    public void setAtlasOn(boolean value){
+        isAtlasOn = value;
     }
     
-    public boolean isAtasOn(){
-        return isAtasOn;
+    public boolean isAtlasOn(){
+        return isAtlasOn;
     }
 
 

@@ -9,14 +9,14 @@ import frc.robot.VisionClient;
 
 // we are in the eighth hole from the front on the LL base plate
 
-public class AtasOff extends InstantCommand{
+public class AtlasOff extends InstantCommand{
   
   private VisionClient m_VisionClient = VisionClient.getInstance();
 
-  public AtasOff(){}
+  public AtlasOff(){}
 
   @Override
   public void initialize(){
-    m_VisionClient.setAtasOn(false);  
+    m_VisionClient.setAtlasOn(false);  
   }
 }

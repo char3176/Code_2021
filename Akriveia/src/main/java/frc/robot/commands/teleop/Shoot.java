@@ -21,7 +21,7 @@ public class Shoot extends InstantCommand {
   
   public Shoot() {
     addRequirements(mDrum);
-    if (!m_VisionClient.isAtasOn()) {addRequirements(mFlywheel);}
+    if (!m_VisionClient.isAtlasOn()) {addRequirements(mFlywheel);}
     addRequirements(mTransfer);
     System.out.println("Shoot Created");
   }
@@ -32,7 +32,7 @@ public class Shoot extends InstantCommand {
     visionAngle = m_VisionClient.getTargetAngle();
     visionDistanceX = m_VisionClient.getTargetDistanceX();
     mDrum.pidVelCtrl_setRpmLevel(1);
-    if (!m_VisionClient.isAtasOn()) {mFlywheel.spinVelocityPIDF(5);}
+    if (!m_VisionClient.isAtlasOn()) {mFlywheel.spinVelocityPIDF(5);}
     // mTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT/2);
     // Timer.delay(2);
     mTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT);
