@@ -7,6 +7,10 @@ package frc.robot.commands.teleop;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drum;
 
+/**
+ * Shakes the Drum fewer times than DrumAgitate.
+ * @see commands.teleop.DrumAgitate
+ */
 public class DrumAgitatePreShoot extends CommandBase {
   /** Creates a new DrumAgitatePreShoot. */
   Drum m_Drum = Drum.getInstance();

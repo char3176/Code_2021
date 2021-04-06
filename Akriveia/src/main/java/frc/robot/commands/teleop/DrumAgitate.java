@@ -7,6 +7,10 @@ package frc.robot.commands.teleop;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drum;
 
+/**
+ * Shakes the Drum rapidly to dislodge stuck Power Cells.
+ * @author Jared Brown
+ */
 public class DrumAgitate extends CommandBase {
   /** Creates a new DrumAgitate. */
   Drum m_Drum = Drum.getInstance();

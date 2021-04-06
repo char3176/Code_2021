@@ -8,6 +8,9 @@ import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.BallTransfer;
 import frc.robot.VisionClient;
 
+/**
+ * Shoots a power cell, taking control of the Flywheel, Drum, and BallTransfer
+ */
 public class Shoot extends InstantCommand {
   Drum mDrum = Drum.getInstance();
   Flywheel mFlywheel = Flywheel.getInstance();
@@ -35,6 +38,5 @@ public class Shoot extends InstantCommand {
     mTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT);
     // Timer.delay(5);
     // mTransfer.Extend();
-    // System.out.println("Shoot Init");
   }
 }
