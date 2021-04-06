@@ -11,7 +11,7 @@ import frc.robot.subsystems.Flywheel;
 
 // we are in the eighth hole from the front on the LL base plate
 
-public class IAVisionCtrlFlywheel extends CommandBase {
+public class AtlasForInterstellarAccuracy extends CommandBase {
   
   private VisionClient m_VisionClient = VisionClient.getInstance();
   private Flywheel m_Flywheel = Flywheel.getInstance();
@@ -19,14 +19,15 @@ public class IAVisionCtrlFlywheel extends CommandBase {
   private String zone;
   private boolean isHoodUp;
 
-  public IAVisionCtrlFlywheel(){}
+  public AtlasForInterstellarAccuracy(){}
 
   @Override
   public void initialize(){
     addRequirements(m_Flywheel);
     addRequirements(m_AngledShooter);
 
-    m_VisionClient.shouldCommandRun = true;
+    isHoodUp = false;
+    m_VisionClient.setAtlasOn(true);  
   }
 
   @Override
@@ -77,6 +78,6 @@ public class IAVisionCtrlFlywheel extends CommandBase {
 
   @Override
   public boolean isFinished(){
-    return !m_VisionClient.shouldCommandRun;
+    return !m_VisionClient.isAtlasOn();
   }
 }

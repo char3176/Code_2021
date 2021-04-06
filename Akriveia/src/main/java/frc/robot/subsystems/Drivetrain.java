@@ -93,10 +93,12 @@ public class Drivetrain extends SubsystemBase {
   private double spinCommand;
 
   private double spinLockAngle;
-  private boolean isSpinLocked;
+  private boolean isSpinLocked = false;
   private PIDLoop spinLockPID;
   // private PIDController spinLockPID;
 
+  private boolean isTurboOn = false;
+  
   public Rotation2d rotation = new Rotation2d();
 
   private double angleOffset = 90.0;
@@ -120,7 +122,7 @@ public class Drivetrain extends SubsystemBase {
    */
 
   public enum driveMode {
-    DEFENSE, DRIVE, TURBO, VISION, ORBIT, SPIN_LOCK
+    DEFENSE, DRIVE, VISION, ORBIT
   }
 
   public enum coordType {
@@ -252,14 +254,14 @@ public class Drivetrain extends SubsystemBase {
     // SmartDashboard.putString("Drive currentCoordType",
     // currentCoordType.toString());
 
-    if (currentDriveMode != driveMode.TURBO) {
+    if (! isTurboOn) {
       this.forwardCommand *= DrivetrainConstants.NON_TURBO_PERCENT_OUT_CAP;
       this.strafeCommand *= DrivetrainConstants.NON_TURBO_PERCENT_OUT_CAP;
       this.spinCommand *= DrivetrainConstants.NON_TURBO_PERCENT_OUT_CAP;
     }
 
-    if (currentDriveMode == driveMode.SPIN_LOCK) {
-      this.spinCommand = spinLockPID.returnOutput(getNavxAngle_inDegrees(), spinLockAngle);
+    if (this.isSpinLocked) {
+      this.spinCommand = spinLockPID.returnOutput(getNavxAngle_inRadians(), spinLockAngle);
       // this.spinCommand = spinLockPID.calculate(getNavxAngle(), spinLockAngle);
 
     }
@@ -484,11 +486,19 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void setSpinLockAngle() {
-    spinLockAngle = getNavxAngle_inDegrees();
+    spinLockAngle = getNavxAngle_inRadians();
   }
 
-  public void setSpinLocked(boolean isSpinLocked) {
-    this.isSpinLocked = isSpinLocked;
+  public void toggleSpinLock() {
+    this.isSpinLocked = !this.isSpinLocked;
+  }
+
+  /**
+   * Sets Turbo mode on or off
+   * @param onOrOff Passing a value of true sets Turbo on (ie isTurboOn = true), and passing value of false sets Turbo off (ie isTurboOn = false)
+   */
+  public void setTurbo(boolean onOrOff) {
+    this.isTurboOn = onOrOff;
   }
 
   /*

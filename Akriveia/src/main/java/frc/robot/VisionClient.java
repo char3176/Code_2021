@@ -64,7 +64,10 @@ public class VisionClient{
 
     private static VisionClient instance = new VisionClient();
 
-    public boolean shouldCommandRun = false;
+    //AGAS = Advanced Guidance Assistance System (For used with Drivetrain & Swerve)
+    private boolean isAgasOn = false;
+    //ATLAS = Advanced Targeting Launch Assistance System (For use with Shooting subsystems, excluding Swerve)
+    private boolean isAtlasOn = false;
 
     /**
      * Creates the default references for VisionClient, specifically for Limelight values
@@ -404,13 +407,26 @@ public class VisionClient{
         return initialTheta;
     }
 
-    public boolean getShouldCommandRun(){
-        return shouldCommandRun;
+    public boolean getAgasState(){
+        return isAgasOn;
     }
 
-    public void setShouldCommandRun(boolean value){
-        shouldCommandRun = value;
+    public void setAgasOn(boolean value){
+        isAgasOn = value;
     }
+    
+    public boolean isAgasOn(){
+        return isAgasOn;
+    }
+
+    public void setAtlasOn(boolean value){
+        isAtlasOn = value;
+    }
+    
+    public boolean isAtlasOn(){
+        return isAtlasOn;
+    }
+
 
     public double getDeltaX(){
         return deltaX;

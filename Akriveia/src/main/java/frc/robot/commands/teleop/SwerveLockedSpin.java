@@ -9,8 +9,9 @@ import java.util.function.DoubleSupplier;
 import frc.robot.util.PIDLoop;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class SwerveLockedSpin extends CommandBase {
+public class SwerveLockedSpin extends InstantCommand {
   private Drivetrain drivetrain = Drivetrain.getInstance();
 
   public SwerveLockedSpin() {
@@ -19,19 +20,8 @@ public class SwerveLockedSpin extends CommandBase {
 
   @Override
   public void initialize() {
-    drivetrain.setDriveMode(driveMode.SPIN_LOCK);
-    drivetrain.setSpinLockAngle();
+    drivetrain.setSpinLockAngle(); //Rearragned because the error would be big currAngle - 0 as error
+    drivetrain.toggleSpinLock();
   }
 
-  @Override
-  public void execute() {
-  }
-
-  @Override
-  public boolean isFinished() { return false; }
-
-  @Override
-  public void end(boolean interrupted) {
-    drivetrain.setDriveMode(driveMode.DRIVE);
-  }
 }

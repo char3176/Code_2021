@@ -22,6 +22,7 @@ public class Controller {
 
     /* Drivetrain */
     
+    private final JoystickButton turboButton;
     private final JoystickButton orbitButton;
     private final JoystickButton dosadoButton;
     private final JoystickButton visionButton;
@@ -75,7 +76,8 @@ public class Controller {
         op = new XboxController(ControllerConstants.XBOX_CONTROLLER_ID);;
 
         // All buttons numbers subject to change
-        orbitButton = new JoystickButton(transStick, 1);
+        turboButton = new JoystickButton(transStick, 1);
+        orbitButton = new JoystickButton(rotStick, 1);
         dosadoButton = new JoystickButton(rotStick, 3);
         defenseButton = new JoystickButton(transStick, 2);
         visionButton = new JoystickButton(transStick, 3); //Should be part of the xbox controller later
@@ -143,7 +145,7 @@ public class Controller {
         if (Math.abs(rotStick.getX()) < 0.06) {
             return 0.0;
         } else {
-            return 0.2 * ControllerConstants.SPIN_AXIS_INVERSION * (Math.pow(rotStick.getX(), 1) / 7.0); }
+            return 0.5 * ControllerConstants.SPIN_AXIS_INVERSION * (Math.pow(rotStick.getX(), 1) / 7.0); }
     } 
 
     public double getOrbitSpeed() { 
@@ -160,6 +162,7 @@ public class Controller {
 
     /* Drivetrain Buttons */
 
+    public JoystickButton getTurboButton() {return turboButton;}
     public JoystickButton getOrbitButton() {return orbitButton;}
     public JoystickButton getDosadoButton() {return dosadoButton;}
     public JoystickButton getVisionButton() {return visionButton;}

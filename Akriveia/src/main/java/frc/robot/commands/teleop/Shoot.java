@@ -8,6 +8,9 @@ import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.BallTransfer;
 import frc.robot.VisionClient;
 
+/**
+ * Shoots a power cell, taking control of the Flywheel, Drum, and BallTransfer
+ */
 public class Shoot extends InstantCommand {
   Drum mDrum = Drum.getInstance();
   Flywheel mFlywheel = Flywheel.getInstance();
@@ -18,7 +21,7 @@ public class Shoot extends InstantCommand {
   
   public Shoot() {
     addRequirements(mDrum);
-    addRequirements(mFlywheel);
+    if (!m_VisionClient.isAtlasOn()) {addRequirements(mFlywheel);}
     addRequirements(mTransfer);
     System.out.println("Shoot Created");
   }
@@ -29,12 +32,11 @@ public class Shoot extends InstantCommand {
     visionAngle = m_VisionClient.getTargetAngle();
     visionDistanceX = m_VisionClient.getTargetDistanceX();
     mDrum.pidVelCtrl_setRpmLevel(1);
-    mFlywheel.spinVelocityPIDF(5);
+    if (!m_VisionClient.isAtlasOn()) {mFlywheel.spinVelocityPIDF(5);}
     // mTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT/2);
     // Timer.delay(2);
     mTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT);
     // Timer.delay(5);
     // mTransfer.Extend();
-    // System.out.println("Shoot Init");
   }
 }
