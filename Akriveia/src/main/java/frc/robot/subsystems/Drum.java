@@ -105,7 +105,6 @@ public class Drum extends SubsystemBase {
   }
 
    /**
-    * 
     * @param level Corresponds to the index of an array containing the RPM speeds
     * @param direction  Determines if we are stepping up or down to the desired "speed level"
     */

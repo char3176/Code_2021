@@ -12,8 +12,6 @@ import frc.robot.constants.IntakeConstants;
  * @see subsystems.Drum
  */
 public class Intake extends SubsystemBase {
-
-
   private static Intake instance = new Intake();
   private WPI_TalonSRX motor = new WPI_TalonSRX(IntakeConstants.MOTOR_CAN_ID);
   private double intakeMotorSpeed = 0;

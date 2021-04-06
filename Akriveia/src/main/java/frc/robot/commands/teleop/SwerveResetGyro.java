@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.Drivetrain;
 
+/**
+ * Makes the gyro's "zero point" its current position, for recallibration.
+ */
 public class SwerveResetGyro extends CommandBase {
   private Drivetrain drivetrain = Drivetrain.getInstance();
   private boolean isreset;

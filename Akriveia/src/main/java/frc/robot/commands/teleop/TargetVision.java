@@ -11,6 +11,12 @@ import frc.robot.constants.AngledShooterConstants;
 import frc.robot.constants.VisionConstants;
 import frc.robot.subsystems.Flywheel;
 
+/**
+ * Attempts to use VisionClient data to set the AngledShooter and Flywheel to the correct angle and velocity,
+ * respectively, to make a shot into the target.
+ * @author Jared Brown
+ * @see VisionClient
+ */
 public class TargetVision extends CommandBase {
   /** Creates a new TargetVision. */
   AngledShooter m_AngledShooter = AngledShooter.getInstance();
@@ -21,6 +27,7 @@ public class TargetVision extends CommandBase {
 
   public TargetVision() {
     addRequirements(m_AngledShooter);
+    addRequirements(m_Flywheel);
   }
 
   @Override
@@ -31,13 +38,10 @@ public class TargetVision extends CommandBase {
     double[] resultArray = m_VisionClient.targetRecogControlLoop();
     if (resultArray != null) {
       wantedAngleTicks = resultArray[1] * (180 / Math.PI) * (AngledShooterConstants.TICS_EQUAL_TO_5DEGREES / 5);
-
-      // whether it is in the range of the hood is likely checked in AngledShooter method
-      m_AngledShooter.pidPosCtrl_setPosition(wantedAngleTicks);
+      m_AngledShooter.pidPosCtrl_setPosition(wantedAngleTicks); // range constraints checked in AngledShooter by this method
 
       // m/s to rad/s (using alpha = r * omega) to rev/s to rev/min (rpm)
       wantedVelocityTicks = (resultArray[0] / VisionConstants.FLYWHEEL_RADIUS / (2 * Math.PI) * 60);
-      
       m_Flywheel.spinVelocityPIDFPart2(wantedVelocityTicks);
     }
   }
