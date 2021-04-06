@@ -19,8 +19,8 @@ public class SwerveLockedSpin extends CommandBase {
 
   @Override
   public void initialize() {
+    drivetrain.setSpinLockAngle(); //Rearragned because the error would be big currAngle - 0 as error
     drivetrain.setDriveMode(driveMode.SPIN_LOCK);
-    drivetrain.setSpinLockAngle();
   }
 
   @Override
