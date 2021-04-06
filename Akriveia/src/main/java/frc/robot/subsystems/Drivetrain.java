@@ -93,7 +93,7 @@ public class Drivetrain extends SubsystemBase {
   private double spinCommand;
 
   private double spinLockAngle;
-  private boolean isSpinLocked;
+  private boolean isSpinLocked = false;
   private PIDLoop spinLockPID;
   // private PIDController spinLockPID;
 
@@ -120,7 +120,7 @@ public class Drivetrain extends SubsystemBase {
    */
 
   public enum driveMode {
-    DEFENSE, DRIVE, TURBO, VISION, ORBIT, SPIN_LOCK
+    DEFENSE, DRIVE, TURBO, VISION, ORBIT
   }
 
   public enum coordType {
@@ -258,8 +258,8 @@ public class Drivetrain extends SubsystemBase {
       this.spinCommand *= DrivetrainConstants.NON_TURBO_PERCENT_OUT_CAP;
     }
 
-    if (currentDriveMode == driveMode.SPIN_LOCK) {
-      this.spinCommand = spinLockPID.returnOutput(getNavxAngle_inDegrees(), spinLockAngle);
+    if (this.isSpinLocked) {
+      this.spinCommand = spinLockPID.returnOutput(getNavxAngle_inRadians(), spinLockAngle);
       // this.spinCommand = spinLockPID.calculate(getNavxAngle(), spinLockAngle);
 
     }
@@ -484,11 +484,11 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void setSpinLockAngle() {
-    spinLockAngle = getNavxAngle_inDegrees();
+    spinLockAngle = getNavxAngle_inRadians();
   }
 
-  public void setSpinLocked(boolean isSpinLocked) {
-    this.isSpinLocked = isSpinLocked;
+  public void toggleSpinLock() {
+    this.isSpinLocked = !this.isSpinLocked;
   }
 
   /*
