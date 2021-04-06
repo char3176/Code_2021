@@ -97,6 +97,8 @@ public class Drivetrain extends SubsystemBase {
   private PIDLoop spinLockPID;
   // private PIDController spinLockPID;
 
+  private boolean isTurboOn = false;
+  
   public Rotation2d rotation = new Rotation2d();
 
   private double angleOffset = 90.0;
@@ -120,7 +122,7 @@ public class Drivetrain extends SubsystemBase {
    */
 
   public enum driveMode {
-    DEFENSE, DRIVE, TURBO, VISION, ORBIT
+    DEFENSE, DRIVE, VISION, ORBIT
   }
 
   public enum coordType {
@@ -252,7 +254,7 @@ public class Drivetrain extends SubsystemBase {
     // SmartDashboard.putString("Drive currentCoordType",
     // currentCoordType.toString());
 
-    if (currentDriveMode != driveMode.TURBO) {
+    if (! isTurboOn) {
       this.forwardCommand *= DrivetrainConstants.NON_TURBO_PERCENT_OUT_CAP;
       this.strafeCommand *= DrivetrainConstants.NON_TURBO_PERCENT_OUT_CAP;
       this.spinCommand *= DrivetrainConstants.NON_TURBO_PERCENT_OUT_CAP;
@@ -489,6 +491,14 @@ public class Drivetrain extends SubsystemBase {
 
   public void toggleSpinLock() {
     this.isSpinLocked = !this.isSpinLocked;
+  }
+
+  /**
+   * Sets Turbo mode on or off
+   * @param onOrOff Passing a value of true sets Turbo on (ie isTurboOn = true), and passing value of false sets Turbo off (ie isTurboOn = false)
+   */
+  public void setTurbo(boolean onOrOff) {
+    this.isTurboOn = onOrOff;
   }
 
   /*

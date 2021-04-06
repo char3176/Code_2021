@@ -130,6 +130,8 @@ public class RobotContainer {
     m_Controller.getResetGyroButton().whenHeld(new SwerveResetGyro());
     m_Controller.getResetGyroButton().whenPressed(new SwerveResetGyro());
     m_Controller.getLockSpinButton().whenPressed(new SwerveLockedSpin());
+    m_Controller.getTurboButton().whenHeld(new SwerveTurboOn());
+    m_Controller.getTurboButton().whenReleased(new SwerveTurboOff());
     m_Controller.getOrbitButton().whenHeld(new SwerveOrbit(
       () -> m_Controller.getOrbitSpeed(),
       () -> m_Controller.getPOVTransStick()));
