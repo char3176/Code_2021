@@ -19,7 +19,7 @@ public class DrumTransferFlywheelTest extends CommandBase {
 
   @Override
   public void initialize() {
-    System.out.println("DrumTransferFlywheelTest.java initialize");
+    // System.out.println("DrumTransferFlywheelTest.java initialize");
     double drumOutputPercent = SmartDashboard.getNumber("DrumOutputPercent", 0);
     // double transferOutputPercent = SmartDashboard.getNumber("BallTransferOutputPercent", 0);
     double flywheelOutputPercent = SmartDashboard.getNumber("FlywheelOutputPercent", 0);

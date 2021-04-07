@@ -12,7 +12,7 @@ public class AngledShooterOff extends InstantCommand {
 
   @Override
   public void initialize() {
-    System.out.println("&&&&&&&&&&&&&&&&&&_ANGLED_SHOOTER_0FF_&&&&&&&&&&&&&&&&&&");
+    // System.out.println("&&&&&&&&&&&&&&&&&&_ANGLED_SHOOTER_0FF_&&&&&&&&&&&&&&&&&&");
     mAngledShooter.pctCtrl_set(0.0);
   }
 }

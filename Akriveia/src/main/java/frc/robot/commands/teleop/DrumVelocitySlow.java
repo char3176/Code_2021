@@ -20,7 +20,7 @@ public class DrumVelocitySlow extends CommandBase {
 
   @Override
   public void initialize() {
-    System.out.println("DrumVelocitySlow.initialized executed. ########################################################");
+    // System.out.println("DrumVelocitySlow.initialized executed. ########################################################");
     tempSetting = m_Drum.getLastSetting();
     procTag = UUID.randomUUID().toString();
   }

@@ -13,7 +13,7 @@ public class FlywheelSlow extends InstantCommand {
 
   @Override
   public void initialize() {
-    System.out.println("FlywheelSlow.initialize executed. ############################################################");
+    // System.out.println("FlywheelSlow.initialize executed. ############################################################");
     /* Finds whatever setting the intake pistons are and does the opposite. */
 
     int tempSetting = m_Flywheel.getLastSetting();

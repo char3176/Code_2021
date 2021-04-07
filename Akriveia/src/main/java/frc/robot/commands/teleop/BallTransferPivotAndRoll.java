@@ -14,7 +14,7 @@ public class BallTransferPivotAndRoll extends InstantCommand {
 
   @Override
   public void initialize() {
-    System.out.println("BallTransferPivotAndRoll.initialize executed.##########################");
+    // System.out.println("BallTransferPivotAndRoll.initialize executed.##########################");
     m_BallTransfer.Retract();
     m_BallTransfer.setPercentControl(0);
   }

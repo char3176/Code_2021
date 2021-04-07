@@ -131,7 +131,7 @@ public class Drum extends SubsystemBase {
       tQuarter = DrumConstants.SPEEDS[lastSetting] / 4;
       level = 0;
     }
-    if(time.get() % 2 == 0) System.out.println("The last setting is /*Should be currently there*/: " + DrumConstants.SPEEDS[lastSetting] + ", fQuarter: " + fQuarter + ", half" + half + ", tQuarter" + tQuarter + ", level " + DrumConstants.SPEEDS[level]);
+    // if(time.get() % 2 == 0) System.out.println("The last setting is /*Should be currently there*/: " + DrumConstants.SPEEDS[lastSetting] + ", fQuarter: " + fQuarter + ", half" + half + ", tQuarter" + tQuarter + ", level " + DrumConstants.SPEEDS[level]);
     drumPIDController.setReference(DrumConstants.SPEEDS[lastSetting], ControlType.kVelocity);
     if(direction != 2) {
       Timer.delay(1);
@@ -178,8 +178,8 @@ public class Drum extends SubsystemBase {
    */
   public boolean pidVelCtrl_setRpmLevel(int lvl) {
     if ((lvl < 0) || (lvl > DrumConstants.SPEEDS.length)) {
-      System.out.println("Drum.pidVelCtrl_setRPMLevel("+lvl+"): index out of range.");
-      System.out.println("Drum.pidVelCtrl_setRPMLevel("+lvl+"):  Parameter input value of "+lvl+" exceeds length of DrumConstants.SPEEDS array which is "+DrumConstants.SPEEDS.length+" elements long.");
+      // System.out.println("Drum.pidVelCtrl_setRPMLevel("+lvl+"): index out of range.");
+      // System.out.println("Drum.pidVelCtrl_setRPMLevel("+lvl+"):  Parameter input value of "+lvl+" exceeds length of DrumConstants.SPEEDS array which is "+DrumConstants.SPEEDS.length+" elements long.");
       return false;
     } else {
       pidVelCtrl_set(DrumConstants.SPEEDS[lvl]);

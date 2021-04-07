@@ -314,13 +314,13 @@ public class VisionClient{
             SmartDashboard.putNumber("Ball Degrees", ballDegrees);
           } else{
             ballDegrees = -999;
-            System.out.println("Ball Recog FAILED:  see VisionClient.controlLoopBallRecog.");
+            // System.out.println("Ball Recog FAILED:  see VisionClient.controlLoopBallRecog.");
           }
         } else if(hasTarget == 0){
             ballLocation = -999;
             SmartDashboard.putBoolean("Ball Recognized", false);
         } else{
-          System.out.println("Ball Recog FAILED:  see VisionClient.controlLoopBallRecog.");
+        //   System.out.println("Ball Recog FAILED:  see VisionClient.controlLoopBallRecog.");
         }
     }
 

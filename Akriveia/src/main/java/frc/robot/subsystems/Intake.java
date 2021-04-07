@@ -35,14 +35,14 @@ public class Intake extends SubsystemBase {
   public void setPercentControl(double percent) {
     motor.set(ControlMode.PercentOutput, percent);
     intakeMotorSpeed = percent;
-    System.out.println("Intake Percent = " + intakeMotorSpeed + " and " + percent);
+    // System.out.println("Intake Percent = " + intakeMotorSpeed + " and " + percent);
   }
 
   /**
    * @return the intake's motor speed
    */
   public double getIntakeMotorSpeed() {
-    System.out.println("Returning the Intake's Speed");
+    // System.out.println("Returning the Intake's Speed");
     return intakeMotorSpeed;
   }
 }

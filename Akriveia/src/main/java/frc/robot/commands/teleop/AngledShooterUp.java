@@ -14,7 +14,7 @@ public class AngledShooterUp extends InstantCommand {
 
   @Override
   public void initialize() {
-    System.out.println("AngledShooterUp.initialize executed. ############################################################");
+    // System.out.println("AngledShooterUp.initialize executed. ############################################################");
     /* Gets the current encoder position and see where it should go */
    
     /*

@@ -23,7 +23,7 @@ public class DrumAgitate extends CommandBase {
 
   @Override
   public void initialize() {
-    System.out.println("DrumAgitate.initialize executed. ############################################################");
+    // System.out.println("DrumAgitate.initialize executed. ############################################################");
   }
 
   @Override

@@ -23,12 +23,12 @@ public class Shoot extends InstantCommand {
     addRequirements(mDrum);
     // if (!m_VisionClient.isAtlasOn()) {addRequirements(mFlywheel);}
     addRequirements(mTransfer);
-    System.out.println("Shoot Created");
+    // System.out.println("Shoot Created");
   }
 
   @Override
   public void initialize() {
-    System.out.println("Shoot.initialize executed. ############################################################");
+    // System.out.println("Shoot.initialize executed. ############################################################");
     visionAngle = m_VisionClient.getTargetAngle();
     visionDistanceX = m_VisionClient.getTargetDistanceX();
     mDrum.pidVelCtrl_setRpmLevel(3);

@@ -27,7 +27,7 @@ public class DrumInputReset extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("DrumInputReset.initialize executed. ############################################################");
+    // System.out.println("DrumInputReset.initialize executed. ############################################################");
     // Made simply to interrupt the DrumVelocitySlow or DrumVelocitySpeed commands, so that they
     // re-initialize when the same button is pressed multiple times in a row. If they don't
     // re-initialize, the index retrieved from the Drum speeds array will not increase, since

@@ -20,18 +20,18 @@ public class IntakeReverse extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("IntakeReverse.initialize executed. ############################################################");
+    // System.out.println("IntakeReverse.initialize executed. ############################################################");
     /* Gets the current intake speed and sets it clockwise */
 
     if (m_Intake.getIntakeMotorSpeed() == IntakeConstants.INTAKE_PERCENT) {
       m_Intake.setPercentControl(-IntakeConstants.INTAKE_PERCENT);
-      System.out.println("The intake is set to: " + -IntakeConstants.INTAKE_PERCENT);
+      // System.out.println("The intake is set to: " + -IntakeConstants.INTAKE_PERCENT);
     } else if(m_Intake.getIntakeMotorSpeed() == -IntakeConstants.INTAKE_PERCENT) {
       m_Intake.setPercentControl(IntakeConstants.INTAKE_PERCENT);
-      System.out.println("The intake is set to: " + IntakeConstants.INTAKE_PERCENT);
+      // System.out.println("The intake is set to: " + IntakeConstants.INTAKE_PERCENT);
     } else {
       m_Intake.setPercentControl(0);
-      System.out.println("The intake is set to 0");
+      // System.out.println("The intake is set to 0");
     }
   }
 }

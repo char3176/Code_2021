@@ -86,8 +86,8 @@ public class AngledShooter extends SubsystemBase {
     maxPosTic = hoodController.getSelectedSensorPosition();
     SmartDashboard.putNumber("maxPosTic_Calculated", maxPosTicCalc);
     SmartDashboard.putNumber("maxPosTic_Sensored", maxPosTic);
-    System.out.println("********** maxPosTic_Calculated (maxPosTicCalc) = " + maxPosTicCalc + "***************************");
-    System.out.println("********** maxPosTic_Sensored (maxPosTic) = " + maxPosTic + "***************************");
+    // System.out.println("********** maxPosTic_Calculated (maxPosTicCalc) = " + maxPosTicCalc + "***************************");
+    // System.out.println("********** maxPosTic_Sensored (maxPosTic) = " + maxPosTic + "***************************");
     targetPos = maxPosTic;
     //while (checkForCurrentSpike() == 0) {
       targetPos = targetPos + (350);
@@ -98,15 +98,15 @@ public class AngledShooter extends SubsystemBase {
     minPosTic = hoodController.getSelectedSensorPosition();
     SmartDashboard.putNumber("minPosTic_Calculated", minPosTicCalc);
     SmartDashboard.putNumber("minPosTic_Sensored", minPosTic);
-    System.out.println("********** minPosTic_Calculated (minPosTicCalc) = " + minPosTicCalc + "***************************");
-    System.out.println("********** minPosTic_Sensored (minPosTic) = " + minPosTic + "***************************");
+    // System.out.println("********** minPosTic_Calculated (minPosTicCalc) = " + minPosTicCalc + "***************************");
+    // System.out.println("********** minPosTic_Sensored (minPosTic) = " + minPosTic + "***************************");
   }
 
   public int pidPosCtrl_buildHoodPositions(int numberOfPositionsDesired) {
     numPositions = numberOfPositionsDesired;
     double range = Math.abs(maxPosTic - minPosTic);
     if (range == 0) {
-      System.out.println("*************ERROR: AngledShooter.buildHoodPositions FAILED due to a 0 range between min and max positions of the Hood***************");
+      // System.out.println("*************ERROR: AngledShooter.buildHoodPositions FAILED due to a 0 range between min and max positions of the Hood***************");
       return 0;
     }
     double tempCandidateHoodPosition[] = new double[numberOfPositionsDesired];
@@ -140,7 +140,7 @@ public class AngledShooter extends SubsystemBase {
       hoodPositions_persistingIndex += 1;
       hoodController.set(ControlMode.Position, hoodPositions_Tics.get(hoodPositions_persistingIndex));
     } else { 
-      System.out.println("*************ERROR:  AngledShooter.goUpToNextHoodPosition :: Already at top of possible Hood positions *****************************");
+      // System.out.println("*************ERROR:  AngledShooter.goUpToNextHoodPosition :: Already at top of possible Hood positions *****************************");
     }
   }
 
@@ -149,7 +149,7 @@ public class AngledShooter extends SubsystemBase {
       hoodPositions_persistingIndex += 1;
       hoodController.set(ControlMode.Position, hoodPositions_Tics.get(hoodPositions_persistingIndex));
     } else { 
-      System.out.println("*************ERROR:  AngledShooter.goUpToNextHoodPosition :: Already at top of possible Hood positions *****************************");
+      // System.out.println("*************ERROR:  AngledShooter.goUpToNextHoodPosition :: Already at top of possible Hood positions *****************************");
     }
   }
   
@@ -162,7 +162,7 @@ public class AngledShooter extends SubsystemBase {
       hoodPositions_persistingIndex -= 1;
       hoodController.set(ControlMode.Position, hoodPositions_Tics.get(hoodPositions_persistingIndex));
     } else { 
-      System.out.println("*************ERROR:  AngledShooter.goDownToNextHoodPosition :: Already at bottom of possible Hood positions *****************************");
+      // System.out.println("*************ERROR:  AngledShooter.goDownToNextHoodPosition :: Already at bottom of possible Hood positions *****************************");
     }
   }
 

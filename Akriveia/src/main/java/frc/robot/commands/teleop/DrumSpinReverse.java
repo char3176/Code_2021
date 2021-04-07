@@ -13,7 +13,7 @@ public class DrumSpinReverse extends InstantCommand {
 
   @Override
   public void initialize() {
-    System.out.println("DrumSpinReverse.initialize executed. ############################################################");
+    // System.out.println("DrumSpinReverse.initialize executed. ############################################################");
     m_Drum.ShortSpinInReverse();
   }
 }

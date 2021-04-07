@@ -182,72 +182,72 @@ public class RobotContainer {
     double startTime = Timer.getFPGATimestamp();
 
     if (m_autonChooser.getSelected().equals("s_barrel_racing")) {
-      System.out.print("################ INFO: setting trajectory = barrel_racing ###########################");
+      // System.out.print("################ INFO: setting trajectory = barrel_racing ###########################");
       m_trajectory = m_trajLibrary.get(0);
       //createTrajectory("barrel_racing");
       //return new FollowGivenPath(trajectory);
     }
     else if(m_autonChooser.getSelected().equals("s_bounce")) {
-      System.out.print("################ INFO: setting trajectory = bounce ###########################");
+      // System.out.print("################ INFO: setting trajectory = bounce ###########################");
       m_trajectory = m_trajLibrary.get(1);
       //createTrajectory("bounce");
       //return new FollowGivenPath(trajectory);
     }
     else if(m_autonChooser.getSelected().equals("s_easy")) {
-      System.out.print("################ INFO: setting trajectory = easy ###########################");
+      // System.out.print("################ INFO: setting trajectory = easy ###########################");
       m_trajectory = m_trajLibrary.get(2);
       //createTrajectory("easy");
       //return new FollowGivenPath(trajectory);
     } 
     else if(m_autonChooser.getSelected().equals("s_forward_and_back")) {
-      System.out.print("################ INFO: setting trajectory = forward_and_back ###########################");
+      // System.out.print("################ INFO: setting trajectory = forward_and_back ###########################");
       m_trajectory = m_trajLibrary.get(3);
       //createTrajectory("forward_and_back");
       //return new FollowGivenPath(trajectory);
     }
     else if(m_autonChooser.getSelected().equals("s_forward")) {
-      System.out.print("################ INFO: setting trajectory = forward ###########################");
+      // System.out.print("################ INFO: setting trajectory = forward ###########################");
       m_trajectory = m_trajLibrary.get(4);
       //createTrajectory("forward");
       //return new FollowGivenPath(trajectory);
     }
     else if (m_autonChooser.getSelected().equals("s_galactic_search_a")) {
-      System.out.print("################ INFO: setting trajectory = galactic_search_a ###########################");
+      // System.out.print("################ INFO: setting trajectory = galactic_search_a ###########################");
       //createTrajectory("galactic_search.pathA_redBalls");
       //return new FollowGivenPath(trajectory);
     }
     else if (m_autonChooser.getSelected().equals("s_galactic_search_b")) {
-      System.out.print("################ INFO: setting trajectory = galactic_search_b ###########################");
+      // System.out.print("################ INFO: setting trajectory = galactic_search_b ###########################");
       //createTrajectory("galactic_search>pathA_redBalls");
       //return new FollowGivenPath(trajectory);
     }
     else if(m_autonChooser.getSelected().equals("s_l_shape")) {
-      System.out.print("################ INFO: setting trajectory = l_shape ###########################");
+      // System.out.print("################ INFO: setting trajectory = l_shape ###########################");
       m_trajectory = m_trajLibrary.get(9);
       //createTrajectory("L_shape");
       //return new FollowGivenPath(trajectory);
     }
     else if(m_autonChooser.getSelected().equals("s_slalom")) {
-      System.out.print("################ INFO: setting trajectory = slalom ###########################");
+      // System.out.print("################ INFO: setting trajectory = slalom ###########################");
       m_trajectory = m_trajLibrary.get(10);
       //createTrajectory("slalom");
       //new FollowGivenPath(trajectory);
     }
    
-    System.out.println("#####################################################");
-    System.out.println("################               WARNING      WARNING:               ############");
-    System.out.println("#####              BIG OLE CHUNK OF DATA     ########"); 
-    System.out.println("#####              ABOUT TO DUMPED HERE.     ########"); 
-    System.out.println("############     tractory object contains following: ");
-    System.out.println("###############  ");
-    System.out.println("###############   BEGIN TRAJECTORY DATA:  ");
-    System.out.println("");
-    System.out.println(m_trajectory.toString()); 
-    System.out.println("");
-    System.out.println("###############   END TRAJECTORY DATA:  ");
-    System.out.println("###############  ");
-    System.out.println("############        THAT'S ALL, FOLKS!!   ############"); 
-    System.out.println("######################################################");
+    // System.out.println("#####################################################");
+    // System.out.println("################               WARNING      WARNING:               ############");
+    // System.out.println("#####              BIG OLE CHUNK OF DATA     ########"); 
+    // System.out.println("#####              ABOUT TO DUMPED HERE.     ########"); 
+    // System.out.println("############     tractory object contains following: ");
+    // System.out.println("###############  ");
+    // System.out.println("###############   BEGIN TRAJECTORY DATA:  ");
+    // System.out.println("");
+    // System.out.println(m_trajectory.toString()); 
+    // System.out.println("");
+    // System.out.println("###############   END TRAJECTORY DATA:  ");
+    // System.out.println("###############  ");
+    // System.out.println("############        THAT'S ALL, FOLKS!!   ############"); 
+    // System.out.println("######################################################");
 
 
 

@@ -196,15 +196,15 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     double elapsedTime = Timer.getFPGATimestamp() - startTime;
-    System.out.println("Robot disabled");
+    // System.out.println("Robot disabled");
     drive.tankDrive(0, 0);
     // data processing step
     data = entries.toString();
     data = data.substring(1, data.length() - 1) + ", ";
     telemetryEntry.setString(data);
     entries.clear();
-    System.out.println("Robot disabled");
-    System.out.println("Collected : " + counter + " in " + elapsedTime + " seconds");
+    // System.out.println("Robot disabled");
+    // System.out.println("Collected : " + counter + " in " + elapsedTime + " seconds");
     data = "";
   }
 
@@ -223,7 +223,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    System.out.println("Robot in operator control mode");
+    // System.out.println("Robot in operator control mode");
   }
 
   @Override
@@ -233,7 +233,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    System.out.println("Robot in autonomous mode");
+    // System.out.println("Robot in autonomous mode");
     startTime = Timer.getFPGATimestamp();
     counter = 0;
 

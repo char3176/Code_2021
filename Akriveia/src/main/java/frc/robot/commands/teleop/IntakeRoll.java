@@ -14,15 +14,15 @@ public class IntakeRoll extends InstantCommand {
 
   @Override
   public void initialize() {
-    System.out.println("IntakeRoll.initialize executed. ############################################################");
+    // System.out.println("IntakeRoll.initialize executed. ############################################################");
     /* Gets the current intake speed and sets to the opposite */
 
     if (m_Intake.getIntakeMotorSpeed() == 0) {
       m_Intake.setPercentControl(IntakeConstants.INTAKE_PERCENT);
-      System.out.println("The intake is set to: " + IntakeConstants.INTAKE_PERCENT);
+      // System.out.println("The intake is set to: " + IntakeConstants.INTAKE_PERCENT);
     } else {
       m_Intake.setPercentControl(0);
-      System.out.println("The intake is 0");
+      // System.out.println("The intake is 0");
     }
   }
 }
