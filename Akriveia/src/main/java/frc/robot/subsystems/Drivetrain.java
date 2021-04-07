@@ -176,7 +176,7 @@ public class Drivetrain extends SubsystemBase {
     this.strafeCommand = 0.0;
     this.spinCommand = 0.0;
 
-    spinLockPID = new PIDLoop(1.0, 0.0, 0.0);
+    spinLockPID = new PIDLoop(0.3, 0.0, 0.0);
     //spinLockAngle = getNavxAngle_inRadians();
     // spinLockPID = new PIDController(0.3, 0.0, 0.0, 0.0);
   }

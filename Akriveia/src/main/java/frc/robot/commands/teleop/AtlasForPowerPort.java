@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.VisionClient;
 import frc.robot.subsystems.AngledShooter;
 import frc.robot.subsystems.Flywheel;
+import frc.robot.constants.VisionConstants;
 
 // we are in the eighth hole from the front on the LL base plate
 
@@ -35,7 +36,7 @@ public class AtlasForPowerPort extends CommandBase {
 
   @Override
   public void execute(){
-    if ((m_VisionClient.getDeltaX() > 10.5) && (m_VisionClient.getDeltaX() <= 14.5)) {    // <- Not sure about the 10.5 & 14.5.  Using these as initial guess based on 12.5 (where Blue & Yellow meet) with +/- 2.0
+    if ((m_VisionClient.getDeltaX() > 3.8) && (m_VisionClient.getDeltaX() <= 4.4)) {    // <- Not sure about the 10.5 & 14.5.  Using these as initial guess based on 12.5 (where Blue & Yellow meet) with +/- 2.0
       SmartDashboard.putBoolean("ATLAS PowerPort Fire Signal", true);
       onBlueYellowLine = true;
     } else {
