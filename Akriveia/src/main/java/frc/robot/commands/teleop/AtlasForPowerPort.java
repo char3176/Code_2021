@@ -18,7 +18,7 @@ public class AtlasForPowerPort extends CommandBase {
   private Flywheel m_Flywheel = Flywheel.getInstance();
   private AngledShooter m_AngledShooter = AngledShooter.getInstance();
   private String zone;
-  private boolean isHoodUp;
+  private boolean isHoodUp, onBlueYellowLine;
 
   public AtlasForPowerPort(){}
 
@@ -35,10 +35,12 @@ public class AtlasForPowerPort extends CommandBase {
 
   @Override
   public void execute(){
-    if ((m_VisionClient.getDeltaX() >= 7.5) && (m_VisionClient.getDeltaX() <= 17.5)) {    // <- Not sure about the 7.5 & 17.5.  Just used the values encompassing Blue & Yellow zones for Interstellar Accuracy.
+    if ((m_VisionClient.getDeltaX() > 10.5) && (m_VisionClient.getDeltaX() <= 14.5)) {    // <- Not sure about the 10.5 & 14.5.  Using these as initial guess based on 12.5 (where Blue & Yellow meet) with +/- 2.0
       SmartDashboard.putBoolean("ATLAS PowerPort Fire Signal", true);
+      onBlueYellowLine = true;
     } else {
       SmartDashboard.putBoolean("ATLAS PowerPort Fire Signal", false);
+      onBlueYellowLine = false;
     }
     zone = m_VisionClient.findShootingZone();
     if(zone.equals("GREEN")){
@@ -47,15 +49,15 @@ public class AtlasForPowerPort extends CommandBase {
         m_AngledShooter.pctCtrl_lowerHoodPosition();
         isHoodUp = false;
       }*/
-    } else if(zone.equals("YELLOW")){
+    } else if((zone.equals("YELLOW")) && (!onBlueYellowLine)){
       m_Flywheel.setVisionCtrlRPM(3850);
       if(!isHoodUp){
         m_AngledShooter.pctCtrl_raiseHoodPosition();
         m_AngledShooter.pctCtrl_holdHoodPosition();
         isHoodUp = true;
       }
-    } else if(zone.equals("BLUE")){
-      m_Flywheel.setVisionCtrlRPM(/*4000*/3800);
+    } else if( (zone.equals("BLUE")) && (!onBlueYellowLine)){
+      m_Flywheel.setVisionCtrlRPM(4000);
       if(!isHoodUp){
         m_AngledShooter.pctCtrl_raiseHoodPosition();
         m_AngledShooter.pctCtrl_holdHoodPosition();
@@ -63,6 +65,13 @@ public class AtlasForPowerPort extends CommandBase {
       }
     } else if(zone.equals("RED")){
       m_Flywheel.setVisionCtrlRPM(4300);
+      if(!isHoodUp){
+        m_AngledShooter.pctCtrl_raiseHoodPosition();
+        m_AngledShooter.pctCtrl_holdHoodPosition();
+        isHoodUp = true;
+      }
+    } else if (onBlueYellowLine) {
+      m_Flywheel.setVisionCtrlRPM(3800);
       if(!isHoodUp){
         m_AngledShooter.pctCtrl_raiseHoodPosition();
         m_AngledShooter.pctCtrl_holdHoodPosition();
