@@ -176,7 +176,8 @@ public class Drivetrain extends SubsystemBase {
     this.strafeCommand = 0.0;
     this.spinCommand = 0.0;
 
-    spinLockPID = new PIDLoop(1.0, 0.0, 0.0, 0.0);
+    spinLockPID = new PIDLoop(1.0, 0.0, 0.0);
+    //spinLockAngle = getNavxAngle_inRadians();
     // spinLockPID = new PIDController(0.3, 0.0, 0.0, 0.0);
   }
 
@@ -373,8 +374,6 @@ public class Drivetrain extends SubsystemBase {
   }
 
   private double getNavxAngle_inDegrees() {
-    SmartDashboard.putNumber("gyro.getAngle()", gyro.getAngle());
-    SmartDashboard.putNumber("gyro.getNavxAngle_inDegrees()", (gyro.getAngle()+DrivetrainConstants.GYRO_COORDSYS_ROTATIONAL_OFFSET+this.gyroOffset));
     return (gyro.getAngle() + DrivetrainConstants.GYRO_COORDSYS_ROTATIONAL_OFFSET + this.gyroOffset);
   }
 
@@ -534,6 +533,15 @@ public class Drivetrain extends SubsystemBase {
     if (this.arraytrack > 3) {
       this.arraytrack = 0;
     } 
+   
+    /*
+    double tslpid = spinLockPID.returnOutput(getNavxAngle_inRadians(), 0);
+    SmartDashboard.putNumber("gyro.angleAvgRollingWindow", this.angleAvgRollingWindow);
+    SmartDashboard.putNumber("gyro.spinLockPID()", tslpid);
+    SmartDashboard.putNumber("gyro.this.currentAngle", this.currentAngle);
+    SmartDashboard.putNumber("gyro.getAngle()", gyro.getAngle());
+    SmartDashboard.putNumber("gyro.getNavxAngle_inRadians()", (getNavxAngle_inRadians()));
+    */
 
     odometry.update(
         new Rotation2d(getHeading()),
