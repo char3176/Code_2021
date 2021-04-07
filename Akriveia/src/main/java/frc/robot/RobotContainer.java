@@ -87,13 +87,14 @@ public class RobotContainer {
     autonChooser = new SendableChooser<>();
     autonChooser.addOption("Barrel Racing", barrel_racing);
     autonChooser.addOption("Bounce Path", bounce_path);
-    autonChooser.addOption("Forward", forward);
+    autonChooser.setDefaultOption("Forward", forward);
     autonChooser.addOption("Forward and Back", forward_and_back);
     autonChooser.addOption("Easy", easy);
     autonChooser.addOption("Galactic Search A", galactic_search_a);
     autonChooser.addOption("Galactic Search B", galactic_search_b);
     autonChooser.addOption("L_Shape", l_shape);
     autonChooser.addOption("Slalom", slalom);
+    SmartDashboard.putData("AutonChoooser",autonChooser);
 
   }
 
