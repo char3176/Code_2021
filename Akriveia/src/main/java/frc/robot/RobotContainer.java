@@ -119,6 +119,7 @@ public class RobotContainer {
     //preloadTrajectoryFiles();
 
     SmartDashboard.putData("ATLAS IntStellarAccuracy", new AtlasForInterstellarAccuracy());
+    SmartDashboard.putData("ATLAS PowerPort", new AtlasForPowerPort());
     SmartDashboard.putData("ATLAS Global Off", new AtlasOff());
   }
 

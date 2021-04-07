@@ -64,8 +64,8 @@ public class VisionClient{
 
     private static VisionClient instance = new VisionClient();
 
-    //AGAS = Advanced Guidance Assistance System (For used with Drivetrain & Swerve)
-    private boolean isAgasOn = false;
+    //ADA = Automated Drive Assistant (For used with Drivetrain & Swerve)
+    private boolean isAdaOn = false;
     //ATLAS = Advanced Targeting Launch Assistance System (For use with Shooting subsystems, excluding Swerve)
     private boolean isAtlasOn = false;
 
@@ -407,16 +407,16 @@ public class VisionClient{
         return initialTheta;
     }
 
-    public boolean getAgasState(){
-        return isAgasOn;
+    public boolean getAdaState(){
+        return isAdaOn;
     }
 
-    public void setAgasOn(boolean value){
-        isAgasOn = value;
+    public void setAdaOn(boolean value){
+        isAdaOn = value;
     }
     
-    public boolean isAgasOn(){
-        return isAgasOn;
+    public boolean isAdaOn(){
+        return isAdaOn;
     }
 
     public void setAtlasOn(boolean value){
