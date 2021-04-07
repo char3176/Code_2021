@@ -49,7 +49,7 @@ public class AtlasForInterstellarAccuracy extends CommandBase {
         isHoodUp = true;
       }
     } else if(zone.equals("BLUE")){
-      m_Flywheel.setVisionCtrlRPM(/*4000*/3800);     // <-- Does 3800 still apply if this cmd is Interstellar Accuracy? Or should this be switched back to 4000?
+      m_Flywheel.setVisionCtrlRPM(4000);
       if(!isHoodUp){
         m_AngledShooter.pctCtrl_raiseHoodPosition();
         m_AngledShooter.pctCtrl_holdHoodPosition();
