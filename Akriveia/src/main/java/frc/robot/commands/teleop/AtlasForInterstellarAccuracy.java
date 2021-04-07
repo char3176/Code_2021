@@ -26,7 +26,9 @@ public class AtlasForInterstellarAccuracy extends CommandBase {
     addRequirements(m_Flywheel);
     addRequirements(m_AngledShooter);
 
-    isHoodUp = false;
+    isHoodUp = true;
+    //m_AngledShooter.pctCtrl_raiseHoodPosition();
+    m_AngledShooter.pctCtrl_holdHoodPosition();
     m_VisionClient.setAtlasOn(true);  
   }
 
@@ -35,10 +37,10 @@ public class AtlasForInterstellarAccuracy extends CommandBase {
     zone = m_VisionClient.findShootingZone();
     if(zone.equals("GREEN")){
       m_Flywheel.setVisionCtrlRPM(3000);
-      if(isHoodUp){
+      /*if(isHoodUp){
         m_AngledShooter.pctCtrl_lowerHoodPosition();
         isHoodUp = false;
-      }
+      }*/
     } else if(zone.equals("YELLOW")){
       m_Flywheel.setVisionCtrlRPM(3850);
       if(!isHoodUp){
@@ -47,7 +49,7 @@ public class AtlasForInterstellarAccuracy extends CommandBase {
         isHoodUp = true;
       }
     } else if(zone.equals("BLUE")){
-      m_Flywheel.setVisionCtrlRPM(4000);
+      m_Flywheel.setVisionCtrlRPM(/*4000*/3800);
       if(!isHoodUp){
         m_AngledShooter.pctCtrl_raiseHoodPosition();
         m_AngledShooter.pctCtrl_holdHoodPosition();
@@ -62,10 +64,10 @@ public class AtlasForInterstellarAccuracy extends CommandBase {
       }
     } else{
       m_Flywheel.setVisionCtrlRPM(0);
-      if(isHoodUp){
+      /*if(isHoodUp){
         m_AngledShooter.pctCtrl_lowerHoodPosition();
         isHoodUp = false;
-      }
+      }*/
     }
   }
 
@@ -73,11 +75,14 @@ public class AtlasForInterstellarAccuracy extends CommandBase {
   public void end(boolean interrupted){
     if(isHoodUp){
       m_AngledShooter.pctCtrl_lowerHoodPosition();
+
     }
+    m_Flywheel.setVisionCtrlRPM(0);
   }
 
   @Override
   public boolean isFinished(){
     return !m_VisionClient.isAtlasOn();
+
   }
 }

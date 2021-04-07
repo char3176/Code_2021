@@ -145,7 +145,11 @@ public class Controller {
         if (Math.abs(rotStick.getX()) < 0.06) {
             return 0.0;
         } else {
+<<<<<<< HEAD
             return 0.2 * ControllerConstants.SPIN_AXIS_INVERSION * (Math.pow(rotStick.getX(), 1) / 7.0); }
+=======
+            return 0.5 * ControllerConstants.SPIN_AXIS_INVERSION * (Math.pow(rotStick.getX(), 1) / 7.0); }
+>>>>>>> 98d311855b2530c6d5eaa2edd82acace308e5c20
     } 
 
     public double getOrbitSpeed() { 

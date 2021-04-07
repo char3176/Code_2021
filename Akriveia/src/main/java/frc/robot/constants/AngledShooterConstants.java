@@ -8,8 +8,8 @@ public class AngledShooterConstants {
     public static boolean SENSOR_PHASE = true;
     public static boolean MOTOR_INVERT = false;
 
-    public static final double MOVE_PCT = .4;
-    public static final double HOLD_PCT = .3;
+    public static final double MOVE_PCT = .1;
+    public static final double HOLD_PCT = .05;
     
     public static final double[] PIDF = {.31, 0.002, 2.12, 0.35};
 
