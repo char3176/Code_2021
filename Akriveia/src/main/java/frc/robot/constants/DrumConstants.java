@@ -14,7 +14,7 @@ public class DrumConstants {
 
     /* RPM Array */
 
-    public static final int[] SPEEDS = {0, 2500, 3500/**/,3750/**/, 4250/**/, 4500, 5000/**/, 7000, 8500};
+    public static final int[] SPEEDS = {0, 2500, 3500/**/,3750/**/, 4250/**/, 4500, 4600/**/, 5000/**/, 7000, 8500};
     public static final double SHAKE_PCT = 0.35;
     public static final double MILLI = 1000000;
     public static final double SEC = 1000000000;

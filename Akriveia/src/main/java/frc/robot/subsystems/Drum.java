@@ -55,7 +55,7 @@ public class Drum extends SubsystemBase {
     drumPIDController = drumMotor.getPIDController();
     drumEncoder = drumMotor.getEncoder();
 
-    drumMotor.setClosedLoopRampRate(0.4);
+    drumMotor.setClosedLoopRampRate(.3);
 
     drumPIDController.setReference(0.0, ControlType.kVelocity);
 
