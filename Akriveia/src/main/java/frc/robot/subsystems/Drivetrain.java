@@ -114,6 +114,8 @@ public class Drivetrain extends SubsystemBase {
   private SwervePod podBL;
   private SwervePod podBR;
 
+  private double lockP, lockI, lockD;
+
   private Drivetrain() {
     // Instantiate pods
     podFR = new SwervePod(0, driveControllers[0], spinControllers[0]);
@@ -221,13 +223,13 @@ public class Drivetrain extends SubsystemBase {
     // SmartDashboard.putString("Drive currentCoordType",
     // currentCoordType.toString());
 
-    if (! isTurboOn) {
+    if (!isTurboOn) {
       this.forwardCommand *= DrivetrainConstants.NON_TURBO_PERCENT_OUT_CAP;
       this.strafeCommand *= DrivetrainConstants.NON_TURBO_PERCENT_OUT_CAP;
       this.spinCommand *= DrivetrainConstants.NON_TURBO_PERCENT_OUT_CAP;
     }
 
-    if (this.isSpinLocked) {
+    if (this.isSpinLocked && !isOrbiting()) {
       this.spinCommand = -spinLockPID.returnOutput(getNavxAngle_inRadians(), spinLockAngle);
       // this.spinCommand = spinLockPID.calculate(getNavxAngle(), spinLockAngle);
 

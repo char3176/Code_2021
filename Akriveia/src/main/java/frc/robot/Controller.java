@@ -152,7 +152,7 @@ public class Controller {
         if (Math.abs(rotStick.getY()) < 0.06) {
             return 0.0;
         } else {
-            return Math.pow(rotStick.getY(), 1) / 7.0; }
+            return Math.pow(rotStick.getY(), 1); }
     } 
     
     
