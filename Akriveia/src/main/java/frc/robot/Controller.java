@@ -136,6 +136,7 @@ public class Controller {
     
     public double getStrafe() { 
         if (Math.abs(transStick.getX()) < 0.06) {
+            
             return 0.0;
         } else { 
             return ControllerConstants.STRAFE_AXIS_INVERSION * Math.pow(transStick.getX(), 1); }

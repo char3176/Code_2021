@@ -40,6 +40,7 @@ public class SwerveDrive extends CommandBase {
 
     if(isFieldCentric.getAsBoolean()) {
       drivetrain.setCoordType(coordType.FIELD_CENTRIC);
+      drivetrain.setFieldCentricOffset();
     }
     if(isRobotCentric.getAsBoolean()) {
       drivetrain.setCoordType(coordType.ROBOT_CENTRIC);

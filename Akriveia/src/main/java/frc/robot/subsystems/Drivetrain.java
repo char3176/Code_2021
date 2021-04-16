@@ -95,7 +95,7 @@ public class Drivetrain extends SubsystemBase {
   
   public Rotation2d rotation = new Rotation2d();
 
-  private double angleOffset = 0.0;
+  private double fieldCentricOffset = 0.0;
 
   private int arraytrack;
   double[] angleHist = { 0.0, 0.0, 0.0, 0.0, 0.0 };
@@ -462,6 +462,15 @@ public class Drivetrain extends SubsystemBase {
     this.isSpinLocked = !this.isSpinLocked;
   }
 
+  public double getFieldCentricOffset() {
+    return fieldCentricOffset;
+  }
+
+  public void setFieldCentricOffset() {
+    fieldCentricOffset = getNavxAngle_inRadians();
+    SmartDashboard.putNumber("value in Drivetrain", getNavxAngle_inRadians());
+  }
+
   /**
    * Sets Turbo mode on or off
    * @param onOrOff Passing a value of true sets Turbo on (ie isTurboOn = true), and passing value of false sets Turbo off (ie isTurboOn = false)
@@ -498,6 +507,11 @@ public class Drivetrain extends SubsystemBase {
 
   public double getAngleAvgRollingWindow() {
     return this.angleAvgRollingWindow;
+  }
+
+  public double getCurrentAngle() {
+    updateNavxAngle();
+    return this.currentAngle;
   }
 
   public ChassisSpeeds getChassisSpeed() {
