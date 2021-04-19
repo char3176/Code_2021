@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.*;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.AngledShooterConstants;
@@ -23,7 +24,9 @@ public class AngledShooter extends SubsystemBase {
   private double startPosTic; 
   private double minPosTic, maxPosTic;
   private int numPositions, hoodPositions_persistingIndex;
-  private ArrayList<Double> hoodPositions_Tics; 
+  private ArrayList<Double> hoodPositions_Tics;
+  private double[] pos5 = new double[5];
+  private int setting;
 
   public AngledShooter() {
     boolean pidPosCtrlActive = false;  //set True if doing PID Position Ctrl.  Set False if doing OutputPercent Ctrl.
@@ -40,24 +43,74 @@ public class AngledShooter extends SubsystemBase {
     hoodController.setInverted(AngledShooterConstants.MOTOR_INVERT);
     hoodController.configNominalOutputForward(0, AngledShooterConstants.TimeoutMs);
     hoodController.configNominalOutputReverse(0, AngledShooterConstants.TimeoutMs);
-    hoodController.configPeakOutputForward(/*1*/0.2, AngledShooterConstants.TimeoutMs);
-    hoodController.configPeakOutputReverse(/*-1*/-0.2, AngledShooterConstants.TimeoutMs);
+    hoodController.configPeakOutputForward(/*1*/0.4, AngledShooterConstants.TimeoutMs);
+    hoodController.configPeakOutputReverse(/*-1*/-0.4, AngledShooterConstants.TimeoutMs);
     hoodController.configAllowableClosedloopError(0, AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.TimeoutMs);
     hoodController.config_kF(AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.PIDF[3], AngledShooterConstants.TimeoutMs);
 		hoodController.config_kP(AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.PIDF[0], AngledShooterConstants.TimeoutMs);
 		hoodController.config_kI(AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.PIDF[1], AngledShooterConstants.TimeoutMs);
     hoodController.config_kD(AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.PIDF[2], AngledShooterConstants.TimeoutMs);
 
-    ampSpikeCount = 0;
-    
+    // ampSpikeCount = 0;
+    findMinMax();
 
-    if (pidPosCtrlActive) {
-      pidPosCtrl_createPositionsAndGoToInitialPos(); 
-    } 
+    // if (pidPosCtrlActive) {
+    //   pidPosCtrl_createPositionsAndGoToInitialPos(); 
+    // } 
       
 
     //hoodController.configContinuousCurrentLimit(20);   //using 20amps b/c that's what was shown in DS logs
     //hoodController.configPeakCurrentDuration(1000);   //1000ms .... is totally a guess.
+  }
+
+  public void findMinMax() { // Finds the min pos and the max pos
+    hoodController.set(ControlMode.PercentOutput, -.4);
+    Timer.delay(1);
+    minPosTic = hoodController.getSelectedSensorPosition();
+    System.out.println("------" + minPosTic);
+    hoodController.set(ControlMode.PercentOutput, .4);
+    Timer.delay(1);
+    maxPosTic = hoodController.getSelectedSensorPosition();
+    System.out.println("++++++" + maxPosTic);
+    boolean direction = minPosTic - maxPosTic > 0; //TRUE is POS; FALSE is NEG
+    double range;
+    pos5[0] = minPosTic;
+    pos5[4] = maxPosTic;
+    setting = 0;
+
+    if(direction) {
+      range = maxPosTic - minPosTic;
+      pos5[1] = (.25 * range) + minPosTic;
+      pos5[2] = (.50 * range) + minPosTic;
+      pos5[3] = (.75 * range) + minPosTic;
+    } else {
+      range = minPosTic - maxPosTic;
+      pos5[1] = minPosTic - (range * .25);
+      pos5[2] = minPosTic - (range * .50);
+      pos5[3] = minPosTic - (range * .75);
+    }
+    downPos();
+  }
+
+  public void downPos() {
+    setting = 0;
+    hoodController.set(ControlMode.Position, pos5[setting]);
+  }
+
+  public void upPos() {
+    setting = pos5.length - 1;
+    hoodController.set(ControlMode.Position, pos5[setting]);
+  }
+
+  public void changePos(int lvl) {
+    setting = lvl;
+    if(setting >= 0 && setting < pos5.length) {
+      hoodController.set(ControlMode.Position, pos5[setting]);
+    }
+  }
+
+  public int getSetting() {
+    return setting;
   }
 
   public void pidPosCtrl_createPositionsAndGoToInitialPos() {

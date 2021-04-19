@@ -157,8 +157,8 @@ public class RobotContainer {
     m_Controller.getDrumInputResetButton().whenActive(new DrumInputReset());
     m_Controller.getDrumCCWButton().whenActive(new DrumCCW());
   
-    m_Controller.getPOVUp().whenHeld(new AngledShooterUp());
-    m_Controller.getPOVDown().whenHeld(new AngledShooterDown());
+    m_Controller.getPOVUp().whenHeld(new AngledShooterUp());    //ANGLE SHOOTER TEST
+    m_Controller.getPOVDown().whenHeld(new AngledShooterDown());//ANGLE SHOOTER TEST
     m_Controller.getPOVLeft().whenHeld(new FlywheelSlow());
     m_Controller.getPOVRight().whenHeld(new FlywheelSpeed());
 
