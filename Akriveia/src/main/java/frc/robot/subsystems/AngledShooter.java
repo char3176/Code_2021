@@ -43,7 +43,7 @@ public class AngledShooter extends SubsystemBase {
     hoodController.setInverted(AngledShooterConstants.MOTOR_INVERT);
     hoodController.configNominalOutputForward(0, AngledShooterConstants.TimeoutMs);
     hoodController.configNominalOutputReverse(0, AngledShooterConstants.TimeoutMs);
-    hoodController.configPeakOutputForward(/*1*/0.4, AngledShooterConstants.TimeoutMs);
+    hoodController.configPeakOutputForward(1, AngledShooterConstants.TimeoutMs);
     hoodController.configPeakOutputReverse(/*-1*/-0.4, AngledShooterConstants.TimeoutMs);
     hoodController.configAllowableClosedloopError(0, AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.TimeoutMs);
     hoodController.config_kF(AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.PIDF[3], AngledShooterConstants.TimeoutMs);
@@ -64,13 +64,14 @@ public class AngledShooter extends SubsystemBase {
   }
 
   public void findMinMax() { // Finds the min pos and the max pos
-    hoodController.set(ControlMode.PercentOutput, -.4);
-    Timer.delay(1);
-    minPosTic = hoodController.getSelectedSensorPosition();
-    System.out.println("------" + minPosTic);
-    hoodController.set(ControlMode.PercentOutput, .4);
+    hoodController.set(ControlMode.PercentOutput, 1);
     Timer.delay(1);
     maxPosTic = hoodController.getSelectedSensorPosition();
+    System.out.println("------" + minPosTic);
+    hoodController.set(ControlMode.PercentOutput, -.4);
+    Timer.delay(1);
+    hoodController.set(ControlMode.PercentOutput, 0);
+    minPosTic = hoodController.getSelectedSensorPosition();
     System.out.println("++++++" + maxPosTic);
     boolean direction = minPosTic - maxPosTic > 0; //TRUE is POS; FALSE is NEG
     double range;
@@ -284,7 +285,7 @@ public class AngledShooter extends SubsystemBase {
   public void periodic() {
     checkForCurrentSpike();
     SmartDashboard.putNumber("Hood Amps", m_PowerManagement.getAngledShooterAvgAmp());
-    SmartDashboard.putNumber("HoodPos_inTics", hoodController.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Hood Position (Tics)", hoodController.getSelectedSensorPosition());
   }
 
 
