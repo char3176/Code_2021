@@ -68,6 +68,12 @@ public class Controller {
 
     private final Trigger angledShooterOffButton;
 
+    /* ANGLED SHOOTED TEST BUTTONS */
+
+    private final Trigger ushootertestbutton;
+    private final Trigger dshootertestbutton;
+    private final Trigger hshootertestbutton;
+
     public Controller() {
 
         // Define control sticks: Translation stick, Rotation stick, and XboxController(aka "op")
@@ -123,7 +129,15 @@ public class Controller {
         dpadLeft = new POVButton(op, 270);
 
         angledShooterOffButton = new XboxLoneButton(op, Button.kStart.value, Button.kBumperLeft.value);
+
+        ushootertestbutton = new JoystickButton(transStick, 8);
+        dshootertestbutton = new JoystickButton(transStick, 9);
+        hshootertestbutton = new JoystickButton(transStick, 10);
     }
+
+    public Trigger getUShoot() {return ushootertestbutton;}
+    public Trigger getDShoot() {return dshootertestbutton;}
+    public Trigger getHShoot() {return hshootertestbutton;}
 
     /* Swerve Axis Data */
 

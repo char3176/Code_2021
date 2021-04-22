@@ -255,6 +255,14 @@ public class AngledShooter extends SubsystemBase {
 
   public void pctCtrl_stopHoodMotor() {
     pctCtrl_set(0);
+    pidCtrl_holdPosition();
+  }
+
+  public int pidCtrl_holdPosition() {
+    double pos2Hold = SmartDashboard.getNumber("Hood Position (Tics)", 0);
+    if(pos2Hold == 0) {return 1;}
+    hoodController.set(ControlMode.Position, pos2Hold);
+    return 0;
   }
 
 	/**
