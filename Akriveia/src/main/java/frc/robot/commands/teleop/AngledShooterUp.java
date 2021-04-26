@@ -34,7 +34,8 @@ public class AngledShooterUp extends InstantCommand {
     //m_AngledShooter.pctCtrl_raiseHoodPosition();
 
     // m_AngledShooter.pctCtrl_set(0.1);
-    int lvl = m_AngledShooter.getSetting();
-    m_AngledShooter.changePos(lvl+1);
+    // int lvl = m_AngledShooter.getSetting();
+    // m_AngledShooter.changePos(lvl+1);
+    m_AngledShooter.pctCtrl_raiseHoodPosition();
   }
 }

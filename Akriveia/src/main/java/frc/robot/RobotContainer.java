@@ -167,6 +167,9 @@ public class RobotContainer {
     m_Controller.getShootButton().whenActive(new Shoot());
     m_Controller.getResetShootButton().whenActive(new ShootReset());
     
+    m_Controller.getTestButton1().whenActive(new AngledShooterUp());
+    m_Controller.getTestButton2().whenActive(new AngledShooterDown());
+    m_Controller.getTestButton3().whenActive(new AngledShooterHoldPos());
   }
 
   public Command getAutonomousCommand() {

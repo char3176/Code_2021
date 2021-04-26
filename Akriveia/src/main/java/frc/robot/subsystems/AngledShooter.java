@@ -257,6 +257,11 @@ public class AngledShooter extends SubsystemBase {
     pctCtrl_set(0);
   }
 
+  public void posCtrl() {
+    double currPos = SmartDashboard.getNumber("Hood Position (Tics)", hoodController.getSelectedSensorPosition());
+    hoodController.set(ControlMode.Position, currPos);
+  }
+
 	/**
 	 * @return the encoder position by using .getSelectedSensorPosition()
 	 */
@@ -280,6 +285,11 @@ public class AngledShooter extends SubsystemBase {
     return returnFlag;
   }
 
+  public void setPID(double kP, double kI, double kD) {
+		hoodController.config_kP(AngledShooterConstants.PIDLoopIdx, kP, AngledShooterConstants.TimeoutMs);
+		hoodController.config_kI(AngledShooterConstants.PIDLoopIdx, kI, AngledShooterConstants.TimeoutMs);
+    hoodController.config_kD(AngledShooterConstants.PIDLoopIdx, kD, AngledShooterConstants.TimeoutMs);
+  }
 
   @Override
   public void periodic() {
