@@ -133,11 +133,13 @@ public class Controller {
         ushootertestbutton = new JoystickButton(transStick, 8);
         dshootertestbutton = new JoystickButton(transStick, 9);
         hshootertestbutton = new JoystickButton(transStick, 10);
+        testButton4 = new JoystickButton(transStick, 7);
     }
 
     public Trigger getUShoot() {return ushootertestbutton;}
     public Trigger getDShoot() {return dshootertestbutton;}
     public Trigger getHShoot() {return hshootertestbutton;}
+    public Trigger getTestButton4() {return testButton4;}
 
     /* Swerve Axis Data */
 
