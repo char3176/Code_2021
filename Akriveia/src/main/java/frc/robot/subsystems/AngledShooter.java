@@ -27,6 +27,7 @@ public class AngledShooter extends SubsystemBase {
   private ArrayList<Double> hoodPositions_Tics;
   private double[] pos5 = new double[5];
   private int setting;
+  private double posToHold;
 
   public AngledShooter() {
     boolean pidPosCtrlActive = false;  //set True if doing PID Position Ctrl.  Set False if doing OutputPercent Ctrl.
@@ -43,8 +44,8 @@ public class AngledShooter extends SubsystemBase {
     hoodController.setInverted(AngledShooterConstants.MOTOR_INVERT);
     hoodController.configNominalOutputForward(0, AngledShooterConstants.TimeoutMs);
     hoodController.configNominalOutputReverse(0, AngledShooterConstants.TimeoutMs);
-    hoodController.configPeakOutputForward(1, AngledShooterConstants.TimeoutMs);
-    hoodController.configPeakOutputReverse(/*-1*/-0.4, AngledShooterConstants.TimeoutMs);
+    hoodController.configPeakOutputForward(0.1, AngledShooterConstants.TimeoutMs);
+    hoodController.configPeakOutputReverse(/*-1*/-0.05, AngledShooterConstants.TimeoutMs);
     hoodController.configAllowableClosedloopError(0, AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.TimeoutMs);
     hoodController.config_kF(AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.PIDF[3], AngledShooterConstants.TimeoutMs);
 		hoodController.config_kP(AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.PIDF[0], AngledShooterConstants.TimeoutMs);
@@ -265,9 +266,13 @@ public class AngledShooter extends SubsystemBase {
     return 0;
   }
 
+  public void setPosToHold() {
+    posToHold = hoodController.getSelectedSensorPosition();
+  }
+
   public void posCtrl() {
-    double currPos = SmartDashboard.getNumber("Hood Position (Tics)", hoodController.getSelectedSensorPosition());
-    hoodController.set(ControlMode.Position, currPos);
+    // double currPos = SmartDashboard.getNumber("Hood Position (Tics)", hoodController.getSelectedSensorPosition());
+    hoodController.set(ControlMode.Position, /*currPos*/posToHold);
   }
 
 	/**

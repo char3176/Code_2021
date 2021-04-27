@@ -14,7 +14,7 @@ import frc.robot.VisionClient;
  */
 public class Shoot extends InstantCommand {
   Drum mDrum = Drum.getInstance();
-  // Flywheel mFlywheel = Flywheel.getInstance();
+  Flywheel mFlywheel = Flywheel.getInstance();
   BallTransfer mTransfer = BallTransfer.getInstance();
   VisionClient m_VisionClient = VisionClient.getInstance();
   // AngledShooter mAngle = AngledShooter.getInstance();
@@ -25,7 +25,7 @@ public class Shoot extends InstantCommand {
     addRequirements(mDrum);
     // if (!m_VisionClient.isAtlasOn()) {addRequirements(mFlywheel);}
     addRequirements(mTransfer);
-    // addRequirements(mFlywheel);
+    addRequirements(mFlywheel);
     // addRequirements(mAngle);
     // System.out.println("Shoot Created");
   }
@@ -39,6 +39,7 @@ public class Shoot extends InstantCommand {
     // mFlywheel.spinVelocityOutputPercent(1);
     // mAngle.pctCtrl_raiseHoodPosition();
     // if (!m_VisionClient.isAtlasOn()) {mFlywheel.spinVelocityPIDF(5);}
+    mFlywheel.spinVelocityPIDF(8);
     // mTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT/2);
     // Timer.delay(2);
     mTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT);

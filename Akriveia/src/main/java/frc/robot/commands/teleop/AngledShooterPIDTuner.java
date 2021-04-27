@@ -4,6 +4,7 @@
 
 package frc.robot.commands.teleop;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.constants.AngledShooterConstants;
@@ -18,6 +19,12 @@ public class AngledShooterPIDTuner extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    subsystem.pctCtrl_set(0);
+    subsystem.setPosToHold();
+    subsystem.pctCtrl_lowerHoodPosition();
+    Timer.delay(0.5);
+    // subsystem.pctCtrl_set(0);
+    subsystem.posCtrl();
     SmartDashboard.putNumber("TEST kP", AngledShooterConstants.PIDF[0]);
     SmartDashboard.putNumber("TEST kI", AngledShooterConstants.PIDF[1]);
     SmartDashboard.putNumber("TEST kD", AngledShooterConstants.PIDF[2]);
@@ -31,6 +38,7 @@ public class AngledShooterPIDTuner extends CommandBase {
     double newD = SmartDashboard.getNumber("TEST kD", AngledShooterConstants.PIDF[2]);
 
     subsystem.setPID(newP, newI, newD);
+    // subsystem.posCtrl();
   }
 
   // Called once the command ends or is interrupted.

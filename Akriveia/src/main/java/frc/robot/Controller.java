@@ -73,6 +73,7 @@ public class Controller {
     private final Trigger ushootertestbutton;
     private final Trigger dshootertestbutton;
     private final Trigger hshootertestbutton;
+    private final Trigger pshootertestbutton;
 
     public Controller() {
 
@@ -133,13 +134,13 @@ public class Controller {
         ushootertestbutton = new JoystickButton(transStick, 8);
         dshootertestbutton = new JoystickButton(transStick, 9);
         hshootertestbutton = new JoystickButton(transStick, 10);
-        testButton4 = new JoystickButton(transStick, 7);
+        pshootertestbutton = new JoystickButton(transStick, 14);
     }
 
     public Trigger getUShoot() {return ushootertestbutton;}
     public Trigger getDShoot() {return dshootertestbutton;}
     public Trigger getHShoot() {return hshootertestbutton;}
-    public Trigger getTestButton4() {return testButton4;}
+    public Trigger getPShoot() {return pshootertestbutton;}
 
     /* Swerve Axis Data */
 

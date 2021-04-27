@@ -172,6 +172,7 @@ public class RobotContainer {
     m_Controller.getUShoot().whenActive(new AngledShooterUp());
     m_Controller.getDShoot().whenActive(new AngledShooterDown());
     m_Controller.getHShoot().whenActive(new AngledShooterOff());
+    m_Controller.getPShoot().whenActive(new AngledShooterPIDTuner());
   }
 
   public Command getAutonomousCommand() {

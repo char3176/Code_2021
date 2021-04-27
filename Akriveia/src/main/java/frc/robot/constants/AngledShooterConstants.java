@@ -11,7 +11,8 @@ public class AngledShooterConstants {
     public static final double MOVE_PCT = .1;
     public static final double HOLD_PCT = .05;
     
-    public static final double[] PIDF = {.62, 0.002, 2.12, 0.35};   //PIDF as start of 4/22 | .31, .002, 2.12, .35      .5 works as P
+    // public static final double[] PIDF = {.31, 0.002, 2.12, 0.35};   //PIDF as start of 4/22 | .31, .002, 2.12, .35      .5 works as P
+    public static final double[] PIDF = {.001, 0.0, 0.0, 0.0};
 
     public static final double GEAR_RATIO = 4/1;
 	

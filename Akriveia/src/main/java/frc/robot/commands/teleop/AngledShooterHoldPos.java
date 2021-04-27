@@ -24,6 +24,7 @@ public class AngledShooterHoldPos extends CommandBase {
     //m_AngledShooter.pctCtrl_holdHoodPosition();
     // m_AngledShooter.pctCtrl_set(0.1);
     m_AngledShooter.pctCtrl_set(0);
+    m_AngledShooter.setPosToHold();
     m_AngledShooter.posCtrl();
   }
 
