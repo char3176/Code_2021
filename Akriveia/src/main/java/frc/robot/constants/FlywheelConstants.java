@@ -7,5 +7,5 @@ public class FlywheelConstants {
     public static final double kPeakOutput = 1.0;
     public static final int kTimeoutMs = 30;
     public static final int kPIDLoopIdx = 0;
-    public static final int[] SPEEDS = {0, 3000, 3850, 4000, 4150, 4300, 4400, 5500, /**/8000};
+    public static final double[] SPEEDS = {0, 3000, 3850, 4000, 4150, 4300, 4400, 5500, /*MAX given from 100%*/8500};
 }
