@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import frc.robot.commands.auton.AutonDrive;
 import frc.robot.commands.auton.FollowGivenPath;
 import frc.robot.commands.auton.HolonomicAuton;
 import frc.robot.commands.auton.Slalom;
@@ -201,7 +202,7 @@ public class RobotContainer {
     
     }
     else if(m_autonChooser.getSelected().equals("s_forward")) {
-      
+      new AutonDrive();
     }
     else if (m_autonChooser.getSelected().equals("s_galactic_search_a")) {
      
