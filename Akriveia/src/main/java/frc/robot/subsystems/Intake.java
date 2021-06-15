@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -15,6 +17,7 @@ public class Intake extends SubsystemBase {
   private static Intake instance = new Intake();
   private WPI_TalonSRX motor = new WPI_TalonSRX(IntakeConstants.MOTOR_CAN_ID);
   private double intakeMotorSpeed = 0;
+  // private DoubleSolenoid actuater = new DoubleSolenoid(IntakeConstants.PISTON_OPEN_ID, IntakeConstants.PISTON_CLOSE_ID);
 
   /**
    * Instantiates the Intake object
@@ -36,6 +39,20 @@ public class Intake extends SubsystemBase {
     motor.set(ControlMode.PercentOutput, percent);
     intakeMotorSpeed = percent;
     // System.out.println("Intake Percent = " + intakeMotorSpeed + " and " + percent);
+  }
+
+  /**
+   * Deploys the Intake
+   */
+  public void deployIntake() {
+    // actuater.set(Value.kForward);
+  }
+
+  /**
+   * Retracts the Intake
+   */
+  public void retractIntake() {
+    // actuater.set(Value.kReverse);
   }
 
   /**
