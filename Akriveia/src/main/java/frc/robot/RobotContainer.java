@@ -202,7 +202,7 @@ public class RobotContainer {
     
     }
     else if(m_autonChooser.getSelected().equals("s_forward")) {
-      new AutonDrive();
+      
     }
     else if (m_autonChooser.getSelected().equals("s_galactic_search_a")) {
      
@@ -254,10 +254,10 @@ public class RobotContainer {
             config); 
       */
     
-    Pose2d initialTrajPose = m_trajectory.getInitialPose();
+    //Pose2d initialTrajPose = m_trajectory.getInitialPose();
 
 
-    m_Drivetrain.resetOdometry(initialTrajPose);  // Reset odometry to the starting pose of the trajectory.
+    //m_Drivetrain.resetOdometry(initialTrajPose);  // Reset odometry to the starting pose of the trajectory.
 
     /*
     m_SwerveControllerCommand =
@@ -280,8 +280,8 @@ public class RobotContainer {
 
     return m_SwerveControllerCommand.andThen(() -> m_Drivetrain.drive(0, 0, 0)); 
     */
-
-    return new HolonomicAuton(m_trajectory);
+    
+    return new AutonDrive();
   }
 
   public void createTrajectory(String path){

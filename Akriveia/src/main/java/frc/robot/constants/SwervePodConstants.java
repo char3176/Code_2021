@@ -103,7 +103,7 @@ public final class SwervePodConstants {
                     //
                     // {2.0, 2.5, 3.0, 3.0} Jake Teleop PID
                     //{1.0, 1.0, 1.0, 1.0},
-                    {0.0, 0.0, 0.0, 0.0},
+                    {0.8, 0.8, 0.8, 0.8},
         /* kI */    {0.0, 0.0, 0.0, 0.0},
                     
         ///* kD */    {25.0, 50.0, 500.0, 50.0},
@@ -145,9 +145,9 @@ public final class SwervePodConstants {
     // public static final int[] SPIN_OFFSET = {47762, 4189, 388129, -50897};
     // public static final int[] SPIN_OFFSET = {49844, 55384, 58418, 73442};
     // public static final int[] SPIN_OFFSET_2019 = {-7492, -6034, -6649, 1305}; // 2019 Bot
-    public static final int[] SPIN_OFFSET_2019 = {2718, 3861, -431, 3328};
+    public static final int[] SPIN_OFFSET_2019 = {-1375, -253, -430, -4739};
 
-    public static final int[] SPIN_OFFSET_2021 = {474, 345, -1246, 2865}; // 2021 Bot
+    public static final int[] SPIN_OFFSET_2021 = {474, 345, -430, 2865}; // 2021 Bot
     public static final int[] SPIN_OFFSET = (MasterConstants.is2021Bot) ? SPIN_OFFSET_2021 : SPIN_OFFSET_2019;
 
     public static final double DRIVE_SPEED_MAX_EMPIRICAL_FEET_PER_SECOND = 13.79;

@@ -160,7 +160,7 @@ public class SwervePod {
                 this.spinController.setSensorPhase(SwervePodConstants.kSensorPhase);
                 this.spinController.setInverted(SwervePodConstants.kMotorInverted);
             }
-            if (this.id == 3) {
+            if (this.id == 3 || this.id == 2) {
                 this.spinController.setSensorPhase(true);
                 this.spinController.setInverted(true);
             }
