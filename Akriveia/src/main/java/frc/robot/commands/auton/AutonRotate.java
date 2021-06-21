@@ -4,47 +4,35 @@
 
 package frc.robot.commands.auton;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Drivetrain.coordType;
 
-public class AutonDrive extends CommandBase {
-  /** Creates a new AutonDrive. */
+public class AutonRotate extends CommandBase {
 
-  Timer timer = new Timer();
-
-  private double xVel;
-  private double yVel;
-  private double omega; //rotational velocity
-  private double endTime;
   private Drivetrain drivetrain = Drivetrain.getInstance();
-
-  public AutonDrive(double x, double y, double rot, double time) {
+  private double rotation;
+  private double degrees;
+  private double initialAngle;
+  /** Creates a new AutonRotate. */
+  public AutonRotate(double rot, double degrees) {
     addRequirements(drivetrain);
-    endTime = time;
-    xVel = x;
-    yVel = y;
-    omega = rot;
-
+   rotation = rot;
+   this.degrees = degrees;
   }
- 
 
-  // Called when the command is initially scheduled.
+  
+
   @Override
   public void initialize() {
-
-    timer.start();
     drivetrain.setCoordType(coordType.ROBOT_CENTRIC);
-    drivetrain.setSpinLockAngle();
-    drivetrain.toggleSpinLock();
+    initialAngle = drivetrain.getNavxAngle_inDegrees();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.calcAngleAvgRollingWindow();
-    drivetrain.drive(xVel,yVel,omega);
+    drivetrain.drive(0,0,rotation);
   }
 
   // Called once the command ends or is interrupted.
@@ -54,7 +42,7 @@ public class AutonDrive extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(timer.get() > endTime){
+    if(drivetrain.getNavxAngle_inDegrees() >= initialAngle + degrees ){
       return true;
     }
     return false;

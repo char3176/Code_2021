@@ -376,7 +376,7 @@ public class Drivetrain extends SubsystemBase {
     }
   }
 
-  private double getNavxAngle_inDegrees() {
+  public double getNavxAngle_inDegrees() {
     return (gyro.getAngle() + DrivetrainConstants.GYRO_COORDSYS_ROTATIONAL_OFFSET + this.gyroOffset);
   }
 
@@ -500,7 +500,7 @@ public class Drivetrain extends SubsystemBase {
    /** 
     * Calculates average angle value based on rolling window of last five angle measurements
     */
-  private void calcAngleAvgRollingWindow() {
+  public void calcAngleAvgRollingWindow() {
     this.angleHist[this.arraytrack] = this.currentAngle;
     angleAvgRollingWindow = (this.angleHist[0] + this.angleHist[1] + this.angleHist[2] + this.angleHist[3]
         + this.angleHist[4]) / 5;

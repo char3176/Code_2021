@@ -15,12 +15,15 @@ import frc.robot.subsystems.Intake;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class RunAuton extends SequentialCommandGroup {
   /** Creates a new RunAuton. */
-  public RunAuton(Drivetrain drive, Drum drum, Intake intake, AngledShooter shooter ) {
+  public RunAuton() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-    
+      //new AutonDrive(.25,0,0,6)//,
 
+      //new AutonDrive(0,.25,0,1)
+    
+      new AutonRotate(.01, 90)
 
 
 

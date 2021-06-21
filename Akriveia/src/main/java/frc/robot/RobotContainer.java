@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.commands.auton.AutonDrive;
 import frc.robot.commands.auton.FollowGivenPath;
 import frc.robot.commands.auton.HolonomicAuton;
+import frc.robot.commands.auton.RunAuton;
 import frc.robot.commands.auton.Slalom;
 import frc.robot.commands.teleop.*;
 import frc.robot.constants.DrivetrainConstants;
@@ -178,16 +179,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
 
-        /*TrajectoryConfig config =
-        new TrajectoryConfig(
-               4.468,
-                1.631)
-            // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(DrivetrainConstants.DRIVE_KINEMATICS);
 
-    */
-
-    double startTime = Timer.getFPGATimestamp();
 
     if (m_autonChooser.getSelected().equals("s_barrel_racing")) {
       
@@ -217,71 +209,8 @@ public class RobotContainer {
    
     }
    
-    // System.out.println("#####################################################");
-    // System.out.println("################               WARNING      WARNING:               ############");
-    // System.out.println("#####              BIG OLE CHUNK OF DATA     ########"); 
-    // System.out.println("#####              ABOUT TO DUMPED HERE.     ########"); 
-    // System.out.println("############     tractory object contains following: ");
-    // System.out.println("###############  ");
-    // System.out.println("###############   BEGIN TRAJECTORY DATA:  ");
-    // System.out.println("");
-    // System.out.println(m_trajectory.toString()); 
-    // System.out.println("");
-    // System.out.println("###############   END TRAJECTORY DATA:  ");
-    // System.out.println("###############  ");
-    // System.out.println("############        THAT'S ALL, FOLKS!!   ############"); 
-    // System.out.println("######################################################");
-
-
-
-    TrajectoryConfig config = 
-      new TrajectoryConfig(
-      4.48,
-      1.631)
-      // Add kinematics to ensure max speed is actually obeyed
-      .setKinematics(DrivetrainConstants.DRIVE_KINEMATICS);
-
-    // An example trajectory to follow.  All units in meters.
-    /*
-    Trajectory trajectory =
-        TrajectoryGenerator.generateTrajectory(
-            // Start at the origin facing the +X direction
-            new Pose2d(0, 0, new Rotation2d(0)),
-            // Pass through these two interior waypoints, making an 's' curve path
-            List.of(new Translation2d(1, 0), new Translation2d(2, 0)),
-            // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(3, 0, new Rotation2d(0)),
-            config); 
-      */
     
-    //Pose2d initialTrajPose = m_trajectory.getInitialPose();
-
-
-    //m_Drivetrain.resetOdometry(initialTrajPose);  // Reset odometry to the starting pose of the trajectory.
-
-    /*
-    m_SwerveControllerCommand =
-      new SwerveControllerCommand(
-        m_trajectory,
-        m_Drivetrain::getCurrentPose, 
-        DrivetrainConstants.DRIVE_KINEMATICS,
-
-        // Position controllers
-        new PIDController(DrivetrainConstants.P_X_Controller, 0, 0),
-        new PIDController(DrivetrainConstants.P_Y_Controller, 0, 0),
-        thetaController,
-        m_Drivetrain::setModuleStates,
-        m_Drivetrain);
-
-    if(m_SwerveControllerCommand == null) { 
-       System.out.println("#############                        Ya screwed up, bub.                                      #########"); 
-       System.out.println("###########  ERROR: RobotContainer.getAutonoumousCommand() m_SwerveControllerCommand is null. #########"); 
-    }
-
-    return m_SwerveControllerCommand.andThen(() -> m_Drivetrain.drive(0, 0, 0)); 
-    */
-    
-    return new AutonDrive();
+    return new RunAuton();
   }
 
   public void createTrajectory(String path){
