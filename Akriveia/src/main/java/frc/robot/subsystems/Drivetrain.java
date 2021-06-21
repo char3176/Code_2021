@@ -200,9 +200,9 @@ public class Drivetrain extends SubsystemBase {
 
   /**
    * 
-   * @param forwardCommand range of {-1,1}
-   * @param strafeCommand  range of {-1, 1}
-   * @param spinCommand    range of {-1, 1}
+   * @param forwardCommand feet per second
+   * @param strafeCommand  feet per second
+   * @param spinCommand    feet per second
    */
   public void drive(double forwardCommand, double strafeCommand, double spinCommand) {
     this.forwardCommand = forwardCommand;
@@ -267,9 +267,9 @@ public class Drivetrain extends SubsystemBase {
 
   /**
    * 
-   * @param forwardCommand range of {-1,1} coming from translation stick Y-Axis
-   * @param strafeCommand  range of {-1,1} coming from translation stick X-Axis
-   * @param spinCommand    range of {}
+   * @param forwardCommand feet per second
+   * @param strafeCommand  feet per second
+   * @param spinCommand    feet per second
    */
   private void calculateNSetPodPositions(double forwardCommand, double strafeCommand, double spinCommand) {
 
@@ -289,7 +289,7 @@ public class Drivetrain extends SubsystemBase {
       // ###########################################################
       double a = strafeCommand - spinCommand * getRadius("A");
       double b = strafeCommand + spinCommand * getRadius("B");
-      ;
+      
       double c = forwardCommand - spinCommand * getRadius("C");
       double d = forwardCommand + spinCommand * getRadius("D");
 
@@ -346,11 +346,11 @@ public class Drivetrain extends SubsystemBase {
         // podDrive[idx]);
       }
 
-      // Find the highest pod speed then normalize if a pod is exceeding our max speed
+      // Find the highest pod speed then normalize if a pod is exceeding our max speed by scaling down all the speeds
       relMaxSpeed = Math.max(Math.max(podDrive[0], podDrive[1]), Math.max(podDrive[2], podDrive[3]));
-      if (relMaxSpeed > maxSpeed_InchesPerSec) {
+      if (relMaxSpeed > DrivetrainConstants.MAX_WHEEL_SPEED_FEET_PER_SECOND) {
         for (int idx = 0; idx < pods.size(); idx++) {
-          podDrive[idx] /= relMaxSpeed / maxSpeed_InchesPerSec;
+          podDrive[idx] /= relMaxSpeed / DrivetrainConstants.MAX_WHEEL_SPEED_FEET_PER_SECOND;
         }
       }
 
