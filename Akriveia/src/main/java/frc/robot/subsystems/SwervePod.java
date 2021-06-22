@@ -301,7 +301,7 @@ public class SwervePod {
     private double fps2ums(double i) {
         
         // input * inchesPerFoot * circumfrenceOfWheel * ticsPerRev * gearRatio * secTo100ms
-        return i * 12.0 * (1.0/10.21) * 2048.0 * (1.0/6.17) * .1;
+        return i * 12.0 * (1.0/10.21) * 2048.0 *6.17 * .1;
         
         // return i * 100;
     }
