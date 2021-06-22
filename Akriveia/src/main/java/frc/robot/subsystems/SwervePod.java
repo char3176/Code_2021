@@ -212,6 +212,7 @@ public class SwervePod {
         this.velTicsPer100ms = fps2ums(this.podDrive);
         SmartDashboard.putNumber("fps2ums:velTicsPer100ms", velTicsPer100ms);
         SmartDashboard.putNumber("podDrive", this.podDrive);
+        SmartDashboard.putNumber("rawVelocity", this.driveController.getSelectedSensorVelocity());
         double encoderSetPos = calcSpinPos(this.podSpin);
         double tics = rads2Tics(this.podSpin);
         // SmartDashboard.putNumber("P" + (id + 1) + " tics", tics);
