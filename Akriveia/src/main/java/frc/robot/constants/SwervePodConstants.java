@@ -72,7 +72,7 @@ public final class SwervePodConstants {
         // /* kI */    {0.001, 0.0015, 0.0015, 0.005}, // using these don't work
         /* kI */    {0.0, 0.0, 0.0, 0.0},
         /* kD */   {0.0, 0.0, 0.0, 0.0},
-        /* kF */    {0.0, 0.0, 0.0, 0.0},    // Feed forward gain constant
+        /* kF */   {1.87, 1.87, 1.87, 1.87}, // Feed forward gain constant
         /* I-Zne */ {0.0, 0.0, 0.0, 0.0}     // The range of error for kI to take affect (like a reverse deadband)
     };
     

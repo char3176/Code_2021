@@ -210,6 +210,8 @@ public class SwervePod {
         // this.velTicsPer100ms = this.podDrive * 2000.0 * kDriveEncoderUnitsPerRevolution / 600.0;  //TODO: rework "podDrive * 2000.0"
         this.maxVelTicsPer100ms = fps2ums(DrivetrainConstants.MAX_WHEEL_SPEED_FEET_PER_SECOND);
         this.velTicsPer100ms = fps2ums(this.podDrive);
+        SmartDashboard.putNumber("fps2ums:velTicsPer100ms", velTicsPer100ms);
+        SmartDashboard.putNumber("podDrive", this.podDrive);
         double encoderSetPos = calcSpinPos(this.podSpin);
         double tics = rads2Tics(this.podSpin);
         // SmartDashboard.putNumber("P" + (id + 1) + " tics", tics);
@@ -297,8 +299,11 @@ public class SwervePod {
      * @return tics per 100ms
      */
     private double fps2ums(double i) {
+        
         // input * inchesPerFoot * circumfrenceOfWheel * ticsPerRev * gearRatio * secTo100ms
-        return i * 12 * (1/10.21) * 2048 * (1/6.17) * .1;
+        return i * 12.0 * (1.0/10.21) * 2048.0 * (1.0/6.17) * .1;
+        
+        // return i * 100;
     }
 
     public boolean isInverted() { return spinController.getInverted(); }
