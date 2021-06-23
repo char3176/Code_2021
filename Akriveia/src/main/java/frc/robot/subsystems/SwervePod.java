@@ -125,10 +125,10 @@ public class SwervePod {
         kD_Spin = SwervePodConstants.SPIN_PID[2][id];
         kF_Spin = SwervePodConstants.SPIN_PID[3][id];
 
-        kP_Drive = SwervePodConstants.DRIVE_PID[0][id];
-        kI_Drive = SwervePodConstants.DRIVE_PID[1][id];
-        kD_Drive = SwervePodConstants.DRIVE_PID[2][id];
-        kF_Drive = SwervePodConstants.DRIVE_PID[3][id];
+        kP_Drive = 0.06; // SwervePodConstants.DRIVE_PID[0][id];
+        kI_Drive = 0.0; // SwervePodConstants.DRIVE_PID[1][id];
+        kD_Drive = 0.0; // SwervePodConstants.DRIVE_PID[2][id];
+        kF_Drive = .045; // SwervePodConstants.DRIVE_PID[3][id];
 
         this.driveController = driveController;
         this.spinController = spinController;
@@ -136,12 +136,12 @@ public class SwervePod {
         this.driveController.configFactoryDefault();
         this.spinController.configFactoryDefault();
 
-        this.driveController.configClosedloopRamp(0.5);    
+        // this.driveController.configClosedloopRamp(0.5);    
 
        // this.driveController.setNeutralMode(NeutralMode.Brake);
        // this.driveController.setNeutralMode(NeutralMode.Brake);
 
-        this.driveController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+        this.driveController.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
         this.spinController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);   //TODO: investigate QuadEncoder vs CTRE_MagEncoder_Absolute.  Are the two equivalent?  Why QuadEncoder instead of CTRE_MagEncoder_Absolute
 
        if (MasterConstants.is2021Bot) { 

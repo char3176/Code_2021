@@ -178,8 +178,8 @@ public class Drivetrain extends SubsystemBase {
     this.strafeCommand = 0.0;
     this.spinCommand = 0.0;
 
-    spinLockPID = new PIDLoop(0.03, 0.0, 0.0);
-    //spinLockAngle = getNavxAngle_inRadians();
+    spinLockPID = new PIDLoop(0.3, 0.0, 0.0);
+    // spinLockAngle = getNavxAngle_inRadians();
     // spinLockPID = new PIDController(0.3, 0.0, 0.0, 0.0);
   }
 
@@ -257,7 +257,8 @@ public class Drivetrain extends SubsystemBase {
     // this.forwardCommand);
     // SmartDashboard.putNumber("this.strafeComDriveTrain.drive",
     // this.strafeCommand);
-    // SmartDashboard.putNumber("this.spinComDriveTrain.drive", this.spinCommand);
+    // TODO: Find out why this putNumber statement is making the spinLock work
+    SmartDashboard.putNumber("this.spinComDriveTrain.drive", this.spinCommand);
     calculateNSetPodPositions(this.forwardCommand, this.strafeCommand, this.spinCommand);
 
     SmartDashboard.putBoolean("isOrbiting", currentDriveMode == driveMode.ORBIT);
@@ -461,6 +462,10 @@ public class Drivetrain extends SubsystemBase {
 
   public void toggleSpinLock() {
     this.isSpinLocked = !this.isSpinLocked;
+  }
+
+  public void setSpinLock(boolean set) {
+    isSpinLocked = set;
   }
 
   public double getFieldCentricOffset() {
