@@ -125,23 +125,23 @@ public class SwervePod {
         kD_Spin = SwervePodConstants.SPIN_PID[2][id];
         kF_Spin = SwervePodConstants.SPIN_PID[3][id];
 
-        kP_Drive = SwervePodConstants.DRIVE_PID[0][id];
-        kI_Drive = SwervePodConstants.DRIVE_PID[1][id];
-        kD_Drive = SwervePodConstants.DRIVE_PID[2][id];
-        kF_Drive = SwervePodConstants.DRIVE_PID[3][id];
+        kP_Drive = .06;//SwervePodConstants.DRIVE_PID[0][id];
+        kI_Drive = 0;//0.005;//SwervePodConstants.DRIVE_PID[1][id];
+        kD_Drive = 0.0;//SwervePodConstants.DRIVE_PID[2][id];
+        kF_Drive = .045;//SwervePodConstants.DRIVE_PID[3][id];
 
         this.driveController = driveController;
         this.spinController = spinController;
 
-        this.driveController.configFactoryDefault();
-        this.spinController.configFactoryDefault();
+        // this.driveController.configFactoryDefault();
+        // this.spinController.configFactoryDefault();
 
-        this.driveController.configClosedloopRamp(0.5);    
+        // this.driveController.configClosedloopRamp(0.5);    
 
        // this.driveController.setNeutralMode(NeutralMode.Brake);
        // this.driveController.setNeutralMode(NeutralMode.Brake);
 
-        this.driveController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+        this.driveController.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
         this.spinController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);   //TODO: investigate QuadEncoder vs CTRE_MagEncoder_Absolute.  Are the two equivalent?  Why QuadEncoder instead of CTRE_MagEncoder_Absolute
 
        if (MasterConstants.is2021Bot) { 
@@ -174,6 +174,7 @@ public class SwervePod {
         this.driveController.config_kI(kPIDLoopIdx_drive, kI_Drive, kTimeoutMs_drive);
         this.driveController.config_kD(kPIDLoopIdx_drive, kD_Drive, kTimeoutMs_drive);
         this.driveController.config_kF(kPIDLoopIdx_drive, kF_Drive, kTimeoutMs_drive);
+        this.driveController.config_IntegralZone(kPIDLoopIdx_drive, 10);
 
         SmartDashboard.putNumber("P", kP_Spin);
         SmartDashboard.putNumber("I", kI_Spin);
@@ -210,9 +211,13 @@ public class SwervePod {
         // this.velTicsPer100ms = this.podDrive * 2000.0 * kDriveEncoderUnitsPerRevolution / 600.0;  //TODO: rework "podDrive * 2000.0"
         this.maxVelTicsPer100ms = fps2ums(DrivetrainConstants.MAX_WHEEL_SPEED_FEET_PER_SECOND);
         this.velTicsPer100ms = fps2ums(this.podDrive);
-        SmartDashboard.putNumber("fps2ums:velTicsPer100ms", velTicsPer100ms);
-        SmartDashboard.putNumber("podDrive", this.podDrive);
-        SmartDashboard.putNumber("rawVelocity", this.driveController.getSelectedSensorVelocity());
+        if (this.id == 0)
+        {
+            SmartDashboard.putNumber("fps2ums:velTicsPer100ms", velTicsPer100ms);
+            SmartDashboard.putNumber("podDrive", this.podDrive);
+            SmartDashboard.putNumber("rawVelocity", this.driveController.getSelectedSensorVelocity(1));
+            SmartDashboard.putNumber("voltage2Controller", this.driveController.getMotorOutputVoltage());
+        }
         double encoderSetPos = calcSpinPos(this.podSpin);
         double tics = rads2Tics(this.podSpin);
         // SmartDashboard.putNumber("P" + (id + 1) + " tics", tics);
@@ -232,6 +237,7 @@ public class SwervePod {
         //SmartDashboard.putNumber("actualVel", driveController.getVoltage());
         
         driveController.set(TalonFXControlMode.Velocity, velTicsPer100ms);
+        // driveController.set(TalonFXControlMode.Velocity, 1000);
         // SmartDashboard.putNumber("P" + (id + 1) + " velTicsPer100ms", velTicsPer100ms);
         // SmartDashboard.putNumber("P" + (id + 1) + " encoderSetPos_end", encoderSetPos);
         //}
