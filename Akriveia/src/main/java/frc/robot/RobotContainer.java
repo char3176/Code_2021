@@ -32,7 +32,6 @@ import frc.robot.subsystems.BallTransfer;
 import frc.robot.subsystems.Drum;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Flywheel;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.PowerManagement;
 
 import java.util.ArrayList;
@@ -41,7 +40,6 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class RobotContainer {
-  public Intake m_Intake;
   private Controller m_Controller;
   private Compressor m_Compressor;
   private AngledShooter m_AngledShooter;
@@ -76,7 +74,6 @@ public class RobotContainer {
 
     m_Controller = Controller.getInstance();
 
-    m_Intake = Intake.getInstance();
     m_Drum = Drum.getInstance();
     m_BallTransfer = BallTransfer.getInstance();
     m_Flywheel = Flywheel.getInstance();
@@ -141,8 +138,6 @@ public class RobotContainer {
       () -> m_Controller.getOrbitSpeed(),
       () -> m_Controller.getPOVTransStick()));
 
-    m_Controller.getIntakeSpinButton().whenActive(new IntakeRoll());
-    m_Controller.getIntakeReverseButton().whenActive(new IntakeReverse());
   
     m_Controller.getDrumUpButton().whenActive(new DrumVelocitySpeed());
     m_Controller.getDrumDownButton().whenActive(new DrumVelocitySlow());

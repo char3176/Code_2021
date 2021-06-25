@@ -24,4 +24,7 @@ public class AngledShooterConstants {
     public static final double RANGE = (MAX_TICS-MIN_TICS);
 
     public static final double[] POS = {MIN_TICS, MIN_TICS + (RANGE*.25), MIN_TICS+ (RANGE*.5), MIN_TICS + (RANGE*.75), MAX_TICS};
+
+    public static final int TOP_LIMIT_SWITCH_ID = 3;
+    public static final int BOTTOM_LIMIT_SWITCH_ID = 2;
 }

@@ -6,6 +6,8 @@ import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SlewRateLimiter;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.constants.DrumConstants;
@@ -42,7 +44,9 @@ public class Drum extends SubsystemBase {
 
   String procTag;
 
-
+  private DigitalInput lineBreakTransmitter;
+  private DigitalInput lineBreakReciever;
+  private boolean isBroken;
   /**
    * Initializes the Drum subsystem once at code deploy.
    * <p>
@@ -50,6 +54,9 @@ public class Drum extends SubsystemBase {
    */
 
   public Drum() {
+    lineBreakReciever = new DigitalInput(1);
+    lineBreakTransmitter = new DigitalInput(0);
+
     m_PowerManagement = PowerManagement.getInstance();
     drumMotor.restoreFactoryDefaults();
     drumPIDController = drumMotor.getPIDController();
@@ -72,6 +79,8 @@ public class Drum extends SubsystemBase {
     drumPIDController.setIZone(DrumConstants.kIZone);
     drumPIDController.setOutputRange(DrumConstants.kMinOutput, DrumConstants.kMaxOutput);    
   }
+
+  public boolean isLineBroke() {return lineBreakReciever.get();}
 
   /**
    * Called one during each run of a nonzero spin speed method. This is to turn the rateLimiter back on at the Drum motor's current
@@ -315,6 +324,7 @@ public class Drum extends SubsystemBase {
 
   @Override
   public void periodic() {
+    isBroken = !isLineBroke();
     //checkForCurrentSpike();
   }
 }

@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.*;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -28,6 +29,8 @@ public class AngledShooter extends SubsystemBase {
   private double[] pos5 = new double[5];
   private int setting;
   private double posToHold;
+  private DigitalInput topSwitch;
+  private DigitalInput bottomSwitch;
 
   public AngledShooter() {
     boolean pidPosCtrlActive = false;  //set True if doing PID Position Ctrl.  Set False if doing OutputPercent Ctrl.
@@ -35,7 +38,8 @@ public class AngledShooter extends SubsystemBase {
 
     m_PowerManagement = PowerManagement.getInstance();
     
-
+    topSwitch = new DigitalInput(AngledShooterConstants.TOP_LIMIT_SWITCH_ID);
+    bottomSwitch = new DigitalInput(AngledShooterConstants.BOTTOM_LIMIT_SWITCH_ID);
 	  /* Setting up the Motor */
 	  
     hoodController.configFactoryDefault();
