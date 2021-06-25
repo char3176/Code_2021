@@ -9,6 +9,7 @@ import frc.robot.subsystems.AngledShooter;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Drum;
 import frc.robot.subsystems.Intake;
+import edu.wpi.first.wpilibj.Timer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -19,15 +20,13 @@ public class RunAuton extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutonDrive(1,0,0,4)//,
+      //new AutonDrive(1,0,0,4)//,
 
       //new AutonDrive(0,.25,0,1)
     
       // new AutonRotate(.01, 90)
 
-
-
-
+      new TrapezoidDrive(9.5, -6.1)
 
 
     );
