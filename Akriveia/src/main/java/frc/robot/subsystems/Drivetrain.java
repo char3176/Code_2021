@@ -178,7 +178,7 @@ public class Drivetrain extends SubsystemBase {
     this.strafeCommand = 0.0;
     this.spinCommand = 0.0;
 
-    spinLockPID = new PIDLoop(0.3, 0.0, 0.0);
+    spinLockPID = new PIDLoop(0.15, 0.0, 0.0);
     // spinLockAngle = getNavxAngle_inRadians();
     // spinLockPID = new PIDController(0.3, 0.0, 0.0, 0.0);
   }
@@ -206,7 +206,7 @@ public class Drivetrain extends SubsystemBase {
    */
   public void drive(double forwardCommand, double strafeCommand, double spinCommand) {
     this.forwardCommand = forwardCommand;
-    this.strafeCommand = strafeCommand;
+    this.strafeCommand = -strafeCommand;  // TODO: The y is inverted because it is backwards for some reason, why?
     this.spinCommand = spinCommand;
     System.out.println("Forward Command" + forwardCommand);
 
