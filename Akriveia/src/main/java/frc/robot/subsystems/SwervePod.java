@@ -125,7 +125,7 @@ public class SwervePod {
         kD_Spin = SwervePodConstants.SPIN_PID[2][id];
         kF_Spin = SwervePodConstants.SPIN_PID[3][id];
 
-        kP_Drive = 0.06; // SwervePodConstants.DRIVE_PID[0][id];
+        kP_Drive = 0.03; // SwervePodConstants.DRIVE_PID[0][id];
         kI_Drive = 0.0; // SwervePodConstants.DRIVE_PID[1][id];
         kD_Drive = 0.0; // SwervePodConstants.DRIVE_PID[2][id];
         kF_Drive = .045; // SwervePodConstants.DRIVE_PID[3][id];
@@ -175,17 +175,20 @@ public class SwervePod {
         this.driveController.config_kD(kPIDLoopIdx_drive, kD_Drive, kTimeoutMs_drive);
         this.driveController.config_kF(kPIDLoopIdx_drive, kF_Drive, kTimeoutMs_drive);
 
-        SmartDashboard.putNumber("P", kP_Spin);
-        SmartDashboard.putNumber("I", kI_Spin);
-        SmartDashboard.putNumber("D", kD_Spin);
-        SmartDashboard.putNumber("F", kF_Spin);
+      
+
+        SmartDashboard.putNumber("P", kP_Drive);
+        SmartDashboard.putNumber("I", kI_Drive);
+        SmartDashboard.putNumber("D", kD_Drive);
+        SmartDashboard.putNumber("F", kF_Drive);
+        SmartDashboard.putNumber("driveSet",0);
 
         this.spinController.config_kP(kPIDLoopIdx_spin, kP_Spin, kTimeoutMs_spin);
         this.spinController.config_kI(kPIDLoopIdx_spin, kI_Spin, kTimeoutMs_spin);
         this.spinController.config_kD(kPIDLoopIdx_spin, kD_Spin, kTimeoutMs_spin);
         this.spinController.config_kF(kPIDLoopIdx_spin, kF_Spin, kTimeoutMs_spin);
 
-        startTics = spinController.getSelectedSensorPosition();
+      ;
         // SmartDashboard.putNumber("startTics", startTics);
 
         // SmartDashboard.putBoolean("pod" + (id + 1) + " inversion", isInverted());
@@ -199,10 +202,16 @@ public class SwervePod {
     public void set(double podDrive, double podSpin) {
         this.podDrive = podDrive;
         this.podSpin = podSpin; 
-        this.spinController.config_kP(kSlotIdx_spin, SmartDashboard.getNumber("P", kP_Spin), kTimeoutMs_spin);
-        this.spinController.config_kI(kSlotIdx_spin, SmartDashboard.getNumber("I", kI_Spin), kTimeoutMs_spin);
-        this.spinController.config_kD(kSlotIdx_spin, SmartDashboard.getNumber("D", kD_Spin), kTimeoutMs_spin);
-        this.spinController.config_kF(kSlotIdx_spin, SmartDashboard.getNumber("F", kF_Spin), kTimeoutMs_spin);
+        // this.spinController.config_kP(kSlotIdx_spin, SmartDashboard.getNumber("P", kP_Spin), kTimeoutMs_spin);
+        // this.spinController.config_kI(kSlotIdx_spin, SmartDashboard.getNumber("I", kI_Spin), kTimeoutMs_spin);
+        // this.spinController.config_kD(kSlotIdx_spin, SmartDashboard.getNumber("D", kD_Spin), kTimeoutMs_spin);
+        // this.spinController.config_kF(kSlotIdx_spin, SmartDashboard.getNumber("F", kF_Spin), kTimeoutMs_spin);
+        this.driveController.config_kP(kSlotIdx_drive, SmartDashboard.getNumber("P", kP_Drive), kTimeoutMs_spin);
+        this.driveController.config_kI(kSlotIdx_drive, SmartDashboard.getNumber("I", kI_Drive), kTimeoutMs_spin);
+        this.driveController.config_kI(kSlotIdx_drive, SmartDashboard.getNumber("D", kD_Drive), kTimeoutMs_spin);
+        this.driveController.config_kF(kSlotIdx_drive, SmartDashboard.getNumber("F", kF_Drive), kTimeoutMs_spin);
+        
+        
         // SmartDashboard.putNumber("P" + (id + 1) + " podDrive", this.podDrive);
         // SmartDashboard.putNumber("P" + (id + 1) + " podSpin", this.podSpin);
             // TODO: need check ether output values. speed vs %-values
@@ -212,6 +221,7 @@ public class SwervePod {
         this.velTicsPer100ms = fps2ums(this.podDrive);
         SmartDashboard.putNumber("fps2ums:velTicsPer100ms", velTicsPer100ms);
         SmartDashboard.putNumber("podDrive", this.podDrive);
+        velTicsPer100ms = SmartDashboard.getNumber("driveSet",velTicsPer100ms);
         double encoderSetPos = calcSpinPos(this.podSpin);
         double tics = rads2Tics(this.podSpin);
         // SmartDashboard.putNumber("P" + (id + 1) + " tics", tics);
@@ -230,6 +240,13 @@ public class SwervePod {
         SmartDashboard.putNumber("P"+this.id+".podDrive", podDrive);
         //SmartDashboard.putNumber("actualVel", driveController.getVoltage());
         
+        if (this.id == 0){
+            SmartDashboard.putNumber("Pod3Distance", driveController.getSelectedSensorPosition());
+            SmartDashboard.putNumber("velTicsPer100ms", velTicsPer100ms);
+            SmartDashboard.putNumber("Tics Error", driveController.getSelectedSensorVelocity()-velTicsPer100ms);
+            SmartDashboard.putNumber("Tics Error2", driveController.getSelectedSensorVelocity()-velTicsPer100ms);
+            SmartDashboard.putNumber("DriveController Velocity", driveController.getSelectedSensorVelocity());
+        } 
         driveController.set(TalonFXControlMode.Velocity, velTicsPer100ms);
         // SmartDashboard.putNumber("P" + (id + 1) + " velTicsPer100ms", velTicsPer100ms);
         // SmartDashboard.putNumber("P" + (id + 1) + " encoderSetPos_end", encoderSetPos);
