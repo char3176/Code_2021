@@ -313,7 +313,40 @@ public class AngledShooter extends SubsystemBase {
     checkForCurrentSpike();
     SmartDashboard.putNumber("Hood Amps", m_PowerManagement.getAngledShooterAvgAmp());
     SmartDashboard.putNumber("Hood Position (Tics)", hoodController.getSelectedSensorPosition());
+    checkLocNum();
   }
+
+  public void checkLocNum() {
+    double oldMinTics = minPosTic;
+    double oldMaxTics = maxPosTic;
+    if(bottomSwitch.get()) {
+      minPosTic = hoodController.getSelectedSensorPosition();
+      hoodController.set(ControlMode.PercentOutput, 0);
+    }
+    if(topSwitch.get()) {
+      maxPosTic = hoodController.getSelectedSensorPosition();
+      hoodController.set(ControlMode.PercentOutput, 0);
+    }
+    if((minPosTic != oldMinTics) || (maxPosTic != oldMaxTics)) {
+      boolean direction = minPosTic - maxPosTic > 0; //TRUE is POS; FALSE is NEG
+      double range;
+      pos5[0] = minPosTic;
+      pos5[4] = maxPosTic;
+      setting = 0;
+      if(direction) {
+        range = maxPosTic - minPosTic;
+        pos5[1] = (.25 * range) + minPosTic;
+        pos5[2] = (.50 * range) + minPosTic;
+        pos5[3] = (.75 * range) + minPosTic;
+      } else {
+        range = minPosTic - maxPosTic;
+        pos5[1] = minPosTic - (range * .25);
+        pos5[2] = minPosTic - (range * .50);
+        pos5[3] = minPosTic - (range * .75);
+      }
+    }
+  }
+  
 
 
   //double feedforward = 0.07   // <- determine from Tuner, % output to offset gravity
