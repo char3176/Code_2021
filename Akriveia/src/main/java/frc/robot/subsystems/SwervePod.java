@@ -136,7 +136,7 @@ public class SwervePod {
         this.driveController.configFactoryDefault();
         this.spinController.configFactoryDefault();
 
-        // this.driveController.configClosedloopRamp(0.5);    
+        this.driveController.configClosedloopRamp(0.5);    
 
        // this.driveController.setNeutralMode(NeutralMode.Brake);
        // this.driveController.setNeutralMode(NeutralMode.Brake);
@@ -181,7 +181,7 @@ public class SwervePod {
         SmartDashboard.putNumber("I", kI_Drive);
         SmartDashboard.putNumber("D", kD_Drive);
         SmartDashboard.putNumber("F", kF_Drive);
-        SmartDashboard.putNumber("driveSet",0);
+       // SmartDashboard.putNumber("driveSet",0);
 
         this.spinController.config_kP(kPIDLoopIdx_spin, kP_Spin, kTimeoutMs_spin);
         this.spinController.config_kI(kPIDLoopIdx_spin, kI_Spin, kTimeoutMs_spin);
@@ -202,13 +202,13 @@ public class SwervePod {
     public void set(double podDrive, double podSpin) {
         this.podDrive = podDrive;
         this.podSpin = podSpin; 
-        // this.spinController.config_kP(kSlotIdx_spin, SmartDashboard.getNumber("P", kP_Spin), kTimeoutMs_spin);
-        // this.spinController.config_kI(kSlotIdx_spin, SmartDashboard.getNumber("I", kI_Spin), kTimeoutMs_spin);
-        // this.spinController.config_kD(kSlotIdx_spin, SmartDashboard.getNumber("D", kD_Spin), kTimeoutMs_spin);
-        // this.spinController.config_kF(kSlotIdx_spin, SmartDashboard.getNumber("F", kF_Spin), kTimeoutMs_spin);
+         //this.spinController.config_kP(kSlotIdx_spin, SmartDashboard.getNumber("P", kP_Spin), kTimeoutMs_spin);
+         //this.spinController.config_kI(kSlotIdx_spin, SmartDashboard.getNumber("I", kI_Spin), kTimeoutMs_spin);
+         //this.spinController.config_kD(kSlotIdx_spin, SmartDashboard.getNumber("D", kD_Spin), kTimeoutMs_spin);
+         //this.spinController.config_kF(kSlotIdx_spin, SmartDashboard.getNumber("F", kF_Spin), kTimeoutMs_spin);
         this.driveController.config_kP(kSlotIdx_drive, SmartDashboard.getNumber("P", kP_Drive), kTimeoutMs_spin);
         this.driveController.config_kI(kSlotIdx_drive, SmartDashboard.getNumber("I", kI_Drive), kTimeoutMs_spin);
-        this.driveController.config_kI(kSlotIdx_drive, SmartDashboard.getNumber("D", kD_Drive), kTimeoutMs_spin);
+        this.driveController.config_kD(kSlotIdx_drive, SmartDashboard.getNumber("D", kD_Drive), kTimeoutMs_spin);
         this.driveController.config_kF(kSlotIdx_drive, SmartDashboard.getNumber("F", kF_Drive), kTimeoutMs_spin);
         
         
@@ -221,7 +221,7 @@ public class SwervePod {
         this.velTicsPer100ms = fps2ums(this.podDrive);
         SmartDashboard.putNumber("fps2ums:velTicsPer100ms", velTicsPer100ms);
         SmartDashboard.putNumber("podDrive", this.podDrive);
-        velTicsPer100ms = SmartDashboard.getNumber("driveSet",velTicsPer100ms);
+       // velTicsPer100ms = SmartDashboard.getNumber("driveSet",velTicsPer100ms);
         double encoderSetPos = calcSpinPos(this.podSpin);
         double tics = rads2Tics(this.podSpin);
         // SmartDashboard.putNumber("P" + (id + 1) + " tics", tics);

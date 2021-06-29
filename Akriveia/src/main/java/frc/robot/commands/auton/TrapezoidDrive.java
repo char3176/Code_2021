@@ -27,7 +27,7 @@ public class TrapezoidDrive extends CommandBase {
     double hyp = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
     this.theta = Math.atan(distanceY / distanceX);
     profile = new TrapezoidProfile
-    (new TrapezoidProfile.Constraints(5, 2), new TrapezoidProfile.State(hyp, 0), new TrapezoidProfile.State(0, 0));
+    (new TrapezoidProfile.Constraints(5, 1), new TrapezoidProfile.State(hyp, 0), new TrapezoidProfile.State(0, 0));
   }
 
   // Called when the command is initially scheduled.
@@ -50,7 +50,9 @@ public class TrapezoidDrive extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_Drivetrain.setSpinLock(false);
+  }
 
   // Returns true when the command should end.
   @Override

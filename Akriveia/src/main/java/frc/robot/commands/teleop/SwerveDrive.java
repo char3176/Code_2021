@@ -4,7 +4,7 @@ import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
+import frc.robot.constants.DrivetrainConstants;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Drivetrain.coordType;
 import frc.robot.subsystems.Drivetrain.driveMode;
@@ -33,6 +33,7 @@ public class SwerveDrive extends CommandBase {
   @Override
   public void initialize() {
     drivetrain.setDriveMode(driveMode.DRIVE);
+    drivetrain.setSpinLock(false);
   }
 
   @Override
@@ -48,7 +49,7 @@ public class SwerveDrive extends CommandBase {
     if(isBackRobotCentric.getAsBoolean()) {
       drivetrain.setCoordType(coordType.BACK_ROBOT_CENTRIC);
     }
-    drivetrain.drive(forwardCommand.getAsDouble(), strafeCommand.getAsDouble(), spinCommand.getAsDouble());
+    drivetrain.drive(forwardCommand.getAsDouble() * DrivetrainConstants.MAX_WHEEL_SPEED_FEET_PER_SECOND, strafeCommand.getAsDouble() * DrivetrainConstants.MAX_WHEEL_SPEED_FEET_PER_SECOND, spinCommand.getAsDouble()*10);
   }
 
   @Override
