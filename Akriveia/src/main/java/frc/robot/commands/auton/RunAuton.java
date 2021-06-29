@@ -25,7 +25,9 @@ public class RunAuton extends SequentialCommandGroup {
     
       // new AutonRotate(.01, 90)
 
-      new TrapezoidDrive(20, 0)
+      new TrapezoidDrive(10, 0),
+      new TrapezoidDrive(0, 10)
+
 
 
     );

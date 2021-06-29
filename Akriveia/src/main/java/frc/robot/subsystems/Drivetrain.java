@@ -206,7 +206,7 @@ public class Drivetrain extends SubsystemBase {
    */
   public void drive(double forwardCommand, double strafeCommand, double spinCommand) {
     this.forwardCommand = forwardCommand;
-    this.strafeCommand = -strafeCommand;  // TODO: The y is inverted because it is backwards for some reason, why?
+    this.strafeCommand = strafeCommand;  // TODO: The y is inverted because it is backwards for some reason, why?
     this.spinCommand = spinCommand;
     System.out.println("Forward Command" + forwardCommand);
 
