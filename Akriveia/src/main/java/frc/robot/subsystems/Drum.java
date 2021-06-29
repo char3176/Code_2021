@@ -44,9 +44,9 @@ public class Drum extends SubsystemBase {
 
   String procTag;
 
-  private DigitalInput lineBreakTransmitter;
-  private DigitalInput lineBreakReciever;
-  private boolean isBroken;
+  // private DigitalInput lineBreakTransmitter;
+  // private DigitalInput lineBreakReciever;
+  // private boolean isBroken;
   /**
    * Initializes the Drum subsystem once at code deploy.
    * <p>
@@ -54,8 +54,8 @@ public class Drum extends SubsystemBase {
    */
 
   public Drum() {
-    lineBreakReciever = new DigitalInput(1);
-    lineBreakTransmitter = new DigitalInput(0);
+    // lineBreakReciever = new DigitalInput(1);
+    // lineBreakTransmitter = new DigitalInput(0);
 
     m_PowerManagement = PowerManagement.getInstance();
     drumMotor.restoreFactoryDefaults();
@@ -80,7 +80,7 @@ public class Drum extends SubsystemBase {
     drumPIDController.setOutputRange(DrumConstants.kMinOutput, DrumConstants.kMaxOutput);    
   }
 
-  public boolean isLineBroke() {return lineBreakReciever.get();}
+  // public boolean isLineBroke() {return lineBreakReciever.get();}
 
   /**
    * Called one during each run of a nonzero spin speed method. This is to turn the rateLimiter back on at the Drum motor's current
@@ -324,7 +324,7 @@ public class Drum extends SubsystemBase {
 
   @Override
   public void periodic() {
-    isBroken = !isLineBroke();
+    // isBroken = !isLineBroke();
     //checkForCurrentSpike();
   }
 }
