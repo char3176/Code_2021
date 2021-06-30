@@ -25,8 +25,17 @@ public class RunAuton extends SequentialCommandGroup {
     
       // new AutonRotate(.01, 90)
 
-      new TrapezoidDrive(10, 0),
-      new TrapezoidDrive(0, 10)
+      // new TrapezoidDrive(-13, 0)
+
+      new TrapezoidDrive(-7, -10)
+      // Flywheel spin up
+      // wait for 10 seconds?
+      // new TrapezoidDrive(22, -5)
+
+
+      // GYRO NOTE:
+      // gyro off by -117.5 @ 8:02p, -117.86 @ 8:03p -- not touched during that time
+      // continuing to drift more negative while not moving
 
 
 
