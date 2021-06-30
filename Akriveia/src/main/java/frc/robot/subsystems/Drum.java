@@ -284,11 +284,11 @@ public class Drum extends SubsystemBase {
   }
 
   /**
-   * Sets the motor to -0.3 percent which is slow counter clockwise
+   * Sets the motor to -0.1 percent which is slow counter clockwise
    */
 
   public void CounterClockwise() {
-    drumMotor.set(-0.3);
+    drumMotor.set(-0.1);
   }
 
   /**
