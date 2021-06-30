@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.BallTransferConstants;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import com.revrobotics.CANSparkMax;
@@ -16,6 +17,8 @@ public class BallTransfer extends SubsystemBase {
   private CANSparkMax transferMotor = new CANSparkMax(BallTransferConstants.MOTOR_CAN_ID, MotorType.kBrushless);
   private boolean pistonSetting = false;
   private double levelSetting = 0;
+
+  private DigitalInput lineBreak = new DigitalInput(1);
 
   public BallTransfer() {}
 
@@ -32,11 +35,13 @@ public class BallTransfer extends SubsystemBase {
   }
 
   /**
-   * Extends the transferPiston
+   * Extends the transferPiston if the line break isn't broken
    */
   public void Extend() {
-    pistonSetting = true;
-    transferPiston.set(Value.kForward);
+    if(lineBreak.get()) {
+      pistonSetting = true;
+      transferPiston.set(Value.kForward);
+    }
   }
 
   /**
