@@ -14,6 +14,7 @@ public class DelayCommand extends CommandBase {
   /** Creates a new DelayCommand. */
   private Timer timer;
   private double delayTime;
+  private double startTime;
 
   /**
   * For use in auton, to wait a time in seconds between sequenced commands.
@@ -29,6 +30,7 @@ public class DelayCommand extends CommandBase {
     this.delayTime = delayTime;
     timer = new Timer();
     timer.start();
+    startTime = timer.getFPGATimestamp();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -46,6 +48,6 @@ public class DelayCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Timer.getFPGATimestamp() >= delayTime);
+    return (Timer.getFPGATimestamp() - startTime >= delayTime);
   }
 }
