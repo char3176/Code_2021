@@ -22,18 +22,18 @@ public class VisionClient{
     // variables to access values given from the Limelight interface
     public NetworkTableInstance tableInstance;
     public NetworkTable limelightTable;
-    public NetworkTableEntry tv;
-    public NetworkTableEntry tx;
-    public NetworkTableEntry ty;
-    public NetworkTableEntry tshort;
-    public NetworkTableEntry tlong;
-    public NetworkTableEntry thor;
-    public NetworkTableEntry tvert;
-    public NetworkTableEntry tcornxy;
-    private NetworkTableEntry tl;
-    private NetworkTableEntry pipeline;
-    private NetworkTableEntry camMode;
-    private NetworkTableEntry ledMode;
+    public NetworkTableEntry tv;  //Whether the limelight has any valid targets (0 or 1)
+    public NetworkTableEntry tx;  //Horizontal Offset From Crosshair To Target (LL1: -27 degrees to 27 degrees | LL2: -29.8 to 29.8 degrees)
+    public NetworkTableEntry ty;  //Vertical Offset From Crosshair To Target (LL1: -20.5 degrees to 20.5 degrees | LL2: -24.85 to 24.85 degrees)
+    public NetworkTableEntry tshort;  //Sidelength of shortest side of the fitted bounding box (pixels)
+    public NetworkTableEntry tlong;  //Sidelength of longest side of the fitted bounding box (pixels)
+    public NetworkTableEntry thor;  //Horizontal sidelength of the rough bounding box (0 - 320 pixels)
+    public NetworkTableEntry tvert;  //Vertical sidelength of the rough bounding box (0 - 320 pixels)
+    public NetworkTableEntry tcornxy;  //Number array of corner x-coordinates and y-coordinates
+    private NetworkTableEntry tl;  //The pipeline’s latency contribution (ms) Add at least 11ms for image capture latency.
+    private NetworkTableEntry pipeline;  //Sets limelight’s current pipeline (0 .. 9)
+    private NetworkTableEntry camMode;  //Sets limelight’s operation mode (0 = Vision processing, 1 = Driver Camera (Increases exposure, disables vision processing))
+    private NetworkTableEntry ledMode;  //Sets limelight’s LED state (0 = use the LED Mode set in the current pipeline, 1 = force off, 2 = force blink, 3 = force on)
 
     public double hasTarget;
     public double ballAngle;
@@ -44,7 +44,7 @@ public class VisionClient{
     private double[] tcornx = new double[4];
     private double[] tcorny = new double[4];
 
-    private double deltaXCam;
+    private double deltaXCam;  
     private double radius;
 
     // initializing variables for kinematic calculations
