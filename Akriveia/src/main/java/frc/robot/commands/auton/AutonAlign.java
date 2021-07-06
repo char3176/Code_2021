@@ -20,7 +20,7 @@ public class AutonAlign extends CommandBase {
   private double goal;
   private double currentAngle;
 
-  /** Creates a new AutonRotate. */
+  /** Creates a new Auton. */
   public AutonAlign(double rot, double degrees) {
     addRequirements(drivetrain);
     rotation = rot;
