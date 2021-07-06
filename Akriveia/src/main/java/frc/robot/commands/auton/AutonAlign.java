@@ -8,41 +8,43 @@ import java.sql.Driver;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.commands.auton.AutonRotate;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Drivetrain.coordType;
+import frc.robot.VisionClient;
 
+
+/**
+ * AutoAlign: A simplistic command class to retrieve the x-angle (tx) formed
+ * by the LL crosshairs, the lens, and the recognized target.  It (tx) is then
+ * used to call AutoRotate(tx) to rotate the bot until the angle is within the range 
+ * formed by upperTxLimit and lowerTxLimit
+ */
 public class AutonAlign extends CommandBase {
 
-  private Drivetrain drivetrain = Drivetrain.getInstance();
-  private double rotation;
-  private double degrees;
-  private double initialAngle;
-  private double goal;
-  private double currentAngle;
+  private Drivetrain m_drivetrain = Drivetrain.getInstance();
+  private VisionClient m_VisionClient = VisionClient.getInstance();
+  private double tx;
+  private double upperTxLimit, lowerTxLimit;
 
-  /** Creates a new Auton. */
-  public AutonAlign(double rot, double degrees) {
-    addRequirements(drivetrain);
-    rotation = rot;
-    this.degrees = degrees;
+  /** Creates a new AutonAlign. */
+  public AutonAlign() {
+    addRequirements(m_drivetrain);
   }
 
   @Override
   public void initialize() {
-    drivetrain.setCoordType(coordType.ROBOT_CENTRIC);
-    initialAngle = -drivetrain.getNavxAngle_inDegrees();
-    rotation = Math.copySign(rotation, degrees);
-    goal = initialAngle + degrees;
+    m_drivetrain.setCoordType(coordType.ROBOT_CENTRIC);
+    this.upperTxLimit = 2;
+    this.lowerTxLimit = -2;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.drive(0,0,rotation);
-    currentAngle = -drivetrain.getNavxAngle_inDegrees();
-    SmartDashboard.putNumber("initialAngle", initialAngle);
-    SmartDashboard.putNumber("currentAngle", currentAngle);
-    SmartDashboard.putNumber("goal", goal);
+    this.tx =  m_VisionClient.getTx();
+    new AutonRotate(.1, tx);
+    SmartDashboard.putNumber("AutonAlign.tx", tx);
   }
 
   // Called once the command ends or is interrupted.
@@ -52,7 +54,7 @@ public class AutonAlign extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if ((degrees >= 0 && currentAngle >= goal) || (degrees < 0 && currentAngle <= goal)) {
+    if (this.tx >= lowerTxLimit && this.tx <= upperTxLimit) {
       return true;
     }
     return false;

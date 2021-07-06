@@ -431,4 +431,9 @@ public class VisionClient{
     public double getDeltaX(){
         return deltaX;
     }
+
+    public double getTx(){
+        updateVisionData();
+        return tx.getDouble(0);
+    }
 }
