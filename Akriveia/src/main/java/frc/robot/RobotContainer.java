@@ -24,6 +24,7 @@ import frc.robot.commands.auton.FollowGivenPath;
 import frc.robot.commands.auton.HolonomicAuton;
 import frc.robot.commands.auton.RunAuton;
 import frc.robot.commands.auton.Slalom;
+import frc.robot.commands.auton.*;
 import frc.robot.commands.teleop.*;
 import frc.robot.constants.DrivetrainConstants;
 import frc.robot.constants.MasterConstants;
@@ -50,15 +51,12 @@ public class RobotContainer {
   private PowerManagement m_PowerManagement;
 
   private SendableChooser<String> m_autonChooser;
-  private static final String m_bounce = "s_bounce";
-  private static final String m_barrel_racing = "s_barrel_racing";
-  private static final String m_galactic_search_a = "s_galactic_search_a";
-  private static final String m_galactic_search_b = "s_galactic_search_b";
-  private static final String m_slalom = "s_slalom";
-  private static final String m_easy = "s_easy";
-  private static final String m_forward = "s_forward";
-  private static final String m_forward_and_back = "s_forward_and_back";
-  private static final String m_l_shape = "s_l_shape";
+  private static final String m_autonstatic1= "s_autonstatic1";
+  private static final String m_autonstatic2= "s_autonstatic2";
+  private static final String m_autonstatic3= "s_autonstatic3";
+  private static final String m_autonmutable1= "s_autonmutable1";
+  private static final String m_autonmutable2= "s_autonmutable2";
+  private static final String m_autonmutable3= "s_autonmutable3";
 
   public Trajectory m_trajectory;
 
@@ -94,19 +92,17 @@ public class RobotContainer {
     configureButtonBindings();
 
     m_autonChooser = new SendableChooser<>();
-    m_autonChooser.addOption("Barrel Racing", m_barrel_racing);
-    m_autonChooser.addOption("Bounce Path", m_bounce);
-    m_autonChooser.setDefaultOption("Forward", m_forward);
-    m_autonChooser.addOption("Forward and Back", m_forward_and_back);
-    m_autonChooser.addOption("Easy", m_easy);
-    m_autonChooser.addOption("Galactic Search A", m_galactic_search_a);
-    m_autonChooser.addOption("Galactic Search B", m_galactic_search_b);
-    m_autonChooser.addOption("L_Shape", m_l_shape);
-    m_autonChooser.addOption("Slalom", m_slalom);
+    m_autonChooser.setDefaultOption("Auton Static 1", m_autonstatic1);
+    m_autonChooser.addOption("Auton Static 2", m_autonstatic2);
+    m_autonChooser.addOption("Auton Static 3", m_autonstatic3);
+    m_autonChooser.addOption("Auton Mutable 1", m_autonmutable1);
+    m_autonChooser.addOption("Auton Mutable 2", m_autonmutable2);
+    m_autonChooser.addOption("Auton Mutable 3", m_autonmutable3);
     SmartDashboard.putData("Auton Choice", m_autonChooser);
 
 
     // Please keep below array trajFilelist in alphabetical order.  Makes it easier to keep track.
+    /*
     String[] trajFilelist = {"barrel_racing", "bounce", "easy", "forward_and_back", "forward",
       "galactic_search_pathA_blueBalls", "galactic_search_pathA_redBalls", 
       "galactic_search_pathB_blueBalls", "galactic_search_pathB_redBalls",
@@ -115,6 +111,7 @@ public class RobotContainer {
     for (String var : trajFilelist)  {
       m_trajLibrary.add(preloadCreateTrajectory(var));
     }
+    */
     //preloadTrajectoryFiles();
 
     SmartDashboard.putData("ATLAS IntStellarAccuracy", new AtlasForInterstellarAccuracy());
@@ -174,38 +171,29 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
 
-
-
-    if (m_autonChooser.getSelected().equals("s_barrel_racing")) {
-      
+    if (m_autonChooser.getSelected().equals("s_autonstatic1")) {
+      //return new RunAutonStatic1();
+      return new RunAuton(); 
     }
-    else if(m_autonChooser.getSelected().equals("s_bounce")) {
-      
+    else if(m_autonChooser.getSelected().equals("s_autonstatic2")) {
+      return new RunAutonStatic2();
     }
-    else if(m_autonChooser.getSelected().equals("s_easy")) {
-   
+    else if(m_autonChooser.getSelected().equals("s_autonstatic3")) {
+      return new RunAutonStatic3();
     } 
-    else if(m_autonChooser.getSelected().equals("s_forward_and_back")) {
+    else if(m_autonChooser.getSelected().equals("s_autonmutable1")) {
+      return new RunAutonMutable1();
+    }
+    else if(m_autonChooser.getSelected().equals("s_autonmutable2")) {
+      return new RunAutonMutable2();
+    }
+    else if (m_autonChooser.getSelected().equals("s_autonmutable3")) {
+      return new RunAutonMutable3();
+    } else {
+      return new RunAuton();
+    }
     
-    }
-    else if(m_autonChooser.getSelected().equals("s_forward")) {
-      
-    }
-    else if (m_autonChooser.getSelected().equals("s_galactic_search_a")) {
-     
-    }
-    else if (m_autonChooser.getSelected().equals("s_galactic_search_b")) {
-  
-    }
-    else if(m_autonChooser.getSelected().equals("s_l_shape")) {
-  
-    }
-    else if(m_autonChooser.getSelected().equals("s_slalom")) {
-   
-    }
-   
-    
-    return new RunAuton();
+    //return new RunAuton();
   }
 
   public void createTrajectory(String path){
