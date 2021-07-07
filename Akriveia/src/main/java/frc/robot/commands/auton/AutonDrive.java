@@ -35,7 +35,7 @@ public class AutonDrive extends CommandBase {
   public void initialize() {
 
     timer.start();
-    drivetrain.setCoordType(coordType.ROBOT_CENTRIC);
+    drivetrain.setCoordType(coordType.FIELD_CENTRIC);
     drivetrain.setSpinLockAngle();
     drivetrain.setSpinLock(true);
   }
@@ -43,8 +43,8 @@ public class AutonDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.calcAngleAvgRollingWindow();
     drivetrain.drive(xVel,yVel,omega);
+    
   }
 
   // Called once the command ends or is interrupted.

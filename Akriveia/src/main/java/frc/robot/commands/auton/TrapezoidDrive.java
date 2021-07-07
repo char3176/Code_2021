@@ -33,7 +33,7 @@ public class TrapezoidDrive extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_Drivetrain.setCoordType(coordType.ROBOT_CENTRIC);
+    m_Drivetrain.setCoordType(coordType.FIELD_CENTRIC);
     m_Drivetrain.setSpinLockAngle();
     m_Drivetrain.setSpinLock(true);
     timer.start();

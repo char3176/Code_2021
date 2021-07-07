@@ -23,11 +23,11 @@ public class RunAutonMutable1 extends SequentialCommandGroup {
 
       //new AutonDrive(0,.25,0,1)
     
-      new AutonRotate(.1, 720),
-      new DelayCommand(1),
-      new AutonRotate(.1, -720)
+      //new AutonRotate(.05, 90)
+     // new DelayCommand(5),
+      //new AutonRotate(-.05, 90)
 
-      // new TrapezoidDrive(-13, 0)
+       new TrapezoidDrive(13, 0)
 
       // new TrapezoidDrive(-7, -10)
       // Flywheel spin up
