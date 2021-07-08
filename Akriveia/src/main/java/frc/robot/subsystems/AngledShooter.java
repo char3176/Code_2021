@@ -260,7 +260,7 @@ public class AngledShooter extends SubsystemBase {
 
   public void pctCtrl_stopHoodMotor() {
     pctCtrl_set(0);
-    pidCtrl_holdPosition();
+    //pidCtrl_holdPosition();
   }
 
   public int pidCtrl_holdPosition() {
@@ -280,7 +280,7 @@ public class AngledShooter extends SubsystemBase {
   }
 
 	/**
-	 * @return the encoder position by using .getSelectedSensorPosition()
+	 * @return the hood motor's encoder position by using .getSelectedSensorPosition()
 	 */
   public double getEncoderPosition() {
     return hoodController.getSelectedSensorPosition();
@@ -310,8 +310,7 @@ public class AngledShooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    checkForCurrentSpike();
-    SmartDashboard.putNumber("Hood Amps", m_PowerManagement.getAngledShooterAvgAmp());
+    //SmartDashboard.putNumber("Hood Amps", m_PowerManagement.getAngledShooterAvgAmp());
     SmartDashboard.putNumber("Hood Position (Tics)", hoodController.getSelectedSensorPosition());
     checkLocNum();
   }

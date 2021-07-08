@@ -35,6 +35,7 @@ public class AutonAlign extends CommandBase {
   @Override
   public void initialize() {
     m_drivetrain.setCoordType(coordType.ROBOT_CENTRIC);
+    m_VisionClient.turnLEDsOn();
     this.upperTxLimit = 2;
     this.lowerTxLimit = -2;
   }
@@ -49,7 +50,9 @@ public class AutonAlign extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+      m_VisionClient.turnLEDsOff();
+  }
 
   // Returns true when the command should end.
   @Override
