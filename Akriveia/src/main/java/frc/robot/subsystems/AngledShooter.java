@@ -41,7 +41,9 @@ public class AngledShooter extends SubsystemBase {
     topSwitch = new DigitalInput(AngledShooterConstants.TOP_LIMIT_SWITCH_ID);
     bottomSwitch = new DigitalInput(AngledShooterConstants.BOTTOM_LIMIT_SWITCH_ID);
 	  /* Setting up the Motor */
-	  
+    minPosTic = 4078;
+    maxPosTic = 2487;
+    
     hoodController.configFactoryDefault();
     hoodController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.TimeoutMs);
     hoodController.setSensorPhase(AngledShooterConstants.SENSOR_PHASE);
@@ -49,7 +51,7 @@ public class AngledShooter extends SubsystemBase {
     hoodController.configNominalOutputForward(0, AngledShooterConstants.TimeoutMs);
     hoodController.configNominalOutputReverse(0, AngledShooterConstants.TimeoutMs);
     hoodController.configPeakOutputForward(0.1, AngledShooterConstants.TimeoutMs);
-    hoodController.configPeakOutputReverse(/*-1*/-0.05, AngledShooterConstants.TimeoutMs);
+    hoodController.configPeakOutputReverse(-0.1, AngledShooterConstants.TimeoutMs);
     hoodController.configAllowableClosedloopError(0, AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.TimeoutMs);
     hoodController.config_kF(AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.PIDF[3], AngledShooterConstants.TimeoutMs);
 		hoodController.config_kP(AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.PIDF[0], AngledShooterConstants.TimeoutMs);
@@ -66,6 +68,14 @@ public class AngledShooter extends SubsystemBase {
 
     //hoodController.configContinuousCurrentLimit(20);   //using 20amps b/c that's what was shown in DS logs
     //hoodController.configPeakCurrentDuration(1000);   //1000ms .... is totally a guess.
+  }
+
+  public void moveTop() {
+    hoodController.set(ControlMode.Position, maxPosTic);
+  }
+  
+  public void moveBottom() {
+    hoodController.set(ControlMode.Position, minPosTic);
   }
 
   public void findMinMax() { // Finds the min pos and the max pos
@@ -316,34 +326,34 @@ public class AngledShooter extends SubsystemBase {
   }
 
   public void checkLocNum() {
-    double oldMinTics = minPosTic;
-    double oldMaxTics = maxPosTic;
+    // double oldMinTics = minPosTic;
+    // double oldMaxTics = maxPosTic;
     if(bottomSwitch.get()) {
-      minPosTic = hoodController.getSelectedSensorPosition();
+      // minPosTic = hoodController.getSelectedSensorPosition();
       hoodController.set(ControlMode.PercentOutput, 0);
     }
     if(topSwitch.get()) {
-      maxPosTic = hoodController.getSelectedSensorPosition();
+      // maxPosTic = hoodController.getSelectedSensorPosition();
       hoodController.set(ControlMode.PercentOutput, 0);
     }
-    if((minPosTic != oldMinTics) || (maxPosTic != oldMaxTics)) {
-      boolean direction = minPosTic - maxPosTic > 0; //TRUE is POS; FALSE is NEG
-      double range;
-      pos5[0] = minPosTic;
-      pos5[4] = maxPosTic;
-      setting = 0;
-      if(direction) {
-        range = maxPosTic - minPosTic;
-        pos5[1] = (.25 * range) + minPosTic;
-        pos5[2] = (.50 * range) + minPosTic;
-        pos5[3] = (.75 * range) + minPosTic;
-      } else {
-        range = minPosTic - maxPosTic;
-        pos5[1] = minPosTic - (range * .25);
-        pos5[2] = minPosTic - (range * .50);
-        pos5[3] = minPosTic - (range * .75);
-      }
-    }
+    // if((minPosTic != oldMinTics) || (maxPosTic != oldMaxTics)) {
+    //   boolean direction = minPosTic - maxPosTic > 0; //TRUE is POS; FALSE is NEG
+    //   double range;
+    //   pos5[0] = minPosTic;
+    //   pos5[4] = maxPosTic;
+    //   setting = 0;
+    //   if(direction) {
+    //     range = maxPosTic - minPosTic;
+    //     pos5[1] = (.25 * range) + minPosTic;
+    //     pos5[2] = (.50 * range) + minPosTic;
+    //     pos5[3] = (.75 * range) + minPosTic;
+    //   } else {
+    //     range = minPosTic - maxPosTic;
+    //     pos5[1] = minPosTic - (range * .25);
+    //     pos5[2] = minPosTic - (range * .50);
+    //     pos5[3] = minPosTic - (range * .75);
+    //   }
+    // }
   }
   
 
