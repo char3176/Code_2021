@@ -99,8 +99,8 @@ public class Controller {
         intakeSpinButton = new XboxLoneButton(op, Button.kA.value, Button.kBumperLeft.value);
         intakeReverseButton = new JoystickButton(op, Button.kA.value).and(new JoystickButton(op, Button.kBumperLeft.value));
         // intakeReverseButton = new JoystickButton(op, Button.kBumperLeft.value).and(new JoystickButton(op, Button.kA.value));
-        intakeHarvestButton = new XboxLoneButton(op, Button.kY.value, Button.kBumperLeft.value);
-        intakeHarvestResetButton = new JoystickButton(op, Button.kY.value).and(new JoystickButton(op, Button.kBumperLeft.value));
+        intakeHarvestButton = new XboxLoneButton(op, Button.kA.value, Button.kBumperLeft.value);
+        intakeHarvestResetButton = new JoystickButton(op, Button.kA.value).and(new JoystickButton(op, Button.kBumperLeft.value));
 
         /* Drum */
 
