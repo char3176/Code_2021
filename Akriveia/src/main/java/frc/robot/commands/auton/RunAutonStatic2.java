@@ -14,31 +14,29 @@ import edu.wpi.first.wpilibj.Timer;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class RunAutonStatic2 extends SequentialCommandGroup {
+
+private double startTime;
+
   /** Creates a new RunAuton. */
   public RunAutonStatic2() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
+    startTime = Timer.getFPGATimestamp();
     addCommands(
-      //new AutonDrive(1,0,0,4)//,
-
-      //new AutonDrive(0,.25,0,1)
+      // Robot starts facing the target directly in front of it
+      // Also we know magnitudes but not signs for TrapezoidDrive
     
+      /*
+      Do we need to keep this?
       new AutonRotate(.1, 720),
       new DelayCommand(1),
       new AutonRotate(.1, -720)
+      */
 
-      // new TrapezoidDrive(-13, 0)
-
-      // new TrapezoidDrive(-7, -10)
-      // Flywheel spin up
-      // wait for 10 seconds?
-      // new TrapezoidDrive(22, -5)
-
-
-      // GYRO NOTE:
-      // gyro off by -117.5 @ 8:02p, -117.86 @ 8:03p -- not touched during that time
-      // continuing to drift more negative while not moving
-
+      new TrapezoidDrive(6, 5), // Forward and right 6 feet
+      new DelayCommand(10 - (Timer.getFPGATimestamp() - startTime)),
+      new TrapezoidDrive(0, -16) // Backwards 16 feet
+      //We shoot
 
 
     );

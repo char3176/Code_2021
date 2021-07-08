@@ -23,10 +23,10 @@ public class RunAutonStatic1 extends SequentialCommandGroup {
     startTime = Timer.getFPGATimestamp();
     addCommands(
       // Robot starts facing the target directly in front of it
-      // Also we know magnitudes but not signs for TrapeziodDrive
+      // Also we know magnitudes but not signs for TrapezoidDrive
 
       //We shoot
-      new TrapezoidDrive(6, 6), // Forward and right 6 feet
+      new TrapezoidDrive(6, 5), // Forward and right 6 feet
       new DelayCommand(10 - (Timer.getFPGATimestamp() - startTime)),
       new TrapezoidDrive(0, -16) // Backwards 16 feet
     );
