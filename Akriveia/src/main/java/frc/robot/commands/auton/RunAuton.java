@@ -23,10 +23,12 @@ public class RunAuton extends SequentialCommandGroup {
 
       //new AutonDrive(0,.25,0,1)
     
-      new AutonRotate(.1, 720),
-      new DelayCommand(1),
-      new AutonRotate(.1, -720)
-
+      /*  new AutonRotate(.1, 720),
+        new DelayCommand(1),
+        new AutonRotate(.1, -720)
+  */
+    new TrapezoidDrive(10, 0),
+    new AutonAlign()
       // new TrapezoidDrive(-13, 0)
 
       // new TrapezoidDrive(-7, -10)

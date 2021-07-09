@@ -8,6 +8,7 @@ import java.sql.Driver;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.auton.AutonRotate;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Drivetrain.coordType;
@@ -20,7 +21,7 @@ import frc.robot.VisionClient;
  * used to call AutoRotate(tx) to rotate the bot until the angle is within the range 
  * formed by upperTxLimit and lowerTxLimit
  */
-public class AutonAlign extends CommandBase {
+public class AutonAlign extends SequentialCommandGroup {
 
   private Drivetrain m_drivetrain = Drivetrain.getInstance();
   private VisionClient m_VisionClient = VisionClient.getInstance();
@@ -44,7 +45,8 @@ public class AutonAlign extends CommandBase {
   @Override
   public void execute() {
     this.tx =  m_VisionClient.getTx();
-    new AutonRotate(.1, tx);
+    //new AutonRotate(.1, tx);
+    m_drivetrain.drive(0, 0, Math.copySign(.1, tx));
     SmartDashboard.putNumber("AutonAlign.tx", tx);
   }
 

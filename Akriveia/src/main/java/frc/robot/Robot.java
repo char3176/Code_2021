@@ -14,14 +14,14 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
-    //m_VisionClient = VisionClient.getInstance();
+    m_VisionClient = VisionClient.getInstance();
     
   }
 
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
-    //m_VisionClient.update();
+    m_VisionClient.update();
   }
 
   @Override
