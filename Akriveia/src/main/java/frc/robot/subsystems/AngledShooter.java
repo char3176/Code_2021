@@ -23,7 +23,8 @@ public class AngledShooter extends SubsystemBase {
   private double hoodDirection;
   private double ampSpikeCount;
   private double startPosTic; 
-  private double minPosTic, maxPosTic;
+  private double minPosTic = -210;
+  private double maxPosTic = -1420;
   private int numPositions, hoodPositions_persistingIndex;
   private ArrayList<Double> hoodPositions_Tics;
   private double[] pos5 = new double[5];
@@ -59,7 +60,7 @@ public class AngledShooter extends SubsystemBase {
     hoodController.config_kD(AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.PIDF[2], AngledShooterConstants.TimeoutMs);
 
     // ampSpikeCount = 0;
-    findMinMax();
+    // findMinMax();
 
     // if (pidPosCtrlActive) {
     //   pidPosCtrl_createPositionsAndGoToInitialPos(); 
@@ -71,11 +72,13 @@ public class AngledShooter extends SubsystemBase {
   }
 
   public void moveTop() {
-    hoodController.set(ControlMode.Position, maxPosTic);
+    // hoodController.set(ControlMode.Position, maxPosTic);
+    hoodController.set(ControlMode.PercentOutput, .5);
   }
   
   public void moveBottom() {
-    hoodController.set(ControlMode.Position, minPosTic);
+    // hoodController.set(ControlMode.Position, minPosTic);
+    hoodController.set(ControlMode.PercentOutput, -.5);
   }
 
   public void findMinMax() { // Finds the min pos and the max pos
@@ -322,41 +325,19 @@ public class AngledShooter extends SubsystemBase {
   public void periodic() {
     //SmartDashboard.putNumber("Hood Amps", m_PowerManagement.getAngledShooterAvgAmp());
     SmartDashboard.putNumber("Hood Position (Tics)", hoodController.getSelectedSensorPosition());
-    checkLocNum();
+    // if(!topSwitch.get()) System.out.println("Top: " + topSwitch.get());
+    // if(!bottomSwitch.get()) System.out.println("Bottom: " + bottomSwitch.get());
   }
 
-  public void checkLocNum() {
-    // double oldMinTics = minPosTic;
-    // double oldMaxTics = maxPosTic;
-    if(bottomSwitch.get()) {
-      // minPosTic = hoodController.getSelectedSensorPosition();
-      hoodController.set(ControlMode.PercentOutput, 0);
-    }
-    if(topSwitch.get()) {
-      // maxPosTic = hoodController.getSelectedSensorPosition();
-      hoodController.set(ControlMode.PercentOutput, 0);
-    }
-    // if((minPosTic != oldMinTics) || (maxPosTic != oldMaxTics)) {
-    //   boolean direction = minPosTic - maxPosTic > 0; //TRUE is POS; FALSE is NEG
-    //   double range;
-    //   pos5[0] = minPosTic;
-    //   pos5[4] = maxPosTic;
-    //   setting = 0;
-    //   if(direction) {
-    //     range = maxPosTic - minPosTic;
-    //     pos5[1] = (.25 * range) + minPosTic;
-    //     pos5[2] = (.50 * range) + minPosTic;
-    //     pos5[3] = (.75 * range) + minPosTic;
-    //   } else {
-    //     range = minPosTic - maxPosTic;
-    //     pos5[1] = minPosTic - (range * .25);
-    //     pos5[2] = minPosTic - (range * .50);
-    //     pos5[3] = minPosTic - (range * .75);
-    //   }
-    // }
+  public boolean getBottomSwitch() {
+    System.out.println("Bottom Switch: " + bottomSwitch.get());
+    return !bottomSwitch.get();
   }
-  
 
+  public boolean getTopSwitch() {
+    System.out.println("Top Switch: " + topSwitch.get());
+    return !topSwitch.get();
+  }
 
   //double feedforward = 0.07   // <- determine from Tuner, % output to offset gravity
   //hoodController.set(ControlMode.MotionMagic, targetPos, DemandType.ArbitraryFeedForward, feedforward);

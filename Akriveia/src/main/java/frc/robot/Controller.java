@@ -75,6 +75,9 @@ public class Controller {
     private final Trigger hshootertestbutton;
     private final Trigger pshootertestbutton;
 
+    private final Trigger k1;
+    private final Trigger k2;
+
     public Controller() {
 
         // Define control sticks: Translation stick, Rotation stick, and XboxController(aka "op")
@@ -135,7 +138,12 @@ public class Controller {
         dshootertestbutton = new JoystickButton(transStick, 9);
         hshootertestbutton = new JoystickButton(transStick, 10);
         pshootertestbutton = new JoystickButton(transStick, 14);
+
+        k1 = new XboxAxisAsButton(op, Axis.kLeftTrigger.value, 0.5);
+        k2 = new XboxLoneButton(op, Button.kStickLeft.value, Button.kBumperLeft.value);
     }
+    public Trigger getLTrigger() {return k1;}
+    public Trigger getLStick() {return k2;}
 
     public Trigger getUShoot() {return ushootertestbutton;}
     public Trigger getDShoot() {return dshootertestbutton;}

@@ -208,7 +208,7 @@ public class Drivetrain extends SubsystemBase {
     this.forwardCommand = forwardCommand;
     this.strafeCommand = strafeCommand;  // TODO: The y is inverted because it is backwards for some reason, why?
     this.spinCommand = spinCommand;
-    System.out.println("Forward Command" + forwardCommand);
+    // System.out.println("Forward Command" + forwardCommand);
 
     // this.forwardCommand = SmartDashboard.getNumber("forwardCommand", 0);
     // this.strafeCommand = SmartDashboard.getNumber("strafeCommand", 0);

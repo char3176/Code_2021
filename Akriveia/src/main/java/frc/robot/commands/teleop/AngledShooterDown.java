@@ -1,10 +1,14 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
 package frc.robot.commands.teleop;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.constants.AngledShooterConstants;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.AngledShooter;
 
-public class AngledShooterDown extends InstantCommand {
+public class AngledShooterDown extends CommandBase {
 
   private AngledShooter m_AngledShooter = AngledShooter.getInstance();
 
@@ -13,29 +17,27 @@ public class AngledShooterDown extends InstantCommand {
   }
 
   @Override
-  public void initialize() {
-    // System.out.println("AngledShooterDown.initialize executed. ############################################################");
-    /* Gets the current encoder position and see where it should go */
+  public void initialize(){
+    System.out.println("----AngledShooter__Down----");
     
-    /*
-    double temp = m_AngledShooter.getEncoderPosition();
-    if(temp <= AngledShooterConstants.pos[1] + 100) {
-     m_AngledShooter.setPosition(AngledShooterConstants.pos[0]);
-    } else if(temp <= AngledShooterConstants.pos[2] + 100 && temp >= AngledShooterConstants.pos[0] - 100) {
-       m_AngledShooter.setPosition(AngledShooterConstants.pos[1]);
-    } else if(temp <= AngledShooterConstants.pos[3] + 100 && temp >= AngledShooterConstants.pos[1] - 100) {
-     m_AngledShooter.setPosition(AngledShooterConstants.pos[2]);
-    } else if(temp <= AngledShooterConstants.pos[4] + 100 && temp >= AngledShooterConstants.pos[2] - 100) {
-     m_AngledShooter.setPosition(AngledShooterConstants.pos[3]);
-     */
+  }
 
-    // m_AngledShooter.goDownToNextHoodPosition_Tic();
-
-    //m_AngledShooter.pctCtrl_lowerHoodPosition();
-    // m_AngledShooter.pctCtrl_set(-0.1);
-    // int lvl = m_AngledShooter.getSetting();
-    // m_AngledShooter.changePos(lvl-1);
-    // m_AngledShooter.pctCtrl_lowerHoodPosition();
+  @Override
+  public void execute(){
     m_AngledShooter.moveBottom();
+    System.out.println("DOWN__EXE");
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    System.out.println("DOWN__END");
+    m_AngledShooter.pctCtrl_set(0);
+  }
+
+  @Override
+  public boolean isFinished() {
+    System.out.println("DOWN__IS");
+    if(m_AngledShooter.getBottomSwitch()) return true;
+    return false;
   }
 }

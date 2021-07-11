@@ -136,8 +136,8 @@ public class RobotContainer {
       () -> m_Controller.getPOVTransStick()));
 
   
-    m_Controller.getDrumUpButton().whenActive(new DrumVelocitySpeed());
-    m_Controller.getDrumDownButton().whenActive(new DrumVelocitySlow());
+    // m_Controller.getDrumUpButton().whenActive(new DrumVelocitySpeed());
+    // m_Controller.getDrumDownButton().whenActive(new DrumVelocitySlow());
   
     m_Controller.getTransferStraightButton().whenActive(new BallTransferStraight());
     m_Controller.getTransferPivotButton().whenActive(new BallTransferPivotAndRoll());
@@ -163,10 +163,15 @@ public class RobotContainer {
 
     /* Angled Shooter Test Controls */
 
-    m_Controller.getUShoot().whenActive(new AngledShooterUp());
-    m_Controller.getDShoot().whenActive(new AngledShooterDown());
-    m_Controller.getHShoot().whenActive(new AngledShooterOff());
-    m_Controller.getPShoot().whenActive(new AngledShooterPIDTuner());
+    // m_Controller.getUShoot().whenActive(new AngledShooterUp());
+    // m_Controller.getDShoot().whenActive(new AngledShooterDown());
+    // m_Controller.getHShoot().whenActive(new AngledShooterOff());
+    // m_Controller.getPShoot().whenActive(new AngledShooterPIDTuner());
+
+    // m_Controller.getLStick().whenActive(new AngledShooterDown());
+    // m_Controller.getLTrigger().whenActive(new AngledShooterUp());
+    m_Controller.getDrumUpButton().whenActive(new AngledShooterUp());
+    m_Controller.getDrumDownButton().whenActive(new AngledShooterDown());
   }
 
   public Command getAutonomousCommand() {

@@ -1,10 +1,14 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
 package frc.robot.commands.teleop;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.AngledShooter;
-import frc.robot.constants.AngledShooterConstants;
 
-public class AngledShooterUp extends InstantCommand {
+public class AngledShooterUp extends CommandBase {
 
   private AngledShooter m_AngledShooter = AngledShooter.getInstance();
 
@@ -13,30 +17,26 @@ public class AngledShooterUp extends InstantCommand {
   }
 
   @Override
-  public void initialize() {
-    // System.out.println("AngledShooterUp.initialize executed. ############################################################");
-    /* Gets the current encoder position and see where it should go */
-   
-    /*
-    double temp = m_AngledShooter.getEncoderPosition();
-    if(temp >= AngledShooterConstants.pos[3] - 100) {
-      m_AngledShooter.setPosition(AngledShooterConstants.pos[4]);
-    } else if(temp >= AngledShooterConstants.pos[2] - 100 && temp <= AngledShooterConstants.pos[4] + 100) {
-      m_AngledShooter.setPosition(AngledShooterConstants.pos[3]);
-    } else if(temp >= AngledShooterConstants.pos[1] - 100 && temp <= AngledShooterConstants.pos[3] + 100) {
-      m_AngledShooter.setPosition(AngledShooterConstants.pos[2]);
-    } else if(temp >= AngledShooterConstants.pos[0] - 100 && temp <= AngledShooterConstants.pos[2] + 100){
-      m_AngledShooter.setPosition(AngledShooterConstants.pos[1]);
-    }
-    */
+  public void initialize(){
+    System.out.println("----AngledShooter__UP----");
+  }
 
-    // m_AngledShooter.goUpToNextHoodPosition_Tic();
-    //m_AngledShooter.pctCtrl_raiseHoodPosition();
-
-    // m_AngledShooter.pctCtrl_set(0.1);
-    // int lvl = m_AngledShooter.getSetting();
-    // m_AngledShooter.changePos(lvl+1);
-    // m_AngledShooter.pctCtrl_raiseHoodPosition();
+  @Override
+  public void execute(){
     m_AngledShooter.moveTop();
+    System.out.println("UP__EXE");    
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    System.out.println("UP__END");
+    m_AngledShooter.pctCtrl_set(0);
+  }
+
+  @Override
+  public boolean isFinished() {
+    System.out.println("UP__IS");
+    if(m_AngledShooter.getTopSwitch()) return true;
+    return false;
   }
 }
