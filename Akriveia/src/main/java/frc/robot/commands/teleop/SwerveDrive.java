@@ -17,16 +17,14 @@ public class SwerveDrive extends CommandBase {
 
   private BooleanSupplier isFieldCentric;
   private BooleanSupplier isRobotCentric;
-  private BooleanSupplier isBackRobotCentric;
 
   public SwerveDrive( DoubleSupplier forwardCommand, DoubleSupplier strafeCommand, DoubleSupplier spinCommand,
-                      BooleanSupplier isFieldCentric, BooleanSupplier isRobotCentric, BooleanSupplier isBackRobotCentric) {
+                      BooleanSupplier isFieldCentric, BooleanSupplier isRobotCentric ) {
     this.forwardCommand = forwardCommand;
     this.strafeCommand = strafeCommand;
     this.spinCommand = spinCommand;
     this.isFieldCentric = isFieldCentric;
     this.isRobotCentric = isRobotCentric;
-    this.isBackRobotCentric = isBackRobotCentric;
     addRequirements(drivetrain);
   }
 
@@ -45,9 +43,6 @@ public class SwerveDrive extends CommandBase {
     }
     if(isRobotCentric.getAsBoolean()) {
       drivetrain.setCoordType(coordType.ROBOT_CENTRIC);
-    }
-    if(isBackRobotCentric.getAsBoolean()) {
-      drivetrain.setCoordType(coordType.BACK_ROBOT_CENTRIC);
     }
     drivetrain.drive(forwardCommand.getAsDouble() * DrivetrainConstants.MAX_WHEEL_SPEED_FEET_PER_SECOND, strafeCommand.getAsDouble() * DrivetrainConstants.MAX_WHEEL_SPEED_FEET_PER_SECOND, spinCommand.getAsDouble()*10);
   }

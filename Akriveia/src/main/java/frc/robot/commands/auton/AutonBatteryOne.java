@@ -4,24 +4,24 @@
 
 package frc.robot.commands.auton;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.VisionClient;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.subsystems.Vision;
+import frc.robot.commands.auton.*;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutonBatteryOne extends InstantCommand { //TODO: WIP for AimLock
-  VisionClient mVision = VisionClient.getInstance();
+public class AutonBatteryOne extends SequentialCommandGroup { //TODO: WIP for AimLock
+  Vision m_Vision = Vision.getInstance();
   
   public AutonBatteryOne() {
     // Use addRequirements() here to declare subsystem dependencies.
+    addCommands(
+      new RotateUntilTargetRecogd(),
+      new AlignVizHorz()
+    );
   }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    if(mVision.getTx() != 1) {
-
-    }
-  }
 }

@@ -71,6 +71,10 @@ public class AngledShooter extends SubsystemBase {
     //hoodController.configPeakCurrentDuration(1000);   //1000ms .... is totally a guess.
   }
 
+  public void stopMotors() {
+    hoodController.set(ControlMode.PercentOutput, 0);
+  }
+
   public void moveTop() {
     // hoodController.set(ControlMode.Position, maxPosTic);
     hoodController.set(ControlMode.PercentOutput, .5);

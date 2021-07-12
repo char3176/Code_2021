@@ -5,7 +5,7 @@
 package frc.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.VisionClient;
+import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.AngledShooter;
 import frc.robot.subsystems.Flywheel;
 
@@ -13,7 +13,7 @@ import frc.robot.subsystems.Flywheel;
 
 public class AtlasForInterstellarAccuracy extends CommandBase {
   
-  private VisionClient m_VisionClient = VisionClient.getInstance();
+  private Vision m_Vision = Vision.getInstance();
   private Flywheel m_Flywheel = Flywheel.getInstance();
   private AngledShooter m_AngledShooter = AngledShooter.getInstance();
   private String zone;
@@ -29,12 +29,12 @@ public class AtlasForInterstellarAccuracy extends CommandBase {
     m_AngledShooter.pctCtrl_raiseHoodPosition();
     isHoodUp = true;
     m_AngledShooter.pctCtrl_holdHoodPosition();
-    m_VisionClient.setAtlasOn(true);  
+    m_Vision.setAtlasOn(true);  
   }
 
   @Override
   public void execute(){
-    zone = m_VisionClient.findShootingZone();
+    zone = m_Vision.findShootingZone();
     if(zone.equals("GREEN")){
       m_Flywheel.setVisionCtrlRPM(3000);
       if(isHoodUp){
@@ -82,7 +82,7 @@ public class AtlasForInterstellarAccuracy extends CommandBase {
 
   @Override
   public boolean isFinished(){
-    return !m_VisionClient.isAtlasOn();
+    return !m_Vision.isAtlasOn();
 
   }
 }

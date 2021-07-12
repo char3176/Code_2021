@@ -86,8 +86,8 @@ public class RobotContainer {
       () -> m_Controller.getStrafe(),
       () -> m_Controller.getSpin(),
       () -> m_Controller.isFieldCentricButtonPressed(),
-      () -> m_Controller.isRobotCentricButtonPressed(),
-      () -> m_Controller.isBackRobotCentricButtonPressed()));
+      () -> m_Controller.isRobotCentricButtonPressed()
+    ));
 
     configureButtonBindings();
 
@@ -138,41 +138,36 @@ public class RobotContainer {
   
     // m_Controller.getDrumUpButton().whenActive(new DrumVelocitySpeed());
     // m_Controller.getDrumDownButton().whenActive(new DrumVelocitySlow());
+    
+    m_Controller.getOp_ButtonY().whenActive(new BallTransferStraight());
+    m_Controller.getOp_ButtonYPlusBumperLeft().whenActive(new BallTransferPivotAndRoll());
   
-    m_Controller.getTransferStraightButton().whenActive(new BallTransferStraight());
-    m_Controller.getTransferPivotButton().whenActive(new BallTransferPivotAndRoll());
+    m_Controller.getOp_ButtonX().whenActive(new BallTransferStraight());
+    m_Controller.getOp_ButtonXPlusBumperLeft().whenActive(new BallTransferPivotAndRoll());
   
-    m_Controller.getIntakeHarvestButton().whenActive(new IntakeHarvest());
-    m_Controller.getIntakeHarvestResetButton().whenActive(new IntakeHarvestReset());
-  
-    // m_Controller.getDrumAgitateButton().whenActive(new DrumAgitate());
-    m_Controller.getDrumAgitatePreShootButton().whenActive(new DrumAgitatePreShoot());
-  
-    m_Controller.getDrumInputResetButton().whenActive(new DrumInputReset());
-    m_Controller.getDrumCCWButton().whenActive(new DrumCCW());
-  
-    m_Controller.getPOVUp().whenHeld(new AngledShooterUp());    //ANGLE SHOOTER TEST
-    m_Controller.getPOVDown().whenHeld(new AngledShooterDown());//ANGLE SHOOTER TEST
-    m_Controller.getPOVLeft().whenHeld(new FlywheelSlow());
-    m_Controller.getPOVRight().whenHeld(new FlywheelSpeed());
+    m_Controller.getOp_ButtonA().whenActive(new BallTransferStraight());
+    m_Controller.getOp_ButtonAPlusBumperLeft().whenActive(new BallTransferPivotAndRoll());
 
-    m_Controller.getAngledShooterOffButton().whenActive(new AngledShooterOff());
+    m_Controller.getOp_ButtonB().whenActive(new AngledShooterUp());
+    m_Controller.getOp_ButtonBPlusBumperLeft().whenActive(new AngledShooterDown());
+
+    m_Controller.getOp_ButtonStart().whenActive(new AngledShooterOff());
+    m_Controller.getOp_ButtonStartPlusBumperLeft().whenActive(new DrumAgitatePreShoot());
   
-    m_Controller.getShootButton().whenActive(new Shoot());
-    m_Controller.getResetShootButton().whenActive(new ShootReset());
+    m_Controller.getOp_ButtonBack().whenActive(new DrumInputReset());
+    m_Controller.getOp_ButtonBackPlusBumperLeft().whenActive(new DrumCCW());
+  
+    m_Controller.getOp_DpadUp().whenPressed(new AngledShooterUp());    //ANGLE SHOOTER TEST
+    m_Controller.getOp_DpadDown().whenPressed(new AngledShooterDown());//ANGLE SHOOTER TEST
+    m_Controller.getOp_DpadLeft().whenPressed(new FlywheelSlow());
+    m_Controller.getOp_DpadRight().whenPressed(new FlywheelSpeed());
+  
+    m_Controller.getOp_BumperRight().whenActive(new Shoot());
+    m_Controller.getOp_TriggerRight().whenActive(new ShootReset());
+    //m_Controller.getOp_TriggerLeft().whenActive(new ShootReset());
 
-    /* Angled Shooter Test Controls */
-
-    // m_Controller.getUShoot().whenActive(new AngledShooterUp());
-    // m_Controller.getDShoot().whenActive(new AngledShooterDown());
-    // m_Controller.getHShoot().whenActive(new AngledShooterOff());
-    // m_Controller.getPShoot().whenActive(new AngledShooterPIDTuner());
-
-    // m_Controller.getLStick().whenActive(new AngledShooterDown());
-    // m_Controller.getLTrigger().whenActive(new AngledShooterUp());
-    m_Controller.getDrumUpButton().whenActive(new AngledShooterUp());
-    m_Controller.getDrumDownButton().whenActive(new AngledShooterDown());
   }
+
 
   public Command getAutonomousCommand() {
 
@@ -223,4 +218,20 @@ public class RobotContainer {
     }
     return tempTrajectory;
   }
+
+  public void stopAllMotors() {
+    m_AngledShooter.stopMotors();
+    m_BallTransfer.stopMotors();
+    m_Drum.stopMotors();
+    m_Flywheel.stopMotors();
+    m_Drivetrain.stopMotors();
+  }
+
+  public void stopAllMotorsExceptDrivetrain() {
+    m_AngledShooter.stopMotors();
+    m_BallTransfer.stopMotors();
+    m_Drum.stopMotors();
+    m_Flywheel.stopMotors();
+  }
+
 }

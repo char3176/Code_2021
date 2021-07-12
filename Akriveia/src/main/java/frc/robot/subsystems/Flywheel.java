@@ -29,7 +29,12 @@ public class Flywheel extends SubsystemBase {
         flywheelController.config_kD(FlywheelConstants.kPIDLoopIdx, FlywheelConstants.PIDF[2], FlywheelConstants.kTimeoutMs);
 
     }
-    
+   
+    public void stopMotors() {
+        flywheelController.set(TalonFXControlMode.PercentOutput, 0);
+    }
+
+
     /**
      * @param level of speed to multipy by 2048 and then divide by 600 and set it to that velocity
      */

@@ -7,7 +7,7 @@ import frc.robot.subsystems.Drum;
 import frc.robot.subsystems.Flywheel;
 import frc.robot.subsystems.AngledShooter;
 import frc.robot.subsystems.BallTransfer;
-import frc.robot.VisionClient;
+import frc.robot.subsystems.Vision;
 
 /**
  * Shoots a power cell, taking control of the Flywheel, Drum, and BallTransfer
@@ -16,14 +16,14 @@ public class Shoot extends InstantCommand {
   Drum mDrum = Drum.getInstance();
   Flywheel mFlywheel = Flywheel.getInstance();
   BallTransfer mTransfer = BallTransfer.getInstance();
-  VisionClient m_VisionClient = VisionClient.getInstance();
+  Vision m_Vision = Vision.getInstance();
   // AngledShooter mAngle = AngledShooter.getInstance();
   // Timer time = new Timer();
   double visionAngle, visionDistanceX;
   
   public Shoot() {
     addRequirements(mDrum);
-    // if (!m_VisionClient.isAtlasOn()) {addRequirements(mFlywheel);}
+    // if (!m_Vision.isAtlasOn()) {addRequirements(mFlywheel);}
     addRequirements(mTransfer);
     addRequirements(mFlywheel);
     // addRequirements(mAngle);
@@ -33,12 +33,12 @@ public class Shoot extends InstantCommand {
   @Override
   public void initialize() {
     // System.out.println("Shoot.initialize executed. ############################################################");
-    visionAngle = m_VisionClient.getTargetAngle();
-    visionDistanceX = m_VisionClient.getTargetDistanceX();
+    visionAngle = m_Vision.getTargetAngle();
+    visionDistanceX = m_Vision.getTargetDistanceX();
     mDrum.pidVelCtrl_setRpmLevel(1);
     // mFlywheel.spinVelocityOutputPercent(1);
     // mAngle.pctCtrl_raiseHoodPosition();
-    // if (!m_VisionClient.isAtlasOn()) {mFlywheel.spinVelocityPIDF(5);}
+    // if (!m_Vision.isAtlasOn()) {mFlywheel.spinVelocityPIDF(5);}
     mFlywheel.spinVelocityPIDF(8);
     // mTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT/2);
     // Timer.delay(2);

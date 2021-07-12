@@ -80,6 +80,9 @@ public class Drum extends SubsystemBase {
     drumPIDController.setOutputRange(DrumConstants.kMinOutput, DrumConstants.kMaxOutput);    
   }
 
+  public void stopMotors() {
+    drumPIDController.setReference(0, ControlType.kVelocity); 
+  }
   // public boolean isLineBroke() {return lineBreakReciever.get();}
 
   /**

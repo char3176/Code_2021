@@ -5,6 +5,8 @@ import frc.robot.constants.BallTransferConstants;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -26,6 +28,9 @@ public class BallTransfer extends SubsystemBase {
     return instance;
   }
 
+  public void stopMotors() {
+    transferMotor.set(0);
+  }
   /**
    * @param percent - the percent -1 to 1 inclusive of the transferMotor
    */
