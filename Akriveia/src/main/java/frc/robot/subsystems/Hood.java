@@ -39,8 +39,8 @@ public class Hood extends SubsystemBase {
 
     m_PowerManagement = PowerManagement.getInstance();
     
-    topSwitch = new DigitalInput(HoodConstants.TOP_LIMIT_SWITCH_ID);
-    bottomSwitch = new DigitalInput(HoodConstants.BOTTOM_LIMIT_SWITCH_ID);
+    topSwitch = new DigitalInput(HoodConstants.TOP_LIMIT_SWITCH_DIO_ID);
+    bottomSwitch = new DigitalInput(HoodConstants.BOTTOM_LIMIT_SWITCH_DIO_ID);
 	  /* Setting up the Motor */
     minPosTic = 4078;
     maxPosTic = 2487;

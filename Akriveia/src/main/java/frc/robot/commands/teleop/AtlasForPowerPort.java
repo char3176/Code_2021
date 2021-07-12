@@ -45,41 +45,41 @@ public class AtlasForPowerPort extends CommandBase {
     }
     zone = m_Vision.findShootingZone();
     if(zone.equals("GREEN")){
-      m_Flywheel.setVisionCtrlRPM(3000);
+      m_Flywheel.setRpm(3000);
       /*if(isHoodUp){
         m_AngledShooter.pctCtrl_lowerHoodPosition();
         isHoodUp = false;
       }*/
     } else if((zone.equals("YELLOW")) && (!onBlueYellowLine)){
-      m_Flywheel.setVisionCtrlRPM(3850);
+      m_Flywheel.setRpm(3850);
       if(!isHoodUp){
         m_AngledShooter.pctCtrl_raiseHoodPosition();
         m_AngledShooter.pctCtrl_holdHoodPosition();
         isHoodUp = true;
       }
     } else if( (zone.equals("BLUE")) && (!onBlueYellowLine)){
-      m_Flywheel.setVisionCtrlRPM(4000);
+      m_Flywheel.setRpm(4000);
       if(!isHoodUp){
         m_AngledShooter.pctCtrl_raiseHoodPosition();
         m_AngledShooter.pctCtrl_holdHoodPosition();
         isHoodUp = true;
       }
     } else if(zone.equals("RED")){
-      m_Flywheel.setVisionCtrlRPM(4300);
+      m_Flywheel.setRpm(4300);
       if(!isHoodUp){
         m_AngledShooter.pctCtrl_raiseHoodPosition();
         m_AngledShooter.pctCtrl_holdHoodPosition();
         isHoodUp = true;
       }
     } else if (onBlueYellowLine) {
-      m_Flywheel.setVisionCtrlRPM(3800);
+      m_Flywheel.setRpm(3800);
       if(!isHoodUp){
         m_AngledShooter.pctCtrl_raiseHoodPosition();
         m_AngledShooter.pctCtrl_holdHoodPosition();
         isHoodUp = true;
       }
     } else{
-      m_Flywheel.setVisionCtrlRPM(0);
+      m_Flywheel.setRpm(0);
       /*if(isHoodUp){
         m_AngledShooter.pctCtrl_lowerHoodPosition();
         isHoodUp = false;
@@ -93,7 +93,7 @@ public class AtlasForPowerPort extends CommandBase {
       m_AngledShooter.pctCtrl_lowerHoodPosition();
 
     }
-    m_Flywheel.setVisionCtrlRPM(0);
+    m_Flywheel.setRpm(0);
   }
 
   @Override

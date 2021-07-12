@@ -87,8 +87,7 @@ public class Flywheel extends SubsystemBase {
         return rpm;     
     }
 
-    @Override
-    public void periodic() {
+    public void manualInputRpm() {
         manualRPMInput = SmartDashboard.getNumber("Flywheel RPM Wanted", 0);
         if ( (manualRPMInput != 0) && (lastSetting == 0) ) { 
             spinVelocityPIDFPart2(manualRPMInput);
@@ -97,18 +96,25 @@ public class Flywheel extends SubsystemBase {
         }
     }
 
+    @Override
+    public void periodic() {
+
+    }
+
     //public double getVisionCtrlRPM(){
     //    return visionCtrlRPM;
     //}
 
     public void setRpm(double rpm){
         spinVelocityPIDFPart2(rpm);   //TODO: in future, would like to set struct containing RPM speed, and flywheel motor doesn't actually get ran here, but in seperate fxn
+        //SmartDashboard.putNumber("Flywheel.setRpm.rpm", rpm);
     }
 
     public void setRpmViaVision() {
         double distanceToTarget = m_Vision.getDeltaX();
         double rpm = FlywheelConstants.SHOT_REGRESSION_INTERCEPT + ( FlywheelConstants.SHOT_REGRESSION_COEFF * distanceToTarget );
         setRpm(rpm);
+        SmartDashboard.putNumber("Flywheel.setRpmViaVision.rpm", rpm);
     }
 
 }

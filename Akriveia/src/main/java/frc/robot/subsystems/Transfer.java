@@ -20,7 +20,7 @@ public class Transfer extends SubsystemBase {
   private boolean pistonSetting = false;
   private double levelSetting = 0;
 
-  private DigitalInput lineBreak = new DigitalInput(1);
+  private DigitalInput irSensor = new DigitalInput(TransferConstants.IRSENSOR_DIO_ID);
 
   public Transfer() {}
 
@@ -43,7 +43,7 @@ public class Transfer extends SubsystemBase {
    * Extends the transferPiston if the line break isn't broken
    */
   public void Extend() {
-    if(lineBreak.get()) {
+    if(irSensor.get()) {
       pistonSetting = true;
       transferPiston.set(Value.kForward);
     }
@@ -70,4 +70,23 @@ public class Transfer extends SubsystemBase {
   public double getLevelSetting() {
     return levelSetting;
   }
+
+  private void testIrSensorIsTrue() {
+    if (irSensor.get()) {
+      System.out.println("<--------  Transfer.irSensor = TRUE ----------->");
+    }
+  }
+  
+  private void testIrSensorIsFalse() {
+    if (irSensor.get()) {
+      System.out.println("<--------  Transfer.irSensor = FALSE ----------->");
+    }
+  }
+
+  @Override
+  public void periodic() {
+    testIrSensorIsTrue();
+  }
+
+
 }
