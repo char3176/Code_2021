@@ -89,6 +89,8 @@ public class Vision extends SubsystemBase{
         updateVisionData();
         m_ledMode = ledMode.getDouble(-999);
         m_pipeline = pipeline.getDouble(-999);
+        targetRecogControlLoop();
+
     }
     public static Vision getInstance() {
         return instance;
@@ -114,16 +116,14 @@ public class Vision extends SubsystemBase{
 
         m_ledMode = ledMode.getDouble(0);
         m_pipeline = pipeline.getDouble(0);
+
+
     }
 
     public void update(){
         pipeline.setNumber(1);
         targetRecogControlLoop();
 
-        SmartDashboard.putString("Viz_ZONE", findShootingZone());
-        SmartDashboard.putNumber("Viz_deltaX (m)", deltaX);
-        SmartDashboard.putNumber("Viz_deltaX (ft)", deltaX / VisionConstants.FEET2METER);
-        SmartDashboard.putNumber("Viz_initialTheta", initialTheta);
     }
     
     /**
@@ -157,7 +157,7 @@ public class Vision extends SubsystemBase{
         double[] resultArray = findInitialAngleAndVelocity(0);
         if (resultArray == null) return null;
 
-        SmartDashboard.putNumber("Latency (ms)", ((Timer.getFPGATimestamp() - startTime) * 1000) + tl.getDouble(0) + 11);
+        //SmartDashboard.putNumber("Latency (ms)", ((Timer.getFPGATimestamp() - startTime) * 1000) + tl.getDouble(0) + 11);
         return resultArray;
     }
 
@@ -167,9 +167,12 @@ public class Vision extends SubsystemBase{
      */
     public void publishPrelimTargetRecogData(){
         SmartDashboard.putBoolean("Has Targets", (tv.getDouble(2) == 1) ? true : false);
-        SmartDashboard.putNumber("tshort", tshort.getDouble(0));
-        SmartDashboard.putNumber("tvert", tvert.getDouble(0));
-        SmartDashboard.putNumber("Length", tcornxy.getDoubleArray(new double[1]).length);
+        SmartDashboard.putNumber("Viz_tx", tx.getDouble(0));
+        SmartDashboard.putNumber("Viz_ty", ty.getDouble(0));
+        SmartDashboard.putNumber("Viz_ta", ta.getDouble(0));
+        SmartDashboard.putNumber("Viz_tshort", tshort.getDouble(0));
+        SmartDashboard.putNumber("Viz_tvert", tvert.getDouble(0));
+        SmartDashboard.putNumber("Viz_Length", tcornxy.getDoubleArray(new double[1]).length);
     }
     /** 
      * Deconvolutes tcornxy array into tcornx[] and tcorny[] arrays of double datatype.
@@ -195,7 +198,7 @@ public class Vision extends SubsystemBase{
         // calculate the distance between the furthest two points as the camera sees it
         deltaXCam = calculateDeltaX(tcornx);
 
-        SmartDashboard.putNumber("DeltaXCam", deltaXCam);
+        //SmartDashboard.putNumber("DeltaXCam", deltaXCam);
 
         // calculate the various kinds of distances from the camera
         radius = VisionConstants.VISION_CONSTANT / deltaXCam;
@@ -207,9 +210,11 @@ public class Vision extends SubsystemBase{
      * Publishes Target Recog Data to SmartDashboard.  Variables published are: radius, deltaX, deltaY.
      */
     public void publishTargetRecogDistances(){
-        SmartDashboard.putNumber("Radius", radius);
-        SmartDashboard.putNumber("deltaX", deltaX);
-        SmartDashboard.putNumber("deltaY", deltaY);
+        SmartDashboard.putNumber("Viz_Radius", radius);
+        SmartDashboard.putNumber("Viz_deltaY (m)", deltaY);
+        SmartDashboard.putNumber("Viz_deltaY (ft)", deltaY / VisionConstants.FEET2METER);
+        SmartDashboard.putNumber("Viz_deltaX (m)", deltaX);
+        SmartDashboard.putNumber("Viz_deltaX (ft)", deltaX / VisionConstants.FEET2METER);
     }
     
     /**
@@ -407,7 +412,7 @@ public class Vision extends SubsystemBase{
    * @param desiredPipelineNum sets the pipeline that will be used. Acceptable values are 0 and 1 at present.
    */
     public void setPipeline(double desiredPipelineNum){
-        if(desiredPipelineNum == 0 || desiredPipelineNum == 1){
+        if(desiredPipelineNum >= 0 && desiredPipelineNum <= 9 ){
             m_pipeline = desiredPipelineNum;
             pipeline.forceSetDouble(m_pipeline);
         } 

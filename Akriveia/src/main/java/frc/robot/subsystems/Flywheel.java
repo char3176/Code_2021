@@ -6,10 +6,12 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import frc.robot.constants.FlywheelConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.Vision;
 
 public class Flywheel extends SubsystemBase {
     WPI_TalonFX flywheelController = new WPI_TalonFX(FlywheelConstants.MOTOR_CAN_ID);
     private static Flywheel instance = new Flywheel();
+    private Vision m_Vision = Vision.getInstance();
     private static int lastSetting = 0;
     private double manualRPMInput;
     private double visionCtrlRPM;
@@ -99,8 +101,14 @@ public class Flywheel extends SubsystemBase {
     //    return visionCtrlRPM;
     //}
 
-    public void setVisionCtrlRPM(double rpm){
-        visionCtrlRPM = rpm;
+    public void setRpm(double rpm){
         spinVelocityPIDFPart2(rpm);   //TODO: in future, would like to set struct containing RPM speed, and flywheel motor doesn't actually get ran here, but in seperate fxn
     }
+
+    public void setRpmViaVision() {
+        double distanceToTarget = m_Vision.getDeltaX();
+        double rpm = FlywheelConstants.SHOT_REGRESSION_INTERCEPT + ( FlywheelConstants.SHOT_REGRESSION_COEFF * distanceToTarget );
+        setRpm(rpm);
+    }
+
 }
