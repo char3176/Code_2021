@@ -2,7 +2,7 @@ package frc.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drum;
-import frc.robot.subsystems.BallTransfer;
+import frc.robot.subsystems.Transfer;
 import frc.robot.subsystems.Flywheel;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 

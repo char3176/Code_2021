@@ -5,8 +5,8 @@
 package frc.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.subsystems.AngledShooter;
-import frc.robot.subsystems.BallTransfer;
+import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.Transfer;
 import frc.robot.subsystems.Drum;
 import frc.robot.subsystems.Flywheel;
 
@@ -14,9 +14,9 @@ import frc.robot.subsystems.Flywheel;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class TrenchRunMode extends InstantCommand {
-  AngledShooter mAngledShooter = AngledShooter.getInstance();
+  Hood mAngledShooter = Hood.getInstance();
   Drum mDrum = Drum.getInstance();
-  BallTransfer mTransfer = BallTransfer.getInstance();
+  Transfer mTransfer = Transfer.getInstance();
   Flywheel mFlywheel = Flywheel.getInstance();
 
   public TrenchRunMode() {

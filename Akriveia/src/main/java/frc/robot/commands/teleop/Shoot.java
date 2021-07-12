@@ -2,11 +2,11 @@ package frc.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.constants.BallTransferConstants;
+import frc.robot.constants.TransferConstants;
 import frc.robot.subsystems.Drum;
 import frc.robot.subsystems.Flywheel;
-import frc.robot.subsystems.AngledShooter;
-import frc.robot.subsystems.BallTransfer;
+import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.Transfer;
 import frc.robot.subsystems.Vision;
 
 /**
@@ -15,7 +15,7 @@ import frc.robot.subsystems.Vision;
 public class Shoot extends InstantCommand {
   Drum mDrum = Drum.getInstance();
   Flywheel mFlywheel = Flywheel.getInstance();
-  BallTransfer mTransfer = BallTransfer.getInstance();
+  Transfer mTransfer = Transfer.getInstance();
   Vision m_Vision = Vision.getInstance();
   // AngledShooter mAngle = AngledShooter.getInstance();
   // Timer time = new Timer();
@@ -42,7 +42,7 @@ public class Shoot extends InstantCommand {
     mFlywheel.spinVelocityPIDF(8);
     // mTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT/2);
     // Timer.delay(2);
-    mTransfer.setPercentControl(BallTransferConstants.BALL_TRANSFER_PERCENT);
+    mTransfer.setPercentControl(TransferConstants.BALL_TRANSFER_PERCENT);
     // Timer.delay(5);
     // mTransfer.Extend();
     // mAngle.pctCtrl_holdHoodPosition();

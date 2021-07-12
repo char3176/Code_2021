@@ -7,7 +7,7 @@ package frc.robot.commands.teleop;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Vision;
-import frc.robot.subsystems.AngledShooter;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Flywheel;
 import frc.robot.constants.VisionConstants;
 
@@ -17,7 +17,7 @@ public class AtlasForPowerPort extends CommandBase {
   
   private Vision m_Vision = Vision.getInstance();
   private Flywheel m_Flywheel = Flywheel.getInstance();
-  private AngledShooter m_AngledShooter = AngledShooter.getInstance();
+  private Hood m_AngledShooter = Hood.getInstance();
   private String zone;
   private boolean isHoodUp, onBlueYellowLine;
 

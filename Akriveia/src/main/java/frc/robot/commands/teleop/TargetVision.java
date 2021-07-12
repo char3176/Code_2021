@@ -6,7 +6,7 @@ package frc.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Vision;
-import frc.robot.subsystems.AngledShooter;
+import frc.robot.subsystems.Hood;
 import frc.robot.constants.AngledShooterConstants;
 import frc.robot.constants.VisionConstants;
 import frc.robot.subsystems.Flywheel;
@@ -19,7 +19,7 @@ import frc.robot.subsystems.Flywheel;
  */
 public class TargetVision extends CommandBase {
   /** Creates a new TargetVision. */
-  AngledShooter m_AngledShooter = AngledShooter.getInstance();
+  Hood m_AngledShooter = Hood.getInstance();
   Vision m_Vision = Vision.getInstance();
   Flywheel m_Flywheel = Flywheel.getInstance();
   private double wantedAngleTicks;

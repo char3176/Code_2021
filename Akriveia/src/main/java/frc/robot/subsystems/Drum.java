@@ -108,8 +108,8 @@ public class Drum extends SubsystemBase {
    * @param level the index in the SPEEDS array that it is set to
    * @param direction the direction of the velocity, 1 = Fast, 0 = Slow, 2 = Same, Others = No Speed
     * @param direction  Determines if we are stepping up or down to the desired "speed level"
-   * @see commands.teleop.DrumVelocitySlow
-   * @see commands.teleop.DrumVelocitySpeed
+   * @see DrumVelocityDown.teleop.DrumVelocitySlow
+   * @see DrumVelocityUp.teleop.DrumVelocitySpeed
    */
 
   public void pidVelCtrl_step4LevelsToDesiredSpeed(int level, int direction, String procTag) {

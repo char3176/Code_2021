@@ -28,8 +28,8 @@ import frc.robot.commands.auton.*;
 import frc.robot.commands.teleop.*;
 import frc.robot.constants.DrivetrainConstants;
 import frc.robot.constants.MasterConstants;
-import frc.robot.subsystems.AngledShooter;
-import frc.robot.subsystems.BallTransfer;
+import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.Transfer;
 import frc.robot.subsystems.Drum;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Flywheel;
@@ -43,10 +43,10 @@ import java.util.List;
 public class RobotContainer {
   private Controller m_Controller;
   private Compressor m_Compressor;
-  private AngledShooter m_AngledShooter;
+  private Hood m_AngledShooter;
   private Drum m_Drum;
   private Drivetrain m_Drivetrain;
-  private BallTransfer m_BallTransfer;
+  private Transfer m_BallTransfer;
   private Flywheel m_Flywheel;
   private PowerManagement m_PowerManagement;
 
@@ -73,9 +73,9 @@ public class RobotContainer {
     m_Controller = Controller.getInstance();
 
     m_Drum = Drum.getInstance();
-    m_BallTransfer = BallTransfer.getInstance();
+    m_BallTransfer = Transfer.getInstance();
     m_Flywheel = Flywheel.getInstance();
-    m_AngledShooter = AngledShooter.getInstance();
+    m_AngledShooter = Hood.getInstance();
     m_PowerManagement = PowerManagement.getInstance();
 
     m_PowerManagement.clearFaults();
@@ -139,28 +139,28 @@ public class RobotContainer {
     // m_Controller.getDrumUpButton().whenActive(new DrumVelocitySpeed());
     // m_Controller.getDrumDownButton().whenActive(new DrumVelocitySlow());
     
-    m_Controller.getOp_ButtonY().whenActive(new BallTransferStraight());
-    m_Controller.getOp_ButtonYPlusBumperLeft().whenActive(new BallTransferPivotAndRoll());
+    m_Controller.getOp_ButtonY().whenActive(new IntakeHarvestStart());
+    m_Controller.getOp_ButtonYPlusBumperLeft().whenActive(new IntakeHarvestStop());
   
-    m_Controller.getOp_ButtonX().whenActive(new BallTransferStraight());
-    m_Controller.getOp_ButtonXPlusBumperLeft().whenActive(new BallTransferPivotAndRoll());
+    m_Controller.getOp_ButtonX().whenActive(new TransferDown());
+    m_Controller.getOp_ButtonXPlusBumperLeft().whenActive(new TransferUp());
   
-    m_Controller.getOp_ButtonA().whenActive(new BallTransferStraight());
-    m_Controller.getOp_ButtonAPlusBumperLeft().whenActive(new BallTransferPivotAndRoll());
+    m_Controller.getOp_ButtonA().whenActive(new TransferDown());
+    m_Controller.getOp_ButtonAPlusBumperLeft().whenActive(new TransferUp());
 
-    m_Controller.getOp_ButtonB().whenActive(new AngledShooterUp());
-    m_Controller.getOp_ButtonBPlusBumperLeft().whenActive(new AngledShooterDown());
+    m_Controller.getOp_ButtonB().whenActive(new HoodUp());
+    m_Controller.getOp_ButtonBPlusBumperLeft().whenActive(new HoodDown());
 
-    m_Controller.getOp_ButtonStart().whenActive(new AngledShooterOff());
+    m_Controller.getOp_ButtonStart().whenActive(new HoodStop());
     m_Controller.getOp_ButtonStartPlusBumperLeft().whenActive(new DrumAgitatePreShoot());
   
-    m_Controller.getOp_ButtonBack().whenActive(new DrumInputReset());
+    m_Controller.getOp_ButtonBack().whenActive(new DrumStop());
     m_Controller.getOp_ButtonBackPlusBumperLeft().whenActive(new DrumCCW());
   
-    m_Controller.getOp_DpadUp().whenPressed(new AngledShooterUp());    //ANGLE SHOOTER TEST
-    m_Controller.getOp_DpadDown().whenPressed(new AngledShooterDown());//ANGLE SHOOTER TEST
-    m_Controller.getOp_DpadLeft().whenPressed(new FlywheelSlow());
-    m_Controller.getOp_DpadRight().whenPressed(new FlywheelSpeed());
+    m_Controller.getOp_DpadUp().whenPressed(new HoodUp());    //ANGLE SHOOTER TEST
+    m_Controller.getOp_DpadDown().whenPressed(new HoodDown());//ANGLE SHOOTER TEST
+    m_Controller.getOp_DpadLeft().whenPressed(new FlywheelVelocityDown());
+    m_Controller.getOp_DpadRight().whenPressed(new FlywheelVelocityUp());
   
     m_Controller.getOp_BumperRight().whenActive(new Shoot());
     m_Controller.getOp_TriggerRight().whenActive(new ShootReset());

@@ -5,7 +5,7 @@
 package frc.robot.commands.auton;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.subsystems.AngledShooter;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Drum;
 import edu.wpi.first.wpilibj.Timer;
@@ -28,7 +28,7 @@ public class RunAuton extends SequentialCommandGroup {
         new AutonRotate(.1, -720)
   */
     new TrapezoidDrive(10, 0),
-    new AlignVizHorz()
+    new AlignVizHorzBangBang()
       // new TrapezoidDrive(-13, 0)
 
       // new TrapezoidDrive(-7, -10)
