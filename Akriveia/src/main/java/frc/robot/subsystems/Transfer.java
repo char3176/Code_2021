@@ -71,8 +71,14 @@ public class Transfer extends SubsystemBase {
     return levelSetting;
   }
 
+  /**
+   * getIrSensor(): Returns whether or not a ball is present.
+   * @return boolean (True if ball present. False if no ball detected.)
+   */
   public boolean getIrSensor() {
-    return irSensor.get();
+    // irSensor.get() natively returns "true" when nothing is detected, and "false" when something is deteected.
+    // Therefore we return inverse.
+    return (!irSensor.get());
   }
 
   private void testIrSensorIsTrue() {
@@ -89,7 +95,7 @@ public class Transfer extends SubsystemBase {
 
   @Override
   public void periodic() {
-    testIrSensorIsTrue();
+    
   }
 
 
