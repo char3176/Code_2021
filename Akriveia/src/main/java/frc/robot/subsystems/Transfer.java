@@ -43,7 +43,7 @@ public class Transfer extends SubsystemBase {
    * Extends the transferPiston if the line break isn't broken
    */
   public void Extend() {
-    if(irSensor.get()) {
+    if(getIrSensor()) {
       pistonSetting = true;
       transferPiston.set(Value.kForward);
     }
@@ -71,14 +71,18 @@ public class Transfer extends SubsystemBase {
     return levelSetting;
   }
 
+  public boolean getIrSensor() {
+    return irSensor.get();
+  }
+
   private void testIrSensorIsTrue() {
-    if (irSensor.get()) {
+    if (getIrSensor()) {
       System.out.println("<--------  Transfer.irSensor = TRUE ----------->");
     }
   }
   
   private void testIrSensorIsFalse() {
-    if (irSensor.get()) {
+    if (getIrSensor()) {
       System.out.println("<--------  Transfer.irSensor = FALSE ----------->");
     }
   }
