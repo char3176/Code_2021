@@ -7,7 +7,7 @@ package frc.robot.commands.teleop;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.Hood;
-import frc.robot.constants.AngledShooterConstants;
+import frc.robot.constants.HoodConstants;
 import frc.robot.constants.VisionConstants;
 import frc.robot.subsystems.Flywheel;
 
@@ -37,7 +37,7 @@ public class TargetVision extends CommandBase {
   public void execute() {
     double[] resultArray = m_Vision.targetRecogControlLoop();
     if (resultArray != null) {
-      wantedAngleTicks = resultArray[1] * (180 / Math.PI) * (AngledShooterConstants.TICS_EQUAL_TO_5DEGREES / 5);
+      wantedAngleTicks = resultArray[1] * (180 / Math.PI) * (HoodConstants.TICS_EQUAL_TO_5DEGREES / 5);
       m_AngledShooter.pidPosCtrl_setPosition(wantedAngleTicks); // range constraints checked in AngledShooter by this method
 
       // m/s to rad/s (using alpha = r * omega) to rev/s to rev/min (rpm)

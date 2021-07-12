@@ -148,8 +148,8 @@ public class RobotContainer {
     m_Controller.getOp_ButtonA().whenActive(new TransferDown());
     m_Controller.getOp_ButtonAPlusBumperLeft().whenActive(new TransferUp());
 
-    m_Controller.getOp_ButtonB().whenActive(new HoodUp());
-    m_Controller.getOp_ButtonBPlusBumperLeft().whenActive(new HoodDown());
+    m_Controller.getOp_ButtonB().whenActive(new HoodPosUp());
+    m_Controller.getOp_ButtonBPlusBumperLeft().whenActive(new HoodPosDown());
 
     m_Controller.getOp_ButtonStart().whenActive(new HoodStop());
     m_Controller.getOp_ButtonStartPlusBumperLeft().whenActive(new DrumAgitatePreShoot());
@@ -157,8 +157,8 @@ public class RobotContainer {
     m_Controller.getOp_ButtonBack().whenActive(new DrumStop());
     m_Controller.getOp_ButtonBackPlusBumperLeft().whenActive(new DrumCCW());
   
-    m_Controller.getOp_DpadUp().whenPressed(new HoodUp());    //ANGLE SHOOTER TEST
-    m_Controller.getOp_DpadDown().whenPressed(new HoodDown());//ANGLE SHOOTER TEST
+    m_Controller.getOp_DpadUp().whenPressed(new HoodPosUp());    //ANGLE SHOOTER TEST
+    m_Controller.getOp_DpadDown().whenPressed(new HoodPosDown());//ANGLE SHOOTER TEST
     m_Controller.getOp_DpadLeft().whenPressed(new FlywheelVelocityDown());
     m_Controller.getOp_DpadRight().whenPressed(new FlywheelVelocityUp());
   

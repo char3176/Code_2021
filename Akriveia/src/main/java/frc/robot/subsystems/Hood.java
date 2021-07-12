@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.constants.AngledShooterConstants;
+import frc.robot.constants.HoodConstants;
 import frc.robot.subsystems.PowerManagement;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class Hood extends SubsystemBase {
   
-  private TalonSRX hoodController = new WPI_TalonSRX(AngledShooterConstants.MOTOR_CAN_ID);
+  private TalonSRX hoodController = new WPI_TalonSRX(HoodConstants.MOTOR_CAN_ID);
   private static Hood instance = new Hood();
   private static PowerManagement m_PowerManagement;
 
@@ -39,25 +39,25 @@ public class Hood extends SubsystemBase {
 
     m_PowerManagement = PowerManagement.getInstance();
     
-    topSwitch = new DigitalInput(AngledShooterConstants.TOP_LIMIT_SWITCH_ID);
-    bottomSwitch = new DigitalInput(AngledShooterConstants.BOTTOM_LIMIT_SWITCH_ID);
+    topSwitch = new DigitalInput(HoodConstants.TOP_LIMIT_SWITCH_ID);
+    bottomSwitch = new DigitalInput(HoodConstants.BOTTOM_LIMIT_SWITCH_ID);
 	  /* Setting up the Motor */
     minPosTic = 4078;
     maxPosTic = 2487;
     
     hoodController.configFactoryDefault();
-    hoodController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.TimeoutMs);
-    hoodController.setSensorPhase(AngledShooterConstants.SENSOR_PHASE);
-    hoodController.setInverted(AngledShooterConstants.MOTOR_INVERT);
-    hoodController.configNominalOutputForward(0, AngledShooterConstants.TimeoutMs);
-    hoodController.configNominalOutputReverse(0, AngledShooterConstants.TimeoutMs);
-    hoodController.configPeakOutputForward(0.1, AngledShooterConstants.TimeoutMs);
-    hoodController.configPeakOutputReverse(-0.1, AngledShooterConstants.TimeoutMs);
-    hoodController.configAllowableClosedloopError(0, AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.TimeoutMs);
-    hoodController.config_kF(AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.PIDF[3], AngledShooterConstants.TimeoutMs);
-		hoodController.config_kP(AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.PIDF[0], AngledShooterConstants.TimeoutMs);
-		hoodController.config_kI(AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.PIDF[1], AngledShooterConstants.TimeoutMs);
-    hoodController.config_kD(AngledShooterConstants.PIDLoopIdx, AngledShooterConstants.PIDF[2], AngledShooterConstants.TimeoutMs);
+    hoodController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, HoodConstants.PIDLoopIdx, HoodConstants.TimeoutMs);
+    hoodController.setSensorPhase(HoodConstants.SENSOR_PHASE);
+    hoodController.setInverted(HoodConstants.MOTOR_INVERT);
+    hoodController.configNominalOutputForward(0, HoodConstants.TimeoutMs);
+    hoodController.configNominalOutputReverse(0, HoodConstants.TimeoutMs);
+    hoodController.configPeakOutputForward(0.1, HoodConstants.TimeoutMs);
+    hoodController.configPeakOutputReverse(-0.1, HoodConstants.TimeoutMs);
+    hoodController.configAllowableClosedloopError(0, HoodConstants.PIDLoopIdx, HoodConstants.TimeoutMs);
+    hoodController.config_kF(HoodConstants.PIDLoopIdx, HoodConstants.PIDF[3], HoodConstants.TimeoutMs);
+		hoodController.config_kP(HoodConstants.PIDLoopIdx, HoodConstants.PIDF[0], HoodConstants.TimeoutMs);
+		hoodController.config_kI(HoodConstants.PIDLoopIdx, HoodConstants.PIDF[1], HoodConstants.TimeoutMs);
+    hoodController.config_kD(HoodConstants.PIDLoopIdx, HoodConstants.PIDF[2], HoodConstants.TimeoutMs);
 
     // ampSpikeCount = 0;
     // findMinMax();
@@ -250,11 +250,11 @@ public class Hood extends SubsystemBase {
   /**
    * Sets the positon of the Angled Shooter Hood
    * @param targetPosition - Gets the target position that it should go if its inside of the MIN and MAX constants
-   * @see HoodUp.teleop.AngledShooterUp
-   * @see HoodDown.teleop.AngledShooterDown
+   * @see HoodPosUp.teleop.AngledShooterUp
+   * @see HoodPosDown.teleop.AngledShooterDown
    */
   public void pidPosCtrl_setPosition(double targetPosition) {
-    if (targetPosition >= AngledShooterConstants.MIN_TICS && targetPosition <= AngledShooterConstants.MAX_TICS){
+    if (targetPosition >= HoodConstants.MIN_TICS && targetPosition <= HoodConstants.MAX_TICS){
       hoodController.set(ControlMode.Position, targetPosition);
     }
   }
@@ -264,15 +264,15 @@ public class Hood extends SubsystemBase {
   }
 
   public void pctCtrl_raiseHoodPosition() {
-    pctCtrl_set(AngledShooterConstants.MOVE_PCT);
+    pctCtrl_set(HoodConstants.MOVE_PCT);
   }
 
   public void pctCtrl_holdHoodPosition() {
-    pctCtrl_set(AngledShooterConstants.HOLD_PCT);
+    pctCtrl_set(HoodConstants.HOLD_PCT);
   }
   
   public void pctCtrl_lowerHoodPosition() {
-    pctCtrl_set(-AngledShooterConstants.MOVE_PCT);
+    pctCtrl_set(-HoodConstants.MOVE_PCT);
   }
 
   public void pctCtrl_stopHoodMotor() {
@@ -320,9 +320,9 @@ public class Hood extends SubsystemBase {
   }
 
   public void setPID(double kP, double kI, double kD) {
-		hoodController.config_kP(AngledShooterConstants.PIDLoopIdx, kP, AngledShooterConstants.TimeoutMs);
-		hoodController.config_kI(AngledShooterConstants.PIDLoopIdx, kI, AngledShooterConstants.TimeoutMs);
-    hoodController.config_kD(AngledShooterConstants.PIDLoopIdx, kD, AngledShooterConstants.TimeoutMs);
+		hoodController.config_kP(HoodConstants.PIDLoopIdx, kP, HoodConstants.TimeoutMs);
+		hoodController.config_kI(HoodConstants.PIDLoopIdx, kI, HoodConstants.TimeoutMs);
+    hoodController.config_kD(HoodConstants.PIDLoopIdx, kD, HoodConstants.TimeoutMs);
   }
 
   @Override
