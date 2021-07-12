@@ -20,7 +20,7 @@ public class AutonBatteryOne extends SequentialCommandGroup { //TODO: WIP for Ai
     // Use addRequirements() here to declare subsystem dependencies.
     addCommands(
       new RotateUntilTargetRecogd(),
-      new AlignVizDistBangBang()
+      new AlignVizDistBangBang(15)
     );
   }
 

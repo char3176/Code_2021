@@ -21,15 +21,16 @@ import frc.robot.subsystems.Vision;
  * used to call AutoRotate(tx) to rotate the bot until the angle is within the range 
  * formed by upperTxLimit and lowerTxLimit
  */
-public class AlignVizYawBangBang extends SequentialCommandGroup {
+public class AlignVizYawPLoop extends SequentialCommandGroup {
 
   private Drivetrain m_drivetrain = Drivetrain.getInstance();
   private Vision m_Vision = Vision.getInstance();
-  private double tx;
+  private double tx, yawError, steerCorrection;
   private double upperTxLimit, lowerTxLimit;
+  private double kP, minCommand;
 
   /** Creates a new AutonAlign. */
-  public AlignVizYawBangBang() {
+  public AlignVizYawPLoop() {
     addRequirements(m_drivetrain);
   }
 
@@ -37,6 +38,8 @@ public class AlignVizYawBangBang extends SequentialCommandGroup {
   public void initialize() {
     m_drivetrain.setCoordType(coordType.ROBOT_CENTRIC);
     m_Vision.turnLEDsOn();
+    this.kP = -0.01;
+    this.minCommand = 0.05;
     this.upperTxLimit = 1;
     this.lowerTxLimit = -1;
   }
@@ -45,9 +48,16 @@ public class AlignVizYawBangBang extends SequentialCommandGroup {
   @Override
   public void execute() {
     this.tx =  m_Vision.getTx();
+    this.yawError = -tx;
     //new AutonRotate(.1, tx);
-    m_drivetrain.drive(0, 0, Math.copySign(.1, tx));
-    SmartDashboard.putNumber("AlignVizYawBangBang.tx", -tx);
+    if (tx > upperTxLimit) {
+      steerCorrection =  kP * yawError - minCommand;
+    } else if ( tx < lowerTxLimit ) {
+      steerCorrection = kP * yawError + minCommand;
+    } 
+    //m_drivetrain.drive(0, 0, Math.copySign(.1, yawError));
+    m_drivetrain.drive(0, 0, steerCorrection);
+    SmartDashboard.putNumber("AlignViaYawPLoop.tx", tx);
   }
 
   // Called once the command ends or is interrupted.
@@ -60,7 +70,7 @@ public class AlignVizYawBangBang extends SequentialCommandGroup {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (this.tx >= lowerTxLimit && this.tx <= upperTxLimit) {
+    if (this.yawError >= lowerTxLimit && this.yawError <= upperTxLimit) {
       return true;
     }
     return false;

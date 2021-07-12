@@ -42,10 +42,13 @@ public class Transfer extends SubsystemBase {
   /**
    * Extends the transferPiston if the line break isn't broken
    */
-  public void Extend() {
+  public boolean Extend() {
     if(getIrSensor()) {
       pistonSetting = true;
       transferPiston.set(Value.kForward);
+      return true;
+    } else {
+      return false;
     }
   }
 
