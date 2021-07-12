@@ -232,7 +232,7 @@ public class Controller {
 
     /* DPAD Methods */
 
-    public POVButton getOp_DpadUp() {return op_DpadUp;}
+    public POVButton getOp_DpadUp() {System.out.println("DPAD UP UP AND AWAY"); return op_DpadUp;}
     public POVButton getOp_DpadDown() {return op_DpadDown;}
     public POVButton getOp_DpadLeft() {return op_DpadLeft;}
     public POVButton getOp_DpadRight() {return op_DpadRight;}

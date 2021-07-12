@@ -18,24 +18,24 @@ public class AngledShooterUp extends CommandBase {
 
   @Override
   public void initialize(){
-    System.out.println("----AngledShooter__UP----");
+    //System.out.println("----AngledShooter__UP----");
   }
 
   @Override
   public void execute(){
     m_AngledShooter.moveTop();
-    System.out.println("UP__EXE");    
+    //System.out.println("UP__EXE");    
   }
 
   @Override
   public void end(boolean interrupted) {
-    System.out.println("UP__END");
+    //System.out.println("UP__END");
     m_AngledShooter.pctCtrl_set(0);
   }
 
   @Override
   public boolean isFinished() {
-    System.out.println("UP__IS");
+    //System.out.println("UP__IS");
     if(m_AngledShooter.getTopSwitch()) return true;
     return false;
   }

@@ -18,25 +18,25 @@ public class AngledShooterDown extends CommandBase {
 
   @Override
   public void initialize(){
-    System.out.println("----AngledShooter__Down----");
+    //System.out.println("----AngledShooter__Down----");
     
   }
 
   @Override
   public void execute(){
     m_AngledShooter.moveBottom();
-    System.out.println("DOWN__EXE");
+    //System.out.println("DOWN__EXE");
   }
 
   @Override
   public void end(boolean interrupted) {
-    System.out.println("DOWN__END");
+    //System.out.println("DOWN__END");
     m_AngledShooter.pctCtrl_set(0);
   }
 
   @Override
   public boolean isFinished() {
-    System.out.println("DOWN__IS");
+    //System.out.println("DOWN__IS");
     if(m_AngledShooter.getBottomSwitch()) return true;
     return false;
   }

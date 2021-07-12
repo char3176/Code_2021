@@ -80,8 +80,8 @@ public class Vision extends SubsystemBase{
         tableInstance = NetworkTableInstance.getDefault();
         m_limelightTable = tableInstance.getTable("limelight");
 
-        pipeline.setNumber(m_pipeline);
-        m_ledMode = getLedMode();
+        //pipeline.setNumber(m_pipeline);
+        //m_ledMode = getLedMode();
     }
 
     @Override
@@ -378,7 +378,7 @@ public class Vision extends SubsystemBase{
     }
 
     public Double getLedMode() {
-        m_ledMode = ledMode.getDouble(-999);
+        m_ledMode = ledMode.getDouble(0);
         return m_ledMode;
         
     }

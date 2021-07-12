@@ -26,6 +26,7 @@ public class DrumVelocitySpeed extends CommandBase {
     // System.out.println("DrumVelocitySpeed.initialized executed. ########################################################");
     tempSetting = m_Drum.getLastSetting();
     procTag = UUID.randomUUID().toString();
+    System.out.println("______DRUM VELOCITY UP INITIALIZED______");
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -334,12 +334,12 @@ public class AngledShooter extends SubsystemBase {
   }
 
   public boolean getBottomSwitch() {
-    System.out.println("Bottom Switch: " + bottomSwitch.get());
+    //System.out.println("Bottom Switch: " + bottomSwitch.get());
     return !bottomSwitch.get();
   }
 
   public boolean getTopSwitch() {
-    System.out.println("Top Switch: " + topSwitch.get());
+    //System.out.println("Top Switch: " + topSwitch.get());
     return !topSwitch.get();
   }
 
