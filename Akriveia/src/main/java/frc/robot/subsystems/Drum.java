@@ -292,7 +292,7 @@ public class Drum extends SubsystemBase {
    */
 
   public void CounterClockwise() {
-    drumMotor.set(-0.1);
+    drumMotor.set(-0.2);
   }
 
   /**

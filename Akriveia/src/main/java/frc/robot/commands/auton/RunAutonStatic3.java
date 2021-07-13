@@ -26,7 +26,8 @@ private double startTime;
       // Robot starts facing the target directly in front of it
       // Also we know magnitudes but not signs for TrapezoidDrive
 
-      new TrapezoidDrive(0, -6) // Left 6 feet
+      new TrapezoidDrive(-6, -5), // Left 6 feet
+      new ShootVisionSetUp()
 
 
 

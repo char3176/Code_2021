@@ -57,6 +57,7 @@ public class Controller {
     /* Command Buttons */
 
     private final Trigger op_BumperRight;
+    private final Trigger op_BumperRightPlusBumperLeft;
     private final Trigger op_TriggerRight;
     private final Trigger op_TriggerLeft;
 
@@ -122,8 +123,8 @@ public class Controller {
 
         /* Command Buttons */
 
-        op_BumperRight = new JoystickButton(op, Button.kBumperRight.value);
-        //resetShootButton = new JoystickButton(op, Button.kBumperRight.value).and(new JoystickButton(op, Button.kBumperLeft.value));
+        op_BumperRight = new XboxLoneButton(op, Button.kBumperRight.value, Button.kBumperLeft.value);
+        op_BumperRightPlusBumperLeft = new JoystickButton(op, Button.kBumperRight.value).and(new JoystickButton(op, Button.kBumperLeft.value));
         op_TriggerRight = new XboxAxisAsButton(op, Axis.kRightTrigger.value, 0.5);
         op_TriggerLeft = new XboxAxisAsButton(op, Axis.kLeftTrigger.value, 0.5);
 

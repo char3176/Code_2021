@@ -163,6 +163,7 @@ public class RobotContainer {
     m_Controller.getOp_DpadRight().whenPressed(new FlywheelVelocityUp());
   
     m_Controller.getOp_BumperRight().whenActive(new Shoot());
+    m_Controller.getOp_BumperRightPlusBumperLeft().whenActive(new ShootVision());
     m_Controller.getOp_TriggerRight().whenActive(new ShootReset());
     //m_Controller.getOp_TriggerLeft().whenActive(new ShootReset());
 

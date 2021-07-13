@@ -12,14 +12,14 @@ import frc.robot.subsystems.Vision;
 /**
  * Shoots a power cell, taking control of the Flywheel, Drum, and BallTransfer
  */
-public class Shoot extends InstantCommand {
+public class ShootVision extends InstantCommand {
   Drum mDrum = Drum.getInstance();
   Flywheel mFlywheel = Flywheel.getInstance();
   Transfer mTransfer = Transfer.getInstance();
   Vision m_Vision = Vision.getInstance();
   double visionAngle, visionDistanceX;
   
-  public Shoot() {
+  public ShootVision() {
     addRequirements(mDrum);
     addRequirements(mTransfer);
     addRequirements(mFlywheel);
@@ -30,7 +30,10 @@ public class Shoot extends InstantCommand {
     visionAngle = m_Vision.getTargetAngle();
     visionDistanceX = m_Vision.getTargetDistanceX();
     mDrum.pidVelCtrl_setRpmLevel(1);
-    mFlywheel.spinVelocityPIDF(8);
     mTransfer.setPercentControl(TransferConstants.BALL_TRANSFER_PERCENT);
+
+    
+    //Sets the Speed using Vision DeltaX within the Flywheel Subsystem
+    mFlywheel.setRpmViaVision();
   }
 }
