@@ -228,6 +228,7 @@ public class Controller {
     /* Command Buttons */
 
     public Trigger getOp_BumperRight() {return op_BumperRight;}
+    public Trigger getOp_BumperRightPlusBumperLeft() {return op_BumperRightPlusBumperLeft;}
     public Trigger getOp_TriggerRight() {return op_TriggerRight;}
     public Trigger getOp_TriggerLeft() {return op_TriggerLeft;}
 

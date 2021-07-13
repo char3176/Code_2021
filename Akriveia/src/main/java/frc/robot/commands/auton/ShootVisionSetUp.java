@@ -9,6 +9,12 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Vision;
 import frc.robot.commands.auton.*;
+import frc.robot.commands.teleop.HoodPosUp;
+import frc.robot.commands.teleop.HoodPosDown;
+import frc.robot.commands.teleop.ShootVision;
+import frc.robot.commands.teleop.TransferDown;
+import frc.robot.commands.teleop.TransferUp;
+import frc.robot.commands.teleop.ShootReset;
 
 
 public class ShootVisionSetUp extends SequentialCommandGroup {

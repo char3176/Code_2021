@@ -81,7 +81,7 @@ public class Transfer extends SubsystemBase {
   public boolean getIrSensor() {
     // irSensor.get() natively returns "true" when nothing is detected, and "false" when something is deteected.
     // Therefore we return inverse.
-    return (!irSensor.get());
+    return (irSensor.get());
   }
 
   private void testIrSensorIsTrue() {
