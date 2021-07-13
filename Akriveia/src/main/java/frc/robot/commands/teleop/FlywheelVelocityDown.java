@@ -3,11 +3,11 @@ package frc.robot.commands.teleop;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Flywheel;
 
-public class FlywheelSlow extends InstantCommand {
+public class FlywheelVelocityDown extends InstantCommand {
 
   Flywheel m_Flywheel = Flywheel.getInstance();
 
-  public FlywheelSlow() {
+  public FlywheelVelocityDown() {
     addRequirements(m_Flywheel);
   }
 

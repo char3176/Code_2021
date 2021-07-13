@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 //TODO: Recognize the red dependecys because seeing red is annoying
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -28,8 +29,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.DrivetrainConstants;
 import frc.robot.Controller;
 // import frc.robot.Controller;
-// import frc.robot.VisionClient;
-import frc.robot.VisionClient;
+// import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.Vision;
 
 import java.util.ArrayList;
 
@@ -38,7 +39,7 @@ import frc.robot.util.PIDLoop;
 public class Drivetrain extends SubsystemBase {
   private static Drivetrain instance = new Drivetrain();
   private Controller controller = Controller.getInstance();
-  private VisionClient visionClient = VisionClient.getInstance();
+  private Vision m_Vision = Vision.getInstance();
 
   private SwerveDriveOdometry odometry;
 
@@ -253,12 +254,12 @@ public class Drivetrain extends SubsystemBase {
       this.strafeCommand *= -1;
       this.forwardCommand *= -1;
     }
-    // SmartDashboard.putNumber("this.forwardComDriveTrain.drive",
+    // SmartDashboard.putNumber("this.forwardCom_Drivetrain.drive",
     // this.forwardCommand);
-    // SmartDashboard.putNumber("this.strafeComDriveTrain.drive",
+    // SmartDashboard.putNumber("this.strafeCom_Drivetrain.drive",
     // this.strafeCommand);
     // TODO: Find out why this putNumber statement is making the spinLock work
-    SmartDashboard.putNumber("this.spinComDriveTrain.drive", this.spinCommand);
+    SmartDashboard.putNumber("this.spinCom_Drivetrain.drive", this.spinCommand);
     calculateNSetPodPositions(this.forwardCommand, this.strafeCommand, this.spinCommand);
 
     SmartDashboard.putBoolean("isOrbiting", currentDriveMode == driveMode.ORBIT);
@@ -377,6 +378,13 @@ public class Drivetrain extends SubsystemBase {
     }
   }
 
+  public void stopMotors() {
+    for (int idx = 0; idx < (pods.size()); idx++) {
+      driveControllers[idx].set(ControlMode.PercentOutput, 0);
+      spinControllers[idx].set(ControlMode.PercentOutput, 0);
+    }
+
+  }
   public double getNavxAngle_inDegrees() {
     return (gyro.getAngle() + DrivetrainConstants.GYRO_COORDSYS_ROTATIONAL_OFFSET + this.gyroOffset);
   }

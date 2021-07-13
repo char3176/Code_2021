@@ -3,12 +3,12 @@ package frc.robot.commands.teleop;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Drum;
 import frc.robot.subsystems.Flywheel;
-import frc.robot.subsystems.BallTransfer;
+import frc.robot.subsystems.Transfer;
 
 public class ShootReset extends InstantCommand {
   Drum mDrum = Drum.getInstance();
   Flywheel mFlywheel = Flywheel.getInstance();
-  BallTransfer mTransfer = BallTransfer.getInstance();
+  Transfer mTransfer = Transfer.getInstance();
   
   public ShootReset() {
     addRequirements(mDrum);

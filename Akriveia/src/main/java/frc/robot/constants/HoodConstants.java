@@ -1,6 +1,6 @@
 package frc.robot.constants;
 
-public class AngledShooterConstants {
+public class HoodConstants {
     public static final int MOTOR_CAN_ID = 60;
 	public static final int SlotIdx = 0;
     public static final int PIDLoopIdx = 0;
@@ -25,6 +25,6 @@ public class AngledShooterConstants {
 
     public static final double[] POS = {MIN_TICS, MIN_TICS + (RANGE*.25), MIN_TICS+ (RANGE*.5), MIN_TICS + (RANGE*.75), MAX_TICS};
 
-    public static final int TOP_LIMIT_SWITCH_ID = 3;
-    public static final int BOTTOM_LIMIT_SWITCH_ID = 2;
+    public static final int TOP_LIMIT_SWITCH_DIO_ID = 3;
+    public static final int BOTTOM_LIMIT_SWITCH_DIO_ID = 2;
 }

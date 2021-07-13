@@ -9,18 +9,28 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Vision;
 import frc.robot.commands.auton.*;
+import frc.robot.commands.teleop.HoodPosUp;
+import frc.robot.commands.teleop.HoodPosDown;
+import frc.robot.commands.teleop.ShootVision;
+import frc.robot.commands.teleop.TransferDown;
+import frc.robot.commands.teleop.TransferUp;
+import frc.robot.commands.teleop.ShootReset;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutonBatteryOne extends SequentialCommandGroup { //TODO: WIP for AimLock
+
+public class ShootVisionSetUp extends SequentialCommandGroup {
   Vision m_Vision = Vision.getInstance();
   
-  public AutonBatteryOne() {
+  public ShootVisionSetUp() {
     // Use addRequirements() here to declare subsystem dependencies.
     addCommands(
-      new RotateUntilTargetRecogd(),
-      new AlignVizDistBangBang(15)
+      new AlignVizYawBangBang(),
+      new HoodPosUp(),
+      new ShootVision(),
+      new TransferDown(),
+      new DelayCommand(5), //TODO: FIX TIME
+      new TransferUp(),
+      new ShootReset(),
+      new HoodPosDown()
     );
   }
 

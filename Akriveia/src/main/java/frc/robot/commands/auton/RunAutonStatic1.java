@@ -5,7 +5,7 @@
 package frc.robot.commands.auton;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.subsystems.AngledShooter;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Drum;
 import edu.wpi.first.wpilibj.Timer;
@@ -26,9 +26,10 @@ public class RunAutonStatic1 extends SequentialCommandGroup {
       // Also we know magnitudes but not signs for TrapezoidDrive
 
       //We shoot
-      new TrapezoidDrive(6, 5), // Forward and right 6 feet
-      new DelayCommand(10 - (Timer.getFPGATimestamp() - startTime)),
-      new TrapezoidDrive(0, -16) // Backwards 16 feet
+      new TrapezoidDrive(0, 6), // Forward and right 6 feet
+      //new DelayCommand(10 - (Timer.getFPGATimestamp() - startTime)),
+      new ShootVisionSetUp()
+      //new TrapezoidDrive(0, -16) // Backwards 16 feet
     );
   }
 }

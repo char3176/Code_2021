@@ -9,13 +9,13 @@ import frc.robot.subsystems.Drum;
 import frc.robot.constants.DrumConstants;
 
 import java.util.UUID;
-public class DrumVelocitySpeed extends CommandBase {
+public class DrumVelocityUp extends CommandBase {
   /** Creates a new DrumVelocitySpeed2. */
   Drum m_Drum = Drum.getInstance();
   int tempSetting;
   String procTag;
 
-  public DrumVelocitySpeed() {
+  public DrumVelocityUp() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Drum);
   }
@@ -26,6 +26,7 @@ public class DrumVelocitySpeed extends CommandBase {
     // System.out.println("DrumVelocitySpeed.initialized executed. ########################################################");
     tempSetting = m_Drum.getLastSetting();
     procTag = UUID.randomUUID().toString();
+    System.out.println("______DRUM VELOCITY UP INITIALIZED______");
   }
 
   // Called every time the scheduler runs while the command is scheduled.

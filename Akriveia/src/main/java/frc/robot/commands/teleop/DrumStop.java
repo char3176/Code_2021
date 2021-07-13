@@ -14,12 +14,12 @@ import frc.robot.subsystems.Drum;
 /**
  * Interrupts the Drum's velocity increment command when changing speeds. (Prevents bugs)
  * @author Jared Brown
- * @see commands.teleop.DrumVelocitySlow
- * @see commands.teleop.DrumVelocitySpeed
+ * @see DrumVelocityDown.teleop.DrumVelocitySlow
+ * @see DrumVelocityUp.teleop.DrumVelocitySpeed
  */
-public class DrumInputReset extends InstantCommand {
+public class DrumStop extends InstantCommand {
   Drum m_Drum = Drum.getInstance();
-  public DrumInputReset() {
+  public DrumStop() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_Drum);
   }
@@ -33,6 +33,7 @@ public class DrumInputReset extends InstantCommand {
     // re-initialize, the index retrieved from the Drum speeds array will not increase, since
     // the statement getting the previous setting in in the initialize methods so that it doesn't
     // go up on each iteration of those commands.
+    m_Drum.stopMotors();
 
   }
 }

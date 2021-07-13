@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Flywheel;
 import frc.robot.constants.FlywheelConstants;
 
-public class FlywheelSpeed extends InstantCommand {
+public class FlywheelVelocityUp extends InstantCommand {
 
   Flywheel m_Flywheel = Flywheel.getInstance();
 
-  public FlywheelSpeed() {
+  public FlywheelVelocityUp() {
     addRequirements(m_Flywheel);
   }
 

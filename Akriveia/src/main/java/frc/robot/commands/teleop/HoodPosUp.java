@@ -6,33 +6,37 @@ package frc.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.AngledShooter;
+import frc.robot.subsystems.Hood;
 
-public class AngledShooterHoldPos extends CommandBase {
+public class HoodPosUp extends CommandBase {
 
-  private AngledShooter m_AngledShooter = AngledShooter.getInstance();
+  private Hood m_AngledShooter = Hood.getInstance();
 
-  public AngledShooterHoldPos() {
+  public HoodPosUp() {
     addRequirements(m_AngledShooter);
   }
 
   @Override
-  public void initialize(){}
-
-  @Override
-  public void execute(){
-    //m_AngledShooter.pctCtrl_holdHoodPosition();
-    // m_AngledShooter.pctCtrl_set(0.1);
-    m_AngledShooter.pctCtrl_set(0);
-    m_AngledShooter.setPosToHold();
-    m_AngledShooter.posCtrl();
+  public void initialize(){
+    //System.out.println("----AngledShooter__UP----");
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void execute(){
+    m_AngledShooter.moveTop();
+    //System.out.println("UP__EXE");    
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    //System.out.println("UP__END");
+    m_AngledShooter.pctCtrl_set(0);
+  }
 
   @Override
   public boolean isFinished() {
+    //System.out.println("UP__IS");
+    if(m_AngledShooter.getTopSwitch()) return true;
     return false;
   }
 }

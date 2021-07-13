@@ -6,37 +6,37 @@ package frc.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.AngledShooter;
+import frc.robot.subsystems.Hood;
 
-public class AngledShooterDown extends CommandBase {
+public class HoodPosDown extends CommandBase {
 
-  private AngledShooter m_AngledShooter = AngledShooter.getInstance();
+  private Hood m_AngledShooter = Hood.getInstance();
 
-  public AngledShooterDown() {
+  public HoodPosDown() {
     addRequirements(m_AngledShooter);
   }
 
   @Override
   public void initialize(){
-    System.out.println("----AngledShooter__Down----");
+    //System.out.println("----AngledShooter__Down----");
     
   }
 
   @Override
   public void execute(){
     m_AngledShooter.moveBottom();
-    System.out.println("DOWN__EXE");
+    //System.out.println("DOWN__EXE");
   }
 
   @Override
   public void end(boolean interrupted) {
-    System.out.println("DOWN__END");
+    //System.out.println("DOWN__END");
     m_AngledShooter.pctCtrl_set(0);
   }
 
   @Override
   public boolean isFinished() {
-    System.out.println("DOWN__IS");
+    //System.out.println("DOWN__IS");
     if(m_AngledShooter.getBottomSwitch()) return true;
     return false;
   }

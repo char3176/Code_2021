@@ -8,13 +8,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drum;
 import java.util.UUID;
 
-public class DrumVelocitySlow extends CommandBase {
+public class DrumVelocityDown extends CommandBase {
   /** Creates a new DrumVelocitySlow2. */
   Drum m_Drum = Drum.getInstance();
   int tempSetting;
   String procTag;
 
-  public DrumVelocitySlow() {
+  public DrumVelocityDown() {
     addRequirements(m_Drum);
   }
 

@@ -5,7 +5,7 @@
 package frc.robot.commands.auton;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.subsystems.AngledShooter;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Drum;
 import edu.wpi.first.wpilibj.Timer;
@@ -19,27 +19,7 @@ public class RunAutonMutable1 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      //new AutonDrive(1,0,0,4)//,
-
-      //new AutonDrive(0,.25,0,1)
-    
-      //new AutonRotate(.05, 90)
-     // new DelayCommand(5),
-      //new AutonRotate(-.05, 90)
-
-       new TrapezoidDrive(13, 0)
-
-      // new TrapezoidDrive(-7, -10)
-      // Flywheel spin up
-      // wait for 10 seconds?
-      // new TrapezoidDrive(22, -5)
-
-
-      // GYRO NOTE:
-      // gyro off by -117.5 @ 8:02p, -117.86 @ 8:03p -- not touched during that time
-      // continuing to drift more negative while not moving
-
-
+      new AlignVizDistBangBang(10)
 
     );
   }

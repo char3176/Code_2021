@@ -1,14 +1,14 @@
 package frc.robot.commands.teleop;
 
-import frc.robot.subsystems.BallTransfer;
+import frc.robot.subsystems.Transfer;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.constants.BallTransferConstants;
+import frc.robot.constants.TransferConstants;
 
-public class BallTransferPivotAndRoll extends InstantCommand {
+public class TransferUp extends InstantCommand {
   
-  private BallTransfer m_BallTransfer = BallTransfer.getInstance();
+  private Transfer m_BallTransfer = Transfer.getInstance();
   
-  public BallTransferPivotAndRoll() {
+  public TransferUp() {
     addRequirements(m_BallTransfer);
   }
 

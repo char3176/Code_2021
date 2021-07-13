@@ -1,12 +1,12 @@
 package frc.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.subsystems.AngledShooter;
+import frc.robot.subsystems.Hood;
 
-public class AngledShooterOff extends InstantCommand {
-  AngledShooter mAngledShooter = AngledShooter.getInstance();
+public class HoodStop extends InstantCommand {
+  Hood mAngledShooter = Hood.getInstance();
 
-  public AngledShooterOff() {
+  public HoodStop() {
     addRequirements(mAngledShooter);
   }
 

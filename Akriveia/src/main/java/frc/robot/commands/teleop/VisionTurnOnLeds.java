@@ -6,17 +6,18 @@ package frc.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Vision;
+import frc.robot.constants.VisionConstants;
 
 // we are in the eighth hole from the front on the LL base plate
 
-public class AtlasOff extends InstantCommand{
+public class VisionTurnOnLeds extends InstantCommand{
   
   private Vision m_Vision = Vision.getInstance();
 
-  public AtlasOff(){}
+  public VisionTurnOnLeds(){}
 
   @Override
   public void initialize(){
-    m_Vision.setAtlasOn(false);  
+    m_Vision.setLedMode(VisionConstants.VISION_LED_PIPELINE);  
   }
 }
