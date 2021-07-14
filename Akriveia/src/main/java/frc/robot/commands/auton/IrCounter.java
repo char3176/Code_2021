@@ -11,8 +11,10 @@ public class IrCounter extends CommandBase {
   Transfer m_Transfer = Transfer.getInstance();
   int count;
   boolean lastState;
+  int endCounts;
 
-  public IrCounter() {
+  public IrCounter(int maxCounts) {
+    endCounts = maxCounts;
     addRequirements(m_Transfer);
   }
 
@@ -28,7 +30,7 @@ public class IrCounter extends CommandBase {
     if(m_Transfer.getIrSensor() && lastState == false) {
       count++;
       lastState = true;
-      System.out.println("----IR__COUNT----");
+      System.out.println("----IR__COUNT__" + count + "----");
     }
     else if(!m_Transfer.getIrSensor()) {
       lastState = false;
@@ -44,7 +46,7 @@ public class IrCounter extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(count == 3) {return true;}
+    if(count == endCounts) {return true;}
     return false;
   }
 }

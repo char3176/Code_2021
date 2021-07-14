@@ -27,7 +27,7 @@ public class ShootVisionSetUp extends SequentialCommandGroup {
       new AlignVizYawBangBang(),
       new HoodPosUp(),
       new TransferDown(),
-      new IrCounter(),
+      new IrCounter(3),
       new TransferUp(),
       new ShootReset(),
       new HoodPosDown()
