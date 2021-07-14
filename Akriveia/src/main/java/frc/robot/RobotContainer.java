@@ -73,6 +73,8 @@ public class RobotContainer {
     m_Controller = Controller.getInstance();
 
     m_Drum = Drum.getInstance();
+    m_Drum.setDefaultCommand(new DrumCCW());
+
     m_BallTransfer = Transfer.getInstance();
     m_Flywheel = Flywheel.getInstance();
     m_AngledShooter = Hood.getInstance();
