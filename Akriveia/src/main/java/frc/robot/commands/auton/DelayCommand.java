@@ -42,7 +42,8 @@ public class DelayCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    
+    timer.stop();
+    System.out.println("----TIMER ENDED----");
   }
 
   // Returns true when the command should end.

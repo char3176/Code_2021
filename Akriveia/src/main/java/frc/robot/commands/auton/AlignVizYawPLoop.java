@@ -39,7 +39,7 @@ public class AlignVizYawPLoop extends SequentialCommandGroup {
     m_drivetrain.setCoordType(coordType.ROBOT_CENTRIC);
     m_Vision.turnLEDsOn();
     this.kP = -0.01;
-    this.minCommand = 0.05;
+    this.minCommand = 0.01;
     this.upperTxLimit = 1;
     this.lowerTxLimit = -1;
   }
@@ -56,7 +56,7 @@ public class AlignVizYawPLoop extends SequentialCommandGroup {
       steerCorrection = kP * yawError + minCommand;
     } 
     //m_drivetrain.drive(0, 0, Math.copySign(.1, yawError));
-    m_drivetrain.drive(0, 0, steerCorrection);
+    m_drivetrain.drive(0, 0, -steerCorrection);
     SmartDashboard.putNumber("AlignViaYawPLoop.tx", tx);
   }
 
