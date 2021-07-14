@@ -71,7 +71,7 @@ public class Controller {
     /* Transfer */
 
     // private final Trigger op_ButtonX;
-    private JoystickButton op_ButtonX;
+    private final JoystickButton op_ButtonX;
     // private final Trigger op_ButtonXPlusBumperLeft;
 
     /* Command Buttons */
