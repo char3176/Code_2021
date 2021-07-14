@@ -30,7 +30,9 @@ public class IrCounter extends CommandBase {
       lastState = true;
       System.out.println("----IR__COUNT----");
     }
-    else {lastState = false;}
+    else if(!m_Transfer.getIrSensor()) {
+      lastState = false;
+    }
   }
 
   // Called once the command ends or is interrupted.
