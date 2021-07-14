@@ -27,7 +27,7 @@ public class ShootVisionSetUp extends SequentialCommandGroup {
       new HoodPosUp(),
       new ShootVision(),
       new TransferDown(),
-      new DelayCommand(30), //TODO: FIX TIME
+      new IrCounter(),
       new TransferUp(),
       new ShootReset(),
       new HoodPosDown()
