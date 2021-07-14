@@ -140,12 +140,22 @@ public class RobotContainer {
   
     // m_Controller.getDrumUpButton().whenActive(new DrumVelocitySpeed());
     // m_Controller.getDrumDownButton().whenActive(new DrumVelocitySlow());
+
+    /* ---- New Mapping ---- */
+
+    m_Controller.getOp_BumperRight().whenHeld(new ShootVision());
+    m_Controller.getOp_BumperRight().whenReleased(new ShootReset());
+
+    m_Controller.getOp_ButtonX().whenHeld(new TransferDown());
+    m_Controller.getOp_ButtonX().whenReleased(new TransferUp());
+
+    /* ---- End Mapping ---- */
     
     m_Controller.getOp_ButtonY().whenActive(new IntakeHarvestStart());
     m_Controller.getOp_ButtonYPlusBumperLeft().whenActive(new IntakeHarvestStop());
   
-    m_Controller.getOp_ButtonX().whenActive(new TransferDown());
-    m_Controller.getOp_ButtonXPlusBumperLeft().whenActive(new TransferUp());
+    // m_Controller.getOp_ButtonX().whenActive(new TransferDown());
+    // m_Controller.getOp_ButtonXPlusBumperLeft().whenActive(new TransferUp());
   
     m_Controller.getOp_ButtonA().whenActive(new TransferDown());
     m_Controller.getOp_ButtonAPlusBumperLeft().whenActive(new TransferUp());
@@ -164,8 +174,8 @@ public class RobotContainer {
     m_Controller.getOp_DpadLeft().whenPressed(new FlywheelVelocityDown());
     m_Controller.getOp_DpadRight().whenPressed(new FlywheelVelocityUp());
   
-    m_Controller.getOp_BumperRight().whenActive(new Shoot());
-    m_Controller.getOp_BumperRightPlusBumperLeft().whenActive(new ShootVision());
+    // m_Controller.getOp_BumperRight().whenActive(new Shoot());
+    // m_Controller.getOp_BumperRightPlusBumperLeft().whenActive(new ShootVision());
     
     m_Controller.getOp_TriggerRight().whenActive(new ShootReset());
     //m_Controller.getOp_TriggerLeft().whenActive(new ShootReset());

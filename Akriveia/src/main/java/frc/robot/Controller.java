@@ -51,13 +51,15 @@ public class Controller {
 
     /* Transfer */
 
-    private final Trigger op_ButtonX;
-    private final Trigger op_ButtonXPlusBumperLeft;
+    // private final Trigger op_ButtonX;
+    private JoystickButton op_ButtonX;
+    // private final Trigger op_ButtonXPlusBumperLeft;
 
     /* Command Buttons */
 
-    private final Trigger op_BumperRight;
-    private final Trigger op_BumperRightPlusBumperLeft;
+    // private final Trigger op_BumperRight;
+    private final JoystickButton op_BumperRight;
+    // private final Trigger op_BumperRightPlusBumperLeft;
     private final Trigger op_TriggerRight;
     private final Trigger op_TriggerLeft;
 
@@ -118,13 +120,15 @@ public class Controller {
 
         /* Transfer */
 
-        op_ButtonXPlusBumperLeft = new JoystickButton(op, Button.kX.value).and(new JoystickButton(op, Button.kBumperLeft.value));
-        op_ButtonX = new XboxLoneButton(op, Button.kX.value, Button.kBumperLeft.value);
+        // op_ButtonXPlusBumperLeft = new JoystickButton(op, Button.kX.value).and(new JoystickButton(op, Button.kBumperLeft.value));
+        // op_ButtonX = new XboxLoneButton(op, Button.kX.value, Button.kBumperLeft.value);
+        op_ButtonX = new JoystickButton(op, Button.kX.value);
 
         /* Command Buttons */
 
-        op_BumperRight = new XboxLoneButton(op, Button.kBumperRight.value, Button.kBumperLeft.value);
-        op_BumperRightPlusBumperLeft = new JoystickButton(op, Button.kBumperRight.value).and(new JoystickButton(op, Button.kBumperLeft.value));
+        // op_BumperRight = new XboxLoneButton(op, Button.kBumperRight.value, Button.kBumperLeft.value);
+        op_BumperRight = new JoystickButton(op, Button.kBumperRight.value);
+        // op_BumperRightPlusBumperLeft = new JoystickButton(op, Button.kBumperRight.value).and(new JoystickButton(op, Button.kBumperLeft.value));
         op_TriggerRight = new XboxAxisAsButton(op, Axis.kRightTrigger.value, 0.5);
         op_TriggerLeft = new XboxAxisAsButton(op, Axis.kLeftTrigger.value, 0.5);
 
@@ -222,13 +226,16 @@ public class Controller {
 
     /* Transfer */
 
-    public Trigger getOp_ButtonX() {return op_ButtonX;}
-    public Trigger getOp_ButtonXPlusBumperLeft() {return op_ButtonXPlusBumperLeft;}
+    public JoystickButton getOp_ButtonX() {return op_ButtonX;}
+    // public Trigger getOp_ButtonX() {return op_ButtonX;}
+    // public Trigger getOp_ButtonXPlusBumperLeft() {return op_ButtonXPlusBumperLeft;}
 
     /* Command Buttons */
 
-    public Trigger getOp_BumperRight() {return op_BumperRight;}
-    public Trigger getOp_BumperRightPlusBumperLeft() {return op_BumperRightPlusBumperLeft;}
+    // public Trigger getOp_BumperRight() {return op_BumperRight;}
+    // public Trigger getOp_BumperRightPlusBumperLeft() {return op_BumperRightPlusBumperLeft;}
+    public JoystickButton getOp_BumperRight() {return op_BumperRight;}
+
     public Trigger getOp_TriggerRight() {return op_TriggerRight;}
     public Trigger getOp_TriggerLeft() {return op_TriggerLeft;}
 
