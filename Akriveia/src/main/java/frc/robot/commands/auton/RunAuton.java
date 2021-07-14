@@ -22,14 +22,14 @@ public class RunAuton extends SequentialCommandGroup {
       //new AutonDrive(1,0,0,4)//,
       // new AlignVizYawBangBang()
       // new AlignVizYawPLoop()
-      new ShootVisionSetUp()
+      //new ShootVisionSetUp()
       // new TrapezoidDrive(-5, 0)
       //new AutonDrive(0,.25,0,1)
     
-      /*  new AutonRotate(.1, 720),
-        new DelayCommand(1),
-        new AutonRotate(.1, -720)
-  */
+      //  new AutonRotate(.1, 720),
+        new DelayCommand(1)
+      //  new AutonRotate(.1, -720)
+  
     // new TrapezoidDrive(10, 0),
     // new AlignVizDistBangBang(15)
       // new TrapezoidDrive(-13, 0)

@@ -21,16 +21,17 @@ public class DelayCommand extends CommandBase {
   @param delayTime Time to wait in seconds
   */
   public DelayCommand(double delayTime) {
+    this.delayTime = delayTime;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    this.delayTime = delayTime;
     timer = new Timer();
     timer.start();
     startTime = timer.getFPGATimestamp();
+    System.out.println("-----TIMER STARTED------");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
