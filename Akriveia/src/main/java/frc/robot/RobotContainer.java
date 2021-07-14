@@ -124,16 +124,16 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // Drivetrain buttons
-    m_Controller.getDefenseButton().whenHeld(new SwerveDefense());
-    m_Controller.getVisionButton().whenHeld(new SwerveVision( 
+    m_Controller.getTransStick_Button2().whenHeld(new SwerveDefense());
+    m_Controller.getTransStick_Button3().whenHeld(new SwerveVision( 
       () -> m_Controller.getForward(), 
       () -> m_Controller.getStrafe()));
-    m_Controller.getResetGyroButton().whenHeld(new SwerveResetGyro());
-    m_Controller.getResetGyroButton().whenPressed(new SwerveResetGyro());
-    m_Controller.getLockSpinButton().whenPressed(new SwerveLockedSpin());
-    m_Controller.getTurboButton().whenHeld(new SwerveTurboOn());
-    m_Controller.getTurboButton().whenReleased(new SwerveTurboOff());
-    m_Controller.getOrbitButton().whenHeld(new SwerveOrbit(
+    m_Controller.getRotStick_Button8().whenHeld(new SwerveResetGyro());
+    m_Controller.getRotStick_Button8().whenPressed(new SwerveResetGyro());
+    m_Controller.getRotStick_Button9().whenPressed(new SwerveLockedSpin());
+    m_Controller.getTransStick_Button1().whenHeld(new SwerveTurboOn());
+    m_Controller.getTransStick_Button1().whenReleased(new SwerveTurboOff());
+    m_Controller.getRotStick_Button1().whenHeld(new SwerveOrbit(
       () -> m_Controller.getOrbitSpeed(),
       () -> m_Controller.getPOVTransStick()));
 

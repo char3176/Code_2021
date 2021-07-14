@@ -23,14 +23,33 @@ public class Controller {
     /* Drivetrain */
     
     private final JoystickButton transStick_Button1;
-    private final JoystickButton rotStick_Button1;
-    private final JoystickButton rotStick_Button3;
-    private final JoystickButton transStick_Button3;
     private final JoystickButton transStick_Button2;
+    private final JoystickButton transStick_Button3;
     private final JoystickButton transStick_Button4;
     private final JoystickButton transStick_Button5;
+    private final JoystickButton transStick_Button6;
+    private final JoystickButton transStick_Button7;
+    private final JoystickButton transStick_Button8;
+    private final JoystickButton transStick_Button9;
+    private final JoystickButton transStick_Button10;
+    private final JoystickButton transStick_Button11;
+    private final JoystickButton transStick_Button12;
+    private final JoystickButton transStick_Button13;
+    private final JoystickButton transStick_Button14;
+    private final JoystickButton rotStick_Button1;
+    private final JoystickButton rotStick_Button2;
+    private final JoystickButton rotStick_Button3;
+    private final JoystickButton rotStick_Button4;
+    private final JoystickButton rotStick_Button5;
+    private final JoystickButton rotStick_Button6;
+    private final JoystickButton rotStick_Button7;
     private final JoystickButton rotStick_Button8;
     private final JoystickButton rotStick_Button9;
+    private final JoystickButton rotStick_Button10;
+    private final JoystickButton rotStick_Button11;
+    private final JoystickButton rotStick_Button12;
+    private final JoystickButton rotStick_Button13;
+    private final JoystickButton rotStick_Button14;
     
     private final Trigger op_ButtonY;
     private final Trigger op_ButtonYPlusBumperLeft;
@@ -89,14 +108,33 @@ public class Controller {
 
         // All buttons numbers subject to change
         transStick_Button1 = new JoystickButton(transStick, 1);
-        rotStick_Button1 = new JoystickButton(rotStick, 1);
-        rotStick_Button3 = new JoystickButton(rotStick, 3);
         transStick_Button2 = new JoystickButton(transStick, 2);
-        transStick_Button3 = new JoystickButton(transStick, 3); //Should be part of the xbox controller later
+        transStick_Button3 = new JoystickButton(transStick, 3); 
         transStick_Button4 = new JoystickButton(transStick, 4);
         transStick_Button5 = new JoystickButton(transStick, 5);
+        transStick_Button6 = new JoystickButton(transStick, 6);
+        transStick_Button7 = new JoystickButton(transStick, 7);
+        transStick_Button8 = new JoystickButton(transStick, 8);
+        transStick_Button9 = new JoystickButton(transStick, 9);
+        transStick_Button10 = new JoystickButton(transStick, 10);
+        transStick_Button11 = new JoystickButton(transStick, 11);
+        transStick_Button12 = new JoystickButton(transStick, 12);
+        transStick_Button13 = new JoystickButton(transStick, 13);
+        transStick_Button14 = new JoystickButton(transStick, 14);
+        rotStick_Button1 = new JoystickButton(rotStick, 1);
+        rotStick_Button2 = new JoystickButton(rotStick, 2);
+        rotStick_Button3 = new JoystickButton(rotStick, 3);
+        rotStick_Button4 = new JoystickButton(rotStick, 4);
+        rotStick_Button5 = new JoystickButton(rotStick, 5);
+        rotStick_Button6 = new JoystickButton(rotStick, 6);
+        rotStick_Button7 = new JoystickButton(rotStick, 7);
         rotStick_Button8 = new JoystickButton(rotStick, 8);
         rotStick_Button9 = new JoystickButton(rotStick, 9);
+        rotStick_Button10 = new JoystickButton(rotStick, 10);
+        rotStick_Button11 = new JoystickButton(rotStick, 11);
+        rotStick_Button12 = new JoystickButton(rotStick, 12);
+        rotStick_Button13 = new JoystickButton(rotStick, 13);
+        rotStick_Button14 = new JoystickButton(rotStick, 14);
           
 
         op_ButtonY = new XboxLoneButton(op, Button.kY.value, Button.kBumperLeft.value);
@@ -191,16 +229,39 @@ public class Controller {
 
     /* Drivetrain Buttons */
 
-    public JoystickButton getTurboButton() {return transStick_Button1;}
-    public JoystickButton getOrbitButton() {return rotStick_Button1;}
-    public JoystickButton getDosadoButton() {return rotStick_Button3;}
-    public JoystickButton getVisionButton() {return transStick_Button3;}
-    public JoystickButton getDefenseButton() {return transStick_Button2;}
-    public JoystickButton getResetGyroButton() {return rotStick_Button8;}
-    public JoystickButton getLockSpinButton() {return rotStick_Button9;}
-    public boolean isGetLockSpinButtonPressed() {return rotStick_Button9.get();}
-    public boolean isFieldCentricButtonPressed() {return transStick_Button4.get();}
-    public boolean isRobotCentricButtonPressed() {return transStick_Button5.get();}
+    public JoystickButton getTransStick_Button1() {return transStick_Button1;}
+    public JoystickButton getTransStick_Button2() {return transStick_Button2;}
+    public JoystickButton getTransStick_Button3() {return transStick_Button3;}
+    public JoystickButton getTransStick_Button4() {return transStick_Button4;}
+    public JoystickButton getTransStick_Button5() {return transStick_Button5;}
+    public JoystickButton getTransStick_Button6() {return transStick_Button6;}
+    public JoystickButton getTransStick_Button7() {return transStick_Button7;}
+    public JoystickButton getTransStick_Button8() {return transStick_Button8;}
+    public JoystickButton getTransStick_Button9() {return transStick_Button9;}
+    public JoystickButton getTransStick_Button10() {return transStick_Button10;}
+    public JoystickButton getTransStick_Button11() {return transStick_Button11;}
+    public JoystickButton getTransStick_Button12() {return transStick_Button12;}
+    public JoystickButton getTransStick_Button13() {return transStick_Button13;}
+    public JoystickButton getTransStick_Button14() {return transStick_Button14;}
+    public JoystickButton getRotStick_Button1() {return rotStick_Button1;}
+    public JoystickButton getRotStick_Button2() {return rotStick_Button2;}
+    public JoystickButton getRotStick_Button3() {return rotStick_Button3;}
+    public JoystickButton getRotStick_Button4() {return rotStick_Button4;}
+    public JoystickButton getRotStick_Button5() {return rotStick_Button5;}
+    public JoystickButton getRotStick_Button6() {return rotStick_Button6;}
+    public JoystickButton getRotStick_Button7() {return rotStick_Button7;}
+    public JoystickButton getRotStick_Button8() {return rotStick_Button8;}
+    public JoystickButton getRotStick_Button9() {return rotStick_Button9;}
+    public JoystickButton getRotStick_Button10() {return rotStick_Button10;}
+    public JoystickButton getRotStick_Button11() {return rotStick_Button11;}
+    public JoystickButton getRotStick_Button12() {return rotStick_Button12;}
+    public JoystickButton getRotStick_Button13() {return rotStick_Button13;}
+    public JoystickButton getRotStick_Button14() {return rotStick_Button14;}
+
+    public boolean isFieldCentricButtonPressed() {return rotStick_Button9.get();}
+    public boolean isRobotCentricButtonPressed() {return transStick_Button4.get();}
+    //public boolean isRobotCentricButtonPressed() {return transStick_Button5.get();}
+    public boolean isRotStick_Button4_Pressed() {return rotStick_Button4.get();}
     
     public Trigger getOp_ButtonY() {return op_ButtonY;}
     public Trigger getOp_ButtonYPlusBumperLeft() {return op_ButtonYPlusBumperLeft;}
