@@ -573,12 +573,12 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("gyro.getNavxAngle_inRadians()", (getNavxAngle_inRadians()));
     */
 
-    odometry.update(
-        new Rotation2d(getHeading()),
-        podFR.getState(),
-        podFL.getState(),
-        podBL.getState(),
-        podBR.getState());
+    //odometry.update(
+    //    new Rotation2d(getHeading()),
+    //    podFR.getState(),
+    //    podFL.getState(),
+    //    podBL.getState(),
+    //    podBR.getState());
   }
 
   public double getHeading() {
