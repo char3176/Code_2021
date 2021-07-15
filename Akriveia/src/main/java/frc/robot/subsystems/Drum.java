@@ -369,6 +369,7 @@ public class Drum extends SubsystemBase {
     if (getIdlerIrSensor() && lastReading_idlerIrSensor == false) { 
       timePt1_idlerIrSensor = Timer.getFPGATimestamp();
     }
+    lastReading_idlerIrSensor = getIdlerIrSensor();
     if (getIdlerIrSensor() && (currentTime_idlerIrSensor - timePt1_idlerIrSensor > durationLimit_idlerIrSensor)) {
       return true;
     } else {return false;}
@@ -376,9 +377,10 @@ public class Drum extends SubsystemBase {
   
   public boolean checkBackIrSensorForJam() {
     double currentTime_backIrSensor = Timer.getFPGATimestamp();
-    if (getIdlerIrSensor() && lastReading_idlerIrSensor == false) { 
+    if (getIdlerIrSensor() && lastReading_backIrSensor == false) { 
       timePt1_backIrSensor = Timer.getFPGATimestamp();
     }
+    lastReading_backIrSensor = getBackIrSensor();
     if (getBackIrSensor() && (currentTime_backIrSensor - timePt1_backIrSensor > durationLimit_backIrSensor)) {
       return true;
     } else {return false;}
