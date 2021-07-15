@@ -36,7 +36,8 @@ public class AlignVizYawPLoop extends SequentialCommandGroup {
 
   @Override
   public void initialize() {
-    m_drivetrain.setCoordType(coordType.ROBOT_CENTRIC);
+    // m_drivetrain.setCoordType(coordType.ROBOT_CENTRIC);
+    m_drivetrain.setCoordType(coordType.FIELD_CENTRIC);
     m_Vision.turnLEDsOn();
     this.kP = -0.01;
     this.minCommand = 0.01;

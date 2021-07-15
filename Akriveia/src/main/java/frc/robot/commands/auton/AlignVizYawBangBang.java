@@ -35,7 +35,8 @@ public class AlignVizYawBangBang extends SequentialCommandGroup {
 
   @Override
   public void initialize() {
-    m_drivetrain.setCoordType(coordType.ROBOT_CENTRIC);
+    // m_drivetrain.setCoordType(coordType.ROBOT_CENTRIC);
+    m_drivetrain.setCoordType(coordType.FIELD_CENTRIC);
     m_Vision.turnLEDsOn();
     this.upperTxLimit = 1;
     this.lowerTxLimit = -1;

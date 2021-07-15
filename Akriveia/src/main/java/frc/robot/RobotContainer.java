@@ -143,8 +143,11 @@ public class RobotContainer {
 
     /* ---- New Mapping ---- */
 
-    m_Controller.getOp_BumperRight().whenHeld(new ShootVision());
-    m_Controller.getOp_BumperRight().whenReleased(new ShootReset());
+    // m_Controller.getOp_BumperRight().whenHeld(new ShootVision());
+    // m_Controller.getOp_BumperRight().whenReleased(new ShootReset());
+    // m_Controller.getOp_BumperRight().whenHeld(new HoodPosUp());
+    // m_Controller.getOp_BumperRight().whenReleased(new HoodPosDown());
+    m_Controller.getOp_BumperRight().whenActive(new ShootVisionSetUp());
     m_Controller.getOp_TriggerLeft().whenActive(new Shoot());
     m_Controller.getOp_TriggerRight().whenActive(new ShootReset());
 
