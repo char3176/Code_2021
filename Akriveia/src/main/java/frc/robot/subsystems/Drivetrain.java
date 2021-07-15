@@ -242,6 +242,11 @@ public class Drivetrain extends SubsystemBase {
           + this.strafeCommand * Math.sin(this.currentAngle));
       this.strafeCommand = (-this.forwardCommand * Math.sin(this.currentAngle)
           + this.strafeCommand * Math.cos(this.currentAngle));
+      //TEST BELOW TO SEE IF FIXES RC/FC ALIGNMENT
+      //final double temp = (this.forwardCommand * Math.sin(this.currentAngle)
+      //    + this.strafeCommand * Math.cos(this.currentAngle));
+      //this.strafeCommand = (-this.forwardCommand * Math.cos(this.currentAngle)
+      //    + this.strafeCommand * Math.sin(this.currentAngle));
       this.forwardCommand = temp;
     }
     // TODO: Find out why we multiply by 0.75
@@ -367,14 +372,14 @@ public class Drivetrain extends SubsystemBase {
       }
       // pods.get(3).set(0.1,1.57);
 
-      // } else { // Enter defenseive position
-      // double smallNum = Math.pow(10, -15);
-      // pods.get(0).set(smallNum, -1.0 * Math.PI / 4.0);
-      // pods.get(1).set(smallNum, 1.0 * Math.PI / 4.0);
-      // pods.get(2).set(smallNum, 3.0 * Math.PI / 4.0);
-      // pods.get(3).set(smallNum, -3.0 * Math.PI / 4.0);
 
-      SmartDashboard.putBoolean("orbiting", isOrbiting());
+      //SmartDashboard.putBoolean("orbiting", isOrbiting());
+    } else if (currentDriveMode == driveMode.DEFENSE) { // Enter defenseive position
+      double smallNum = Math.pow(10, -15);
+      pods.get(0).set(smallNum, -1.0 * Math.PI / 4.0);
+      pods.get(1).set(smallNum, 1.0 * Math.PI / 4.0);
+      pods.get(2).set(smallNum, 3.0 * Math.PI / 4.0);
+      pods.get(3).set(smallNum, -3.0 * Math.PI / 4.0);
     }
   }
 
