@@ -490,6 +490,13 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("value in Drivetrain", getNavxAngle_inRadians());
   }
 
+  public void setCoordTypeToFieldCentric() {
+    this.currentCoordType = coordType.FIELD_CENTRIC;
+  }
+
+  public void setCoordTypeToRobotCentric() {
+    this.currentCoordType = coordType.ROBOT_CENTRIC;
+  }
   /**
    * Sets Turbo mode on or off
    * @param onOrOff Passing a value of true sets Turbo on (ie isTurboOn = true), and passing value of false sets Turbo off (ie isTurboOn = false)
