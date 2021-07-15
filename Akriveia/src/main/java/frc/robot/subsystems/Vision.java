@@ -361,7 +361,7 @@ public class Vision extends SubsystemBase{
      * Turns on Limelight's LEDs.  Duh.
      */
     public void turnLEDsOn(){
-        setLedMode(3);
+        setLedMode(0);
     }
 
     /**
