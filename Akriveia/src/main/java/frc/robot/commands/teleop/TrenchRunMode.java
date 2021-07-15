@@ -15,14 +15,10 @@ import frc.robot.subsystems.Flywheel;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class TrenchRunMode extends InstantCommand {
   Hood mAngledShooter = Hood.getInstance();
-  Drum mDrum = Drum.getInstance();
-  Transfer mTransfer = Transfer.getInstance();
   Flywheel mFlywheel = Flywheel.getInstance();
 
   public TrenchRunMode() {
     addRequirements(mAngledShooter);
-    addRequirements(mDrum);
-    addRequirements(mTransfer);
     addRequirements(mFlywheel);
   }
 
@@ -30,8 +26,6 @@ public class TrenchRunMode extends InstantCommand {
   @Override
   public void initialize() {
     mAngledShooter.moveBottom();
-    mDrum.pctCtrl_set(0);
-    mTransfer.setPercentControl(0);
     mFlywheel.spinVelocityOutputPercent(0);
   }
 }
