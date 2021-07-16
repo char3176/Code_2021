@@ -442,7 +442,7 @@ public class Drum extends SubsystemBase {
 
   @Override
   public void periodic() {
-    actIfJamPresent();
+    //actIfJamPresent();
     //checkForCurrentSpike();
   }
 }
