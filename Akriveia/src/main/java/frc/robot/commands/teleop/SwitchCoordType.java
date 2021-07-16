@@ -18,10 +18,16 @@ public class SwitchCoordType extends InstantCommand {
 
   @Override
   public void initialize() {
+    System.out.println("EXECUTING SWITCHCOORDTYPE");
+    System.out.println(m_Drivetrain.getCurrentCoordType());
     if ( m_Drivetrain.getCurrentCoordType() == coordType.FIELD_CENTRIC ) {
-      m_Drivetrain.setCoordType(coordType.ROBOT_CENTRIC);
-    } else if ( m_Drivetrain.getCurrentCoordType() == coordType.ROBOT_CENTRIC ) {
-      m_Drivetrain.setCoordType(coordType.FIELD_CENTRIC);
+      m_Drivetrain.setCoordTypeToRobotCentric();;
+      System.out.println("SwitchCoordType: ROBOT CENTRIC ACTIVATED");
+    }
+     if ( m_Drivetrain.getCurrentCoordType() == coordType.ROBOT_CENTRIC ) {
+      m_Drivetrain.setCoordTypeToFieldCentric();;
+      System.out.println("SwitchCoordType: FIELD CENTRIC ACTIVATED");
+
     }
   }
 }

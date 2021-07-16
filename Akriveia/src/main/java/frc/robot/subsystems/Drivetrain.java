@@ -156,7 +156,7 @@ public class Drivetrain extends SubsystemBase {
     // 0 or -361. gyro.getRotation2d() uses NWU Axis Convention
 
     //Is continuous. ie 360+1=361 not m0 or -361. getNavxAngle_asRotation2d() should be same Axis Convention as Teleop, I believe.
-    odometry = new SwerveDriveOdometry(DrivetrainConstants.DRIVE_KINEMATICS, getNavxAngle_inRadians_asRotation2d()); 
+    //odometry = new SwerveDriveOdometry(DrivetrainConstants.DRIVE_KINEMATICS, getNavxAngle_inRadians_asRotation2d()); 
 
     // SmartDashboard.putNumber("currentAngle", this.currentAngle);
 
@@ -255,10 +255,7 @@ public class Drivetrain extends SubsystemBase {
       this.forwardCommand *= 1; // 0.75;
       this.spinCommand *= 1; // 0.75;
     }
-    if (currentCoordType == coordType.BACK_ROBOT_CENTRIC) {
-      this.strafeCommand *= -1;
-      this.forwardCommand *= -1;
-    }
+   
     // SmartDashboard.putNumber("this.forwardCom_Drivetrain.drive",
     // this.forwardCommand);
     // SmartDashboard.putNumber("this.strafeCom_Drivetrain.drive",
@@ -270,6 +267,7 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putBoolean("isOrbiting", currentDriveMode == driveMode.ORBIT);
     SmartDashboard.putBoolean("isRobotCentric", currentCoordType == coordType.ROBOT_CENTRIC);
     SmartDashboard.putBoolean("isFieldCentric", currentCoordType == coordType.FIELD_CENTRIC);
+    //  System.out.println("CURRENTCOORDTYPE = " + currentCoordType);
   }
 
   /**

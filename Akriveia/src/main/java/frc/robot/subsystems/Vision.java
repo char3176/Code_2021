@@ -121,7 +121,7 @@ public class Vision extends SubsystemBase{
     }
 
     public void update(){
-        pipeline.setNumber(1);
+        pipeline.setNumber(m_pipeline);
         targetRecogControlLoop();
 
     }
