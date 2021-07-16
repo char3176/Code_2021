@@ -18,6 +18,7 @@ public class VisionTurnOffLeds extends InstantCommand{
 
   @Override
   public void initialize(){
-    m_Vision.setLedMode(VisionConstants.VISION_LED_OFF);  
+    //m_Vision.setLedMode(VisionConstants.VISION_LED_OFF);  
+    m_Vision.setPipeline(VisionConstants.PIPELINE_FOR_DRIVER_CAM);
   }
 }

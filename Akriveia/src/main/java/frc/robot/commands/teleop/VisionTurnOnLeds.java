@@ -18,6 +18,7 @@ public class VisionTurnOnLeds extends InstantCommand{
 
   @Override
   public void initialize(){
-    m_Vision.setLedMode(VisionConstants.VISION_LED_PIPELINE);  
+    //m_Vision.setLedMode(VisionConstants.VISION_LED_PIPELINE);  
+    m_Vision.setPipeline(VisionConstants.PIPELINE_FOR_TARGET_RECOG);
   }
 }

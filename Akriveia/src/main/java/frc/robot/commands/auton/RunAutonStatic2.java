@@ -33,7 +33,7 @@ private double startTime;
       new AutonRotate(.1, -720)
       */
 
-      new TrapezoidDrive(-5, 0), // Forward and right 6 feet
+      new TrapezoidDrive(-5, 0), // Back 5ft
       //new DelayCommand(10 - (Timer.getFPGATimestamp() - startTime)),
       //new TrapezoidDrive(0, -16) // Backwards 16 feet
       new ShootVisionSetUp()

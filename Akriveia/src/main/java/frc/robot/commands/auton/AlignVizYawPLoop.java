@@ -42,10 +42,10 @@ public class AlignVizYawPLoop extends SequentialCommandGroup {
     // m_drivetrain.setCoordType(coordType.ROBOT_CENTRIC);
     m_drivetrain.setCoordType(coordType.FIELD_CENTRIC);
     m_Vision.turnLEDsOn();
-    this.kP = -0.02;
+    this.kP = -0.01;
     this.minCommand = 0.05;
-    this.upperTxLimit = 1;
-    this.lowerTxLimit = -1;
+    this.upperTxLimit = 2;
+    this.lowerTxLimit = -2;
   }
 
   // Called every time the scheduler runs while the command is scheduled.

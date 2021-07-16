@@ -12,4 +12,6 @@ public class VisionConstants {
     public static final int VISION_LED_PIPELINE = 0;
     public static final double MIN_TURN_OUTPUT = 0.2;
     public static final double VISION_STEER_KP = 0.3;
+    public static final int PIPELINE_FOR_TARGET_RECOG = 1;
+    public static final int PIPELINE_FOR_DRIVER_CAM = 3;
 }

@@ -26,7 +26,7 @@ private double startTime;
       // Robot starts facing the target directly in front of it
       // Also we know magnitudes but not signs for TrapezoidDrive
 
-      new TrapezoidDrive(-6, 5), // Left 6 feet
+      new TrapezoidDrive(-6, 5), // Move back to start of trench.  6feet back and 5 feet right.
       new ShootVisionSetUp()
 
 
