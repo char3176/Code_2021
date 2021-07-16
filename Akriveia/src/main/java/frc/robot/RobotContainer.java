@@ -86,9 +86,9 @@ public class RobotContainer {
     m_Drivetrain.setDefaultCommand(new SwerveDrive(
       () -> m_Controller.getForward(), 
       () -> m_Controller.getStrafe(),
-      () -> m_Controller.getSpin(),
-      () -> m_Controller.isFieldCentricButtonPressed(),
-      () -> m_Controller.isRobotCentricButtonPressed()
+      () -> m_Controller.getSpin()
+      //() -> m_Controller.isFieldCentricButtonPressed(),
+      //() -> m_Controller.isRobotCentricButtonPressed()
     ));
 
     configureButtonBindings();
@@ -116,9 +116,9 @@ public class RobotContainer {
     */
     //preloadTrajectoryFiles();
 
-    SmartDashboard.putData("ATLAS IntStellarAccuracy", new AtlasForInterstellarAccuracy());
-    SmartDashboard.putData("ATLAS PowerPort", new AtlasForPowerPort());
-    SmartDashboard.putData("ATLAS Global Off", new AtlasOff());
+    //SmartDashboard.putData("ATLAS IntStellarAccuracy", new AtlasForInterstellarAccuracy());
+    //SmartDashboard.putData("ATLAS PowerPort", new AtlasForPowerPort());
+    //SmartDashboard.putData("ATLAS Global Off", new AtlasOff());
   }
 
   private void configureButtonBindings() {

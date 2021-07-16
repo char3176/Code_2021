@@ -403,7 +403,7 @@ public class Vision extends SubsystemBase{
    * Gets which pipeline the processor will use. Returns double value indicating number of currently active pipeline. 
    */
     public Double getPipeline(){
-        m_pipeline = pipeline.getDouble(-999);
+        m_pipeline = pipeline.getDouble(1);
         return m_pipeline;
     }
 

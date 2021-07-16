@@ -20,7 +20,7 @@ public class VisionToggleLeds extends InstantCommand{
   public void initialize(){
     //m_Vision.setLedMode(VisionConstants.VISION_LED_OFF);  
 
-    if (m_Vision.getPipeline() == 3) {
+    if (m_Vision.getPipeline() != 1) {
       m_Vision.setPipeline(VisionConstants.PIPELINE_FOR_TARGET_RECOG);
     } else if (m_Vision.getPipeline() == 1) {
       m_Vision.setPipeline(VisionConstants.PIPELINE_FOR_DRIVER_CAM);
