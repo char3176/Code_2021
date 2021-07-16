@@ -26,7 +26,7 @@ public class RunAutonStatic1 extends SequentialCommandGroup {
       // Also we know magnitudes but not signs for TrapezoidDrive
 
       //We shoot
-      new TrapezoidDrive(0, 6), // Forward and right 6 feet
+      new TrapezoidDrive(0, -6), // Forward and right 6 feet
       //new DelayCommand(10 - (Timer.getFPGATimestamp() - startTime)),
       new ShootVisionSetUp()
       //new TrapezoidDrive(0, -16) // Backwards 16 feet

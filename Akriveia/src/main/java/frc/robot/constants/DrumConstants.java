@@ -2,8 +2,8 @@ package frc.robot.constants;
 
 public class DrumConstants {
     public static final int MOTOR_CAN_ID = 50;
-    public static final int IDLER_IRSENSOR_DIO_ID = 4;
-    public static final int BACKWALL_IRSENSOR_DIO_ID = 3;
+    public static final int IDLER_IRSENSOR_DIO_ID = 1;
+    public static final int BACKWALL_IRSENSOR_DIO_ID = 4;
 
     public static final double DURATION_LIMIT_BACK_IR_SENSOR_SECONDS = 0.5;
     public static final double DURATION_LIMIT_IDLER_IR_SENSOR_SECONDS = 0.5;

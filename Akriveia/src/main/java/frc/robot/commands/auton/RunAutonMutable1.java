@@ -19,7 +19,8 @@ public class RunAutonMutable1 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AlignVizDistBangBang(10)
+      // new AlignVizDistBangBang(10)
+      new AlignVizYawPLoop()
 
     );
   }

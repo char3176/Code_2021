@@ -191,10 +191,11 @@ public class RobotContainer {
 
 
   public Command getAutonomousCommand() {
-    System.out.println(m_autonChooser.getSelected());
+    // System.out.println(m_autonChooser.getSelected());
     if (m_autonChooser.getSelected().equals("s_autonstatic1")) {
       //return new RunAutonStatic1();
-      return new RunAuton(); 
+      // return new RunAuton(); 
+      return new RunAutonStatic1();
     }
     else if(m_autonChooser.getSelected().equals("s_autonstatic2")) {
       return new RunAutonStatic2();

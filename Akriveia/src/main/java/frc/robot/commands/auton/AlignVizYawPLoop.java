@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.auton.AutonRotate;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Transfer;
 import frc.robot.subsystems.Drivetrain.coordType;
 import frc.robot.subsystems.Vision;
 
@@ -25,6 +26,7 @@ public class AlignVizYawPLoop extends SequentialCommandGroup {
 
   private Drivetrain m_drivetrain = Drivetrain.getInstance();
   private Vision m_Vision = Vision.getInstance();
+  private Transfer m_Transfer = Transfer.getInstance();
   private double tx, yawError, steerCorrection;
   private double upperTxLimit, lowerTxLimit;
   private double kP, minCommand;
@@ -32,6 +34,7 @@ public class AlignVizYawPLoop extends SequentialCommandGroup {
   /** Creates a new AutonAlign. */
   public AlignVizYawPLoop() {
     addRequirements(m_drivetrain);
+    addRequirements(m_Transfer);
   }
 
   @Override
@@ -39,8 +42,8 @@ public class AlignVizYawPLoop extends SequentialCommandGroup {
     // m_drivetrain.setCoordType(coordType.ROBOT_CENTRIC);
     m_drivetrain.setCoordType(coordType.FIELD_CENTRIC);
     m_Vision.turnLEDsOn();
-    this.kP = -0.01;
-    this.minCommand = 0.01;
+    this.kP = -0.02;
+    this.minCommand = 0.05;
     this.upperTxLimit = 1;
     this.lowerTxLimit = -1;
   }
