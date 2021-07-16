@@ -87,8 +87,8 @@ public class Vision extends SubsystemBase{
     @Override
     public void periodic() {
         updateVisionData();
-        m_ledMode = ledMode.getDouble(-999);
-        m_pipeline = pipeline.getDouble(-999);
+        //m_ledMode = ledMode.getDouble(0);
+        //m_pipeline = pipeline.getDouble(-999);
         targetRecogControlLoop();
 
     }
@@ -121,7 +121,7 @@ public class Vision extends SubsystemBase{
     }
 
     public void update(){
-        pipeline.setNumber(m_pipeline);
+        //pipeline.setNumber(m_pipeline);
         targetRecogControlLoop();
 
     }
@@ -403,7 +403,7 @@ public class Vision extends SubsystemBase{
    * Gets which pipeline the processor will use. Returns double value indicating number of currently active pipeline. 
    */
     public Double getPipeline(){
-        m_pipeline = pipeline.getDouble(1);
+        m_pipeline = pipeline.getDouble(0);
         return m_pipeline;
     }
 
@@ -412,12 +412,19 @@ public class Vision extends SubsystemBase{
    * @param desiredPipelineNum sets the pipeline that will be used. Acceptable values are 0 and 1 at present.
    */
     public void setPipeline(double desiredPipelineNum){
-        if(desiredPipelineNum >= 0 && desiredPipelineNum <= 9 ){
+        if(desiredPipelineNum >= 0.0 && desiredPipelineNum <= 9.0 ){
             m_pipeline = desiredPipelineNum;
             pipeline.forceSetDouble(m_pipeline);
         } 
     }
 
+    public void setPipeline0() {
+        pipeline.forceSetDouble(0);
+    }
+
+    public void setPipeline1() {
+        pipeline.forceSetDouble(1.0);
+    }
     public double getBallLocation(){
         return ballLocation;
     }

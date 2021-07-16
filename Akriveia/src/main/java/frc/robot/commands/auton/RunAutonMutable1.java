@@ -20,11 +20,11 @@ public class RunAutonMutable1 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new VisionToggleLeds(),
+      //new VisionToggleLeds(),
       // new AlignVizDistBangBang(10)
-      new AlignVizYawPLoop(),
-      new VisionToggleLeds()
-
+      //new AlignVizYawPLoop(),
+      //new VisionToggleLeds()
+    new ShootVisionSetUp()
     );
   }
 }

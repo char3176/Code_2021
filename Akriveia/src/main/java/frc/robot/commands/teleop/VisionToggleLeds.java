@@ -14,15 +14,17 @@ public class VisionToggleLeds extends InstantCommand{
   
   private Vision m_Vision = Vision.getInstance();
 
-  public VisionToggleLeds(){}
+  public VisionToggleLeds(){
+    addRequirements(m_Vision);
+  }
 
   @Override
   public void initialize(){
     //m_Vision.setLedMode(VisionConstants.VISION_LED_OFF);  
 
-    if (m_Vision.getPipeline() != 1) {
+    if (m_Vision.getPipeline() != 1.0) {
       m_Vision.setPipeline(VisionConstants.PIPELINE_FOR_TARGET_RECOG);
-    } else if (m_Vision.getPipeline() == 1) {
+    } else if (m_Vision.getPipeline() == 1.0) {
       m_Vision.setPipeline(VisionConstants.PIPELINE_FOR_DRIVER_CAM);
     }
   }

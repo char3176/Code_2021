@@ -39,6 +39,7 @@ public class Drum extends SubsystemBase {
   private double shakeStartTime = -1;
   private double shakeIterations = 0;
   public boolean drumStopMotorFlag = false;
+  private boolean oneTimeIRSwitch;
 
   private DigitalInput idlerIrSensor = new DigitalInput(DrumConstants.IDLER_IRSENSOR_DIO_ID);
   private DigitalInput backIrSensor = new DigitalInput(DrumConstants.BACKWALL_IRSENSOR_DIO_ID);
@@ -74,6 +75,7 @@ public class Drum extends SubsystemBase {
     rateLimiter = new SlewRateLimiter(DrumConstants.kRampRate, 0);
 
     time = new Timer();
+    oneTimeIRSwitch = true;
 
     durationLimit_idlerIrSensor = DrumConstants.DURATION_LIMIT_IDLER_IR_SENSOR_SECONDS;
     durationLimit_backIrSensor = DrumConstants.DURATION_LIMIT_BACK_IR_SENSOR_SECONDS;
@@ -372,7 +374,9 @@ public class Drum extends SubsystemBase {
       System.out.println("<----------- Drum.backIrSensor = FALSE ------------->");
     }
   }
-
+  public boolean getOneTimeIRSwitch(){
+    return oneTimeIRSwitch;
+    }
   public boolean checkIdlerIrSensorForJam() {
     double currentTime_idlerIrSensor = Timer.getFPGATimestamp();
     if (getIdlerIrSensor() && lastReading_idlerIrSensor == true) { 
@@ -392,26 +396,45 @@ public class Drum extends SubsystemBase {
       timePt1_backIrSensor = Timer.getFPGATimestamp();
     }
     lastReading_backIrSensor = getBackIrSensor();
-    if (!getBackIrSensor() && (currentTime_backIrSensor - timePt1_backIrSensor > durationLimit_backIrSensor)) {
-      return true;
-    } else {return false;}
+    if(oneTimeIRSwitch){
+      if (!getBackIrSensor()){ //&& (currentTime_backIrSensor - timePt1_backIrSensor > durationLimit_backIrSensor)) {
+        oneTimeIRSwitch = false;
+        return true;
+      } 
+      else {
+        oneTimeIRSwitch = false;
+        return false;
+      }
+      
   }
-  
+    else if(!oneTimeIRSwitch){
+      if (!getBackIrSensor()){ //&& (currentTime_backIrSensor - timePt1_backIrSensor > durationLimit_backIrSensor)) {
+        oneTimeIRSwitch = false;
+        return true;
+      } 
+      else {
+        oneTimeIRSwitch = false;
+        return false;
+      }
+    }
+    return false;
+}
+
   public boolean 
   isThereAJam() {
     if (checkIdlerIrSensorForJam() || checkBackIrSensorForJam()) {
-      System.out.println("There is a jam");
+      //System.out.println("There is a jam");
       return true;
 
     } else {
-      System.out.println("There is not a jam");
+     // System.out.println("There is not a jam");
       return false;
     }
   }
 
   public void actIfJamPresent() {
     if (isThereAJam()) {
-      System.out.println("Motors should be stopping");
+      //System.out.println("Motors should be stopping");
       stopMotors();
     }
   }

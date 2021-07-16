@@ -15,18 +15,20 @@ public class DrumCCW extends CommandBase {
   @Override
   public void initialize() {
     // System.out.println("DrumCCW.initialize executed. ############################################################");
+
   }
 
   @Override
   public void execute() {
-    
+    if(m_Drum.getOneTimeIRSwitch()){
     if(m_Drum.getDrumStopMotorFlag()){
     m_Drum.CounterClockwise(0);
   }
   else{
     m_Drum.CounterClockwise();
   }
-  }
+  
+}
 
   @Override
   public boolean isFinished() {

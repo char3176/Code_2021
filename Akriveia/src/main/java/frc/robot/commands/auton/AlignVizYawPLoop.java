@@ -41,7 +41,8 @@ public class AlignVizYawPLoop extends SequentialCommandGroup {
   public void initialize() {
     // m_drivetrain.setCoordType(coordType.ROBOT_CENTRIC);
     m_drivetrain.setCoordType(coordType.FIELD_CENTRIC);
-    m_Vision.turnLEDsOn();
+    //m_Vision.setPipeline(1);
+    //m_Vision.turnLEDsOn();
     this.kP = -0.01;
     this.minCommand = 0.001;
     this.upperTxLimit = 2;
@@ -68,7 +69,7 @@ public class AlignVizYawPLoop extends SequentialCommandGroup {
   @Override
   public void end(boolean interrupted) {
       m_drivetrain.drive(0,0,0);
-      m_Vision.turnLEDsOff();
+      //m_Vision.setPipeline(3);
   }
 
   // Returns true when the command should end.
