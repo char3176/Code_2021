@@ -127,9 +127,10 @@ public class RobotContainer {
     m_Controller.getTransStick_Button1().whenHeld(new SwerveTurboOn());
     m_Controller.getTransStick_Button1().whenReleased(new SwerveTurboOff());
     m_Controller.getTransStick_Button2().whenHeld(new SwerveDefense());
-    m_Controller.getTransStick_Button3().whenHeld(new SwerveVision( 
-      () -> m_Controller.getForward(), 
-      () -> m_Controller.getStrafe()));
+    //m_Controller.getTransStick_Button3().whenHeld(new SwerveVision( 
+    //  () -> m_Controller.getForward(), 
+    //  () -> m_Controller.getStrafe()));
+    m_Controller.getTransStick_Button2().whenPressed(new VisionToggleLeds());
     m_Controller.getTransStick_Button4().whenPressed(new SwitchCoordType());
     m_Controller.getRotStick_Button1().whenHeld(new SwerveOrbit(
       () -> m_Controller.getOrbitSpeed(),
