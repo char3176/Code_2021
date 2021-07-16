@@ -38,6 +38,7 @@ public class Drum extends SubsystemBase {
   private int direction = 1;
   private double shakeStartTime = -1;
   private double shakeIterations = 0;
+  public boolean drumStopMotorFlag = false;
 
   private DigitalInput idlerIrSensor = new DigitalInput(DrumConstants.IDLER_IRSENSOR_DIO_ID);
   private DigitalInput backIrSensor = new DigitalInput(DrumConstants.BACKWALL_IRSENSOR_DIO_ID);
@@ -88,7 +89,13 @@ public class Drum extends SubsystemBase {
   }
 
   public void stopMotors() {
-    drumPIDController.setReference(0, ControlType.kVelocity); 
+     drumStopMotorFlag = true;
+    //drumPIDController.setReference(0, ControlType.kVelocity); 
+    drumMotor.set(0);
+  }
+
+  public boolean getDrumStopMotorFlag(){
+    return drumStopMotorFlag;
   }
   // public boolean isLineBroke() {return lineBreakReciever.get();}
 
@@ -352,6 +359,8 @@ public class Drum extends SubsystemBase {
     return (backIrSensor.get());
   }
 
+  public void setDrumStopMotorFlag(boolean c) {drumStopMotorFlag = c;}
+
   private void testBackIrSensorIsTrue() {
     if (getBackIrSensor()) {
       System.out.println("<----------- Drum.backIrSensor = TRUE ------------->");
@@ -366,36 +375,43 @@ public class Drum extends SubsystemBase {
 
   public boolean checkIdlerIrSensorForJam() {
     double currentTime_idlerIrSensor = Timer.getFPGATimestamp();
-    if (getIdlerIrSensor() && lastReading_idlerIrSensor == false) { 
+    if (getIdlerIrSensor() && lastReading_idlerIrSensor == true) { 
       timePt1_idlerIrSensor = Timer.getFPGATimestamp();
     }
     lastReading_idlerIrSensor = getIdlerIrSensor();
-    if (getIdlerIrSensor() && (currentTime_idlerIrSensor - timePt1_idlerIrSensor > durationLimit_idlerIrSensor)) {
+    //System.out.println("Drum Limit =" + (currentTime_idlerIrSensor - timePt1_idlerIrSensor));
+    //System.out.println("IdlerIrSensor"+ getIdlerIrSensor());
+    if (!getIdlerIrSensor() && (currentTime_idlerIrSensor - timePt1_idlerIrSensor > durationLimit_idlerIrSensor)) {
       return true;
     } else {return false;}
   }
   
   public boolean checkBackIrSensorForJam() {
     double currentTime_backIrSensor = Timer.getFPGATimestamp();
-    if (getIdlerIrSensor() && lastReading_backIrSensor == false) { 
+    if (getBackIrSensor() && lastReading_backIrSensor == true) { 
       timePt1_backIrSensor = Timer.getFPGATimestamp();
     }
     lastReading_backIrSensor = getBackIrSensor();
-    if (getBackIrSensor() && (currentTime_backIrSensor - timePt1_backIrSensor > durationLimit_backIrSensor)) {
+    if (!getBackIrSensor() && (currentTime_backIrSensor - timePt1_backIrSensor > durationLimit_backIrSensor)) {
       return true;
     } else {return false;}
   }
   
-  public boolean isThereAJam() {
+  public boolean 
+  isThereAJam() {
     if (checkIdlerIrSensorForJam() || checkBackIrSensorForJam()) {
+      System.out.println("There is a jam");
       return true;
+
     } else {
+      System.out.println("There is not a jam");
       return false;
     }
   }
 
   public void actIfJamPresent() {
     if (isThereAJam()) {
+      System.out.println("Motors should be stopping");
       stopMotors();
     }
   }
@@ -403,7 +419,7 @@ public class Drum extends SubsystemBase {
 
   @Override
   public void periodic() {
-    //actIfJamPresent();
+    actIfJamPresent();
     //checkForCurrentSpike();
   }
 }

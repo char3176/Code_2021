@@ -34,6 +34,7 @@ public class DrumStop extends InstantCommand {
     // the statement getting the previous setting in in the initialize methods so that it doesn't
     // go up on each iteration of those commands.
     m_Drum.stopMotors();
+    m_Drum.setDrumStopMotorFlag(false);
 
   }
 }

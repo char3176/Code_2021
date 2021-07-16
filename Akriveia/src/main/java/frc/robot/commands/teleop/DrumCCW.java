@@ -19,12 +19,22 @@ public class DrumCCW extends CommandBase {
 
   @Override
   public void execute() {
+    
+    if(m_Drum.getDrumStopMotorFlag()){
+    m_Drum.CounterClockwise(0);
+  }
+  else{
     m_Drum.CounterClockwise();
+  }
   }
 
   @Override
-  public boolean isFinished() { 
-    return false; 
+  public boolean isFinished() {
+    if(m_Drum.getDrumStopMotorFlag()){
+    return true; }
+    else{
+      return false;
+    }
   }
 
   @Override

@@ -6,6 +6,7 @@ package frc.robot.commands.auton;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Hood;
+import frc.robot.commands.teleop.VisionToggleLeds;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Drum;
 import edu.wpi.first.wpilibj.Timer;
@@ -19,8 +20,10 @@ public class RunAutonMutable1 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new VisionToggleLeds(),
       // new AlignVizDistBangBang(10)
-      new AlignVizYawPLoop()
+      new AlignVizYawPLoop(),
+      new VisionToggleLeds()
 
     );
   }

@@ -24,8 +24,8 @@ public class ShootVisionSetUp extends SequentialCommandGroup {
     // Use addRequirements() here to declare subsystem dependencies.
     addCommands(
       new ShootVision(),
-      new AlignVizYawBangBang(),
-      // new AlignVizYawPLoop(),
+      //new AlignVizYawBangBang(),
+      new AlignVizYawPLoop(),
       new HoodPosUp(),
       new TransferDown(),
       // new IrCounter(3),

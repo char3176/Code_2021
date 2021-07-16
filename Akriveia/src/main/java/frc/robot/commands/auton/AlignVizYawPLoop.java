@@ -43,7 +43,7 @@ public class AlignVizYawPLoop extends SequentialCommandGroup {
     m_drivetrain.setCoordType(coordType.FIELD_CENTRIC);
     m_Vision.turnLEDsOn();
     this.kP = -0.01;
-    this.minCommand = 0.05;
+    this.minCommand = 0.001;
     this.upperTxLimit = 2;
     this.lowerTxLimit = -2;
   }
