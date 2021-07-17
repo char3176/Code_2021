@@ -79,7 +79,10 @@ public class RobotContainer {
 
     m_BallTransfer = Transfer.getInstance();
     m_Flywheel = Flywheel.getInstance();
+
     m_AngledShooter = Hood.getInstance();
+    m_AngledShooter.setDefaultCommand(new HoodPosUp());
+
     m_PowerManagement = PowerManagement.getInstance();
 
     m_PowerManagement.clearFaults();
@@ -141,9 +144,10 @@ public class RobotContainer {
     //  () -> m_Controller.getStrafe()));
     m_Controller.getTransStick_Button3().whenPressed(new VisionToggleLeds());
     m_Controller.getTransStick_Button4().whenPressed(new SwitchCoordType());
-    m_Controller.getRotStick_Button1().whenHeld(new SwerveOrbit(
-      () -> m_Controller.getOrbitSpeed(),
-      () -> m_Controller.getPOVTransStick()));
+    //m_Controller.getRotStick_Button1().whenHeld(new SwerveOrbit(
+      //() -> m_Controller.getOrbitSpeed(),
+      //() -> m_Controller.getPOVTransStick()));
+    m_Controller.getRotStick_Button1().whenHeld(new AlignVizYawPLoopTele());
     m_Controller.getRotStick_Button4().whenPressed(new SwerveResetGyro());
     m_Controller.getRotStick_Button8().whenHeld(new SwerveResetGyro());
     m_Controller.getRotStick_Button8().whenPressed(new SwerveResetGyro());
