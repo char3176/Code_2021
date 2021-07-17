@@ -177,10 +177,10 @@ public class SwervePod {
 
       
 
-        SmartDashboard.putNumber("P", kP_Drive);
-        SmartDashboard.putNumber("I", kI_Drive);
-        SmartDashboard.putNumber("D", kD_Drive);
-        SmartDashboard.putNumber("F", kF_Drive);
+        // SmartDashboard.putNumber("P", kP_Drive);
+        // SmartDashboard.putNumber("I", kI_Drive);
+        // SmartDashboard.putNumber("D", kD_Drive);
+        // SmartDashboard.putNumber("F", kF_Drive);
        // SmartDashboard.putNumber("driveSet",0);
 
         this.spinController.config_kP(kPIDLoopIdx_spin, kP_Spin, kTimeoutMs_spin);
@@ -206,10 +206,10 @@ public class SwervePod {
          //this.spinController.config_kI(kSlotIdx_spin, SmartDashboard.getNumber("I", kI_Spin), kTimeoutMs_spin);
          //this.spinController.config_kD(kSlotIdx_spin, SmartDashboard.getNumber("D", kD_Spin), kTimeoutMs_spin);
          //this.spinController.config_kF(kSlotIdx_spin, SmartDashboard.getNumber("F", kF_Spin), kTimeoutMs_spin);
-        this.driveController.config_kP(kSlotIdx_drive, SmartDashboard.getNumber("P", kP_Drive), kTimeoutMs_spin);
-        this.driveController.config_kI(kSlotIdx_drive, SmartDashboard.getNumber("I", kI_Drive), kTimeoutMs_spin);
-        this.driveController.config_kD(kSlotIdx_drive, SmartDashboard.getNumber("D", kD_Drive), kTimeoutMs_spin);
-        this.driveController.config_kF(kSlotIdx_drive, SmartDashboard.getNumber("F", kF_Drive), kTimeoutMs_spin);
+        // this.driveController.config_kP(kSlotIdx_drive, SmartDashboard.getNumber("P", kP_Drive), kTimeoutMs_spin);
+        // this.driveController.config_kI(kSlotIdx_drive, SmartDashboard.getNumber("I", kI_Drive), kTimeoutMs_spin);
+        // this.driveController.config_kD(kSlotIdx_drive, SmartDashboard.getNumber("D", kD_Drive), kTimeoutMs_spin);
+        // this.driveController.config_kF(kSlotIdx_drive, SmartDashboard.getNumber("F", kF_Drive), kTimeoutMs_spin);
         
         
         // SmartDashboard.putNumber("P" + (id + 1) + " podDrive", this.podDrive);
@@ -219,8 +219,8 @@ public class SwervePod {
         // this.velTicsPer100ms = this.podDrive * 2000.0 * kDriveEncoderUnitsPerRevolution / 600.0;  //TODO: rework "podDrive * 2000.0"
         this.maxVelTicsPer100ms = fps2ums(DrivetrainConstants.MAX_WHEEL_SPEED_FEET_PER_SECOND);
         this.velTicsPer100ms = fps2ums(this.podDrive);
-        SmartDashboard.putNumber("fps2ums:velTicsPer100ms", velTicsPer100ms);
-        SmartDashboard.putNumber("podDrive", this.podDrive);
+        // SmartDashboard.putNumber("fps2ums:velTicsPer100ms", velTicsPer100ms);
+        // SmartDashboard.putNumber("podDrive", this.podDrive);
        // velTicsPer100ms = SmartDashboard.getNumber("driveSet",velTicsPer100ms);
         double encoderSetPos = calcSpinPos(this.podSpin);
         double tics = rads2Tics(this.podSpin);
@@ -237,16 +237,16 @@ public class SwervePod {
         }    
         //SmartDashboard.putNumber("P" + (id) + "getSelSenPos", spinController.getSelectedSensorPosition());
 
-        SmartDashboard.putNumber("P"+this.id+".podDrive", podDrive);
+        // SmartDashboard.putNumber("P"+this.id+".podDrive", podDrive);
         //SmartDashboard.putNumber("actualVel", driveController.getVoltage());
         
-        if (this.id == 0){
-            SmartDashboard.putNumber("Pod3Distance", driveController.getSelectedSensorPosition());
-            SmartDashboard.putNumber("velTicsPer100ms", velTicsPer100ms);
-            SmartDashboard.putNumber("Tics Error", driveController.getSelectedSensorVelocity()-velTicsPer100ms);
-            SmartDashboard.putNumber("Tics Error2", driveController.getSelectedSensorVelocity()-velTicsPer100ms);
-            SmartDashboard.putNumber("DriveController Velocity", driveController.getSelectedSensorVelocity());
-        } 
+        // if (this.id == 0){
+        //     SmartDashboard.putNumber("Pod3Distance", driveController.getSelectedSensorPosition());
+        //     SmartDashboard.putNumber("velTicsPer100ms", velTicsPer100ms);
+        //     SmartDashboard.putNumber("Tics Error", driveController.getSelectedSensorVelocity()-velTicsPer100ms);
+        //     SmartDashboard.putNumber("Tics Error2", driveController.getSelectedSensorVelocity()-velTicsPer100ms);
+        //     SmartDashboard.putNumber("DriveController Velocity", driveController.getSelectedSensorVelocity());
+        // } 
         driveController.set(TalonFXControlMode.Velocity, velTicsPer100ms);
         // SmartDashboard.putNumber("P" + (id + 1) + " velTicsPer100ms", velTicsPer100ms);
         // SmartDashboard.putNumber("P" + (id + 1) + " encoderSetPos_end", encoderSetPos);
@@ -333,8 +333,8 @@ public class SwervePod {
         Rotation2d rotation = new Rotation2d(-tics2Rads(spinController.getSelectedSensorPosition()));
         state = newDesiredState;
         //SwerveModuleState.optimize(desiredState, rotation); //I do not know if this is the angle of the encoder.
-        SmartDashboard.putNumber("P"+this.id+".setDesiredState_desiredDegrees", desiredState.angle.getDegrees());
-        SmartDashboard.putNumber("P"+this.id+".setdesiredState_sensoredDegrees", rotation.getDegrees());
+        // SmartDashboard.putNumber("P"+this.id+".setDesiredState_desiredDegrees", desiredState.angle.getDegrees());
+        // SmartDashboard.putNumber("P"+this.id+".setdesiredState_sensoredDegrees", rotation.getDegrees());
         double driveOutput =    
             m_drivePIDController.calculate(getVelocity_metersPerSec(), state.speedMetersPerSecond);
 
@@ -342,8 +342,8 @@ public class SwervePod {
 
         final var turnOutput = 
             m_turningPIDController.calculate(tics2Rads(spinController.getSelectedSensorPosition()), state.angle.getRadians());
-        SmartDashboard.putNumber("P"+this.id+".setDesiredState_TurnOutput",turnOutput);
-        SmartDashboard.putNumber("P"+this.id+".setDesiredState_DriveOutput",driveOutput);
+        // SmartDashboard.putNumber("P"+this.id+".setDesiredState_TurnOutput",turnOutput);
+        // SmartDashboard.putNumber("P"+this.id+".setDesiredState_DriveOutput",driveOutput);
 
         Rotation2d tempTurnOutput = new Rotation2d(turnOutput);
 
@@ -364,7 +364,7 @@ public class SwervePod {
         double wheelCircumference = Units.inchesToMeters(DrivetrainConstants.WHEEL_DIAMETER_INCHES * Math.PI);
         double metersPer100ms = sensoredVelInTicsPer100ms * 1 * wheelCircumference / (SwervePodConstants.DRIVE_ENCODER_UNITS_PER_REVOLUTION * 6.17);  //6.17 = gear ratio  <--should this be 6.17 here, or (1 / 6.17)?
         double metersPerSecond = metersPer100ms * 10 /*ms*/ / 1 /*sec*/;
-        SmartDashboard.putNumber("Velocity", metersPerSecond);
+        // SmartDashboard.putNumber("Velocity", metersPerSecond);
         return metersPerSecond;     
     }
 

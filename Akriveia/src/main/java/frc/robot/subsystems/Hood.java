@@ -141,9 +141,9 @@ public class Hood extends SubsystemBase {
     minPosTic = startPosTic;
     maxPosTic = startPosTic + 1500;
     numPositions = 0;
-    SmartDashboard.putNumber("Hood startPosTic", startPosTic);
-    SmartDashboard.putNumber("Hood minPosTic", minPosTic);
-    SmartDashboard.putNumber("Hood maxPosTic", maxPosTic);
+    // SmartDashboard.putNumber("Hood startPosTic", startPosTic);
+    // SmartDashboard.putNumber("Hood minPosTic", minPosTic);
+    // SmartDashboard.putNumber("Hood maxPosTic", maxPosTic);
     //pidPosCtrl_findMinPosTicMaxPosTic();
     pidPosCtrl_buildHoodPositions(3);
     hoodController.set(ControlMode.Position, hoodPositions_Tics.get(hoodPositions_persistingIndex));
@@ -160,8 +160,8 @@ public class Hood extends SubsystemBase {
     hoodController.set(ControlMode.Position, targetPos - 350);
     double maxPosTicCalc = (targetPos + 350);
     maxPosTic = hoodController.getSelectedSensorPosition();
-    SmartDashboard.putNumber("maxPosTic_Calculated", maxPosTicCalc);
-    SmartDashboard.putNumber("maxPosTic_Sensored", maxPosTic);
+    // SmartDashboard.putNumber("maxPosTic_Calculated", maxPosTicCalc);
+    // SmartDashboard.putNumber("maxPosTic_Sensored", maxPosTic);
     // System.out.println("********** maxPosTic_Calculated (maxPosTicCalc) = " + maxPosTicCalc + "***************************");
     // System.out.println("********** maxPosTic_Sensored (maxPosTic) = " + maxPosTic + "***************************");
     targetPos = maxPosTic;
@@ -172,8 +172,8 @@ public class Hood extends SubsystemBase {
     hoodController.set(ControlMode.Position, targetPos + 350);
     double minPosTicCalc = (targetPos - 350);
     minPosTic = hoodController.getSelectedSensorPosition();
-    SmartDashboard.putNumber("minPosTic_Calculated", minPosTicCalc);
-    SmartDashboard.putNumber("minPosTic_Sensored", minPosTic);
+    // SmartDashboard.putNumber("minPosTic_Calculated", minPosTicCalc);
+    // SmartDashboard.putNumber("minPosTic_Sensored", minPosTic);
     // System.out.println("********** minPosTic_Calculated (minPosTicCalc) = " + minPosTicCalc + "***************************");
     // System.out.println("********** minPosTic_Sensored (minPosTic) = " + minPosTic + "***************************");
   }
@@ -206,8 +206,8 @@ public class Hood extends SubsystemBase {
     }
     */
 
-    SmartDashboard.putNumber("Hood_NumOfPositions", hoodPositions_Tics.size());
-    SmartDashboard.putNumberArray("Hood_Positions_in_Tics", tempCandidateHoodPosition);
+    // SmartDashboard.putNumber("Hood_NumOfPositions", hoodPositions_Tics.size());
+    // SmartDashboard.putNumberArray("Hood_Positions_in_Tics", tempCandidateHoodPosition);
     return 1;
   }
 
@@ -281,7 +281,8 @@ public class Hood extends SubsystemBase {
   }
 
   public int pidCtrl_holdPosition() {
-    double pos2Hold = SmartDashboard.getNumber("Hood Position (Tics)", 0);
+    // double pos2Hold = SmartDashboard.getNumber("Hood Position (Tics)", 0);
+    double pos2Hold = 0;
     if(pos2Hold == 0) {return 1;}
     hoodController.set(ControlMode.Position, pos2Hold);
     return 0;
@@ -328,7 +329,7 @@ public class Hood extends SubsystemBase {
   @Override
   public void periodic() {
     //SmartDashboard.putNumber("Hood Amps", m_PowerManagement.getAngledShooterAvgAmp());
-    SmartDashboard.putNumber("Hood Position (Tics)", hoodController.getSelectedSensorPosition());
+    // SmartDashboard.putNumber("Hood Position (Tics)", hoodController.getSelectedSensorPosition());
     // if(!topSwitch.get()) System.out.println("Top: " + topSwitch.get());
     // if(!bottomSwitch.get()) System.out.println("Bottom: " + bottomSwitch.get());
   }

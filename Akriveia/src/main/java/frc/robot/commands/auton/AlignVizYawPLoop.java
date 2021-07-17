@@ -62,7 +62,7 @@ public class AlignVizYawPLoop extends SequentialCommandGroup {
     } 
     //m_drivetrain.drive(0, 0, Math.copySign(.1, yawError));
     m_drivetrain.drive(0, 0, -steerCorrection);
-    SmartDashboard.putNumber("AlignViaYawPLoop.tx", tx);
+    // SmartDashboard.putNumber("AlignViaYawPLoop.tx", tx);
   }
 
   // Called once the command ends or is interrupted.

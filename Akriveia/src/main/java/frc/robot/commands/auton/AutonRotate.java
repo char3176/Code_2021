@@ -41,10 +41,10 @@ public class AutonRotate extends CommandBase {
   @Override
   public void execute() {
     drivetrain.drive(0,0,-rotationSpeed);
-    //currentAngle = -drivetrain.getNavxAngle_inDegrees();
-    SmartDashboard.putNumber("initialAngle", initialAngle);
+    currentAngle = -drivetrain.getNavxAngle_inDegrees();
+    // SmartDashboard.putNumber("initialAngle", initialAngle);
     SmartDashboard.putNumber("currentAngle", currentAngle);
-    SmartDashboard.putNumber("goal", goal);
+    // SmartDashboard.putNumber("goal", goal);
   }
 
   // Called once the command ends or is interrupted.

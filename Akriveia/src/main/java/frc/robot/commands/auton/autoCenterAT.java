@@ -13,31 +13,22 @@ import edu.wpi.first.wpilibj.Timer;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class RunAutonStatic2 extends SequentialCommandGroup {
+public class autoCenterAT extends SequentialCommandGroup {
 
 private double startTime;
 
   /** Creates a new RunAuton. */
-  public RunAutonStatic2() {
+  public autoCenterAT() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     startTime = Timer.getFPGATimestamp();
     addCommands(
       // Robot starts facing the target directly in front of it
       // Also we know magnitudes but not signs for TrapezoidDrive
-    
-      /*
-      Do we need to keep this?
-      new AutonRotate(.1, 720),
-      new DelayCommand(1),
-      new AutonRotate(.1, -720)
-      */
 
-      new TrapezoidDrive(-5, 0), // Back 5ft
-      //new DelayCommand(10 - (Timer.getFPGATimestamp() - startTime)),
-      //new TrapezoidDrive(0, -16) // Backwards 16 feet
+      new TrapezoidDrive(-6, 5), // Move back to start of trench.  6feet back and 5 feet right.
       new ShootVisionSetUp()
-      //We shoot
+
 
 
     );

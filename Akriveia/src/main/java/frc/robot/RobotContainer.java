@@ -19,11 +19,6 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
-import frc.robot.commands.auton.AutonDrive;
-import frc.robot.commands.auton.FollowGivenPath;
-import frc.robot.commands.auton.HolonomicAuton;
-import frc.robot.commands.auton.RunAuton;
-import frc.robot.commands.auton.Slalom;
 import frc.robot.commands.auton.*;
 import frc.robot.commands.teleop.*;
 import frc.robot.constants.DrivetrainConstants;
@@ -51,9 +46,16 @@ public class RobotContainer {
   private PowerManagement m_PowerManagement;
 
   private SendableChooser<String> m_autonChooser;
-  private static final String m_autonstatic1= "s_autonstatic1";
-  private static final String m_autonstatic2= "s_autonstatic2";
-  private static final String m_autonstatic3= "s_autonstatic3";
+  private static final String m_autoDis5Back= "s_autoDis5Back";
+  private static final String m_autoDis6Left= "s_autoDis6Left";
+  private static final String m_autoDis6Right= "s_autoDis6Right";
+  private static final String m_auto1Hypo = "s_auto1Hypo";
+  private static final String m_auto2Hypo = "s_auto2Hypo";
+  private static final String m_auto1Out = "s_auto1Out";
+  private static final String m_auto2Out = "s_auto2Out";
+  private static final String m_auto3Hypo = "s_auto3AIAEHypo";
+  private static final String m_auto3Out = "s_auto3AIAEOut";
+  private static final String m_autoCenterAT = "s_autoCenterAT";
   private static final String m_autonmutable1= "s_autonmutable1";
   private static final String m_autonmutable2= "s_autonmutable2";
   private static final String m_autonmutable3= "s_autonmutable3";
@@ -94,9 +96,16 @@ public class RobotContainer {
     configureButtonBindings();
 
     m_autonChooser = new SendableChooser<>();
-    m_autonChooser.setDefaultOption("Auton Static 1", m_autonstatic1);
-    m_autonChooser.addOption("Auton Static 2", m_autonstatic2);
-    m_autonChooser.addOption("Auton Static 3", m_autonstatic3);
+    m_autonChooser.setDefaultOption("Auto: Dis5Back", m_autoDis5Back);
+    m_autonChooser.addOption("Auto: Dis6Left", m_autoDis6Left);
+    m_autonChooser.addOption("Auto: Dis6Right", m_autoDis6Right);
+    m_autonChooser.addOption("Auto: 1Hypo", m_auto1Hypo);
+    m_autonChooser.addOption("Auto: 2Hypo", m_auto2Hypo);
+    m_autonChooser.addOption("Auto: 1Out", m_auto1Out);
+    m_autonChooser.addOption("Auto: 2Out", m_auto2Out);
+    m_autonChooser.addOption("Auto: 3Hypo", m_auto3Hypo);
+    m_autonChooser.addOption("Auto: 3Out", m_auto3Out);
+    m_autonChooser.addOption("Auto: Center Trench", m_autoCenterAT);
     m_autonChooser.addOption("Auton Mutable 1", m_autonmutable1);
     m_autonChooser.addOption("Auton Mutable 2", m_autonmutable2);
     m_autonChooser.addOption("Auton Mutable 3", m_autonmutable3);
@@ -192,31 +201,32 @@ public class RobotContainer {
 
 
   public Command getAutonomousCommand() {
-    // System.out.println(m_autonChooser.getSelected());
-    if (m_autonChooser.getSelected().equals("s_autonstatic1")) {
-      //return new RunAutonStatic1();
-      // return new RunAuton(); 
-      return new RunAutonStatic1();
+    if (m_autonChooser.getSelected().equals("s_autoDis5Back")) {
+      return new autoDis5Back();
     }
     else if(m_autonChooser.getSelected().equals("s_autonstatic2")) {
-      return new RunAutonStatic2();
+      return new autoDis6Left();
     }
     else if(m_autonChooser.getSelected().equals("s_autonstatic3")) {
-      return new RunAutonStatic3();
+      return new autoCenterAT();
     } 
-    else if(m_autonChooser.getSelected().equals("s_autonmutable1")) {
-      return new RunAutonMutable1();
-    }
-    else if(m_autonChooser.getSelected().equals("s_autonmutable2")) {
-      return new RunAutonMutable2();
-    }
-    else if (m_autonChooser.getSelected().equals("s_autonmutable3")) {
-      return new RunAutonMutable3();
-    } else {
-      return new RunAuton();
-    }
     
-    //return new RunAuton();
+    else if(m_autonChooser.getSelected().equals("s_autoDis5Back")) {return new autoDis5Back();}
+    else if(m_autonChooser.getSelected().equals("s_autoDis6Left")) {return new autoDis6Left();}
+    else if(m_autonChooser.getSelected().equals("s_autoDis6Right")) {return new autoDis6Right();}
+    else if(m_autonChooser.getSelected().equals("s_auto1Hypo")) {return new auto1Hypo();}
+    else if(m_autonChooser.getSelected().equals("s_auto2Hypo")) {return new auto2Hypo();}
+    else if(m_autonChooser.getSelected().equals("s_auto1Out")) {return new auto1Out();}
+    else if(m_autonChooser.getSelected().equals("s_auto2Out")) {return new auto2Out();}
+    else if(m_autonChooser.getSelected().equals("s_auto3AIAEHypo")) {return new auto3AIAEHypo();}
+    else if(m_autonChooser.getSelected().equals("s_auto3AIAEOut")) {return new auto3AIAEOut();}
+    else if(m_autonChooser.getSelected().equals("s_autoCenterAT")) {return new autoCenterAT();}
+
+    else if(m_autonChooser.getSelected().equals("s_autonmutable1")) {return new RunAutonMutable1();}
+    else if(m_autonChooser.getSelected().equals("s_autonmutable2")) {return new RunAutonMutable2();}
+    else if (m_autonChooser.getSelected().equals("s_autonmutable3")) {return new RunAutonMutable3();}
+    
+    return new autoDis5Back();
   }
 
   public void createTrajectory(String path){
