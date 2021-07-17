@@ -51,8 +51,8 @@ public class Hood extends SubsystemBase {
     hoodController.setInverted(HoodConstants.MOTOR_INVERT);
     hoodController.configNominalOutputForward(0, HoodConstants.TimeoutMs);
     hoodController.configNominalOutputReverse(0, HoodConstants.TimeoutMs);
-    hoodController.configPeakOutputForward(0.2, HoodConstants.TimeoutMs);
-    hoodController.configPeakOutputReverse(-0.2, HoodConstants.TimeoutMs);
+    hoodController.configPeakOutputForward(0.25, HoodConstants.TimeoutMs);
+    hoodController.configPeakOutputReverse(-0.25, HoodConstants.TimeoutMs);
     hoodController.configAllowableClosedloopError(0, HoodConstants.PIDLoopIdx, HoodConstants.TimeoutMs);
     hoodController.config_kF(HoodConstants.PIDLoopIdx, HoodConstants.PIDF[3], HoodConstants.TimeoutMs);
 		hoodController.config_kP(HoodConstants.PIDLoopIdx, HoodConstants.PIDF[0], HoodConstants.TimeoutMs);
