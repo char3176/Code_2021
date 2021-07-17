@@ -48,7 +48,7 @@ public class AlignVizYawBangBang extends SequentialCommandGroup {
     this.tx =  m_Vision.getTx();
     //new AutonRotate(.1, tx);
     m_drivetrain.drive(0, 0, Math.copySign(.05, -tx));
-    SmartDashboard.putNumber("AlignVizYawBangBang.tx", -tx);
+    // SmartDashboard.putNumber("AlignVizYawBangBang.tx", -tx);
   }
 
   // Called once the command ends or is interrupted.

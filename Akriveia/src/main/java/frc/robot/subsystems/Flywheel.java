@@ -49,7 +49,7 @@ public class Flywheel extends SubsystemBase {
     public void spinVelocityPIDFPart2(double rpmSetPoint) {
         double ticsPer100ms = (rpmSetPoint * 2048.0) / 600.0;
         flywheelController.set(TalonFXControlMode.Velocity, ticsPer100ms);
-        SmartDashboard.putNumber("Flywheel RPM Requested", (ticsPer100ms * 600 / 2048));
+        // SmartDashboard.putNumber("Flywheel RPM Requested", (ticsPer100ms * 600 / 2048));
     }
 
     /**
@@ -79,20 +79,20 @@ public class Flywheel extends SubsystemBase {
      */
     private double getVelocity() {
         double speed = flywheelController.getSelectedSensorVelocity(1);
-        SmartDashboard.putNumber("FlywheelSensorVelocity_ticsPer100ms", speed);
+        // SmartDashboard.putNumber("FlywheelSensorVelocity_ticsPer100ms", speed);
         double rpm = (speed * 600 / 2048);
     
             // is linear velocity at surface of wheel.  Needs correct diameter instead of 3.25) --> speed = speed * 1 * Units.inchesToMeters(3.25*PI)/SwervePodConstants.DRIVE_ENCODER_UNITS_PER_REVOLUTION;
-        SmartDashboard.putNumber("FlywheelSensorVelocity_RPM", rpm);
+        // SmartDashboard.putNumber("FlywheelSensorVelocity_RPM", rpm);
         return rpm;     
     }
 
     public void manualInputRpm() {
-        manualRPMInput = SmartDashboard.getNumber("Flywheel RPM Wanted", 0);
+        // manualRPMInput = SmartDashboard.getNumber("Flywheel RPM Wanted", 0);
         if ( (manualRPMInput != 0) && (lastSetting == 0) ) { 
             spinVelocityPIDFPart2(manualRPMInput);
         } else {
-            SmartDashboard.putNumber("Flywheel RPM Wanted", 0);
+            // SmartDashboard.putNumber("Flywheel RPM Wanted", 0);
         }
     }
 
@@ -114,7 +114,7 @@ public class Flywheel extends SubsystemBase {
         double distanceToTarget = m_Vision.getDeltaX();
         double rpm = FlywheelConstants.SHOT_REGRESSION_INTERCEPT + ( FlywheelConstants.SHOT_REGRESSION_COEFF * distanceToTarget );
         setRpm(rpm);
-        SmartDashboard.putNumber("Flywheel.setRpmViaVision.rpm", rpm);
+        // SmartDashboard.putNumber("Flywheel.setRpmViaVision.rpm", rpm);
     }
 
 }

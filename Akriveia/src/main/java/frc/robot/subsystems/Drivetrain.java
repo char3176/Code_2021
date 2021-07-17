@@ -261,11 +261,11 @@ public class Drivetrain extends SubsystemBase {
     // SmartDashboard.putNumber("this.strafeCom_Drivetrain.drive",
     // this.strafeCommand);
     // TODO: Find out why this putNumber statement is making the spinLock work
-    SmartDashboard.putNumber("this.spinCom_Drivetrain.drive", this.spinCommand);
+    // SmartDashboard.putNumber("this.spinCom_Drivetrain.drive", this.spinCommand);
     calculateNSetPodPositions(this.forwardCommand, this.strafeCommand, this.spinCommand);
 
-    SmartDashboard.putBoolean("isOrbiting", currentDriveMode == driveMode.ORBIT);
-    SmartDashboard.putBoolean("isRobotCentric", currentCoordType == coordType.ROBOT_CENTRIC);
+    // SmartDashboard.putBoolean("isOrbiting", currentDriveMode == driveMode.ORBIT);
+    // SmartDashboard.putBoolean("isRobotCentric", currentCoordType == coordType.ROBOT_CENTRIC);
     SmartDashboard.putBoolean("isFieldCentric", currentCoordType == coordType.FIELD_CENTRIC);
     //  System.out.println("CURRENTCOORDTYPE = " + currentCoordType);
   }
@@ -485,7 +485,7 @@ public class Drivetrain extends SubsystemBase {
 
   public void setFieldCentricOffset() {
     fieldCentricOffset = getNavxAngle_inRadians();
-    SmartDashboard.putNumber("value in Drivetrain", getNavxAngle_inRadians());
+    // SmartDashboard.putNumber("value in Drivetrain", getNavxAngle_inRadians());
   }
 
   public void setCoordTypeToFieldCentric() {
@@ -543,8 +543,8 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public Pose2d getCurrentPose() {
-    SmartDashboard.putNumber("odometry X", odometry.getPoseMeters().getX());
-    SmartDashboard.putNumber("odometry Y", odometry.getPoseMeters().getY());
+    // SmartDashboard.putNumber("odometry X", odometry.getPoseMeters().getX());
+    // SmartDashboard.putNumber("odometry Y", odometry.getPoseMeters().getY());
     return odometry.getPoseMeters() ; //Does this work?
   }
 
@@ -592,8 +592,8 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getHeading() {
-    SmartDashboard.putNumber("Drivetrain.getHeading_as_gyro.getRotation2d.getDegrees()", gyro.getRotation2d().getDegrees());
-    SmartDashboard.putNumber("Drivetrain.getHeading_as_getNavxAngle_inDegrees()", getNavxAngle_inDegrees());
+    // SmartDashboard.putNumber("Drivetrain.getHeading_as_gyro.getRotation2d.getDegrees()", gyro.getRotation2d().getDegrees());
+    // SmartDashboard.putNumber("Drivetrain.getHeading_as_getNavxAngle_inDegrees()", getNavxAngle_inDegrees());
     //return gyro.getRotation2d().getRadians() ; //+ Math.PI/2;
     return getNavxAngle_inRadians() ; //+ Math.PI/2;
   }

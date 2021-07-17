@@ -93,7 +93,7 @@ public class AlignVizVertBangBang extends CommandBase {
 
 
     //new AutonRotate(.1, tx);
-    SmartDashboard.putNumber("AutonAlign.ty", ty);
+    // SmartDashboard.putNumber("AutonAlign.ty", ty);
   }
 
   // Called once the command ends or is interrupted.

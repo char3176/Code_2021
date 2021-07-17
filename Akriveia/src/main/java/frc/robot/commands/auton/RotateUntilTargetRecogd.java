@@ -39,7 +39,7 @@ public class RotateUntilTargetRecogd extends CommandBase {
     this.tv =  m_Vision.getTv();
     //new AutonRotate(.1, tx);
     m_Drivetrain.drive(0, 0, .5);
-    SmartDashboard.putBoolean("AutonAlign.tv", tv);
+    // SmartDashboard.putBoolean("AutonAlign.tv", tv);
   }
 
   // Called once the command ends or is interrupted.

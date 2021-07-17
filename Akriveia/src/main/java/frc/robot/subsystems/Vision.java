@@ -168,11 +168,11 @@ public class Vision extends SubsystemBase{
     public void publishPrelimTargetRecogData(){
         SmartDashboard.putBoolean("Has Targets", (tv.getDouble(2) == 1) ? true : false);
         SmartDashboard.putNumber("Viz_tx", tx.getDouble(0));
-        SmartDashboard.putNumber("Viz_ty", ty.getDouble(0));
-        SmartDashboard.putNumber("Viz_ta", ta.getDouble(0));
-        SmartDashboard.putNumber("Viz_tshort", tshort.getDouble(0));
-        SmartDashboard.putNumber("Viz_tvert", tvert.getDouble(0));
-        SmartDashboard.putNumber("Viz_Length", tcornxy.getDoubleArray(new double[1]).length);
+        // SmartDashboard.putNumber("Viz_ty", ty.getDouble(0));
+        // SmartDashboard.putNumber("Viz_ta", ta.getDouble(0));
+        // SmartDashboard.putNumber("Viz_tshort", tshort.getDouble(0));
+        // SmartDashboard.putNumber("Viz_tvert", tvert.getDouble(0));
+        // SmartDashboard.putNumber("Viz_Length", tcornxy.getDoubleArray(new double[1]).length);
     }
     /** 
      * Deconvolutes tcornxy array into tcornx[] and tcorny[] arrays of double datatype.
@@ -210,11 +210,11 @@ public class Vision extends SubsystemBase{
      * Publishes Target Recog Data to SmartDashboard.  Variables published are: radius, deltaX, deltaY.
      */
     public void publishTargetRecogDistances(){
-        SmartDashboard.putNumber("Viz_Radius", radius);
-        SmartDashboard.putNumber("Viz_deltaY (m)", deltaY);
-        SmartDashboard.putNumber("Viz_deltaY (ft)", deltaY / VisionConstants.FEET2METER);
-        SmartDashboard.putNumber("Viz_deltaX (m)", deltaX);
-        SmartDashboard.putNumber("Viz_deltaX (ft)", deltaX / VisionConstants.FEET2METER);
+        // SmartDashboard.putNumber("Viz_Radius", radius);
+        // SmartDashboard.putNumber("Viz_deltaY (m)", deltaY);
+        // SmartDashboard.putNumber("Viz_deltaY (ft)", deltaY / VisionConstants.FEET2METER);
+        // SmartDashboard.putNumber("Viz_deltaX (m)", deltaX);
+        // SmartDashboard.putNumber("Viz_deltaX (ft)", deltaX / VisionConstants.FEET2METER);
     }
     
     /**
@@ -282,7 +282,7 @@ public class Vision extends SubsystemBase{
      * Publishes initialAngle to SmartDashboard under key value "initialTheta".
      */
     public void publishInitialTheta(){
-        SmartDashboard.putNumber("initialTheta", initialTheta);
+        // SmartDashboard.putNumber("initialTheta", initialTheta);
     }
 
 
@@ -315,28 +315,28 @@ public class Vision extends SubsystemBase{
         ballAngle = tx.getDouble(0);
 
         if(hasTarget == 1){
-          SmartDashboard.putBoolean("Ball Recognized", true);
+        //   SmartDashboard.putBoolean("Ball Recognized", true);
           if(ballAngle <= 1 && ballAngle >= -1){
             ballLocation = 1;
             ballDegrees = 0;
-            SmartDashboard.putNumber("Degrees", 0);
+            // SmartDashboard.putNumber("Degrees", 0);
           } else if(ballAngle >= 1){
             ballLocation = 2;
             ballDegrees = ballAngle;
               //Ball on the Right side of Limelight crosshairs by absOffset Degrees.
-            SmartDashboard.putNumber("Ball Degrees", ballDegrees);
+            // SmartDashboard.putNumber("Ball Degrees", ballDegrees);
           } else if(ballAngle <= -1){
             ballLocation = 0;
             ballDegrees = ballAngle;
               // Ball on the Left side of Limelight crosshairs by absOffset Degrees.
-            SmartDashboard.putNumber("Ball Degrees", ballDegrees);
+            // SmartDashboard.putNumber("Ball Degrees", ballDegrees);
           } else{
             ballDegrees = -999;
             // System.out.println("Ball Recog FAILED:  see Vision.controlLoopBallRecog.");
           }
         } else if(hasTarget == 0){
             ballLocation = -999;
-            SmartDashboard.putBoolean("Ball Recognized", false);
+            // SmartDashboard.putBoolean("Ball Recognized", false);
         } else{
         //   System.out.println("Ball Recog FAILED:  see Vision.controlLoopBallRecog.");
         }

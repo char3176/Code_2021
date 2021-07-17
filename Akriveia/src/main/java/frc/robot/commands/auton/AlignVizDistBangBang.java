@@ -60,7 +60,7 @@ public class AlignVizDistBangBang extends CommandBase {
     }
 
     m_drivetrain.drive(forwardDriveCorrection_feet, 0, 0);
-    SmartDashboard.putNumber("AlignVizDistBangBang.forwardDriveCorrection_feet", forwardDriveCorrection_feet);
+    // SmartDashboard.putNumber("AlignVizDistBangBang.forwardDriveCorrection_feet", forwardDriveCorrection_feet);
   }
 
   // Called once the command ends or is interrupted.

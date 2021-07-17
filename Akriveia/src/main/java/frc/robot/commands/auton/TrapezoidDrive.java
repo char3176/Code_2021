@@ -46,6 +46,8 @@ public class TrapezoidDrive extends CommandBase {
     double velocityX = setPoint.velocity * Math.cos(theta);
     double velocityY = setPoint.velocity * Math.sin(theta);
     m_Drivetrain.drive(Math.copySign(velocityX, distanceX), Math.copySign(velocityY, distanceY), 0);
+
+    // System.out.println("X: " + distanceX + ", Y: " + distanceY);
   }
 
   // Called once the command ends or is interrupted.

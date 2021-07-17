@@ -35,9 +35,9 @@ public class SwerveOrbit extends CommandBase {
     }
     radianOffset = drivetrain.getCurrentAngle() - drivetrain.getFieldCentricOffset();
 
-    SmartDashboard.putNumber("currentAngle", drivetrain.getCurrentAngle());
-    SmartDashboard.putNumber("getFieldCentricOffset", drivetrain.getFieldCentricOffset());
-    SmartDashboard.putNumber("radianOffset", radianOffset);
+    // SmartDashboard.putNumber("currentAngle", drivetrain.getCurrentAngle());
+    // SmartDashboard.putNumber("getFieldCentricOffset", drivetrain.getFieldCentricOffset());
+    // SmartDashboard.putNumber("radianOffset", radianOffset);
 
     drivetrain.setDriveMode(driveMode.ORBIT);
     drivetrain.setCoordType(coordType.ROBOT_CENTRIC);

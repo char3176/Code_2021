@@ -37,10 +37,10 @@ public class AtlasForPowerPort extends CommandBase {
   @Override
   public void execute(){
     if ((m_Vision.getDeltaX() > 3.8) && (m_Vision.getDeltaX() <= 4.4)) {    // <- Not sure about the 10.5 & 14.5.  Using these as initial guess based on 12.5 (where Blue & Yellow meet) with +/- 2.0
-      SmartDashboard.putBoolean("ATLAS PowerPort Fire Signal", true);
+      // SmartDashboard.putBoolean("ATLAS PowerPort Fire Signal", true);
       onBlueYellowLine = true;
     } else {
-      SmartDashboard.putBoolean("ATLAS PowerPort Fire Signal", false);
+      // SmartDashboard.putBoolean("ATLAS PowerPort Fire Signal", false);
       onBlueYellowLine = false;
     }
     zone = m_Vision.findShootingZone();

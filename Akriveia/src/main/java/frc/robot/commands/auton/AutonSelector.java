@@ -47,25 +47,25 @@ public class AutonSelector extends CommandBase{
   public void execute(){
     commandScheduler.schedule(new IntakeDropViaSpinning());
 
-    SmartDashboard.putNumber("Received Angle (rad)", angle);
+    // SmartDashboard.putNumber("Received Angle (rad)", angle);
     if(angle == -999){
       // print out an error message
-      SmartDashboard.putString("Path", "UNKNOWN");
+      // SmartDashboard.putString("Path", "UNKNOWN");
     } else if(angle < -.29){
       // A - blue
-      SmartDashboard.putString("Path", "A - blue");
+      // SmartDashboard.putString("Path", "A - blue");
       m_Drivetrain.drive(Math.cos(-.3805063771), Math.sin(-.3805063771), 0);
     } else if(angle < -.08){
       // B - blue
-      SmartDashboard.putString("Path", "B - blue");
+      // SmartDashboard.putString("Path", "B - blue");
       m_Drivetrain.drive(Math.cos(-.197395598), Math.sin(-.197395598), 0);
     } else if(angle < .15){
       // A - red
-      SmartDashboard.putString("Path", "A - red");
+      // SmartDashboard.putString("Path", "A - red");
       m_Drivetrain.drive(Math.cos(0), Math.sin(0), 0);
     } else if(angle < .52){
       // B - red
-      SmartDashboard.putString("Path", "B - red");
+      // SmartDashboard.putString("Path", "B - red");
       m_Drivetrain.drive(Math.cos(.463647609), Math.sin(.463647409), 0);
     }
   }

@@ -21,18 +21,18 @@ public class SmartDashboardControl extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putNumber("fly pct", 0);
-    SmartDashboard.putNumber("drum pct", 0);
+    // SmartDashboard.putNumber("fly pct", 0);
+    // SmartDashboard.putNumber("drum pct", 0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double fPCT = SmartDashboard.getNumber("fly pct", 0);
-    double dPCT = SmartDashboard.getNumber("drum pct", 0);
+    // double fPCT = SmartDashboard.getNumber("fly pct", 0);
+    // double dPCT = SmartDashboard.getNumber("drum pct", 0);
 
-    fly.spinVelocityOutputPercent(fPCT);
-    drum.pctCtrl_set(dPCT);
+    // fly.spinVelocityOutputPercent(fPCT);
+    // drum.pctCtrl_set(dPCT);
   }
 
   // Called once the command ends or is interrupted.

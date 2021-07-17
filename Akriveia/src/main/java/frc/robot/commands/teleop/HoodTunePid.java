@@ -25,19 +25,19 @@ public class HoodTunePid extends CommandBase {
     Timer.delay(0.5);
     // subsystem.pctCtrl_set(0);
     subsystem.posCtrl();
-    SmartDashboard.putNumber("TEST kP", HoodConstants.PIDF[0]);
-    SmartDashboard.putNumber("TEST kI", HoodConstants.PIDF[1]);
-    SmartDashboard.putNumber("TEST kD", HoodConstants.PIDF[2]);
+    // SmartDashboard.putNumber("TEST kP", HoodConstants.PIDF[0]);
+    // SmartDashboard.putNumber("TEST kI", HoodConstants.PIDF[1]);
+    // SmartDashboard.putNumber("TEST kD", HoodConstants.PIDF[2]);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double newP = SmartDashboard.getNumber("TEST kP", HoodConstants.PIDF[0]);
-    double newI = SmartDashboard.getNumber("TEST kI", HoodConstants.PIDF[1]);
-    double newD = SmartDashboard.getNumber("TEST kD", HoodConstants.PIDF[2]);
+    // double newP = SmartDashboard.getNumber("TEST kP", HoodConstants.PIDF[0]);
+    // double newI = SmartDashboard.getNumber("TEST kI", HoodConstants.PIDF[1]);
+    // double newD = SmartDashboard.getNumber("TEST kD", HoodConstants.PIDF[2]);
 
-    subsystem.setPID(newP, newI, newD);
+    // subsystem.setPID(newP, newI, newD);
     // subsystem.posCtrl();
   }
 
