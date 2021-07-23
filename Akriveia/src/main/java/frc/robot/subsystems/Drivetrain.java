@@ -86,6 +86,7 @@ public class Drivetrain extends SubsystemBase {
   private double forwardCommand;
   private double strafeCommand;
   private double spinCommand;
+  private double visionSpinCommandCorrection;
 
   private double spinLockAngle;
   private boolean isSpinLocked = false;
@@ -208,7 +209,7 @@ public class Drivetrain extends SubsystemBase {
   public void drive(double forwardCommand, double strafeCommand, double spinCommand) {
     this.forwardCommand = forwardCommand;
     this.strafeCommand = strafeCommand;  // TODO: The y is inverted because it is backwards for some reason, why?
-    this.spinCommand = spinCommand;
+    this.spinCommand = spinCommand + visionSpinCommandCorrection;
     // System.out.println("Forward Command" + forwardCommand);
 
     // this.forwardCommand = SmartDashboard.getNumber("forwardCommand", 0);
@@ -589,6 +590,10 @@ public class Drivetrain extends SubsystemBase {
     //    podFL.getState(),
     //    podBL.getState(),
     //    podBR.getState());
+  }
+
+  public void insertSpinCommand(double spinCorrection) {
+    this.visionSpinCommandCorrection = spinCorrection;
   }
 
   public double getHeading() {

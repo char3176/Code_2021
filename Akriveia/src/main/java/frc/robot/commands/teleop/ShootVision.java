@@ -22,7 +22,7 @@ public class ShootVision extends InstantCommand {
   public ShootVision() {
     addRequirements(mDrum);
     addRequirements(mTransfer);
-    addRequirements(mFlywheel);
+    //addRequirements(mFlywheel);
   }
 
   @Override
@@ -34,6 +34,6 @@ public class ShootVision extends InstantCommand {
 
     
     //Sets the Speed using Vision DeltaX within the Flywheel Subsystem
-    mFlywheel.setRpmViaVision();
+    //mFlywheel.setRpmViaVision();
   }
 }

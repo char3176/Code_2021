@@ -98,7 +98,7 @@ public class Flywheel extends SubsystemBase {
 
     @Override
     public void periodic() {
-
+        setRpmViaVision();
     }
 
     //public double getVisionCtrlRPM(){

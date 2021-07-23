@@ -6,7 +6,9 @@ package frc.robot.commands.auton;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.CommandGroupBase;
 import frc.robot.subsystems.Vision;
 import frc.robot.commands.auton.*;
 import frc.robot.commands.teleop.HoodPosUp;
@@ -22,6 +24,7 @@ public class ShootVisionSetUp extends SequentialCommandGroup {
   
   public ShootVisionSetUp() {
     // Use addRequirements() here to declare subsystem dependencies.
+
     addCommands(
       new ShootVision(),
       new AlignVizYawBangBang(),
@@ -35,5 +38,4 @@ public class ShootVisionSetUp extends SequentialCommandGroup {
       new HoodPosDown()
     );
   }
-
 }
