@@ -61,7 +61,7 @@ public class AlignVizYawBangBang extends SequentialCommandGroup {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (this.tx >= lowerTxLimit && this.tx <= upperTxLimit) {
+    if (this.tx >= lowerTxLimit && this.tx <= upperTxLimit){
       return true;
     }
     return false;
