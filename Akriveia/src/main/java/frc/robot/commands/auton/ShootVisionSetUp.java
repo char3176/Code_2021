@@ -26,16 +26,24 @@ public class ShootVisionSetUp extends SequentialCommandGroup {
     // Use addRequirements() here to declare subsystem dependencies.
 
     addCommands(
-      new ShootVision(),
-      new AlignVizYawBangBang(),
-      // new AlignVizYawPLoop(),
-      new HoodPosUp(),
-      new TransferDown(),
-      // new IrCounter(3),
-      new DelayCommand(5),
-      new TransferUp(),
-      new ShootReset(),
-      new HoodPosDown()
+      new SequentialCommandGroup(
+        new ParallelCommandGroup(
+          new ShootVision(),  //spins up TxrBelt/Rollers and the Drum for "Shooting"
+          new AlignVizYawBangBang(),  //uses limelight to align drivetrain such that the horizontal launch angle is within 1-2 degrees of center of recog'd Target
+          // new AlignVizYawPLoop(),
+          new HoodPosUp()  // just incase Hood isn't already up
+        ),
+        new SequentialCommandGroup( 
+          new TransferDown(),
+          // new IrCounter(3),
+          new DelayCommand(5)
+        ),
+        new ParallelCommandGroup( 
+          new TransferUp(), 
+          new ShootReset() 
+          //new HoodPosDown()
+        )
+      )
     );
   }
 }
