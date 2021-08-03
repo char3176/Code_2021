@@ -1,5 +1,6 @@
 package frc.robot;
 
+import ch.qos.logback.classic.util.ContextInitializer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -68,7 +69,16 @@ public class RobotContainer {
 
   public SwerveControllerCommand m_SwerveControllerCommand;
 
+  public static boolean isLoggingOn;
+
   public RobotContainer() {
+
+    isLoggingOn = true;
+    if (isLoggingOn) {
+      System.out.println("isLogging = True.  Switching logging to log file.");
+      System.setProperty(ContextInitializer.CONFIG_FILE_PROPERTY, "logback-event.xml");
+    }
+
     m_Compressor = new Compressor();
     m_Compressor.start();
 
@@ -147,7 +157,7 @@ public class RobotContainer {
     //m_Controller.getRotStick_Button1().whenHeld(new SwerveOrbit(
       //() -> m_Controller.getOrbitSpeed(),
       //() -> m_Controller.getPOVTransStick()));
-    m_Controller.getRotStick_Button1().whenHeld(new AlignVizYawPLoopTele());
+    //m_Controller.getRotStick_Button1().whenHeld(new AlignVizYawPLoopTele());    //temporarily commenting out until the appropriate file is added as commands/teleop/AlignVizYawPLoopTele.java (shld be included as part of char3176/Code_2021:fixedSeqAndParallelCmdGroupUsage -- PR#7 on Team3176/Code_2021)
     m_Controller.getRotStick_Button4().whenPressed(new SwerveResetGyro());
     m_Controller.getRotStick_Button8().whenHeld(new SwerveResetGyro());
     m_Controller.getRotStick_Button8().whenPressed(new SwerveResetGyro());

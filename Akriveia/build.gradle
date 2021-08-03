@@ -54,6 +54,19 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
 
+    //Logging for SLF4J and Logback framework
+    implementation "ch.qos.logback:logback-classic:${logbackVersion}"
+    //implementation "io.github.microutils:kotlin-logging:1.6.10"
+
+    //implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    //implementation "org.jetbrains.kotlinx:kotlinx-html-jvm:0.6.+"
+
+    //implementation "com.squireup.mosh:mosh:1.9.2"
+
+    //implementation "com.opencsv:opencsv:5.1"
+
+    //implementation "net.consensys.cava:cava-toml:0.5.0"
+
     // Enable simulation gui support. Must check the box in vscode to enable support
     // upon debugging
     simulation wpi.deps.sim.gui(wpi.platforms.desktop, false)
